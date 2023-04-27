@@ -18,7 +18,7 @@ public class Person {
 	private String last_name;
 	
 	@Column(name="phone_number", length=9)
-	private int phone_number;
+	private Integer phone_number;
 	
 	@Column(name="email")
 	private String email;
