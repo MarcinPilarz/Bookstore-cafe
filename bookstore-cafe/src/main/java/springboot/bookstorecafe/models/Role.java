@@ -1,17 +1,16 @@
 package springboot.bookstorecafe.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name="role")
 public class Role {
 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_person")
+	@Column(name="id_role")
 	private Long id_role;
+	
+	
 }

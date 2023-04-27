@@ -1,6 +1,6 @@
 package springboot.bookstorecafe.models;
-import javax.persistence.*; 
 
+import jakarta.persistence.*;
 
 @Entity 
 @Table(name="person")
