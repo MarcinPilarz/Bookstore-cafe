@@ -4,6 +4,7 @@ import java.sql.Date;
 
 //import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -14,49 +15,66 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_event")
-	private Long id_event;
+	private Long idEvent;
 	
+	@NotNull
 	@Column(name="event_name")
-	private String event_name;
+	private String eventName;
 	
+	@NotNull
 	@Column(name="event_description")
-	private String event_description;
+	private String eventDescription;
 	
+	@NotNull
 	@Column(name="events_date")
-	private Date events_date;
-
-	public Long getId_event() {
-		return id_event;
-	}
-
-	public void setId_event(Long id_event) {
-		this.id_event = id_event;
-	}
-
-	public String getEvent_name() {
-		return event_name;
-	}
-
-	public void setEvent_name(String event_name) {
-		this.event_name = event_name;
-	}
-
-	public String getEvent_description() {
-		return event_description;
-	}
-
-	public void setEvent_description(String event_description) {
-		this.event_description = event_description;
-	}
-
-	public Date getEvents_date() {
-		return events_date;
-	}
-
-	public void setEvents_date(Date events_date) {
-		this.events_date = events_date;
-	}
+	private Date eventsDate;
 	
+	@ManyToOne
+	@JoinColumn(name="id_person")
+	private Person person;
+	
+	
+	public Long getIdEvent() {
+		return idEvent;
+	}
+
+	public void setIdEvent(Long idEvent) {
+		this.idEvent = idEvent;
+	}
+
+	public String getEventName() {
+		return eventName;
+	}
+
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+
+	public String getEventDescription() {
+		return eventDescription;
+	}
+
+	public void setEventDescription(String eventDescription) {
+		this.eventDescription = eventDescription;
+	}
+
+	public Date getEventsDate() {
+		return eventsDate;
+	}
+
+	public void setEventsDate(Date eventsDate) {
+		this.eventsDate = eventsDate;
+	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+
 	
 	
 }

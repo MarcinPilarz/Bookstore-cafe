@@ -1,6 +1,7 @@
 package springboot.bookstorecafe.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity 
 @Table(name="person")
@@ -9,51 +10,72 @@ public class Person {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_person")
-	private Long id_person;
+	private Long idPerson;
 	
+	@NotNull
 	@Column(name="first_name")
-	private String first_name;
+	private String firstName;
 	
+	@NotNull
 	@Column(name="last_name")
-	private String last_name;
+	private String lastName;
 	
+	@NotNull
 	@Column(name="phone_number", length=9)
-	private Integer phone_number;
+	private Integer phoneNumber;
 	
+	@NotNull
 	@Column(name="email")
 	private String email;
-
 	
-	public Long getId_person() {
-		return id_person;
+	@ManyToOne
+	@JoinColumn(name="id_role")
+	private Role role;
+	
+	//ZOBACZYC TO
+	@OneToOne(mappedBy="person", cascade=CascadeType.ALL)
+	private Reservation reservation;
+	
+	@OneToOne(mappedBy="person")
+	private Review review;
+	
+	@OneToOne(mappedBy="person")
+	private OrderItem orderItem;
+	
+	@OneToOne(mappedBy="person")
+	private Event event;
+	
+
+	public Long getIdPerson() {
+		return idPerson;
 	}
 
-	public void setId_person(Long id_person) {
-		this.id_person = id_person;
+	public void setIdPerson(Long idPerson) {
+		this.idPerson = idPerson;
 	}
 
-	public String getFirst_name() {
-		return first_name;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	public int getPhone_number() {
-		return phone_number;
+	public Integer getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhone_number(int phone_number) {
-		this.phone_number = phone_number;
+	public void setPhoneNumber(Integer phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getEmail() {
@@ -63,7 +85,48 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public Reservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
+
+	public Review getReview() {
+		return review;
+	}
+
+	public void setReview(Review review) {
+		this.review = review;
+	}
+
+	public OrderItem getOrderItem() {
+		return orderItem;
+	}
+
+	public void setOrderItem(OrderItem orderItem) {
+		this.orderItem = orderItem;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
+	}
 	
 	
-	
+
 }
+	

@@ -11,32 +11,36 @@ public class Review {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_review")
-	private Long id_review;
+	private Long idReview;
 	
 	@Column(name="review_content")
-	private String review_content;
+	private String reviewContent;
 	
 	
 	@Column(name="rating")
 	private Integer rating;
 	
 	@Column(name="review_data")
-	private Date review_data;
+	private Date reviewData;
 
-	public Long getId_review() {
-		return id_review;
+	@ManyToOne
+	@JoinColumn(name="id_person")
+	private Person person;
+	
+	public Long getIdReview() {
+		return idReview;
 	}
 
-	public void setId_review(Long id_review) {
-		this.id_review = id_review;
+	public void setIdReview(Long idReview) {
+		this.idReview = idReview;
 	}
 
-	public String getReview_content() {
-		return review_content;
+	public String getReviewContent() {
+		return reviewContent;
 	}
 
-	public void setReview_content(String review_content) {
-		this.review_content = review_content;
+	public void setReviewContent(String reviewContent) {
+		this.reviewContent = reviewContent;
 	}
 
 	public Integer getRating() {
@@ -47,14 +51,23 @@ public class Review {
 		this.rating = rating;
 	}
 
-	public Date getReview_data() {
-		return review_data;
+	public Date getReviewData() {
+		return reviewData;
 	}
 
-	public void setReview_data(Date review_data) {
-		this.review_data = review_data;
+	public void setReviewData(Date reviewData) {
+		this.reviewData = reviewData;
 	}
 
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	
 	
 	
 }

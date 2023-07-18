@@ -3,6 +3,7 @@ import java.sql.Date;
 
 //import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="reservation")
@@ -11,39 +12,50 @@ public class Reservation {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id_reservation;
+	@Column(name="id_reservation")
+	private Long idReservation;
 	
+	@NotNull
 	@Column(name="table_number")
-	private Integer table_number;
+	private Integer tableNumber;
 	
+	@NotNull
 	@Column(name="bokking_data")
-	private Date bokking_data;
+	private Date bokkingData;
 	
+	@NotNull
 	@Column(name="isReservation")
 	private Boolean isReservation;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="id_person")
+	//@MapsId
+	private Person person;
 
-	public Long getId_reservation() {
-		return id_reservation;
+	
+	public Long getIdReservation() {
+		return idReservation;
 	}
 
-	public void setId_reservation(Long id_reservation) {
-		this.id_reservation = id_reservation;
+	public void setIdReservation(Long idReservation) {
+		this.idReservation = idReservation;
 	}
 
-	public Integer getTable_number() {
-		return table_number;
+	public Integer getTableNumber() {
+		return tableNumber;
 	}
 
-	public void setTable_number(Integer table_number) {
-		this.table_number = table_number;
+	public void setTableNumber(Integer tableNumber) {
+		this.tableNumber = tableNumber;
 	}
 
-	public Date getBokking_data() {
-		return bokking_data;
+	public Date getBokkingData() {
+		return bokkingData;
 	}
 
-	public void setBokking_data(Date bokking_data) {
-		this.bokking_data = bokking_data;
+	public void setBokkingData(Date bokkingData) {
+		this.bokkingData = bokkingData;
 	}
 
 	public Boolean getIsReservation() {
@@ -53,6 +65,15 @@ public class Reservation {
 	public void setIsReservation(Boolean isReservation) {
 		this.isReservation = isReservation;
 	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
 	
 	
 }
