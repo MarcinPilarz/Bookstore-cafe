@@ -19,32 +19,26 @@ import jakarta.validation.constraints.NotNull;
 public class OrderItem {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_order")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_order")
 	private Long idOrder;
-	
-	@NotNull
-	@Column(name="date_order")
+
+	// @NotNull
+	@Column(name = "date_order")
 	private Date dateOrder;
-	
-	@NotNull
-	@Column(name="quantity")
+
+	// @NotNull
+	@Column(name = "quantity")
 	private Integer quantity;
-	
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_person")
+	@JoinColumn(name = "id_person")
 	private Person person;
 
-	
 	@ManyToMany
-	@JoinTable(
-		name= "order_has_product",
-		joinColumns= @JoinColumn(name="id_order"),
-		inverseJoinColumns=@JoinColumn(name= "id_product")
-			)
-	private List<Product> products= new ArrayList<>();
-	
+	@JoinTable(name = "order_has_product", joinColumns = @JoinColumn(name = "id_order"), inverseJoinColumns = @JoinColumn(name = "id_product"))
+	private List<Product> products = new ArrayList<>();
+
 	public Long getIdOrder() {
 		return idOrder;
 	}
@@ -84,7 +78,5 @@ public class OrderItem {
 	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
-	
-	
-	
+
 }

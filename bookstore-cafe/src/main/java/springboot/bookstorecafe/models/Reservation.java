@@ -1,4 +1,5 @@
 package springboot.bookstorecafe.models;
+
 import java.sql.Date;
 
 //import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
@@ -6,34 +7,31 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name="reservation")
+@Table(name = "reservation")
 public class Reservation {
 
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_reservation")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_reservation")
 	private Long idReservation;
-	
-	@NotNull
-	@Column(name="table_number")
+
+	// @NotNull
+	@Column(name = "table_number")
 	private Integer tableNumber;
-	
-	@NotNull
-	@Column(name="bokking_data")
+
+	// @NotNull
+	@Column(name = "bokking_data")
 	private Date bokkingData;
-	
-	@NotNull
-	@Column(name="isReservation")
+
+	// @NotNull
+	@Column(name = "isReservation")
 	private Boolean isReservation;
-	
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_person")
-	//@MapsId
+	@JoinColumn(name = "id_person")
+	// @MapsId
 	private Person person;
 
-	
 	public Long getIdReservation() {
 		return idReservation;
 	}
@@ -74,7 +72,4 @@ public class Reservation {
 		this.person = person;
 	}
 
-	
-	
 }
-

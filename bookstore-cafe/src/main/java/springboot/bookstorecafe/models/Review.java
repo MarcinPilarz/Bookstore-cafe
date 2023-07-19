@@ -2,6 +2,7 @@ package springboot.bookstorecafe.models;
 
 import java.sql.Date;
 //import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
+import java.util.Objects;
 
 import jakarta.persistence.*;
 @Entity
@@ -65,6 +66,23 @@ public class Review {
 
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idReview);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Review other = (Review) obj;
+		return Objects.equals(idReview, other.idReview);
 	}
 
 	

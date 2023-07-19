@@ -19,7 +19,7 @@ public class ProductImage {
 	@Column(name="id_product_image")
 	private Long idProductImage;
 	
-	@NotNull
+//	@NotNull
 	@Column(name="image")
 	private byte[] image;
 	

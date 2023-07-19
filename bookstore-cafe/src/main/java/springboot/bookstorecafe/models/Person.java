@@ -1,50 +1,51 @@
 package springboot.bookstorecafe.models;
 
+import java.util.Objects; 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-@Entity 
-@Table(name="person")
+@Entity
+@Table(name = "person")
 public class Person {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id_person")
+	@Column(name = "id_person")
 	private Long idPerson;
-	
-	@NotNull
-	@Column(name="first_name")
+
+	// @NotNull
+	@Column(name = "first_name")
 	private String firstName;
-	
-	@NotNull
-	@Column(name="last_name")
+
+	// @NotNull
+	@Column(name = "last_name")
 	private String lastName;
-	
-	@NotNull
-	@Column(name="phone_number", length=9)
+
+	// @NotNull
+	@Column(name = "phone_number", length = 9)
 	private Integer phoneNumber;
-	
-	@NotNull
-	@Column(name="email")
+
+	// @NotNull
+	@Column(name = "email")
 	private String email;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_role")
+	@JoinColumn(name = "id_role")
 	private Role role;
-	
-	//ZOBACZYC TO
-	@OneToOne(mappedBy="person", cascade=CascadeType.ALL)
+
+	// ZOBACZYC TO
+	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
 	private Reservation reservation;
-	
-	@OneToOne(mappedBy="person")
+
+	@OneToOne(mappedBy = "person")
 	private Review review;
-	
-	@OneToOne(mappedBy="person")
+
+	@OneToOne(mappedBy = "person")
 	private OrderItem orderItem;
-	
-	@OneToOne(mappedBy="person")
+
+	@OneToOne(mappedBy = "person")
 	private Event event;
-	
 
 	public Long getIdPerson() {
 		return idPerson;
@@ -125,8 +126,22 @@ public class Person {
 	public void setEvent(Event event) {
 		this.event = event;
 	}
-	
-	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idPerson);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		return Objects.equals(idPerson, other.idPerson);
+	}
 
 }
-	

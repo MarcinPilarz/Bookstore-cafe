@@ -13,30 +13,26 @@ import jakarta.validation.constraints.NotNull;
 public class Food {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_food")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_food")
 	private Long id_food;
-	
+
 	@NotNull
-	@Column(name="type_of_dish")
+	@Column(name = "type_of_dish")
 	private String typeOfDish;
-	
+
 	@NotNull
-	@Column(name="food_weight")
+	@Column(name = "food_weight")
 	private Double foodWeight;
-	
+
 	@NotNull
-	@Column(name="amount_of_calories")
+	@Column(name = "amount_of_calories")
 	private Double amountOfCalories;
 
-	
 	@ManyToOne
-	@JoinColumn(name="id_product")
+	@JoinColumn(name = "id_product")
 	private Product product;
-	
-	
-	//sdadasda
-	
+
 	public Long getId_food() {
 		return id_food;
 	}
@@ -76,7 +72,5 @@ public class Food {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	
-	
+
 }

@@ -1,39 +1,36 @@
 package springboot.bookstorecafe.models;
 
-import java.sql.Date;
 
-//import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
+
+import java.util.Date; 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-
 @Entity
-@Table(name="event")
+@Table(name = "event")
 public class Event {
 
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_event")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_event")
 	private Long idEvent;
-	
+
 	@NotNull
-	@Column(name="event_name")
+	@Column(name = "event_name")
 	private String eventName;
-	
+
 	@NotNull
-	@Column(name="event_description")
+	@Column(name = "event_description")
 	private String eventDescription;
-	
+
 	@NotNull
-	@Column(name="events_date")
+	@Column(name = "events_date")
 	private Date eventsDate;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_person")
+	@JoinColumn(name = "id_person")
 	private Person person;
-	
-	
+
 	public Long getIdEvent() {
 		return idEvent;
 	}
@@ -74,7 +71,4 @@ public class Event {
 		this.person = person;
 	}
 
-
-	
-	
 }
