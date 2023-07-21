@@ -27,12 +27,12 @@ public class Person {
 	private Integer phoneNumber;
 
 	// @NotNull
-	@Column(name = "email")
-	private String email;
+//	@Column(name = "email")
+//	private String email;
 
-	@ManyToOne
-	@JoinColumn(name = "id_role")
-	private Role role;
+	@OneToOne
+	@JoinColumn(name = "id_login_person")
+	private LoginPerson loginPerson;
 
 	// ZOBACZYC TO
 	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
@@ -79,24 +79,26 @@ public class Person {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getEmail() {
-		return email;
-	}
+//	public String getEmail() {
+//		return email;
+//	}
+//
+//	public void setEmail(String email) {
+//		this.email = email;
+//	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
+	
 
 	public Reservation getReservation() {
 		return reservation;
+	}
+
+	public LoginPerson getLoginPerson() {
+		return loginPerson;
+	}
+
+	public void setLoginPerson(LoginPerson loginPerson) {
+		this.loginPerson = loginPerson;
 	}
 
 	public void setReservation(Reservation reservation) {
