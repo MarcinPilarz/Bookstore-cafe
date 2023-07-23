@@ -1,6 +1,12 @@
 package springboot.bookstorecafe.models;
 
-import java.util.Objects; 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -26,10 +32,6 @@ public class Person {
 	@Column(name = "phone_number", length = 9)
 	private Integer phoneNumber;
 
-	// @NotNull
-//	@Column(name = "email")
-//	private String email;
-
 	@OneToOne
 	@JoinColumn(name = "id_login_person")
 	private LoginPerson loginPerson;
@@ -38,8 +40,10 @@ public class Person {
 	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
 	private Reservation reservation;
 
-	@OneToOne(mappedBy = "person")
-	private Review review;
+	
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Review> review = new ArrayList<>();
 
 	@OneToOne(mappedBy = "person")
 	private OrderItem orderItem;
@@ -79,16 +83,6 @@ public class Person {
 		this.phoneNumber = phoneNumber;
 	}
 
-//	public String getEmail() {
-//		return email;
-//	}
-//
-//	public void setEmail(String email) {
-//		this.email = email;
-//	}
-
-	
-
 	public Reservation getReservation() {
 		return reservation;
 	}
@@ -105,11 +99,11 @@ public class Person {
 		this.reservation = reservation;
 	}
 
-	public Review getReview() {
+	public List<Review> getReview() {
 		return review;
 	}
 
-	public void setReview(Review review) {
+	public void setReview(List<Review> review) {
 		this.review = review;
 	}
 
