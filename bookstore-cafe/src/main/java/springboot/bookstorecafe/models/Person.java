@@ -48,8 +48,9 @@ public class Person {
 	@OneToOne(mappedBy = "person")
 	private OrderItem orderItem;
 
-	@OneToOne(mappedBy = "person")
-	private Event event;
+	@OneToMany(mappedBy = "person", cascade=CascadeType.ALL)
+	@JsonIgnore
+	private List<Event> event= new ArrayList<>();
 
 	public Long getIdPerson() {
 		return idPerson;
@@ -115,11 +116,12 @@ public class Person {
 		this.orderItem = orderItem;
 	}
 
-	public Event getEvent() {
+	
+	public List<Event> getEvent() {
 		return event;
 	}
 
-	public void setEvent(Event event) {
+	public void setEvent(List<Event> event) {
 		this.event = event;
 	}
 
