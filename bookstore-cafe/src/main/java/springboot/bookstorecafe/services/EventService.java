@@ -41,8 +41,8 @@ public class EventService implements MainService<Event> {
 
 	@Override
 	public Event findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	
+		return eventRepo.findById(id).orElse(null);
 	}
 
 }
