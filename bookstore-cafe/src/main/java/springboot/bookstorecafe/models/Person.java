@@ -36,11 +36,14 @@ public class Person {
 	@JoinColumn(name = "id_login_person")
 	private LoginPerson loginPerson;
 
-	// ZOBACZYC TO
-	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-	private Reservation reservation;
+//	// ZOBACZYC TO
+//	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+//	private Reservation reservation;
 
-	
+	@OneToMany(mappedBy = "person")
+	@JsonIgnore
+	private List<Reservation> reservations;
+
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Review> review = new ArrayList<>();
@@ -48,9 +51,9 @@ public class Person {
 	@OneToOne(mappedBy = "person")
 	private OrderItem orderItem;
 
-	@OneToMany(mappedBy = "person", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<Event> event= new ArrayList<>();
+	private List<Event> event = new ArrayList<>();
 
 	public Long getIdPerson() {
 		return idPerson;
@@ -84,10 +87,6 @@ public class Person {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Reservation getReservation() {
-		return reservation;
-	}
-
 	public LoginPerson getLoginPerson() {
 		return loginPerson;
 	}
@@ -96,8 +95,12 @@ public class Person {
 		this.loginPerson = loginPerson;
 	}
 
-	public void setReservation(Reservation reservation) {
-		this.reservation = reservation;
+	public List<Reservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	public List<Review> getReview() {
@@ -116,7 +119,6 @@ public class Person {
 		this.orderItem = orderItem;
 	}
 
-	
 	public List<Event> getEvent() {
 		return event;
 	}

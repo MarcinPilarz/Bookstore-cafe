@@ -1,6 +1,7 @@
 package springboot.bookstorecafe.models;
 
-import java.sql.Date;
+
+import java.time.LocalDate;
 
 //import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
 import jakarta.persistence.*;
@@ -17,15 +18,15 @@ public class Reservation {
 
 	// @NotNull
 	@Column(name = "table_number")
-	private Integer tableNumber;
+	private int tableNumber;
 
 	// @NotNull
 	@Column(name = "bokking_data")
-	private Date bokkingData;
+	private LocalDate bokkingData;
 
 	// @NotNull
 	@Column(name = "isReservation")
-	private Boolean isReservation;
+	private boolean isReservation =false;
 
 	@ManyToOne
 	@JoinColumn(name = "id_person")
@@ -40,27 +41,29 @@ public class Reservation {
 		this.idReservation = idReservation;
 	}
 
-	public Integer getTableNumber() {
+	public int getTableNumber() {
 		return tableNumber;
 	}
 
-	public void setTableNumber(Integer tableNumber) {
+	public void setTableNumber(int tableNumber) {
 		this.tableNumber = tableNumber;
 	}
 
-	public Date getBokkingData() {
+	public LocalDate getBokkingData() {
 		return bokkingData;
 	}
 
-	public void setBokkingData(Date bokkingData) {
+	public void setBokkingData(LocalDate bokkingData) {
 		this.bokkingData = bokkingData;
 	}
 
-	public Boolean getIsReservation() {
+	
+
+	public boolean isReservation() {
 		return isReservation;
 	}
 
-	public void setIsReservation(Boolean isReservation) {
+	public void setReservation(boolean isReservation) {
 		this.isReservation = isReservation;
 	}
 
