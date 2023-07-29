@@ -1,5 +1,7 @@
 package springboot.bookstorecafe.models;
 
+import java.util.Objects;
+
 import jakarta.persistence.Column;  
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +26,7 @@ public class Coffee {
 	
 	@NotNull
 	@Column(name="coffee_intensity")
-	private Integer coffeeIntensity;
+	private int coffeeIntensity;
 	
 	@Column(name="coffee_description")
 	private String coffeeDescription;
@@ -49,11 +51,12 @@ public class Coffee {
 		this.typeOfCoffee = typeOfCoffee;
 	}
 
-	public Integer getCoffeeIntensity() {
+	
+	public int getCoffeeIntensity() {
 		return coffeeIntensity;
 	}
 
-	public void setCoffeeIntensity(Integer coffeeIntensity) {
+	public void setCoffeeIntensity(int coffeeIntensity) {
 		this.coffeeIntensity = coffeeIntensity;
 	}
 
@@ -71,6 +74,23 @@ public class Coffee {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idCoffee);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Coffee other = (Coffee) obj;
+		return Objects.equals(idCoffee, other.idCoffee);
 	}
 	
 	
