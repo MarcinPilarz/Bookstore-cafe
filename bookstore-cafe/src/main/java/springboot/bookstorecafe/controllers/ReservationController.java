@@ -26,14 +26,14 @@ public class ReservationController {
 	}
 
 	@PostMapping("/newReservation")
-	public void bookTable(@RequestParam Long idPerson, @RequestParam Long idReservation,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bokkingData) {
+	public void bookTable(@RequestParam Long idPerson, @RequestParam Long idBookTable, @RequestParam Long idReservation,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bokkingData, @RequestParam int numberOfPeople) {
 
-		reservationService.bookTable(idPerson, idReservation, bokkingData);
+		reservationService.bookTable(idPerson, idBookTable, idReservation, bokkingData, numberOfPeople);
 	}
 	
 	
-	@DeleteMapping("/cancleReservation/{idReservation}")
+	@DeleteMapping("/cancleReservation")
 	public void cancleReservation(Long idReservation) {
 		
 		reservationService.cancleReservation(idReservation);

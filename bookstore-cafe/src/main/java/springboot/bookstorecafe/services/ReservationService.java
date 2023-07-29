@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+import springboot.bookstorecafe.models.BookTable;
 import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.models.Reservation;
+import springboot.bookstorecafe.repositories.BookTableRepository;
 import springboot.bookstorecafe.repositories.PersonRepository;
 import springboot.bookstorecafe.repositories.ReservationRepository;
 
@@ -18,12 +20,15 @@ public class ReservationService {
 
 	private PersonRepository personRepo;
 	private ReservationRepository reservationRepo;
+	private BookTableRepository bookTableRepo;
 
 	@Autowired
-	public ReservationService(PersonRepository personRepo, ReservationRepository reservationRepo) {
+	public ReservationService(PersonRepository personRepo, ReservationRepository reservationRepo,
+			BookTableRepository bookTableRepo) {
 
 		this.personRepo = personRepo;
 		this.reservationRepo = reservationRepo;
+		this.bookTableRepo = bookTableRepo;
 	}
 
 	public List<Reservation> getReservations() {
@@ -31,22 +36,29 @@ public class ReservationService {
 		return reservationRepo.findAll();
 	}
 
-	public void bookTable(Long idPerson, Long idReservation, LocalDate bokkingData) {
+	public void bookTable(Long idPerson, Long idBookTable, Long idReservation, LocalDate bokkingData, int numberOfPeople) {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 //		Reservation reservation = reservationRepo.findById(idReservation)
 //				.orElseThrow(() -> new RuntimeException("This table is already booked: " + idReservation));
 
+		BookTable bookTable= bookTableRepo.findById(idBookTable).orElseThrow(() -> new RuntimeException("There is no such table: " + idBookTable));
 		Reservation reservation = new Reservation();
-		if (reservation.isReservation()) {
+		if (bookTable.isReservation()) {
 			throw new RuntimeException("This table is reserved.");
 		}
-		reservation.getTableNumber();
-		reservation.setReservation(true);
-
+		
+		
+		
 		reservation.setPerson(person);
 		reservation.setBokkingData(bokkingData);
-
+		reservation.setNumberOfPeople(numberOfPeople);
+		reservation.setBookTable(bookTable);
+		
+		if(bookTable.getSeatingCapacity() < reservation.getNumberOfPeople()) {
+			throw new RuntimeException("This table is not suitable for the stated number of people");
+		}
+		bookTable.setReservation(true);
 		reservationRepo.save(reservation);
 	}
 
@@ -54,12 +66,12 @@ public class ReservationService {
 		Reservation reservation = reservationRepo.findById(idReservation)
 				.orElseThrow(() -> new RuntimeException("Name reservation not found" + idReservation));
 
-		if (!reservation.isReservation()) {
+		if (!reservation.getBookTable().isReservation()) {
 
 			throw new RuntimeException("The reservation is no longer active.");
 		}
 
-		reservation.setReservation(false);
+		reservation.getBookTable().setReservation(false);
 		reservationRepo.delete(reservation);
 	}
 }

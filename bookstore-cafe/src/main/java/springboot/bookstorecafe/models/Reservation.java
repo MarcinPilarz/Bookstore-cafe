@@ -17,22 +17,31 @@ public class Reservation {
 	private Long idReservation;
 
 	// @NotNull
-	@Column(name = "table_number")
-	private int tableNumber;
+//	@Column(name = "table_number")
+//	private int tableNumber;
 
 	// @NotNull
 	@Column(name = "bokking_data")
 	private LocalDate bokkingData;
 
+	@Column(name="number_of_people")
+	private int numberOfPeople;
+	
 	// @NotNull
-	@Column(name = "isReservation")
-	private boolean isReservation =false;
+//	@Column(name = "isReservation")
+//	private boolean isReservation =false;
 
+	
+	
 	@ManyToOne
 	@JoinColumn(name = "id_person")
 	// @MapsId
 	private Person person;
 
+	@ManyToOne
+	@JoinColumn(name="id_book_table")
+	private BookTable bookTable;
+	
 	public Long getIdReservation() {
 		return idReservation;
 	}
@@ -41,13 +50,13 @@ public class Reservation {
 		this.idReservation = idReservation;
 	}
 
-	public int getTableNumber() {
-		return tableNumber;
-	}
-
-	public void setTableNumber(int tableNumber) {
-		this.tableNumber = tableNumber;
-	}
+//	public int getTableNumber() {
+//		return tableNumber;
+//	}
+//
+//	public void setTableNumber(int tableNumber) {
+//		this.tableNumber = tableNumber;
+//	}
 
 	public LocalDate getBokkingData() {
 		return bokkingData;
@@ -59,13 +68,21 @@ public class Reservation {
 
 	
 
-	public boolean isReservation() {
-		return isReservation;
+	public int getNumberOfPeople() {
+		return numberOfPeople;
 	}
 
-	public void setReservation(boolean isReservation) {
-		this.isReservation = isReservation;
+	public void setNumberOfPeople(int numberOfPeople) {
+		this.numberOfPeople = numberOfPeople;
 	}
+
+//	public boolean isReservation() {
+//		return isReservation;
+//	}
+//
+//	public void setReservation(boolean isReservation) {
+//		this.isReservation = isReservation;
+//	}
 
 	public Person getPerson() {
 		return person;
@@ -73,6 +90,14 @@ public class Reservation {
 
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+	public BookTable getBookTable() {
+		return bookTable;
+	}
+
+	public void setBookTable(BookTable bookTable) {
+		this.bookTable = bookTable;
 	}
 
 }
