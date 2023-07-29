@@ -4,30 +4,41 @@ import java.sql.Date;
 //import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
+
 @Entity
-@Table(name="review")
+@Table(name = "review")
 public class Review {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_review")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_review")
 	private Long idReview;
-	
-	@Column(name="review_content")
+
+	@Column(name = "review_content")
 	private String reviewContent;
-	
-	
-	@Column(name="rating")
+
+	@Column(name = "rating")
 	private Integer rating;
-	
-	@Column(name="review_data")
+
+	@Column(name = "review_data")
 	private Date reviewData;
 
+	@Column(name = "number_of_likes")
+	private int numberOfLikes;
+
+	public void setNumberOfLikes(int numberOfLikes) {
+		this.numberOfLikes = numberOfLikes;
+	}
+
 	@ManyToOne
-	@JoinColumn(name="id_person")
-	private Person person;
+	@JoinColumn(name = "id_person")
 	
+	private Person person;
+
 	public Long getIdReview() {
 		return idReview;
 	}
@@ -60,6 +71,14 @@ public class Review {
 		this.reviewData = reviewData;
 	}
 
+	public int getNumberOfLikes() {
+		return numberOfLikes;
+	}
+
+	public void setNumberOfLikres(int numberOfLikes) {
+		this.numberOfLikes = numberOfLikes;
+	}
+
 	public Person getPerson() {
 		return person;
 	}
@@ -85,7 +104,4 @@ public class Review {
 		return Objects.equals(idReview, other.idReview);
 	}
 
-	
-	
-	
 }

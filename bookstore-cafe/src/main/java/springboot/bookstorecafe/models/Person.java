@@ -1,6 +1,12 @@
 package springboot.bookstorecafe.models;
 
-import java.util.Objects; 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -24,28 +30,30 @@ public class Person {
 
 	// @NotNull
 	@Column(name = "phone_number", length = 9)
-	private Integer phoneNumber;
+	private String phoneNumber;
 
-	// @NotNull
-	@Column(name = "email")
-	private String email;
+	@OneToOne
+	@JoinColumn(name = "id_login_person")
+	private LoginPerson loginPerson;
 
-	@ManyToOne
-	@JoinColumn(name = "id_role")
-	private Role role;
+//	// ZOBACZYC TO
+//	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+//	private Reservation reservation;
 
-	// ZOBACZYC TO
-	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-	private Reservation reservation;
+	@OneToMany(mappedBy = "person")
+	@JsonIgnore
+	private List<Reservation> reservations;
 
-	@OneToOne(mappedBy = "person")
-	private Review review;
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Review> review = new ArrayList<>();
 
 	@OneToOne(mappedBy = "person")
 	private OrderItem orderItem;
 
-	@OneToOne(mappedBy = "person")
-	private Event event;
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Event> event = new ArrayList<>();
 
 	public Long getIdPerson() {
 		return idPerson;
@@ -71,43 +79,35 @@ public class Person {
 		this.lastName = lastName;
 	}
 
-	public Integer getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getEmail() {
-		return email;
+	public LoginPerson getLoginPerson() {
+		return loginPerson;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLoginPerson(LoginPerson loginPerson) {
+		this.loginPerson = loginPerson;
 	}
 
-	public Role getRole() {
-		return role;
+	public List<Reservation> getReservations() {
+		return reservations;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setReservations(List<Reservation> reservations) {
+		this.reservations = reservations;
 	}
 
-	public Reservation getReservation() {
-		return reservation;
-	}
-
-	public void setReservation(Reservation reservation) {
-		this.reservation = reservation;
-	}
-
-	public Review getReview() {
+	public List<Review> getReview() {
 		return review;
 	}
 
-	public void setReview(Review review) {
+	public void setReview(List<Review> review) {
 		this.review = review;
 	}
 
@@ -119,11 +119,11 @@ public class Person {
 		this.orderItem = orderItem;
 	}
 
-	public Event getEvent() {
+	public List<Event> getEvent() {
 		return event;
 	}
 
-	public void setEvent(Event event) {
+	public void setEvent(List<Event> event) {
 		this.event = event;
 	}
 
