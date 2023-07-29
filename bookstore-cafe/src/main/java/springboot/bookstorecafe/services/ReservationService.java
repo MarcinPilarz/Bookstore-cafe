@@ -59,7 +59,7 @@ public class ReservationService {
 		bookTable.setReservation(true);
 		reservationRepo.save(reservation);
 	}
-	
+
 	public void bookTableEmployee(Long idPerson, Long idBookTable, Long idReservation, LocalDate bokkingData,
 			int numberOfPeople) {
 		Person person = personRepo.findById(idPerson)
@@ -92,4 +92,8 @@ public class ReservationService {
 		reservation.getBookTable().setReservation(false);
 		reservationRepo.delete(reservation);
 	}
+
+//	public boolean isPersonDataMatch(String lastName, String phoneNumber) {
+//		return 
+//	}
 }

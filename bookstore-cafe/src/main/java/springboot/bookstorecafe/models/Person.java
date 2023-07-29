@@ -30,7 +30,7 @@ public class Person {
 
 	// @NotNull
 	@Column(name = "phone_number", length = 9)
-	private Integer phoneNumber;
+	private String phoneNumber;
 
 	@OneToOne
 	@JoinColumn(name = "id_login_person")
@@ -79,11 +79,11 @@ public class Person {
 		this.lastName = lastName;
 	}
 
-	public Integer getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(Integer phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
