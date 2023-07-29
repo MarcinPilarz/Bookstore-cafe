@@ -36,28 +36,46 @@ public class ReservationService {
 		return reservationRepo.findAll();
 	}
 
-	public void bookTable(Long idPerson, Long idBookTable, Long idReservation, LocalDate bokkingData, int numberOfPeople) {
+	public void bookTable(Long idPerson, Long idBookTable, Long idReservation, LocalDate bokkingData,
+			int numberOfPeople) {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
-//		Reservation reservation = reservationRepo.findById(idReservation)
-//				.orElseThrow(() -> new RuntimeException("This table is already booked: " + idReservation));
 
-		BookTable bookTable= bookTableRepo.findById(idBookTable).orElseThrow(() -> new RuntimeException("There is no such table: " + idBookTable));
+		BookTable bookTable = bookTableRepo.findById(idBookTable)
+				.orElseThrow(() -> new RuntimeException("There is no such table: " + idBookTable));
 		Reservation reservation = new Reservation();
 		if (bookTable.isReservation()) {
 			throw new RuntimeException("This table is reserved.");
 		}
-		
-		
-		
+
 		reservation.setPerson(person);
 		reservation.setBokkingData(bokkingData);
 		reservation.setNumberOfPeople(numberOfPeople);
 		reservation.setBookTable(bookTable);
-		
-		if(bookTable.getSeatingCapacity() < reservation.getNumberOfPeople()) {
+
+		if (bookTable.getSeatingCapacity() < reservation.getNumberOfPeople()) {
 			throw new RuntimeException("This table is not suitable for the stated number of people");
 		}
+		bookTable.setReservation(true);
+		reservationRepo.save(reservation);
+	}
+	
+	public void bookTableEmployee(Long idPerson, Long idBookTable, Long idReservation, LocalDate bokkingData,
+			int numberOfPeople) {
+		Person person = personRepo.findById(idPerson)
+				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
+
+		BookTable bookTable = bookTableRepo.findById(idBookTable)
+				.orElseThrow(() -> new RuntimeException("There is no such table: " + idBookTable));
+		Reservation reservation = new Reservation();
+		if (bookTable.isReservation()) {
+			throw new RuntimeException("This table is reserved.");
+		}
+
+		reservation.setPerson(person);
+		reservation.setBokkingData(bokkingData);
+		reservation.setNumberOfPeople(numberOfPeople);
+		reservation.setBookTable(bookTable);
 		bookTable.setReservation(true);
 		reservationRepo.save(reservation);
 	}

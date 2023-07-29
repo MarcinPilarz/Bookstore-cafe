@@ -33,6 +33,13 @@ public class ReservationController {
 	}
 	
 	
+	@PostMapping("/newReservationEmployee")
+	public void bookTableEmployee(@RequestParam Long idPerson, @RequestParam Long idBookTable, @RequestParam Long idReservation,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bokkingData, @RequestParam int numberOfPeople) {
+
+		reservationService.bookTableEmployee(idPerson, idBookTable, idReservation, bokkingData, numberOfPeople);
+	}
+	
 	@DeleteMapping("/cancleReservation")
 	public void cancleReservation(Long idReservation) {
 		
