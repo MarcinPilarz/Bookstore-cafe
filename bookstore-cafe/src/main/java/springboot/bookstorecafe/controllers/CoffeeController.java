@@ -42,7 +42,7 @@ public class CoffeeController {
 	}
 
 	@DeleteMapping(value = "/deleteCoffee")
-	public ResponseEntity<Coffee> updateCoffee(@RequestParam Long id) {
+	public ResponseEntity<Coffee> deleteCoffee(@RequestParam Long id) {
 
 		Coffee coffee = coffeeService.findById(id);
 		if (coffee != null) {

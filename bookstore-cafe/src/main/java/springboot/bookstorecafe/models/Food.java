@@ -15,7 +15,7 @@ public class Food {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_food")
-	private Long id_food;
+	private Long idFood;
 
 	@NotNull
 	@Column(name = "type_of_dish")
@@ -33,12 +33,12 @@ public class Food {
 	@JoinColumn(name = "id_product")
 	private Product product;
 
-	public Long getId_food() {
-		return id_food;
+	public Long getIdFood() {
+		return idFood;
 	}
 
-	public void setId_food(Long id_food) {
-		this.id_food = id_food;
+	public void setIdFood(Long idFood) {
+		this.idFood = idFood;
 	}
 
 	public String getTypeOfDish() {

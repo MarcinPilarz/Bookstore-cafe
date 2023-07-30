@@ -18,19 +18,19 @@ public class Book {
 	@Column(name="id_book")
 	private Long idBook;
 	
-	@NotNull
+	//@NotNull
 	@Column(name="title")
 	private String title;
 	
-	@NotNull
+	//@NotNull
 	@Column(name="author")
 	private String author;
 	
-	@NotNull
+	//@NotNull
 	@Column(name="genere")
 	private String genere;
 	
-	@NotNull
+	//@NotNull
 	@Column(name="description")
 	private String description;
 	
