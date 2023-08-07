@@ -43,8 +43,8 @@ public class CoffeeService implements MainService<Coffee> {
 		return coffeeRepo.findById(id).orElse(null);
 	}
 
-	public Coffee findByTypeOfCoffee(String typeOfCoffee) {
-		return coffeeRepo.findByTypeOfCoffee(typeOfCoffee);
-	}
+//	public Coffee findByTypeOfCoffee(String typeOfCoffee) {
+//		return coffeeRepo.findByTypeOfCoffee(typeOfCoffee);
+//	}
 
 }

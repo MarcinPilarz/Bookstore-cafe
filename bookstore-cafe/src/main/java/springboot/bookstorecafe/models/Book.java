@@ -7,36 +7,36 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Book {
 
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_book")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_book")
 	private Long idBook;
-	
-	//@NotNull
-	@Column(name="title")
-	private String title;
-	
-	//@NotNull
-	@Column(name="author")
+
+	// @NotNull
+//	@Column(name = "title")
+//	private String title;
+
+	// @NotNull
+	@Column(name = "author")
 	private String author;
-	
-	//@NotNull
-	@Column(name="genere")
+
+	// @NotNull
+	@Column(name = "genere")
 	private String genere;
-	
-	//@NotNull
-	@Column(name="description")
-	private String description;
-	
-	@ManyToOne
-	@JoinColumn(name="id_product")
-	private Product product;
+
+	// @NotNull
+//	@Column(name="description")
+//	private String description;
+
+	@OneToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
 
 	public Long getIdBook() {
 		return idBook;
@@ -46,13 +46,13 @@ public class Book {
 		this.idBook = idBook;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
+//	public String getTitle() {
+//		return title;
+//	}
+//
+//	public void setTitle(String title) {
+//		this.title = title;
+//	}
 
 	public String getAuthor() {
 		return author;
@@ -70,13 +70,13 @@ public class Book {
 		this.genere = genere;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
+//	public String getDescription() {
+//		return description;
+//	}
+//
+//	public void setDescription(String description) {
+//		this.description = description;
+//	}
 
 	public Product getProduct() {
 		return product;
@@ -85,7 +85,5 @@ public class Book {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	
-	
+
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -17,9 +18,9 @@ public class Food {
 	@Column(name = "id_food")
 	private Long idFood;
 
-	@NotNull
-	@Column(name = "type_of_dish")
-	private String typeOfDish;
+//	@NotNull
+//	@Column(name = "type_of_dish")
+//	private String typeOfDish;
 
 	@NotNull
 	@Column(name = "food_weight")
@@ -29,9 +30,9 @@ public class Food {
 	@Column(name = "amount_of_calories")
 	private Double amountOfCalories;
 
-	@ManyToOne
-	@JoinColumn(name = "id_product")
-	private Product product;
+	@OneToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
 
 	public Long getIdFood() {
 		return idFood;
@@ -41,13 +42,13 @@ public class Food {
 		this.idFood = idFood;
 	}
 
-	public String getTypeOfDish() {
-		return typeOfDish;
-	}
-
-	public void setTypeOfDish(String typeOfDish) {
-		this.typeOfDish = typeOfDish;
-	}
+//	public String getTypeOfDish() {
+//		return typeOfDish;
+//	}
+//
+//	public void setTypeOfDish(String typeOfDish) {
+//		this.typeOfDish = typeOfDish;
+//	}
 
 	public Double getFoodWeight() {
 		return foodWeight;

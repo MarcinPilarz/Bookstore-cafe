@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -20,20 +21,24 @@ public class Coffee {
 	@Column(name="id_coffee")
 	private Long idCoffee;
 	
-	@NotNull
-	@Column(name="types_of_coffee")
-	private String typeOfCoffee;
+//	@NotNull
+//	@Column(name="types_of_coffee")
+//	private String typeOfCoffee;
 	
 	@NotNull
 	@Column(name="coffee_intensity")
 	private int coffeeIntensity;
 	
-	@Column(name="coffee_description")
-	private String coffeeDescription;
+//	@Column(name="coffee_description")
+//	private String coffeeDescription;
 
-	@ManyToOne
-	@JoinColumn(name="id_product")
-	private Product product;
+//	@ManyToOne
+//	@JoinColumn(name="id_product")
+//	private Product product;
+	
+	@OneToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
 	
 	public Long getIdCoffee() {
 		return idCoffee;
@@ -43,13 +48,13 @@ public class Coffee {
 		this.idCoffee = idCoffee;
 	}
 
-	public String getTypeOfCoffee() {
-		return typeOfCoffee;
-	}
-
-	public void setTypeOfCoffee(String typeOfCoffee) {
-		this.typeOfCoffee = typeOfCoffee;
-	}
+//	public String getTypeOfCoffee() {
+//		return typeOfCoffee;
+//	}
+//
+//	public void setTypeOfCoffee(String typeOfCoffee) {
+//		this.typeOfCoffee = typeOfCoffee;
+//	}
 
 	
 	public int getCoffeeIntensity() {
@@ -60,13 +65,15 @@ public class Coffee {
 		this.coffeeIntensity = coffeeIntensity;
 	}
 
-	public String getCoffeeDescription() {
-		return coffeeDescription;
-	}
+//	public String getCoffeeDescription() {
+//		return coffeeDescription;
+//	}
+//
+//	public void setCoffeeDescription(String coffeeDescription) {
+//		this.coffeeDescription = coffeeDescription;
+//	}
 
-	public void setCoffeeDescription(String coffeeDescription) {
-		this.coffeeDescription = coffeeDescription;
-	}
+	
 
 	public Product getProduct() {
 		return product;
