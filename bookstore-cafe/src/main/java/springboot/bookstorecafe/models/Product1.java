@@ -7,12 +7,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -21,12 +24,14 @@ import jakarta.validation.constraints.NotNull;
 
 
 @Entity
-public class Product {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "product_type")
+public abstract class Product1 {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_product")
-	private Long idProduct;
+	private Long idProduct1;
 
 	//@NotNull
 	@Column(name = "product_name")
@@ -52,22 +57,11 @@ public class Product {
 //	private Food food;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "product_type")
+	@Column(name = "product_type", insertable = false, updatable = false)
 	private ProductType productType;
 	
 	
-	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private Coffee coffee;
 	
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private Book book;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private Food food;
 	
 	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private ProductImage productImage;
@@ -75,12 +69,12 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	private List<OrderItem> orderItems = new ArrayList<>();
 
-	public Long getIdProduct() {
-		return idProduct;
+	public Long getIdProduct1() {
+		return idProduct1;
 	}
 
-	public void setIdProduct(Long idProduct) {
-		this.idProduct = idProduct;
+	public void setIdProduct1(Long idProduct1) {
+		this.idProduct1 = idProduct1;
 	}
 
 	public String getProductName() {
@@ -128,13 +122,7 @@ public class Product {
 		return productImage;
 	}
 
-	public Coffee getCoffee() {
-		return coffee;
-	}
-
-	public void setCoffee(Coffee coffee) {
-		this.coffee = coffee;
-	}
+	
 
 	public void setProductImage(ProductImage productImage) {
 		this.productImage = productImage;
@@ -164,20 +152,6 @@ public class Product {
 		this.productType = productType;
 	}
 
-	public Book getBook() {
-		return book;
-	}
-
-	public void setBook(Book book) {
-		this.book = book;
-	}
-
-	public Food getFood() {
-		return food;
-	}
-
-	public void setFood(Food food) {
-		this.food = food;
-	}
+	
 
 }

@@ -28,17 +28,17 @@ public class ProductService {
 
 	}
 
-//	public Product addBook(Product product, Book book) {
-//
-//		product.setBook(book);
-//		return productRepo.save(product);
-//	}
-//
-//	public Product addFood(Product product, Food food) {
-//
-//		product.setFood(food);
-//		return productRepo.save(product);
-//	}
+	public Product addBook(Product product, Book book) {
+
+		product.setBook(book);
+		return productRepo.save(product);
+	}
+
+	public Product addFood(Product product, Food food) {
+
+		product.setFood(food);
+		return productRepo.save(product);
+	}
 
 	public void deleteItem(Product product) {
 		productRepo.delete(product);

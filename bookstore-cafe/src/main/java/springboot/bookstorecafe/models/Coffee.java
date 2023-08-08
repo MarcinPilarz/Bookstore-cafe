@@ -2,7 +2,8 @@ package springboot.bookstorecafe.models;
 
 import java.util.Objects;
 
-import jakarta.persistence.Column;  
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +14,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Coffee {
+//@DiscriminatorValue("COFFEE")
+public class Coffee   {
 
 	
 	@Id
