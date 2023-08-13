@@ -7,12 +7,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
@@ -21,7 +26,10 @@ import jakarta.validation.constraints.NotNull;
 
 
 @Entity
-public class Product {
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name = "typProduktu", discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorValue("Product")
+public abstract class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,18 +64,18 @@ public class Product {
 	private ProductType productType;
 	
 	
-	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private Coffee coffee;
+//	@JsonIgnore
+//	@OneToOne(mappedBy = "product")
+//	private Coffee coffee;
+//	
 	
+//	@JsonIgnore
+//	@OneToOne(mappedBy = "product")
+//	private Book book;
 	
-	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private Book book;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "product")
-	private Food food;
+//	@JsonIgnore
+//	@OneToOne(mappedBy = "product")
+//	private Food food;
 	
 	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private ProductImage productImage;
@@ -128,13 +136,13 @@ public class Product {
 		return productImage;
 	}
 
-	public Coffee getCoffee() {
-		return coffee;
-	}
-
-	public void setCoffee(Coffee coffee) {
-		this.coffee = coffee;
-	}
+//	public Coffee getCoffee() {
+//		return coffee;
+//	}
+//
+//	public void setCoffee(Coffee coffee) {
+//		this.coffee = coffee;
+//	}
 
 	public void setProductImage(ProductImage productImage) {
 		this.productImage = productImage;
@@ -164,20 +172,20 @@ public class Product {
 		this.productType = productType;
 	}
 
-	public Book getBook() {
-		return book;
-	}
+//	public Book getBook() {
+//		return book;
+//	}
+//
+//	public void setBook(Book book) {
+//		this.book = book;
+//	}
 
-	public void setBook(Book book) {
-		this.book = book;
-	}
-
-	public Food getFood() {
-		return food;
-	}
-
-	public void setFood(Food food) {
-		this.food = food;
-	}
+//	public Food getFood() {
+//		return food;
+//	}
+//
+//	public void setFood(Food food) {
+//		this.food = food;
+//	}
 
 }

@@ -1,12 +1,17 @@
 package springboot.bookstorecafe.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.query.Param;
 
 import springboot.bookstorecafe.models.Product;
+import springboot.bookstorecafe.models.ProductType;
 
-@Repository
-public interface ProductRepository extends JpaRepository<Product, Long>{
-
-	Product findByProductName(String productName);
+@NoRepositoryBean
+public interface ProductRepository<T extends Product> extends CrudRepository<T, Long> {
+    List<T> getProductsByProductType(ProductType productType);
 }

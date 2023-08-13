@@ -11,12 +11,12 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Book {
+public class Book extends Product {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_book")
-	private Long idBook;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column(name = "id_book")
+//	private Long idBook;
 
 	// @NotNull
 //	@Column(name = "title")
@@ -34,17 +34,17 @@ public class Book {
 //	@Column(name="description")
 //	private String description;
 
-	@OneToOne
-    @JoinColumn(name = "id_product")
-    private Product product;
+//	@OneToOne
+//    @JoinColumn(name = "id_product")
+//    private Product product;
 
-	public Long getIdBook() {
-		return idBook;
-	}
-
-	public void setIdBook(Long idBook) {
-		this.idBook = idBook;
-	}
+//	public Long getIdBook() {
+//		return idBook;
+//	}
+//
+//	public void setIdBook(Long idBook) {
+//		this.idBook = idBook;
+//	}
 
 //	public String getTitle() {
 //		return title;
@@ -78,12 +78,12 @@ public class Book {
 //		this.description = description;
 //	}
 
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+//	public Product getProduct() {
+//		return product;
+//	}
+//
+//	public void setProduct(Product product) {
+//		this.product = product;
+//	}
 
 }

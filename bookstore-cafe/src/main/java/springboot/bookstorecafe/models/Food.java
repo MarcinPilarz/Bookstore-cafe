@@ -11,12 +11,12 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Food {
+public class Food extends Product{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_food")
-	private Long idFood;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column(name = "id_food")
+//	private Long idFood;
 
 //	@NotNull
 //	@Column(name = "type_of_dish")
@@ -30,17 +30,17 @@ public class Food {
 	@Column(name = "amount_of_calories")
 	private Double amountOfCalories;
 
-	@OneToOne
-    @JoinColumn(name = "id_product")
-    private Product product;
+//	@OneToOne
+//    @JoinColumn(name = "id_product")
+//    private Product product;
 
-	public Long getIdFood() {
-		return idFood;
-	}
-
-	public void setIdFood(Long idFood) {
-		this.idFood = idFood;
-	}
+//	public Long getIdFood() {
+//		return idFood;
+//	}
+//
+//	public void setIdFood(Long idFood) {
+//		this.idFood = idFood;
+//	}
 
 //	public String getTypeOfDish() {
 //		return typeOfDish;
@@ -66,12 +66,12 @@ public class Food {
 		this.amountOfCalories = amountOfCalories;
 	}
 
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+//	public Product getProduct() {
+//		return product;
+//	}
+//
+//	public void setProduct(Product product) {
+//		this.product = product;
+//	}
 
 }

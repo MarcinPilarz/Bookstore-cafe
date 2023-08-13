@@ -22,36 +22,36 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
-	@GetMapping(value = "/books")
-	public List<Book> getBooks() {
-
-		return bookService.findAllItems();
-	}
-
-	@PostMapping(value = "/addBook")
-	public ResponseEntity<Book> addBook(@RequestBody Book newBook) {
-		bookService.addItem(newBook);
-		return ResponseEntity.ok(newBook);
-	}
-
-	@PutMapping(value = "/updateBook")
-	public ResponseEntity<Book> updateBook(@RequestParam Long id, @RequestBody Book updateBook) {
-
-		Book book = bookService.findById(id);
-		updateBook.setIdBook(book.getIdBook());
-		bookService.updateItem(updateBook);
-		return ResponseEntity.ok(updateBook);
-
-	}
-
-	@DeleteMapping(value = "/deleteBook")
-	public ResponseEntity<Book> deleteBook(@RequestParam Long id) {
-		Book book = bookService.findById(id);
-		if (book != null) {
-			bookService.deleteItem(bookService.findById(id));
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
+//	@GetMapping(value = "/books")
+//	public List<Book> getBooks() {
+//
+//		return bookService.findAllItems();
+//	}
+//
+//	@PostMapping(value = "/addBook")
+//	public ResponseEntity<Book> addBook(@RequestBody Book newBook) {
+//		bookService.addItem(newBook);
+//		return ResponseEntity.ok(newBook);
+//	}
+//
+//	@PutMapping(value = "/updateBook")
+//	public ResponseEntity<Book> updateBook(@RequestParam Long id, @RequestBody Book updateBook) {
+//
+//		Book book = bookService.findById(id);
+//		updateBook.setIdBook(book.getIdBook());
+//		bookService.updateItem(updateBook);
+//		return ResponseEntity.ok(updateBook);
+//
+//	}
+//
+//	@DeleteMapping(value = "/deleteBook")
+//	public ResponseEntity<Book> deleteBook(@RequestParam Long id) {
+//		Book book = bookService.findById(id);
+//		if (book != null) {
+//			bookService.deleteItem(bookService.findById(id));
+//			return ResponseEntity.noContent().build();
+//		} else {
+//			return ResponseEntity.notFound().build();
+//		}
+//	}
 }

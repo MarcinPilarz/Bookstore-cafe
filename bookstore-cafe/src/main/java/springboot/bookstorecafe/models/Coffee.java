@@ -5,6 +5,8 @@ import java.util.Objects;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,15 +16,15 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-//@DiscriminatorValue("COFFEE")
-public class Coffee   {
+@DiscriminatorValue("Coffee")
+public class Coffee extends Product   {
 
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_coffee")
-	private Long idCoffee;
-	
+//	@Id
+//	@GeneratedValue(strategy=GenerationType.IDENTITY)
+//	@Column(name="id_coffee")
+//	private Long idCoffee;
+//	
 //	@NotNull
 //	@Column(name="types_of_coffee")
 //	private String typeOfCoffee;
@@ -31,24 +33,29 @@ public class Coffee   {
 	@Column(name="coffee_intensity")
 	private int coffeeIntensity;
 	
+	@Enumerated(EnumType.STRING)
+    @Column(name = "product_type", insertable = false, updatable = false)
+    private ProductType productType = ProductType.COFFEE;
 //	@Column(name="coffee_description")
 //	private String coffeeDescription;
-
+	public Coffee() {
+        setProductType(ProductType.COFFEE);
+    }
 //	@ManyToOne
 //	@JoinColumn(name="id_product")
 //	private Product product;
 	
-	@OneToOne
-    @JoinColumn(name = "id_product")
-    private Product product;
+//	@OneToOne
+//    @JoinColumn(name = "id_product")
+//    private Product product;
 	
-	public Long getIdCoffee() {
-		return idCoffee;
-	}
-
-	public void setIdCoffee(Long idCoffee) {
-		this.idCoffee = idCoffee;
-	}
+//	public Long getIdCoffee() {
+//		return idCoffee;
+//	}
+//
+//	public void setIdCoffee(Long idCoffee) {
+//		this.idCoffee = idCoffee;
+//	}
 
 //	public String getTypeOfCoffee() {
 //		return typeOfCoffee;
@@ -59,6 +66,14 @@ public class Coffee   {
 //	}
 
 	
+	public ProductType getProductType() {
+		return productType;
+	}
+
+	public void setProductType(ProductType productType) {
+		this.productType = productType;
+	}
+
 	public int getCoffeeIntensity() {
 		return coffeeIntensity;
 	}
@@ -77,30 +92,30 @@ public class Coffee   {
 
 	
 
-	public Product getProduct() {
-		return product;
-	}
+//	public Product getProduct() {
+//		return product;
+//	}
+//
+//	public void setProduct(Product product) {
+//		this.product = product;
+//	}
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(idCoffee);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Coffee other = (Coffee) obj;
-		return Objects.equals(idCoffee, other.idCoffee);
-	}
+//	@Override
+//	public int hashCode() {
+//		return Objects.hash(idCoffee);
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		Coffee other = (Coffee) obj;
+//		return Objects.equals(idCoffee, other.idCoffee);
+//	}
 	
 	
 	

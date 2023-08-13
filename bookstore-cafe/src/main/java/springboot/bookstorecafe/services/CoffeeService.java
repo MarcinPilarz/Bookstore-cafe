@@ -3,43 +3,59 @@ package springboot.bookstorecafe.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import springboot.bookstorecafe.models.Coffee;
+import springboot.bookstorecafe.models.Product;
+import springboot.bookstorecafe.models.ProductType;
 import springboot.bookstorecafe.repositories.CoffeeRepository;
+import springboot.bookstorecafe.repositories.ProductRepository;
 
 @Service
-public class CoffeeService implements MainService<Coffee> {
+public class CoffeeService {
 
 	@Autowired
 	private CoffeeRepository coffeeRepo;
+	@Qualifier("coffeeRepository") // Wskaźnik na repozytorium Coffee
+	@Autowired
+	private ProductRepository productRepo;
 
-	@Override
-	public List<Coffee> findAllItems() {
+	public Iterable<Coffee> findAllItems() {
 
 		return coffeeRepo.findAll();
 	}
 
-	@Override
-	public void addItem(Coffee coffee) {
+	public Iterable<Product> findAllCoffeeByType(ProductType productType) {
+		return productRepo.getProductsByProductType(productType);
+	}
+
+	public void addCoffee(Coffee coffee) {
 
 		coffeeRepo.save(coffee);
 	}
 
-	@Override
-	public void deleteItem(Coffee coffee) {
-		coffeeRepo.delete(coffee);
+	public void deleteCoffee(Coffee product) {
+		coffeeRepo.delete(product);
 
 	}
 
-	@Override
-	public void updateItem(Coffee coffee) {
+	public void updateCoffee(Coffee coffee) {
 		coffeeRepo.save(coffee);
 
 	}
+//
+//	@Override
+//	public Coffee findById(Long id) {
+//		return coffeeRepo.findById(id).orElse(null);
+//	}
 
-	@Override
-	public Coffee findById(Long id) {
+//	public List<Coffee> getAllCoffee(ProductType productType) {
+//	return coffeeRepo.getProductsByType();
+//}
+
+	public Product findById(Long id) {
+		// TODO Auto-generated method stub
 		return coffeeRepo.findById(id).orElse(null);
 	}
 
