@@ -36,7 +36,7 @@ public class BookTableController {
 	}
 	
 	
-	
+
 	
 	@PutMapping(value="/editTable")
 	public ResponseEntity<BookTable> editTable(@RequestParam Long id, @RequestBody BookTable updateBookTable){

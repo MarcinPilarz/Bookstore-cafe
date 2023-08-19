@@ -7,19 +7,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Food {
+public class Food extends Product{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_food")
-	private Long id_food;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@Column(name = "id_food")
+//	private Long idFood;
 
-	@NotNull
-	@Column(name = "type_of_dish")
-	private String typeOfDish;
+//	@NotNull
+//	@Column(name = "type_of_dish")
+//	private String typeOfDish;
 
 	@NotNull
 	@Column(name = "food_weight")
@@ -29,25 +30,25 @@ public class Food {
 	@Column(name = "amount_of_calories")
 	private Double amountOfCalories;
 
-	@ManyToOne
-	@JoinColumn(name = "id_product")
-	private Product product;
+//	@OneToOne
+//    @JoinColumn(name = "id_product")
+//    private Product product;
 
-	public Long getId_food() {
-		return id_food;
-	}
+//	public Long getIdFood() {
+//		return idFood;
+//	}
+//
+//	public void setIdFood(Long idFood) {
+//		this.idFood = idFood;
+//	}
 
-	public void setId_food(Long id_food) {
-		this.id_food = id_food;
-	}
-
-	public String getTypeOfDish() {
-		return typeOfDish;
-	}
-
-	public void setTypeOfDish(String typeOfDish) {
-		this.typeOfDish = typeOfDish;
-	}
+//	public String getTypeOfDish() {
+//		return typeOfDish;
+//	}
+//
+//	public void setTypeOfDish(String typeOfDish) {
+//		this.typeOfDish = typeOfDish;
+//	}
 
 	public Double getFoodWeight() {
 		return foodWeight;
@@ -65,12 +66,12 @@ public class Food {
 		this.amountOfCalories = amountOfCalories;
 	}
 
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+//	public Product getProduct() {
+//		return product;
+//	}
+//
+//	public void setProduct(Product product) {
+//		this.product = product;
+//	}
 
 }
