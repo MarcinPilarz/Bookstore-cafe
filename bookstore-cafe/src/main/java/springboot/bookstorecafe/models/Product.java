@@ -27,7 +27,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name = "typProduktu", discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorColumn(name = "typProduktu", discriminatorType = DiscriminatorType.STRING)
 //@DiscriminatorValue("Product")
 public abstract class Product {
 

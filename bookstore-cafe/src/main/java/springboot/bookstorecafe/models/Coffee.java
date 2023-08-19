@@ -13,10 +13,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@DiscriminatorValue("Coffee")
+//@DiscriminatorValue("Coffee")
+
 public class Coffee extends Product   {
 
 	
