@@ -18,29 +18,30 @@ public class BookService {
 	@Autowired
 	private BookRepository bookRepo;
 	@Qualifier("bookRepository") // Wskaźnik na repozytorium Coffee
-    @Autowired
-    private ProductRepository productRepo;
+	@Autowired
+	private ProductRepository productRepo;
+
 	public Iterable<Book> findAllItems() {
 
 		return bookRepo.findAll();
 	}
-//
-//	public Iterable<Product> findAllBooksByType(ProductType productType) {
-//
-//		return bookRepo.getProductsByType(ProductType.BOOK);
-//
-//	}
+
 	public Iterable<Product> findAllBooksByType(ProductType productType) {
-        return productRepo.getProductsByProductType(productType);
-    }
+		return productRepo.getProductsByProductType(productType);
+	}
+
 	public void addItem(Book book) {
+		Book existingBook= bookRepo.findByProductName(book.getProductName());
+		if(existingBook != null) {
+			throw new IllegalArgumentException("Product with the same name already exists: " + book.getProductName());
+		}
 		bookRepo.save(book);
 
 	}
 
-	public void deleteItem(Book book) {
+	public void deleteBook(Long idBook) {
 
-		bookRepo.delete(book);
+		bookRepo.deleteById(idBook);
 
 	}
 
@@ -49,9 +50,14 @@ public class BookService {
 
 	}
 
-//	public Product findById(Long id) {
-//
-//		return bookRepo.findById(id).orElse(null);
-//	}
+	public Product findById(Long id) {
 
+		return bookRepo.findById(id).orElse(null);
+	}
+
+	public void addAllItemsToList(List<Product> productList, Iterable<? extends Product> items) {
+		for (Product item : items) {
+			productList.add(item);
+		}
+	}
 }

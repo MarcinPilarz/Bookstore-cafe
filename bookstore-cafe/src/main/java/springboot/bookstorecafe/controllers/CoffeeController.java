@@ -3,7 +3,6 @@ package springboot.bookstorecafe.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.mapping.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springboot.bookstorecafe.models.Coffee;
 import springboot.bookstorecafe.models.Product;
 import springboot.bookstorecafe.models.ProductType;
-import springboot.bookstorecafe.repositories.FoodRepository;
+
 import springboot.bookstorecafe.services.BookService;
 import springboot.bookstorecafe.services.CoffeeService;
 import springboot.bookstorecafe.services.FoodService;
@@ -38,9 +37,9 @@ public class CoffeeController {
 		if (productType == ProductType.ALLPRODUCTS) {
 
 			List<Product> allProducts = new ArrayList<>();
-			addAllItemsToList(allProducts, coffeeService.findAllItems());
-			addAllItemsToList(allProducts, foodService.findAllFoods());
-			addAllItemsToList(allProducts, bookService.findAllItems());
+			coffeeService.addAllItemsToList(allProducts, coffeeService.findAllItems());
+			foodService.addAllItemsToList(allProducts, foodService.findAllFoods());
+			bookService.addAllItemsToList(allProducts, bookService.findAllItems());
 			return allProducts;
 		} else if (productType == ProductType.COFFEE) {
 			return coffeeService.findAllCoffeeByType(productType);
@@ -54,9 +53,14 @@ public class CoffeeController {
 	}
 
 	@PostMapping(value = "/newCoffee")
-	public ResponseEntity<Coffee> newCoffee(@RequestBody Coffee newCoffee) {
-		coffeeService.addCoffee(newCoffee);
-		return ResponseEntity.ok(newCoffee);
+	public ResponseEntity<Coffee> newCoffee(@RequestParam ProductType coffeeType, @RequestBody Coffee newCoffee) {
+		if (coffeeType == ProductType.COFFEE ) {
+
+			newCoffee.setProductType(coffeeType);
+			coffeeService.addCoffee(newCoffee);
+			return ResponseEntity.ok(newCoffee);
+		}
+		return null;
 	}
 
 	@PutMapping(value = "/updateCoffee")
@@ -68,20 +72,16 @@ public class CoffeeController {
 		return ResponseEntity.ok(updateCoffee);
 	}
 
-	private void addAllItemsToList(List<Product> productList, Iterable<? extends Product> items) {
-		for (Product item : items) {
-			productList.add(item);
+	@DeleteMapping(value = "/deleteCoffee")
+	public ResponseEntity<Coffee> deleteCoffee(@RequestParam Long id) {
+
+		Product coffee = coffeeService.findById(id);
+		if (coffee != null) {
+
+			coffeeService.deleteCoffee(id);
+			return ResponseEntity.noContent().build();
+		} else {
+			return ResponseEntity.notFound().build();
 		}
 	}
-//	@DeleteMapping(value = "/deleteCoffee")
-//	public ResponseEntity<Coffee> deleteCoffee(@RequestParam Long id) {
-//
-//		Product coffee = coffeeService.findById(id);
-//		if (coffee != null) {
-//			coffeeService.deleteCoffee(coffeeService.findById(id));
-//			return ResponseEntity.noContent().build();
-//		} else {
-//			return ResponseEntity.notFound().build();
-//		}
-//	}
 }

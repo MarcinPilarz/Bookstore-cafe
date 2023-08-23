@@ -26,41 +26,49 @@ public class CoffeeService {
 		return coffeeRepo.findAll();
 	}
 
-	public Iterable<Product> findAllCoffeeByType(ProductType productType) {
+	public List<Product> findAllCoffeeByType(ProductType productType) {
 		return productRepo.getProductsByProductType(productType);
 	}
 
 	public void addCoffee(Coffee coffee) {
 
+		Coffee existingCoffee = coffeeRepo.findByProductName(coffee.getProductName());
+		if (existingCoffee != null) {
+			throw new IllegalArgumentException("Product with the same name already exists: " + coffee.getProductName());
+		}
+		coffee.setProductName(changingCoffeeNameSize(coffee.getProductName()));
 		coffeeRepo.save(coffee);
+
 	}
 
-	public void deleteCoffee(Coffee product) {
-		coffeeRepo.delete(product);
+	public void deleteCoffee(Long idCoffee) {
+		coffeeRepo.deleteById(idCoffee);
 
 	}
 
 	public void updateCoffee(Coffee coffee) {
+
+		coffee.setProductName(changingCoffeeNameSize(coffee.getProductName()));
 		coffeeRepo.save(coffee);
 
 	}
-//
-//	@Override
-//	public Coffee findById(Long id) {
-//		return coffeeRepo.findById(id).orElse(null);
-//	}
-
-//	public List<Coffee> getAllCoffee(ProductType productType) {
-//	return coffeeRepo.getProductsByType();
-//}
 
 	public Product findById(Long id) {
-		// TODO Auto-generated method stub
+
 		return coffeeRepo.findById(id).orElse(null);
 	}
 
-//	public Coffee findByTypeOfCoffee(String typeOfCoffee) {
-//		return coffeeRepo.findByTypeOfCoffee(typeOfCoffee);
-//	}
+	public void addAllItemsToList(List<Product> productList, Iterable<? extends Product> items) {
+		for (Product item : items) {
+			productList.add(item);
+		}
+	}
 
+	public static String changingCoffeeNameSize(String input) {
+		if (input == null || input.isEmpty()) {
+			return input;
+		}
+
+		return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+	}
 }

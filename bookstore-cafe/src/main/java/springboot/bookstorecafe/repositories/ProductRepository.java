@@ -14,4 +14,5 @@ import springboot.bookstorecafe.models.ProductType;
 @NoRepositoryBean
 public interface ProductRepository<T extends Product> extends CrudRepository<T, Long> {
     List<T> getProductsByProductType(ProductType productType);
+    T findByProductName(String productName);
 }
