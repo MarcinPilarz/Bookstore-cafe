@@ -22,6 +22,8 @@ public class ProductImage {
 	@Column(name="id_product_image")
 	private Long idProductImage;
 	
+	@Column(name="image_name")
+	private String imageName;
 //	@NotNull
 	@Lob
 	@Column(name="image")
@@ -41,6 +43,14 @@ public class ProductImage {
 	}
 
 	
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
 
 	public Blob getImage() {
 		return image;

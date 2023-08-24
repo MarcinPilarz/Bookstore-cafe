@@ -80,7 +80,9 @@ public abstract class Product {
 	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private ProductImage productImage;
 
+	
 	@ManyToMany(mappedBy = "products")
+	@JsonIgnore
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 	public Long getIdProduct() {

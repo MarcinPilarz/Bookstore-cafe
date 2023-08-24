@@ -49,6 +49,7 @@ public class Person {
 	private List<Review> review = new ArrayList<>();
 
 	@OneToOne(mappedBy = "person")
+	@JsonIgnore
 	private OrderItem orderItem;
 
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
