@@ -1,5 +1,6 @@
 package springboot.bookstorecafe.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +28,7 @@ public class OrderItem {
 
 	// @NotNull
 	@Column(name = "date_order")
-	private Date dateOrder;
+	private LocalDateTime dateOrder;
 
 	// @NotNull
 	@Column(name = "quantity")
@@ -50,12 +51,12 @@ public class OrderItem {
 		this.idOrder = idOrder;
 	}
 
-	public Date getDateOrder() {
+	public LocalDateTime getDateOrder() {
 		return dateOrder;
 	}
 
-	public void setDateOrder(Date dateOrder) {
-		this.dateOrder = dateOrder;
+	public void setDateOrder(LocalDateTime currentOrderDate) {
+		this.dateOrder = currentOrderDate;
 	}
 
 	public Integer getQuantity() {

@@ -1,5 +1,6 @@
 package springboot.bookstorecafe.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,12 @@ public class OrderItemController {
 		return orderService.findAllItems();
 	}
 	@PostMapping(value="/addOrder")
-	public ResponseEntity<String> addOrderItem(@RequestParam Long idPerson, @RequestParam Long idProduct){
+	public ResponseEntity<String> addOrderItem(@RequestParam Long idPerson, @RequestParam Long idProduct, LocalDateTime dateOrder){
 	
-		orderService.addItem(idPerson, idProduct);
+		//OrderItem orderItem= new OrderItem();
+		
+	
+		orderService.addItem(idPerson, idProduct, dateOrder);
 		return ResponseEntity.ok("Order item added successfully");
 	
 	}

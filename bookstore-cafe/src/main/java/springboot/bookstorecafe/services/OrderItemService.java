@@ -1,5 +1,6 @@
 package springboot.bookstorecafe.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +27,23 @@ public class OrderItemService {
 
 	private PersonRepository personRepo;
 
-	@Autowired
 	private CoffeeRepository coffeeRepo;
 
-	@Autowired
 	private BookRepository bookRepo;
-	@Autowired
+
 	private FoodRepository foodRepo;
 
 //	@Autowired
 //	private ProductRepository productRepo;
 	@Autowired
-	public OrderItemService(PersonRepository personRepo, OrderItemRepository orderRepo) {
+	public OrderItemService(PersonRepository personRepo, OrderItemRepository orderRepo, CoffeeRepository coffeeRepo,
+			BookRepository bookRepo, FoodRepository foodRepo) {
 
 		this.personRepo = personRepo;
 		this.orderRepo = orderRepo;
+		this.coffeeRepo = coffeeRepo;
+		this.bookRepo = bookRepo;
+		this.foodRepo = foodRepo;
 	}
 
 	public List<OrderItem> findAllItems() {
@@ -48,12 +51,11 @@ public class OrderItemService {
 		return orderRepo.findAll();
 	}
 
-	public void addItem(Long idPerson, Long idProduct) {
+	public void addItem(Long idPerson, Long idProduct, LocalDateTime currentOrderDate) {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
 		OrderItem orderItem = new OrderItem();
-	
 
 		Coffee coffee = coffeeRepo.findById(idProduct).orElse(null);
 
@@ -64,14 +66,23 @@ public class OrderItemService {
 				if (book != null) {
 					orderItem.setPerson(person);
 					orderItem.getProducts().add(book);
+					orderItem.setDateOrder(LocalDateTime.now().withNano(0).withSecond(0));
+					orderRepo.save(orderItem);
+
 				}
 			} else {
 				orderItem.setPerson(person);
 				orderItem.getProducts().add(food);
+				orderItem.setDateOrder(LocalDateTime.now().withNano(0).withSecond(0));
+				orderRepo.save(orderItem);
+
 			}
 		} else {
 			orderItem.setPerson(person);
 			orderItem.getProducts().add(coffee);
+			orderItem.setDateOrder(LocalDateTime.now().withNano(0).withSecond(0));
+			orderRepo.save(orderItem);
+
 		}
 
 		
