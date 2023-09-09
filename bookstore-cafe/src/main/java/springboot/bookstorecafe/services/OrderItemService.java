@@ -56,7 +56,7 @@ public class OrderItemService {
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
 		OrderItem orderItem = new OrderItem();
-
+		orderItem.setQuantity(1);
 		Coffee coffee = coffeeRepo.findById(idProduct).orElse(null);
 
 		if (coffee == null) {
@@ -66,27 +66,27 @@ public class OrderItemService {
 				if (book != null) {
 					orderItem.setPerson(person);
 					orderItem.getProducts().add(book);
-					orderItem.setDateOrder(LocalDateTime.now().withNano(0).withSecond(0));
+					
+					orderItem.setDateOrder(LocalDateTime.now().withNano(0));
+					
 					orderRepo.save(orderItem);
 
 				}
 			} else {
 				orderItem.setPerson(person);
 				orderItem.getProducts().add(food);
-				orderItem.setDateOrder(LocalDateTime.now().withNano(0).withSecond(0));
+				orderItem.setDateOrder(LocalDateTime.now().withNano(0));
 				orderRepo.save(orderItem);
 
 			}
 		} else {
 			orderItem.setPerson(person);
 			orderItem.getProducts().add(coffee);
-			orderItem.setDateOrder(LocalDateTime.now().withNano(0).withSecond(0));
+			orderItem.setDateOrder(LocalDateTime.now().withNano(0));
 			orderRepo.save(orderItem);
 
 		}
 
-		
-	
 	}
 
 	public void deleteItem(OrderItem obejct) {
@@ -100,8 +100,9 @@ public class OrderItemService {
 	}
 
 	public OrderItem findById(Long id) {
-		// TODO Auto-generated method stub
+
 		return orderRepo.findById(id).orElse(null);
 	}
 
+	
 }
