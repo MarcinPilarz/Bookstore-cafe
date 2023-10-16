@@ -13,6 +13,7 @@ import springboot.bookstorecafe.models.Food;
 import springboot.bookstorecafe.models.OrderItem;
 import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.models.Product;
+import springboot.bookstorecafe.models.ProductType;
 import springboot.bookstorecafe.repositories.BookRepository;
 import springboot.bookstorecafe.repositories.CoffeeRepository;
 import springboot.bookstorecafe.repositories.FoodRepository;
@@ -33,8 +34,6 @@ public class OrderItemService {
 
 	private FoodRepository foodRepo;
 
-//	@Autowired
-//	private ProductRepository productRepo;
 	@Autowired
 	public OrderItemService(PersonRepository personRepo, OrderItemRepository orderRepo, CoffeeRepository coffeeRepo,
 			BookRepository bookRepo, FoodRepository foodRepo) {
@@ -51,51 +50,96 @@ public class OrderItemService {
 		return orderRepo.findAll();
 	}
 
-	public void addItem(Long idPerson, Long idProduct, LocalDateTime currentOrderDate) {
+	public void addItem(Long idPerson, Long idProduct, int quantity) {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
 		OrderItem orderItem = new OrderItem();
-		orderItem.setQuantity(1);
-		Coffee coffee = coffeeRepo.findById(idProduct).orElse(null);
+		Product products = null;
 
-		if (coffee == null) {
-			Food food = foodRepo.findById(idProduct).orElse(null);
-			if (food == null) {
-				Book book = bookRepo.findById(idProduct).orElse(null);
-				if (book != null) {
-					orderItem.setPerson(person);
-					orderItem.getProducts().add(book);
-					
-					orderItem.setDateOrder(LocalDateTime.now().withNano(0));
-					
-					orderRepo.save(orderItem);
+		List<ProductRepository<? extends Product>> repositories = List.of(coffeeRepo, bookRepo, foodRepo);
 
-				}
-			} else {
-				orderItem.setPerson(person);
-				orderItem.getProducts().add(food);
-				orderItem.setDateOrder(LocalDateTime.now().withNano(0));
-				orderRepo.save(orderItem);
-
+		for (ProductRepository<? extends Product> repository : repositories) {
+			products = repository.findById(idProduct).orElse(null);
+			if (products != null) {
+				break; // Znaleziono produkt w jednym z repozytoriów, przerywamy pętlę
 			}
-		} else {
-			orderItem.setPerson(person);
-			orderItem.getProducts().add(coffee);
-			orderItem.setDateOrder(LocalDateTime.now().withNano(0));
-			orderRepo.save(orderItem);
-
 		}
 
+		if (products == null) {
+			throw new RuntimeException("There is no such product: " + idProduct);
+		}
+
+		orderItem.setPerson(person);
+		orderItem.addProductWithQuantity(products, quantity);
+		//orderItem.addProductWithQuantity(products, quantity);
+		orderItem.setQuantity(quantity);
+		orderItem.setDateOrder(LocalDateTime.now().withNano(0));
+
+		Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych
+														// produktów
+		orderItem.setTotalPrice(totalPrice);
+
+		orderRepo.save(orderItem);
+//		Coffee coffee = coffeeRepo.findById(idProduct).orElse(null);
+//
+//		if (coffee == null) {
+//			Food food = foodRepo.findById(idProduct).orElse(null);
+//			if (food == null) {
+//				Book book = bookRepo.findById(idProduct).orElse(null);
+//				if (book != null) {
+//					orderItem.setPerson(person);
+//					orderItem.addProductWithQuantity(product, quantity);
+//					orderItem.getProducts().add(book);
+//					orderItem.setQuantity(quantity);
+//					
+//					orderItem.setDateOrder(LocalDateTime.now().withNano(0));
+//					
+//					//priceAllProducts(orderItem);
+//					
+//					Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych produktów
+//				    orderItem.setTotalPrice(totalPrice);
+//
+//					orderRepo.save(orderItem);
+//
+//				}
+//			} else {
+//				orderItem.setPerson(person);
+//				orderItem.addProductWithQuantity(product, quantity);
+//				orderItem.getProducts().add(food);
+//				orderItem.setQuantity(quantity);
+//				orderItem.setDateOrder(LocalDateTime.now().withNano(0));
+//			
+//			//	priceAllProducts(orderItem);
+//				Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych produktów
+//			    orderItem.setTotalPrice(totalPrice);
+//
+//				orderRepo.save(orderItem);
+//				
+//
+//			}
+//		} else {
+//			orderItem.setPerson(person);
+//			orderItem.addProductWithQuantity(product, quantity);
+//			orderItem.getProducts().add(coffee);
+//			orderItem.setQuantity(quantity);
+//			orderItem.setDateOrder(LocalDateTime.now().withNano(0));
+//			
+//			
+//			Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych produktów
+//		    orderItem.setTotalPrice(totalPrice);
+//
+//			//priceAllProducts(orderItem);
+//			//coffee.getProductPrice();
+//			
+//			
+//			orderRepo.save(orderItem);
+//
+//		}
+//		orderRepo.save(orderItem);
 	}
 
 	public void deleteItem(OrderItem obejct) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void updateItem(OrderItem object) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -104,5 +148,19 @@ public class OrderItemService {
 		return orderRepo.findById(id).orElse(null);
 	}
 
-	
+//	private void priceAllProducts(OrderItem orderItems) {
+//
+//		double totalPrice = 0.0;
+//
+//		for (Product product : orderItems.getProducts()) {
+//			totalPrice += product.getProductPrice() * orderItems.getQuantity();
+//		}
+//
+//		double previousTotalPrice = orderItems.getTotalPrice();
+//		double minusTotalPrice = totalPrice - previousTotalPrice;
+//
+//		orderItems.setTotalPrice(totalPrice);
+//		orderRepo.save(orderItems);
+//	}
+
 }

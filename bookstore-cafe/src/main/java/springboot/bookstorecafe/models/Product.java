@@ -42,7 +42,7 @@ public abstract class Product {
 
 	//@NotNull
 	@Column(name = "product_price")
-	private Double productPrice;
+	private double productPrice;
 
 	@Column(name="product_description")
 	private String productDescription;
