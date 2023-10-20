@@ -26,12 +26,19 @@ public class OrderHistory {
 
 
 	@Column(name= "quantity")
-	private Double quantity;
+	private  int quantity;
+	
+	@Column(name="total_price")
+	private Double totalPrice;
 	
 	@ManyToOne
 	@JoinColumn(name="id_person")
 	private Person person;
 
+	@ManyToOne
+	@JoinColumn(name="id_product")
+	private Product product;
+	
 	public Long getIdOrderHistory() {
 		return idOrderHistory;
 	}
@@ -48,12 +55,21 @@ public class OrderHistory {
 		this.dateOrder = dateOrder;
 	}
 
-	public Double getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Double quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public Person getPerson() {
@@ -63,6 +79,15 @@ public class OrderHistory {
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
 	
 	
 }

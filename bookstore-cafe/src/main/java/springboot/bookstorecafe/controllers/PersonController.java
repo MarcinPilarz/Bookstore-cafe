@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import springboot.bookstorecafe.DTO.PersonDTO;
 //import springboot.bookstorecafe.DTO.PersonDTO;
 import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.services.PersonService;
-//import static springboot.bookstorecafe.DTO.mapper.PersonDTOMapper.mapPersonToPersonInfo;
+import static springboot.bookstorecafe.DTO.mapper.PersonDTOMapper.mapPersonToPersonInfo;
 @RestController
 public class PersonController {
 
@@ -31,12 +32,12 @@ public class PersonController {
 
 	}
 
-//	@GetMapping(value = "/personDTO")
-//	public List<PersonDTO> getPersonDTO() {
-//
-//		return mapPersonToPersonInfo(personService.findAllItems());
-//
-//	}
+	@GetMapping(value = "/personDTO")
+	public List<PersonDTO> getPersonDTO() {
+
+		return mapPersonToPersonInfo(personService.findAllItems());
+
+	}
 	@PostMapping(value = "/newPerson")
 	public ResponseEntity<Person> addPerson( @Valid @RequestBody Person newPeson) {
 

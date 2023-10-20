@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import springboot.bookstorecafe.models.Book;
 import springboot.bookstorecafe.models.Coffee;
 import springboot.bookstorecafe.models.Food;
+import springboot.bookstorecafe.models.OrderHistory;
 import springboot.bookstorecafe.models.OrderItem;
 import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.models.Product;
@@ -18,6 +19,7 @@ import springboot.bookstorecafe.models.ProductType;
 import springboot.bookstorecafe.repositories.BookRepository;
 import springboot.bookstorecafe.repositories.CoffeeRepository;
 import springboot.bookstorecafe.repositories.FoodRepository;
+import springboot.bookstorecafe.repositories.OrderHistoryRepository;
 import springboot.bookstorecafe.repositories.OrderItemRepository;
 import springboot.bookstorecafe.repositories.PersonRepository;
 import springboot.bookstorecafe.repositories.ProductRepository;
@@ -34,6 +36,9 @@ public class OrderItemService {
 	private BookRepository bookRepo;
 
 	private FoodRepository foodRepo;
+
+	@Autowired
+	private OrderHistoryRepository orderHistoryRepo;
 
 	@Autowired
 	public OrderItemService(PersonRepository personRepo, OrderItemRepository orderRepo, CoffeeRepository coffeeRepo,
@@ -71,7 +76,7 @@ public class OrderItemService {
 			throw new RuntimeException("There is no such product: " + idProduct);
 		}
 
-		//person.setOrderItem(orderItem);
+		// person.setOrderItem(orderItem);
 		orderItem.setPerson(person);
 		orderItem.addProductWithQuantity(products, quantity);
 		// orderItem.addProductWithQuantity(products, quantity);
@@ -83,6 +88,10 @@ public class OrderItemService {
 		orderItem.setTotalPrice(totalPrice);
 
 		orderRepo.save(orderItem);
+
+		if (orderItem != null) {
+			addItemToHistory(orderItem, person, products);
+		}
 //		Coffee coffee = coffeeRepo.findById(idProduct).orElse(null);
 //
 //		if (coffee == null) {
@@ -140,9 +149,20 @@ public class OrderItemService {
 //		}
 //		orderRepo.save(orderItem);
 	}
-	
-	
-	
+
+	public void addItemToHistory(OrderItem oldOrder, Person person2, Product products) {
+
+		OrderHistory orderHistory = new OrderHistory();
+
+		orderHistory.setIdOrderHistory(oldOrder.getIdOrder());
+		orderHistory.setDateOrder(oldOrder.getDateOrder());
+		orderHistory.setQuantity(oldOrder.getQuantity());
+		orderHistory.setTotalPrice(oldOrder.getTotalPrice());
+		orderHistory.setPerson(person2);
+		orderHistory.setProduct(products);
+		orderHistoryRepo.save(orderHistory);
+	}
+
 	// ?
 //	public void updateItem(@RequestParam Long idOrderItem,OrderItem orderItem) {
 //		OrderItem updateOrderItem= findById(idOrderItem);
@@ -153,7 +173,7 @@ public class OrderItemService {
 
 		OrderItem orderItem = orderRepo.findById(idOrderItem)
 				.orElseThrow(() -> new RuntimeException("There is no such order: " + idOrderItem));
-		
+
 		orderRepo.delete(orderItem);
 	}
 

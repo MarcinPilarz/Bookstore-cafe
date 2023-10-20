@@ -32,7 +32,7 @@ public class ReservationService {
 	}
 
 	public List<Reservation> getReservations() {
-		// TODO Auto-generated method stub
+
 		return reservationRepo.findAll();
 	}
 
