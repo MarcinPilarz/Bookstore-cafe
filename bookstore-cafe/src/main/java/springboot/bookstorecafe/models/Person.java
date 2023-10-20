@@ -48,14 +48,25 @@ public class Person {
 	@JsonIgnore
 	private List<Review> review = new ArrayList<>();
 
-	@OneToOne(mappedBy = "person")
-	@JsonIgnore
-	private OrderItem orderItem;
+//	@OneToOne(mappedBy = "person")
+//	@JsonIgnore
+//	private OrderItem orderItem;
 
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Event> event = new ArrayList<>();
 
+	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+	@JsonIgnore
+	  private List<OrderItem> orderItems= new ArrayList<>();
+//	
+//	@ManyToMany
+//    @JoinTable(
+//        name = "person_orderitem", // Nazwa tabeli łączącej
+//        joinColumns = @JoinColumn(name = "person_id"),
+//        inverseJoinColumns = @JoinColumn(name = "orderitem_id")
+//    )
+//    private List<OrderItem> orderItems;
 	public Long getIdPerson() {
 		return idPerson;
 	}
@@ -112,13 +123,13 @@ public class Person {
 		this.review = review;
 	}
 
-	public OrderItem getOrderItem() {
-		return orderItem;
-	}
-
-	public void setOrderItem(OrderItem orderItem) {
-		this.orderItem = orderItem;
-	}
+//	public OrderItem getOrderItem() {
+//		return orderItem;
+//	}
+//
+//	public void setOrderItem(OrderItem orderItem) {
+//		this.orderItem = orderItem;
+//	}
 
 	public List<Event> getEvent() {
 		return event;
@@ -132,6 +143,25 @@ public class Person {
 	public int hashCode() {
 		return Objects.hash(idPerson);
 	}
+
+	
+	
+	
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+
+//	public List<OrderItem> getOrderItems() {
+//		return orderItems;
+//	}
+//
+//	public void setOrderItems(List<OrderItem> orderItems) {
+//		this.orderItems = orderItems;
+//	}
 
 	@Override
 	public boolean equals(Object obj) {

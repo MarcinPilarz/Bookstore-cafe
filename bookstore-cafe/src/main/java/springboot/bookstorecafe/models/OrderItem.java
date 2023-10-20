@@ -46,6 +46,7 @@ public class OrderItem {
 	private Double totalPrice;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "id_person")
 	private Person person;
 

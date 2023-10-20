@@ -43,8 +43,8 @@ public class ReservationController {
 	}
 
 	@DeleteMapping("/cancleReservation")
-	public void cancleReservation(Long idReservation) {
+	public void cancleReservation(Long idReservation, String lastName, String phoneNumber) {
 
-		reservationService.cancleReservation(idReservation);
+		reservationService.cancleReservation(idReservation, lastName, phoneNumber);
 	}
 }

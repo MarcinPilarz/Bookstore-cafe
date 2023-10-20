@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import springboot.bookstorecafe.models.Book;
 import springboot.bookstorecafe.models.Coffee;
@@ -70,9 +71,10 @@ public class OrderItemService {
 			throw new RuntimeException("There is no such product: " + idProduct);
 		}
 
+		//person.setOrderItem(orderItem);
 		orderItem.setPerson(person);
 		orderItem.addProductWithQuantity(products, quantity);
-		//orderItem.addProductWithQuantity(products, quantity);
+		// orderItem.addProductWithQuantity(products, quantity);
 		orderItem.setQuantity(quantity);
 		orderItem.setDateOrder(LocalDateTime.now().withNano(0));
 
@@ -138,9 +140,21 @@ public class OrderItemService {
 //		}
 //		orderRepo.save(orderItem);
 	}
+	
+	
+	
+	// ?
+//	public void updateItem(@RequestParam Long idOrderItem,OrderItem orderItem) {
+//		OrderItem updateOrderItem= findById(idOrderItem);
+//		
+//	}
 
-	public void deleteItem(OrderItem obejct) {
+	public void deleteItem(Long idOrderItem) {
 
+		OrderItem orderItem = orderRepo.findById(idOrderItem)
+				.orElseThrow(() -> new RuntimeException("There is no such order: " + idOrderItem));
+		
+		orderRepo.delete(orderItem);
 	}
 
 	public OrderItem findById(Long id) {

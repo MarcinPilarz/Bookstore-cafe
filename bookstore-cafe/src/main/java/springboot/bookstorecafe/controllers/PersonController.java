@@ -1,6 +1,7 @@
-package springboot.bookstorecafe.controllers;
+package springboot.bookstorecafe.controllers; 
 
 import java.util.List; 
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+//import springboot.bookstorecafe.DTO.PersonDTO;
 import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.services.PersonService;
-
+//import static springboot.bookstorecafe.DTO.mapper.PersonDTOMapper.mapPersonToPersonInfo;
 @RestController
 public class PersonController {
 
@@ -28,8 +31,14 @@ public class PersonController {
 
 	}
 
+//	@GetMapping(value = "/personDTO")
+//	public List<PersonDTO> getPersonDTO() {
+//
+//		return mapPersonToPersonInfo(personService.findAllItems());
+//
+//	}
 	@PostMapping(value = "/newPerson")
-	public ResponseEntity<Person> addPerson(@RequestBody Person newPeson) {
+	public ResponseEntity<Person> addPerson( @Valid @RequestBody Person newPeson) {
 
 		personService.addItem(newPeson);
 		return ResponseEntity.ok(newPeson);
