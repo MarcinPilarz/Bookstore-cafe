@@ -59,6 +59,10 @@ public class Person {
 	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
 	@JsonIgnore
 	  private List<OrderItem> orderItems= new ArrayList<>();
+	
+	@OneToMany(mappedBy = "person",fetch = FetchType.EAGER)
+	@JsonIgnore
+	  private List<OrderHistory> orderHistory= new ArrayList<>();
 //	
 //	@ManyToMany
 //    @JoinTable(
@@ -173,6 +177,14 @@ public class Person {
 			return false;
 		Person other = (Person) obj;
 		return Objects.equals(idPerson, other.idPerson);
+	}
+
+	public List<OrderHistory> getOrderHistory() {
+		return orderHistory;
+	}
+
+	public void setOrderHistory(List<OrderHistory> orderHistory) {
+		this.orderHistory = orderHistory;
 	}
 
 }

@@ -1,6 +1,7 @@
 package springboot.bookstorecafe.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,19 +21,31 @@ public class OrderHistoryService {
 	private PersonRepository personRepo;
 	
 	
-	public List<OrderHistory> findAllHistory(Long idPerson){
-		
-		Person person=personRepo.findById(idPerson).orElse(null);
-		
-		return null;
-	//	return orderHistoryRepo.findByHistoryOrders(person);
-		
-		
-//		if(person !=null) {
-//			//return orderHistoryRepo.findById(person);
-//		}
-		
-		//return person;
-		
+//	public List<OrderHistory> findAllHistory(Long idPerson){
+//		
+//		return orderHistoryRepo.findAll();
+//	//	return orderHistoryRepo.findByHistoryOrders(person);
+//		
+//		
+////		if(person !=null) {
+////			//return orderHistoryRepo.findById(person);
+////		}
+//		
+//		//return person;
+//		
+//	}
+//	
+//	public List<OrderHistory> findPersonById(Long idPerson){
+//		
+//	 return orderHistoryRepo.findByPerson(idPerson);
+//	
+//	}
+	
+	public List<OrderHistory> findPerson(Long personId){
+		return orderHistoryRepo.findByPersonNative(personId);
 	}
+	
+	 public List<OrderHistory> findByPersonId(Long personId) {
+	        return orderHistoryRepo.findByPersonIdPerson(personId);
+	    }
 }
