@@ -22,6 +22,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapKeyJoinColumn;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -38,7 +39,8 @@ public class OrderItem {
 	private LocalDateTime dateOrder;
 
 	// @NotNull
-	//@Min(1)
+	@Min(1)
+	@Max(20)
 	@Column(name = "quantity")
 	private int quantity;
 

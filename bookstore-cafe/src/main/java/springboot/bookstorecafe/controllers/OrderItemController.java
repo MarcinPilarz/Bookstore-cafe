@@ -1,6 +1,6 @@
 package springboot.bookstorecafe.controllers;
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime; 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import springboot.bookstorecafe.DTO.OrderItemDTO;
 import springboot.bookstorecafe.models.OrderItem;
 import springboot.bookstorecafe.services.OrderItemService;
-
+import static springboot.bookstorecafe.DTO.mapper.OrderItemDTOMapper.mapOrderItemtoOrderItemInfo;
 @RestController
 public class OrderItemController {
 
@@ -36,13 +37,17 @@ public class OrderItemController {
 	    }
 	}
 
+	@GetMapping(value="/ordersDTO")
+	public List<OrderItemDTO> getOrdersDTO(){
+		return mapOrderItemtoOrderItemInfo(orderService.findAllItems());
+	}
 	@PostMapping(value="/addOrder")
 	public ResponseEntity<String> addOrderItem(@RequestParam Long idPerson, @RequestParam Long idProduct, LocalDateTime dateOrder, int quantity){
 	
 		//OrderItem orderItem= new OrderItem();
 		
 	
-		orderService.addItem(idPerson, idProduct, quantity);
+		orderService.addItem(idPerson, idProduct, quantity, null);
 		return ResponseEntity.ok("Order item added successfully");
 	
 	}

@@ -4,11 +4,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.Charge;
+
 import springboot.bookstorecafe.models.Book;
+import springboot.bookstorecafe.models.ChargeCreateParamsBuilder;
 import springboot.bookstorecafe.models.Coffee;
 import springboot.bookstorecafe.models.Food;
 import springboot.bookstorecafe.models.OrderHistory;
@@ -37,6 +43,9 @@ public class OrderItemService {
 
 	private FoodRepository foodRepo;
 
+	@Value("${stripe.apikey}")
+	String stripeKey;
+	
 	@Autowired
 	private OrderHistoryRepository orderHistoryRepo;
 
@@ -59,7 +68,7 @@ public class OrderItemService {
 		return orderRepo.findAll();
 	}
 
-	public void addItem(Long idPerson, Long idProduct, int quantity) {
+	public void addItem(Long idPerson, Long idProduct, int quantity, String tokenCreditCard) {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
@@ -78,8 +87,10 @@ public class OrderItemService {
 		if (products == null) {
 			throw new RuntimeException("There is no such product: " + idProduct);
 		}
-
+		//Stripe.apiKey=stripeKey;
 		// person.setOrderItem(orderItem);
+		
+		
 		orderItem.setPerson(person);
 		orderItem.addProductWithQuantity(products, quantity);
 		// orderItem.addProductWithQuantity(products, quantity);
@@ -89,6 +100,19 @@ public class OrderItemService {
 		Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych
 														// produktów
 		orderItem.setTotalPrice(totalPrice);
+		
+	//	int totalPriceCents = (int) (totalPrice * 100);
+		
+//		try {
+//	        Charge charge = Charge.create(new ChargeCreateParamsBuilder()
+//	            .setAmount((long) totalPriceCents)
+//	            .setCurrency("usd")
+//	            .setSource(tokenCreditCard) // Token karty kredytowej klienta
+//	            .setDescription("Opis płatności")
+//	            .build()
+//	        );
+//		
+		
 
 		orderRepo.save(orderItem);
 
@@ -96,6 +120,10 @@ public class OrderItemService {
 			addItemToHistory(orderItem, person, products);
 		}
 
+//		 } catch (StripeException e) {
+//		        // Płatność nie powiodła się, obsłuż błąd
+//		        throw new RuntimeException("Błąd płatności: " + e.getMessage());
+//		    }
 	}
 
 	public void addItemToHistory(OrderItem oldOrder, Person person2, Product products) {
