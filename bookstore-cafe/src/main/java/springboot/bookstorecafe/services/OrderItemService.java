@@ -41,6 +41,9 @@ public class OrderItemService {
 	private OrderHistoryRepository orderHistoryRepo;
 
 	@Autowired
+	private OrderHistoryService orderHistoryService;
+
+	@Autowired
 	public OrderItemService(PersonRepository personRepo, OrderItemRepository orderRepo, CoffeeRepository coffeeRepo,
 			BookRepository bookRepo, FoodRepository foodRepo) {
 
@@ -92,62 +95,7 @@ public class OrderItemService {
 		if (orderItem != null) {
 			addItemToHistory(orderItem, person, products);
 		}
-//		Coffee coffee = coffeeRepo.findById(idProduct).orElse(null);
-//
-//		if (coffee == null) {
-//			Food food = foodRepo.findById(idProduct).orElse(null);
-//			if (food == null) {
-//				Book book = bookRepo.findById(idProduct).orElse(null);
-//				if (book != null) {
-//					orderItem.setPerson(person);
-//					orderItem.addProductWithQuantity(product, quantity);
-//					orderItem.getProducts().add(book);
-//					orderItem.setQuantity(quantity);
-//					
-//					orderItem.setDateOrder(LocalDateTime.now().withNano(0));
-//					
-//					//priceAllProducts(orderItem);
-//					
-//					Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych produktów
-//				    orderItem.setTotalPrice(totalPrice);
-//
-//					orderRepo.save(orderItem);
-//
-//				}
-//			} else {
-//				orderItem.setPerson(person);
-//				orderItem.addProductWithQuantity(product, quantity);
-//				orderItem.getProducts().add(food);
-//				orderItem.setQuantity(quantity);
-//				orderItem.setDateOrder(LocalDateTime.now().withNano(0));
-//			
-//			//	priceAllProducts(orderItem);
-//				Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych produktów
-//			    orderItem.setTotalPrice(totalPrice);
-//
-//				orderRepo.save(orderItem);
-//				
-//
-//			}
-//		} else {
-//			orderItem.setPerson(person);
-//			orderItem.addProductWithQuantity(product, quantity);
-//			orderItem.getProducts().add(coffee);
-//			orderItem.setQuantity(quantity);
-//			orderItem.setDateOrder(LocalDateTime.now().withNano(0));
-//			
-//			
-//			Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych produktów
-//		    orderItem.setTotalPrice(totalPrice);
-//
-//			//priceAllProducts(orderItem);
-//			//coffee.getProductPrice();
-//			
-//			
-//			orderRepo.save(orderItem);
-//
-//		}
-//		orderRepo.save(orderItem);
+
 	}
 
 	public void addItemToHistory(OrderItem oldOrder, Person person2, Product products) {
@@ -161,6 +109,16 @@ public class OrderItemService {
 		orderHistory.setPerson(person2);
 		orderHistory.setProduct(products);
 		orderHistoryRepo.save(orderHistory);
+
+		Long idPerson = orderHistory.getPerson().getIdPerson();
+		List<OrderHistory> orderHistoryList = orderHistoryRepo.findByPersonIdPerson(idPerson);
+
+		if (orderHistoryList.size() > 20) {
+			orderHistory = orderHistoryList.get(0);
+
+			orderHistoryRepo.delete(orderHistory);
+		}
+
 	}
 
 	// ?

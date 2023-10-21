@@ -16,36 +16,13 @@ public class OrderHistoryService {
 
 	@Autowired
 	private OrderHistoryRepository orderHistoryRepo;
-	
+
 	@Autowired
 	private PersonRepository personRepo;
-	
-	
-//	public List<OrderHistory> findAllHistory(Long idPerson){
-//		
-//		return orderHistoryRepo.findAll();
-//	//	return orderHistoryRepo.findByHistoryOrders(person);
-//		
-//		
-////		if(person !=null) {
-////			//return orderHistoryRepo.findById(person);
-////		}
-//		
-//		//return person;
-//		
-//	}
-//	
-//	public List<OrderHistory> findPersonById(Long idPerson){
-//		
-//	 return orderHistoryRepo.findByPerson(idPerson);
-//	
-//	}
-	
-	public List<OrderHistory> findPerson(Long personId){
-		return orderHistoryRepo.findByPersonNative(personId);
+
+	public List<OrderHistory> findByPersonId(Long personId) {
+		return orderHistoryRepo.findByPersonIdPerson(personId);
+		
+		
 	}
-	
-	 public List<OrderHistory> findByPersonId(Long personId) {
-	        return orderHistoryRepo.findByPersonIdPerson(personId);
-	    }
 }

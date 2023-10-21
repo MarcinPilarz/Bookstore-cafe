@@ -19,30 +19,14 @@ public class OrderHistoryController {
 	@Autowired
 	private OrderHistoryService orderService;
 	
-//	@GetMapping(value="/history")
-//	public List<OrderHistory> getOrdersHistory(@RequestParam Long idPerson){
-//		
-//		List<OrderHistory> history= orderService.get
-//		return orderService.findAllHistory(idPerson);
-//	}
-	
-//	 @GetMapping("/byperson")
-//	    public ResponseEntity<List<OrderHistory>> getSampleDataByPersonId(@RequestParam Long idPerson) {
-//	        List<OrderHistory> data = orderService.findPersonById(idPerson);
-//	        if (!data.isEmpty()) {
-//	            return ResponseEntity.ok(data);
-//	        } else {
-//	            return ResponseEntity.notFound().build();
-//	        }
-//	    }
+
 	@GetMapping("/history/{personId}")
     public ResponseEntity<List<OrderHistory>> getHistoryByPerson(@PathVariable Long personId) {
-        List<OrderHistory> orderHistoryList = orderService.findByPersonId(personId);
-        return ResponseEntity.ok(orderHistoryList);
+        List<OrderHistory> orderHistory = orderService.findByPersonId(personId);
+        return ResponseEntity.ok(orderHistory);
+        
     }
-//	@GetMapping("/history")
-//	public List<OrderHistory> getHistoryPerson(@RequestParam("personId") Long personId){
-//		
-//		return orderService.findPerson(personId);
-//	}
+
+	
+	
 }

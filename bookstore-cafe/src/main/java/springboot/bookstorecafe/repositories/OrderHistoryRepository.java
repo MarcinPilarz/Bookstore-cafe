@@ -13,10 +13,7 @@ import springboot.bookstorecafe.models.Person;
 @Repository
 public interface OrderHistoryRepository extends JpaRepository<OrderHistory, Long> {
 
-	//List<OrderHistory> findByPerson(Long idPerson);//
-	
 	List<OrderHistory> findByPersonIdPerson(Long personId);
-	
-	@Query(value="SELECT * FROM order_history WHERE id_person = :idPerson", nativeQuery=true)
-	List<OrderHistory> findByPersonNative(@Param("idPerson") Long idPerson);
+	// List<OrderHistory> findByPersonIdOrderByDateOrder(Long personId);
+
 }
