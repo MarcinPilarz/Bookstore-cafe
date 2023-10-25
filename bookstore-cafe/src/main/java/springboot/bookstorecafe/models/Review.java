@@ -1,6 +1,7 @@
 package springboot.bookstorecafe.models;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 //import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
 import java.util.Objects;
 
@@ -25,14 +26,12 @@ public class Review {
 	private Integer rating;
 
 	@Column(name = "review_data")
-	private Date reviewData;
+	private LocalDateTime reviewData;
 
 	@Column(name = "number_of_likes")
 	private int numberOfLikes;
 
-	public void setNumberOfLikes(int numberOfLikes) {
-		this.numberOfLikes = numberOfLikes;
-	}
+	
 
 	@ManyToOne
 	@JoinColumn(name = "id_person")
@@ -63,11 +62,11 @@ public class Review {
 		this.rating = rating;
 	}
 
-	public Date getReviewData() {
+	public LocalDateTime getReviewData() {
 		return reviewData;
 	}
 
-	public void setReviewData(Date reviewData) {
+	public void setReviewData(LocalDateTime reviewData) {
 		this.reviewData = reviewData;
 	}
 
@@ -75,7 +74,7 @@ public class Review {
 		return numberOfLikes;
 	}
 
-	public void setNumberOfLikres(int numberOfLikes) {
+	public void setNumberOfLikes(int numberOfLikes) {
 		this.numberOfLikes = numberOfLikes;
 	}
 

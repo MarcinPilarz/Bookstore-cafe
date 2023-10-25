@@ -1,8 +1,11 @@
 package springboot.bookstorecafe.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.stripe.Stripe;
 
 import springboot.bookstorecafe.DTO.PersonAndPersonLoginDTO;
 import springboot.bookstorecafe.DTO.PersonDTO;
@@ -30,7 +35,8 @@ public class PersonController {
 
 	@Autowired
 	private LoginPersonService loginService;
-
+	@Value("${stripe.apikey}")
+	String stripeKey;
 	@GetMapping(value = "/person")
 	public List<Person> getPerson() {
 
@@ -61,6 +67,16 @@ public class PersonController {
 		loginService.addLoginPerson(loginPerson);
 		person.setLoginPerson(loginPerson);
 		personService.addNewPerson(person);
+		
+//		Stripe.apiKey=stripeKey;
+//		Map<String, Object> params = new HashMap<>();
+//		params.put("name", person.getFirstName());
+//		params.put("email", loginPerson.getEmail());
+//		
+//
+//		Person customer = Person.create(params);
+//		data.setCustomerId(customer.getId());
+//		return data;
 
 		return ResponseEntity.ok("Okej");
 	}
