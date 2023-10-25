@@ -35,7 +35,7 @@ public class PersonController {
 
 	@Autowired
 	private LoginPersonService loginService;
-	@Value("${stripe.apikey}")
+	
 	String stripeKey;
 	@GetMapping(value = "/person")
 	public List<Person> getPerson() {
@@ -64,10 +64,11 @@ public class PersonController {
 		loginPerson.setPassword(newPersonDTO.password());
 		loginPerson.setRoleType(newPersonDTO.roleType());
 
+		
 		loginService.addLoginPerson(loginPerson);
 		person.setLoginPerson(loginPerson);
 		personService.addNewPerson(person);
-		
+		personService.registerPeopleToStripe(person, loginPerson);
 //		Stripe.apiKey=stripeKey;
 //		Map<String, Object> params = new HashMap<>();
 //		params.put("name", person.getFirstName());

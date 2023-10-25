@@ -17,21 +17,21 @@ import springboot.bookstorecafe.models.CustomerData;
 @RestController
 public class StripePaymentControllerAPI {
 
-//	@Value("${stripe.apikey}")
-//	String stripeKey;
-//	
-//	@RequestMapping("/createCustomer")
-//	public CustomerData createCustomer(@RequestBody CustomerData data) throws StripeException {
-//		
-//		Stripe.apiKey=stripeKey;
-//
-//		Map<String, Object> params = new HashMap<>();
-//		params.put("name", data.getName());
-//		params.put("email", data.getEmail());
-//		
-//
-//		Customer customer = Customer.create(params);
-//		data.setCustomerId(customer.getId());
-//		return data;
-//	}
+	@Value("${stripe.apikey}")
+	String stripeKey;
+	
+	@RequestMapping("/createCustomer")
+	public CustomerData createCustomer(@RequestBody CustomerData data) throws StripeException {
+		
+		Stripe.apiKey=stripeKey;
+
+		Map<String, Object> params = new HashMap<>();
+		params.put("name", data.getName());
+		params.put("email", data.getEmail());
+		
+
+		Customer customer = Customer.create(params);
+		data.setCustomerId(customer.getId());
+		return data;
+	}
 }
