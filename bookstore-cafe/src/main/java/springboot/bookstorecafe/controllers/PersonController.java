@@ -69,15 +69,6 @@ public class PersonController {
 		person.setLoginPerson(loginPerson);
 		personService.addNewPerson(person);
 		personService.registerPeopleToStripe(person, loginPerson);
-//		Stripe.apiKey=stripeKey;
-//		Map<String, Object> params = new HashMap<>();
-//		params.put("name", person.getFirstName());
-//		params.put("email", loginPerson.getEmail());
-//		
-//
-//		Person customer = Person.create(params);
-//		data.setCustomerId(customer.getId());
-//		return data;
 
 		return ResponseEntity.ok("Okej");
 	}
