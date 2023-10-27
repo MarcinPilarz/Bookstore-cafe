@@ -1,6 +1,6 @@
 package springboot.bookstorecafe.services;
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime; 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,11 +114,28 @@ public class OrderItemService {
 //		
 		
 
-		orderRepo.save(orderItem);
+		 try {
+	            Stripe.apiKey = stripeKey;
 
-		if (orderItem != null) {
-			addItemToHistory(orderItem, person, products);
-		}
+	            // Przygotuj dane do płatności w Stripe
+	            Long totalPriceCents = (long) (totalPrice * 100); // W centach
+	            Charge charge = Charge.create(new ChargeCreateParamsBuilder()
+	                .setAmount(totalPriceCents)
+	                .setCurrency("usd")
+	                .setSource(tokenCreditCard) // Token karty kredytowej klienta
+	                .setDescription("Opis płatności")
+	                .build()
+	            );
+
+	            // Jeśli płatność przebiegnie pomyślnie, zapisz zamówienie
+	            orderRepo.save(orderItem);
+
+	            if (orderItem != null) {
+	                addItemToHistory(orderItem, person, products);
+	            } } catch (StripeException e) {
+	                // Obsłuż błąd płatności
+	                throw new RuntimeException("Błąd płatności: " + e.getMessage());
+	            }
 
 //		 } catch (StripeException e) {
 //		        // Płatność nie powiodła się, obsłuż błąd
