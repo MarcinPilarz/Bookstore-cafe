@@ -2,13 +2,13 @@ package springboot.bookstorecafe.DTO;
 
 import springboot.bookstorecafe.models.Product;
 
-public class ProductPhotoInfo {
+public class ProductaAndProductPhotoInfoDTO {
 
 	  private String imageUrl;
 	    private Product product;
 	    
 	    
-	    public ProductPhotoInfo(String imageUrl, Product product) {
+	    public ProductaAndProductPhotoInfoDTO(String imageUrl, Product product) {
 	        this.imageUrl = imageUrl;
 	        this.product = product;
 	    }

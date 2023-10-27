@@ -90,6 +90,17 @@
     <version>2.0.0</version>
 </dependency>
 
+<dependency>
+	<groupId>org.projectlombok</groupId>
+	<artifactId>lombok</artifactId>
+	<optional>true</optional>
+</dependency>
+
+<dependency>
+    <groupId>org.modelmapper</groupId>
+    <artifactId>modelmapper</artifactId>
+    <version>3.2.0</version>
+</dependency>
 	</dependencies>
 
 	<build>
@@ -101,6 +112,13 @@
 					<environmentVariables>
 						<GOOGLE_APPLICATION_CREDENTIALS>C:\Users\marci\Dropbox\Komputer\Desktop\Klucze\client_secret_44916352466-dadgmq3mbs4njqd65fho6tsglvsqfgpi.apps.googleusercontent.com.json</GOOGLE_APPLICATION_CREDENTIALS>
 					</environmentVariables>
+					
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
 				</configuration>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
