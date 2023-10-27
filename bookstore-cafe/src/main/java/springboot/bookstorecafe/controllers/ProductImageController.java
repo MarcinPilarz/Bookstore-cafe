@@ -1,10 +1,11 @@
 package springboot.bookstorecafe.controllers;
 
-import java.io.IOException;   
+import java.io.IOException;
 import com.google.cloud.storage.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -32,11 +33,14 @@ import org.springframework.http.MediaType;
 //import com.google.cloud.storage.BlobId;
 
 import jakarta.servlet.http.HttpServletRequest;
+import springboot.bookstorecafe.DTO.ProductPhotoInfo;
 import springboot.bookstorecafe.models.Product;
 import springboot.bookstorecafe.models.ProductImage;
+import springboot.bookstorecafe.models.ProductType;
 import springboot.bookstorecafe.repositories.BookRepository;
 import springboot.bookstorecafe.repositories.CoffeeRepository;
 import springboot.bookstorecafe.repositories.FoodRepository;
+import springboot.bookstorecafe.repositories.ProductImageRepository;
 import springboot.bookstorecafe.repositories.ProductRepository;
 import springboot.bookstorecafe.services.ProductImageService;
 
@@ -47,165 +51,100 @@ public class ProductImageController {
 	private ProductImageService imageService;
 
 	@Autowired
+	private ProductImageRepository imageRepo;
+	@Autowired
 	private Storage storage;
-	
+
 //	@GetMapping(value="/images")
 //	public String sendData() {
 //		BlobId id=BlobId.of("springbootphoto", null);
 //	}
-	@Autowired 
+	@Autowired
 	private CoffeeRepository coffeeRepo;
 	@Autowired
 	private BookRepository bookRepo;
 	@Autowired
 	private FoodRepository foodRepo;
-	
-	
-	
-//	@GetMapping("/productImages")
-//	public ResponseEntity<List<ProductInfo>> getAllProductImages() {
-//	    List<ProductInfo> productInfos = new ArrayList<>();
-//
-//	    List<Product> products = productRepository.findAll();
-//
-//	    for (Product product : products) {
-//	        ProductImage productImage = imageRepo.findByProductId(product.getId());
-//
-//	        if (productImage != null) {
-//	            try {
-//	                BlobId blobId = BlobId.of("springbootphoto", "springbootphoto/" + product.getId() + "/" + productImage.getImageName());
-//	                Blob blob = storage.get(blobId);
-//	                byte[] imageBytes = blob.getContent();
-//
-//	                ProductInfo productInfo = new ProductInfo();
-//	                productInfo.setProduct(product);
-//	                productInfo.setImageData(imageBytes);
-//
-//	                productInfos.add(productInfo);
-//	            } catch (Exception e) {
-//	                e.printStackTrace();
-//	            }
-//	        }
-//	    }
-//
-//	    return new ResponseEntity<>(productInfos, HttpStatus.OK);
-//	}
-	
-	
-//	@GetMapping("/allProducts")
-//	public List<Product> getAllProductsInfo() {
-//	    List<Product> products = new ArrayList<>();
-//
-//	    // Dodaj wszystkie produkty z różnych repozytoriów do listy 'products'
-//	    List<ProductRepository<? extends Product>> repositories = List.of(coffeeRepo, bookRepo, foodRepo);
-//
-//	    for (ProductRepository<? extends Product> repository : repositories) {
-//	        products.addAll(StreamSupport.stream(repository.findAll().spliterator(), false)
-//	            .collect(Collectors.toList()));
-//	    }
-//
-//
-//	    for (Product product : products) {
-//	        ProductImage productImage = imageService.findById(product.getIdProduct());
-//
-//	        if (productImage != null) {
-//	            try {
-//	                // Pobierz obraz z Google Cloud Storage i ustaw go w encji Product
-//	                BlobId blobId = BlobId.of("springbootphoto", "springbootphoto/" + product.getIdProduct() + "/" + productImage.getImageName());
-//	                Blob blob = storage.get(blobId);
-//	                byte[] imageBytes = blob.getContent();
-//	                product.setProductImage(imageBytes);
-//	            } catch (Exception e) {
-//	                e.printStackTrace();
-//	            }
-//	        }
-//	    }
-//
-//	    return products;
-//	}
 
-	
-//	@GetMapping("getPhoto/{idProduct}/{imageName}")
-//    public ResponseEntity<byte[]> getProductImage(@PathVariable Long idProduct, @PathVariable String imageName) {
-//        try {
-//            byte[] imageBytes = imageService.getProductImage(idProduct, imageName);
-//            HttpHeaders headers = new HttpHeaders();
-//            headers.setContentType(MediaType.IMAGE_JPEG_VALUE);
-//
-//            return new ResponseEntity<byte[]>(imageBytes, HttpStatus.OK);
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            // Możesz obsłużyć błąd w dowolny sposób, na przykład zwrócić pusty obrazek lub odpowiedź z błędem.
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-	
-	
-	
-	 @GetMapping("/allImages")
-	    public ResponseEntity<List<String>> getAllImages() {
-	        String bucketName = "springbootphoto"; // Zmień na nazwę swojego "bucketa"
-	        List<String> imageUrls = new ArrayList<>();
+	@GetMapping("/allImages")
+	public ResponseEntity<List<String>> getAllImages() {
+		String bucketName = "springbootphoto"; // Zmień na nazwę swojego "bucketa"
+		List<String> imageUrls = new ArrayList<>();
 
-	        // Pobierz listę wszystkich obiektów w "buckecie"
-	        Iterable<Blob> blobs = storage.list(bucketName).iterateAll();
-	        for (Blob blob : blobs) {
-	            BlobId blobId = blob.getBlobId();
-	            String objectName = blobId.getName();
+		// Pobierz listę wszystkich obiektów w "buckecie"
+		Iterable<Blob> blobs = storage.list(bucketName).iterateAll();
+		for (Blob blob : blobs) {
+			BlobId blobId = blob.getBlobId();
+			String objectName = blobId.getName();
 
-	            // Tutaj możesz dowolnie formatować URL do obiektu w Cloud Storage
-	            // Oto prosty przykład, zakładając, że serwer Spring działa na localhost:8080
-	            String imageUrl = "http://localhost:8080/getPhoto/" + objectName;
-	            imageUrls.add(imageUrl);
-	        }
+			// Tutaj możesz dowolnie formatować URL do obiektu w Cloud Storage
+			// Oto prosty przykład, zakładając, że serwer Spring działa na localhost:8080
+			String imageUrl = "http://localhost:8080/getPhoto/" + objectName;
+			imageUrls.add(imageUrl);
+		}
 
-	        return new ResponseEntity<>(imageUrls, HttpStatus.OK);
-	    }
+		return new ResponseEntity<>(imageUrls, HttpStatus.OK);
+	}
 
-	    @GetMapping("/getPhoto/{imageName:.+}")
-	    public ResponseEntity<byte[]> getProductImage(@PathVariable String imageName) throws IOException {
-	        BlobId blobId = BlobId.of("springbootphoto", imageName); // Zmień na nazwę swojego "bucketa"
-			Blob blob = storage.get(blobId);
+	@GetMapping("/getPhoto/{imageName:.+}")
+	public ResponseEntity<byte[]> getProductImage(@PathVariable String imageName) throws IOException {
+		BlobId blobId = BlobId.of("springbootphoto", imageName); // Zmień na nazwę swojego "bucketa"
+		Blob blob = storage.get(blobId);
 
-			if (blob != null) {
-			    return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(blob.getContent());
-			} else {
-			    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		if (blob != null) {
+			return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(blob.getContent());
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/images")
+	public ResponseEntity<List<ProductPhotoInfo>> getAllImagesWithProducts(@RequestParam ProductType productType) {
+		List<ProductPhotoInfo> imageInfoList = new ArrayList<>();
+
+		List<ProductImage> productImages = imageRepo.findAll();
+
+		for (ProductImage productImage : productImages) {
+			Optional<Product> productOptional = getProductByProductId(productImage.getProduct().getIdProduct());
+
+			if (productOptional.isPresent()) {
+				Product product = productOptional.get();
+
+				if (productType == ProductType.ALLPRODUCTS || product.getProductType() == productType) {
+					String imageUrl = "https://storage.googleapis.com/springbootphoto/springbootphoto" + "/"
+							+ productImage.getImageName();
+
+					ProductPhotoInfo imageInfo = new ProductPhotoInfo(imageUrl, product);
+					imageInfoList.add(imageInfo);
+				}
 			}
-	    }
+		}
 
-	    
-	    @GetMapping("/images")
-	    public ResponseEntity<List<String>> getAllImages1() {
-	        List<String> imageUrls = new ArrayList<>();
+		return ResponseEntity.ok(imageInfoList);
+	}
 
-	        // Przy użyciu Google Cloud Storage API uzyskaj listę obrazów w swoim buckecie
-	        // i wygeneruj ich adresy URL
+	private Optional<Product> getProductByProductId(Long productId) {
+		List<ProductRepository<? extends Product>> repositories = List.of(coffeeRepo, bookRepo, foodRepo);
 
-	        // Przykładowy sposób pobrania listy obrazów
-	        Storage storage = StorageOptions.getDefaultInstance().getService();
-	        String bucketName = "springbootphoto"; // Zmień na nazwę swojego bucketa
-	        Page<Blob> blobs = storage.list(bucketName);
+		for (ProductRepository<? extends Product> repository : repositories) {
+			Optional<? extends Product> product = repository.findById(productId);
+			if (product.isPresent()) {
+				return Optional.of(product.get());
+			}
+		}
 
-	        for (Blob blob : blobs.iterateAll()) {
-	            String imageUrl = "https://storage.googleapis.com/" + bucketName + "/" + blob.getName();
-	            imageUrls.add(imageUrl);
-	        }
+		return Optional.empty();
+	}
 
-	        return ResponseEntity.ok(imageUrls);
-	    }
-	    
-	@PostMapping(value="/addImage/{idProduct}")
-	public ResponseEntity<String> addImageProduct(@PathVariable Long idProduct,@RequestParam MultipartFile file) {
+	@PostMapping(value = "/addImage/{idProduct}")
+	public ResponseEntity<String> addImageProduct(@PathVariable Long idProduct, @RequestParam MultipartFile file) {
 		try {
-		imageService.uploadProductImage(idProduct, file);
-		
-		//Blob blob= new javax.sql.rowset.SerialBlob(bytes);
-		
-		return ResponseEntity.ok("Photo is added");
-		}catch( Exception e) {
+			imageService.uploadProductImage(idProduct, file);
+
+			// Blob blob= new javax.sql.rowset.SerialBlob(bytes);
+
+			return ResponseEntity.ok("Photo is added");
+		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading photo");
 		}

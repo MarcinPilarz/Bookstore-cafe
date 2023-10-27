@@ -79,6 +79,7 @@ public abstract class Product {
 //	private Food food;
 	
 	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private ProductImage productImage;
 
 	
