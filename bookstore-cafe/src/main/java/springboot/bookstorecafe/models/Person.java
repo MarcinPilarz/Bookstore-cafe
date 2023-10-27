@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -33,12 +31,9 @@ public class Person {
 	private String phoneNumber;
 
 	@OneToOne
+
 	@JoinColumn(name = "id_login_person")
 	private LoginPerson loginPerson;
-
-//	// ZOBACZYC TO
-//	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-//	private Reservation reservation;
 
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
@@ -48,12 +43,17 @@ public class Person {
 	@JsonIgnore
 	private List<Review> review = new ArrayList<>();
 
-	@OneToOne(mappedBy = "person")
-	private OrderItem orderItem;
-
 	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Event> event = new ArrayList<>();
+
+	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<OrderItem> orderItems = new ArrayList<>();
+
+	@OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+	@JsonIgnore
+	private List<OrderHistory> orderHistory = new ArrayList<>();
 
 	public Long getIdPerson() {
 		return idPerson;
@@ -111,14 +111,6 @@ public class Person {
 		this.review = review;
 	}
 
-	public OrderItem getOrderItem() {
-		return orderItem;
-	}
-
-	public void setOrderItem(OrderItem orderItem) {
-		this.orderItem = orderItem;
-	}
-
 	public List<Event> getEvent() {
 		return event;
 	}
@@ -132,6 +124,14 @@ public class Person {
 		return Objects.hash(idPerson);
 	}
 
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -142,6 +142,14 @@ public class Person {
 			return false;
 		Person other = (Person) obj;
 		return Objects.equals(idPerson, other.idPerson);
+	}
+
+	public List<OrderHistory> getOrderHistory() {
+		return orderHistory;
+	}
+
+	public void setOrderHistory(List<OrderHistory> orderHistory) {
+		this.orderHistory = orderHistory;
 	}
 
 }

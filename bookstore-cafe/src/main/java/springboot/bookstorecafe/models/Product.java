@@ -21,6 +21,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 
@@ -42,7 +43,7 @@ public abstract class Product {
 
 	//@NotNull
 	@Column(name = "product_price")
-	private Double productPrice;
+	private double productPrice;
 
 	@Column(name="product_description")
 	private String productDescription;
@@ -78,11 +79,17 @@ public abstract class Product {
 //	private Food food;
 	
 	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private ProductImage productImage;
 
+	
 	@ManyToMany(mappedBy = "products")
+	@JsonIgnore
 	private List<OrderItem> orderItems = new ArrayList<>();
 
+	@OneToMany(mappedBy = "product")
+	@JsonIgnore
+	  private List<OrderHistory> orderHistory= new ArrayList<>();
 	public Long getIdProduct() {
 		return idProduct;
 	}
@@ -172,6 +179,19 @@ public abstract class Product {
 		this.productType = productType;
 	}
 
+	public List<OrderHistory> getOrderHistory() {
+		return orderHistory;
+	}
+
+	public void setOrderHistory(List<OrderHistory> orderHistory) {
+		this.orderHistory = orderHistory;
+	}
+
+	public void setProductPrice(double productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	
 //	public Book getBook() {
 //		return book;
 //	}

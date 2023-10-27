@@ -1,6 +1,6 @@
 package springboot.bookstorecafe.controllers;
 
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.persistence.EntityNotFoundException;
+import springboot.bookstorecafe.DTO.UpdateReviewDTO;
 import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.models.Review;
+import springboot.bookstorecafe.repositories.PersonRepository;
 import springboot.bookstorecafe.services.ReviewService;
 
 @RestController
@@ -23,6 +26,9 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
+	@Autowired 
+	private PersonRepository personRepo;
+	
 	@GetMapping(value ="/reviews")
 	public List<Review> getReviews(){
 		return reviewService.findAllItems();
@@ -30,8 +36,10 @@ public class ReviewController {
 	
 	
 	@PostMapping(value="/newComment")
-	public ResponseEntity<Review> addReview(@RequestBody Review newReview){
-		
+	public ResponseEntity<Review> addReview(@RequestBody Review newReview, @RequestParam Long idPerson){
+	
+		Person person= personRepo.findById(idPerson).orElseThrow(() -> new EntityNotFoundException("A person with this id does not exist"));
+		newReview.setPerson(person);
 		reviewService.addItem(newReview);
 		return ResponseEntity.ok(newReview);
 		
@@ -39,11 +47,18 @@ public class ReviewController {
 	
 	
 	@PutMapping(value="/editComment")
-	public ResponseEntity<Review> editReview(@RequestParam Long id, @RequestBody Review updateReview){
+	public ResponseEntity<String> editReview(@RequestParam Long id, @RequestBody UpdateReviewDTO updateReviewDTO){
 		Review review= reviewService.findById(id);
-		updateReview.setIdReview(review.getIdReview());
+	
+	if(review != null) {
+		
+		review.setNumberOfLikes(updateReviewDTO.numberOfLikes());
 		reviewService.updateItem(review);
-		return ResponseEntity.ok(updateReview);
+		return ResponseEntity.ok("");
+	}
+	else {
+		 return ResponseEntity.notFound().build();
+	}
 	}
 	
 	@DeleteMapping(value = "/deleteComment")

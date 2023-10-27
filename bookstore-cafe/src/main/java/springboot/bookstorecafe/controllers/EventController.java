@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import springboot.bookstorecafe.DTO.EventDTO;
 import springboot.bookstorecafe.models.Event;
 import springboot.bookstorecafe.services.EventService;
 
@@ -19,28 +22,39 @@ public class EventController {
 
 	@Autowired
 	private EventService eventService;
-	
-	@GetMapping(value="/events")
-	public List<Event> getEvents(){
+
+	@GetMapping(value = "/events")
+	public List<Event> getEvents() {
 		return eventService.findAllItems();
 	}
-	
-	@PostMapping(value="/newEvent")
-	public ResponseEntity<Event> addNewEvent(@RequestBody Event newEvent){
-		
+
+	@PostMapping(value = "/newEvent")
+	public ResponseEntity<Event> addNewEvent(@RequestBody Event newEvent) {
+
 		eventService.addItem(newEvent);
 		return ResponseEntity.ok(newEvent);
 	}
-	
-	@DeleteMapping(value= "/deleteEvent")
-	public ResponseEntity<Event> deleteEvent(@RequestParam Long id){
-		Event event= eventService.findById(id);
-		if(event != null) {
+
+	@PutMapping(value = "/updateEvent/{id}")
+	public ResponseEntity<String> updateEvent(@PathVariable Long id, @RequestBody EventDTO updateEventDTO) {
+		Event event = eventService.findById(id);
+
+		event.setEventName(updateEventDTO.eventName());
+		event.setEventDescription(updateEventDTO.eventDescription());
+
+		eventService.updateItem(event);
+		return ResponseEntity.ok("The event has been updated");
+	}
+
+	@DeleteMapping(value = "/deleteEvent")
+	public ResponseEntity<Event> deleteEvent(@RequestParam Long id) {
+		Event event = eventService.findById(id);
+		if (event != null) {
 			eventService.deleteItem(eventService.findById(id));
 			return ResponseEntity.noContent().build();
 		} else {
 			return ResponseEntity.notFound().build();
 		}
-				
+
 	}
 }

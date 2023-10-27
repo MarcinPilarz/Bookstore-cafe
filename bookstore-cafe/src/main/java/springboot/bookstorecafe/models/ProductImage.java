@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -22,13 +23,15 @@ public class ProductImage {
 	@Column(name="id_product_image")
 	private Long idProductImage;
 	
+	@Column(name="image_name")
+	private String imageName;
 //	@NotNull
 	@Lob
 	@Column(name="image")
 	private Blob image;
 	
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="id_product")
 	private Product product;
 
@@ -41,6 +44,14 @@ public class ProductImage {
 	}
 
 	
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
 
 	public Blob getImage() {
 		return image;

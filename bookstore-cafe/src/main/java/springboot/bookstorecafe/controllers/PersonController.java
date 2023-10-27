@@ -1,8 +1,11 @@
 package springboot.bookstorecafe.controllers;
 
-import java.util.List; 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +15,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.stripe.Stripe;
+
+import springboot.bookstorecafe.DTO.PersonAndPersonLoginDTO;
+import springboot.bookstorecafe.DTO.PersonDTO;
+import springboot.bookstorecafe.models.LoginPerson;
+
 import springboot.bookstorecafe.models.Person;
+
+import springboot.bookstorecafe.services.LoginPersonService;
 import springboot.bookstorecafe.services.PersonService;
+import static springboot.bookstorecafe.DTO.mapper.PersonDTOMapper.mapPersonToPersonInfo;
 
 @RestController
 public class PersonController {
@@ -21,6 +33,10 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
+	@Autowired
+	private LoginPersonService loginService;
+	
+	String stripeKey;
 	@GetMapping(value = "/person")
 	public List<Person> getPerson() {
 
@@ -28,11 +44,33 @@ public class PersonController {
 
 	}
 
-	@PostMapping(value = "/newPerson")
-	public ResponseEntity<Person> addPerson(@RequestBody Person newPeson) {
+	@GetMapping(value = "/personDTO")
+	public List<PersonDTO> getPersonDTO() {
 
-		personService.addItem(newPeson);
-		return ResponseEntity.ok(newPeson);
+		return mapPersonToPersonInfo(personService.findAllItems());
+
+	}
+
+	@PostMapping("/newPerson")
+	public ResponseEntity<String> addItem(@RequestBody PersonAndPersonLoginDTO newPersonDTO) {
+		Person person = new Person();
+		person.setFirstName(newPersonDTO.firstName());
+		person.setLastName(newPersonDTO.lastName());
+		person.setPhoneNumber(newPersonDTO.phoneNumber());
+
+		LoginPerson loginPerson = new LoginPerson();
+
+		loginPerson.setEmail(newPersonDTO.email());
+		loginPerson.setPassword(newPersonDTO.password());
+		loginPerson.setRoleType(newPersonDTO.roleType());
+
+		
+		loginService.addLoginPerson(loginPerson);
+		person.setLoginPerson(loginPerson);
+		personService.addNewPerson(person);
+		personService.registerPeopleToStripe(person, loginPerson);
+
+		return ResponseEntity.ok("Okej");
 	}
 
 	@PutMapping(value = "/editPerson")
@@ -55,19 +93,5 @@ public class PersonController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-//	@GetMapping(value = "/personName")
-//	public List<Person> getPersonName(@RequestParam("firstName") String firstName,
-//			@RequestParam("lastName") String lastName) {
-//
-//		if(firstName !=null && lastName !=null) {
-//		return personService.findByPersonName(firstName, lastName);
-//		} else if(firstName!=null) {
-//			return personService.findByFirstName(firstName);
-//			
-//		} else if (lastName!= null) {
-//			return personService.findByLastName(lastName);
-//		} else {
-//			return null;
-//		}
-//	}
+
 }

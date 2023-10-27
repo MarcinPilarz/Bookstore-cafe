@@ -29,6 +29,7 @@ public class EventService implements MainService<Event> {
 
 	@Override
 	public void deleteItem(Event event) {
+
 		eventRepo.delete(event);
 
 	}
@@ -41,7 +42,7 @@ public class EventService implements MainService<Event> {
 
 	@Override
 	public Event findById(Long id) {
-	
+
 		return eventRepo.findById(id).orElse(null);
 	}
 

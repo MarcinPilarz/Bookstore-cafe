@@ -1,18 +1,30 @@
 package springboot.bookstorecafe.controllers;
 
 import java.io.IOException;
-import java.sql.Blob;
+import com.google.cloud.storage.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
+import springboot.bookstorecafe.DTO.ProductaAndProductPhotoInfoDTO;
+
+import springboot.bookstorecafe.models.ProductType;
+
 import springboot.bookstorecafe.services.ProductImageService;
 
 @RestController
@@ -21,14 +33,24 @@ public class ProductImageController {
 	@Autowired
 	private ProductImageService imageService;
 
-	@PostMapping(value="/addImage")
-	public String addImageProduct(HttpServletRequest request,@RequestParam("image") MultipartFile file) throws IOException, SerialException, SQLException{
-		
-		byte[] bytes=file.getBytes();
-		
-		//Blob blob= new javax.sql.rowset.SerialBlob(bytes);
-		
-		return null;
-		
+	@GetMapping("/images")
+	public ResponseEntity<List<ProductaAndProductPhotoInfoDTO>> getAllImagesWithProducts(
+			@RequestParam ProductType productType) {
+		List<ProductaAndProductPhotoInfoDTO> imageInfoList = imageService.getAllImagesWithProducts(productType);
+		return ResponseEntity.ok(imageInfoList);
+	}
+
+	@PostMapping(value = "/addImage/{idProduct}")
+	public ResponseEntity<String> addImageProduct(@PathVariable Long idProduct, @RequestParam MultipartFile file) {
+		try {
+			imageService.uploadProductImage(idProduct, file);
+
+			// Blob blob= new javax.sql.rowset.SerialBlob(bytes);
+
+			return ResponseEntity.ok("Photo is added");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading photo");
+		}
 	}
 }

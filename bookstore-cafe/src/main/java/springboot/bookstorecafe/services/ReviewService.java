@@ -1,5 +1,6 @@
 package springboot.bookstorecafe.services;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import springboot.bookstorecafe.models.Review;
+
 import springboot.bookstorecafe.repositories.ReviewRepostory;
 
 @Service
@@ -29,6 +31,9 @@ public class ReviewService implements MainService<Review> {
 
 	@Override
 	public void addItem(Review review) {
+
+		review.setReviewData(LocalDateTime.now());
+
 		reviewRepo.save(review);
 
 	}
@@ -48,7 +53,7 @@ public class ReviewService implements MainService<Review> {
 	@Override
 	public Review findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return reviewRepo.findById(id).orElse(null);
 	}
 
 }

@@ -13,5 +13,6 @@ import springboot.bookstorecafe.models.ProductType;
 
 @Repository
 public interface CoffeeRepository extends ProductRepository<Coffee> {
-    // Dodatkowe metody specyficzne dla CoffeeRepository
+    //Coffee findByProductName(String productName);
+	
 }
