@@ -1,0 +1,125 @@
+nav {
+    background-color: #2c3b11;
+    padding: 10px;
+  }
+  
+  ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  
+ 
+  li {
+    margin-right: 20px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+  .sign-in{
+    margin-right: 2rem;
+  }
+  
+  div.busket-icon {
+    position: absolute;
+    right: 0; /* Ustawienie na prawy brzeg */
+    /* top: 1.45rem;  */
+    top:25px;
+    /* transform: translateY(-50%); Korekta pozycji w pionie */
+    width: 50px; /* Szerokość kwadratu */
+    height: 50px; /* Wysokość kwadratu */
+    color: #fff;
+    /* background-color: aqua; */
+  }
+  li:hover{
+    cursor: pointer;
+    background-color:#628326;
+  }
+  div.busket-icon:hover{
+    cursor: pointer;
+    color: bisque;
+  }
+
+ 
+
+  
+  div.bar-icon{
+
+  }
+
+  .bar-icon .hamburger {
+   
+    width: 4.5%;
+    /* background-color: #333; */
+    color: #fff;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; /* Wyśrodkowanie w poziomie */
+  }
+
+  .hamburger {
+    display: none; 
+  }
+
+  .navbar{
+    list-style: none;
+  display: flex;
+  }
+
+  
+  nav.open .hamburger{
+    display: block;
+  }
+  @media (max-width: 768px) {
+
+   
+    .hamburger{
+      display: block;
+    }
+
+    .hamburger:hover{
+      cursor: pointer;
+      color:bisque
+    }
+    .navbar{
+      display: none;
+    }
+
+    nav.open .navbar{
+      display: flex;
+    }
+   
+   
+    ul {
+      flex-direction: column;
+    align-items: center;
+    }
+  
+    li {
+      margin-right: 0;
+      margin: 0;
+      padding: 10px; 
+      text-align: center; 
+    }
+    .sign-in{
+        margin-right:0;
+    }
+    div.busket-icon {
+      position: absolute;
+    right: 0; /* Ustawienie na prawy brzeg */
+    /* top: 1.45rem;  */
+    top:20px;
+    /* transform: translateY(-50%); Korekta pozycji w pionie */
+    width: 50px; /* Szerokość kwadratu */
+    height: 50px; /* Wysokość kwadratu */
+    color: #fff;
+    /* /* background-color: aqua; * */
+    }
+   
+  }
+ 
+  
+  
