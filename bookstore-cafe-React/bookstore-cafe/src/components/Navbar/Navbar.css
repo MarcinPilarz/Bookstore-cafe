@@ -22,8 +22,9 @@ nav {
     margin-right: 2rem;
   }
   
-  div.busket-icon {
+  .busket-icon {
     position: absolute;
+    /* display: block; */
     right: 0; /* Ustawienie na prawy brzeg */
     /* top: 1.45rem;  */
     top:25px;
@@ -73,6 +74,65 @@ nav {
   nav.open .hamburger{
     display: block;
   }
+
+  div.busket-sidebar{
+    width: 300px;
+    height: 400px;
+    background-color: rgb(213, 214, 214);
+    position:fixed;
+    transition: transform 0.3s;
+    top:9%;
+    right: 0%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    transform: translateY(9%);
+  }
+
+  /* .busket-sidebar {
+    
+/* 
+    width: 250px;
+    height: 100px;
+    background-color: #920d0d;
+    top: 0;
+    right: -250px;
+    position: fixed; 
+    transition: 0.3s;
+    overflow-x: hidden;
+    overflow-y: auto; */
+
+/* 
+    width: 250px;
+    height: 100px;
+    background-color: #920d0d; */
+    /* top: 0; */
+    /* right: -250px; */
+    /* color:red; */
+    /* top: 0;
+    right: -250px;
+    position: relative; */
+    /* display: flex; */
+
+
+    /* transition: 0.3s;
+    overflow-x: hidden; */
+    /* padding-top: 60px; */
+    /* overflow-y: auto; */
+
+      /* width: 250px;
+  height: 100%;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  right: -250px; /* Zmieniamy lewo na prawo */
+  /* transition: 0.3s;
+  overflow-y: auto;  */ 
+  /* } */ 
+  
+  /* Klasa, która otwiera boczny panel */
+  .openBusket {
+    right: 0;
+    width: 250px;   }
   @media (max-width: 768px) {
 
    
