@@ -1,0 +1,26 @@
+.homepage {
+  background-color: #fff; /* Tło białe */
+  padding: 20px;
+  text-align: center;
+}
+
+.homepage img {
+  max-width: 100%;
+  height: auto;
+}
+
+.homepage section {
+  margin: 20px 0;
+}
+
+.homepage h1 {
+  color: #204b33; /* Kolor ciemnego zielonego */
+  font-size: 24px;
+}
+
+.product-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}

@@ -1,0 +1,30 @@
+/* Modal.css */
+.modal {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+}
+
+.modal img {
+  max-width: 100%;
+  height: auto;
+}
+
+.modal h3 {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.modal button {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #204b33; /* Kolor ciemnego zielonego */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Dodaj dodatkową stylizację, jeśli jest to konieczne */
