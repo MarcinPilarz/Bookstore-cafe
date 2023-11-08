@@ -6,19 +6,18 @@ const Footer = () => {
   return (
     <section>
       <footer className="top">
-        <img src="logo.svg" />
+        <img src="logo.svg" alt="Logo" />
         <div className="links">
           <div className="links-column">
             <h2>Kontakt</h2>
-            <a>Telefon:111111111</a>
-            <a>
-              E-mail
-              <a>czytajzkawa@example.pl</a>
-            </a>
+            <a>Telefon: 111111111</a>
+            <p>
+              E-mail:
+              <a> czytajzkawa@example.pl</a>
+            </p>
           </div>
           <div className="links-column socials-column">
             <h2>Media społecznościowe</h2>
-
             <p>Polub nas:</p>
             <div className="socials">
               <a
@@ -28,7 +27,6 @@ const Footer = () => {
               >
                 <FontAwesomeIcon icon={faFacebook} />
               </a>
-
               <a
                 href="https://www.instagram.com/"
                 target="_blank"
@@ -40,7 +38,7 @@ const Footer = () => {
           </div>
         </div>
       </footer>
-      <footer className="bootom">
+      <footer className="bottom">
         <p className="copyright">2024 CzytajzKawa</p>
         <div className="legal">
           <a>License</a>

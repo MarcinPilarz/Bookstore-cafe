@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../HomePage/HomePage.css";
 import ProductsTile from "./ProductsTile";
 import ProductModal from "./ProductModal";
 import { Link } from "react-router-dom";
+import EventSlider from "../EventSlider/EventSlider";
+import axios from "axios";
 const HomePage = () => {
   const products = [
     {
@@ -15,13 +17,17 @@ const HomePage = () => {
       image:
         "https://storage.googleapis.com/springbootphoto/springbootphoto/KawaKafelekProdukt.png",
     },
-    { title: "Jedzenie", image: "jedzenie.jpg" },
+    {
+      title: "Jedzenie",
+      image:
+        "https://storage.googleapis.com/springbootphoto/springbootphoto/JedzenieKafelekProdukt.png",
+    },
     // Dodaj więcej produktów
   ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-
+  const [events, setEvents] = useState([]);
   const openModal = (product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
@@ -32,6 +38,20 @@ const HomePage = () => {
     setSelectedProduct(null);
     setIsModalOpen(false);
   };
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8080/events")
+  //     .then((response) => {
+  //       const eventsData = response.data;
+  //       console.log("Pobrane dane z API:", eventsData);
+  //       setEvents(eventsData);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Błąd pobierania danych wydarzeń", error);
+  //     });
+  // }, []);
+
   return (
     <div className="homepage">
       <section>
@@ -73,6 +93,7 @@ const HomePage = () => {
         <p>Bądź na bieżąco z naszymi najnowszymi wydarzeniami i promocjami.</p>
       </section>
 
+      <EventSlider />
       <section>
         <h1>Rezerwacje</h1>
         <p>
