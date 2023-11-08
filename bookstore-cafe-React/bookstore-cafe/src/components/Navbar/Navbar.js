@@ -11,7 +11,7 @@ const Navbar = () => {
   // const { isOpen, setIsOpen, handleClose } = useContext(BusketSideBar);
 
   const [busketOrderBar, setBusketOrderBar] = useState(false);
-
+  const [infoImageVisible, setinfoImageVisible] = useState(true);
   const toggleMenu = () => {
     setShowMenuBars(!showMenuBars);
     setBusketOrderBar(false);
@@ -24,9 +24,12 @@ const Navbar = () => {
   const busketBar = () => {
     setBusketOrderBar(!busketOrderBar);
     setShowMenuBars(false);
+    setinfoImageVisible(!infoImageVisible);
     console.log(
       "Menu zostało przełączone. Aktualny stan menuOpen:",
-      !busketOrderBar
+      !busketOrderBar,
+      "Stan napisów",
+      infoImageVisible
     );
   };
 

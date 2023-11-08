@@ -36,10 +36,19 @@ const HomePage = () => {
     <div className="homepage">
       <section>
         <h1>O Nas</h1>
-        <p>
-          Jesteśmy firmą specjalizującą się w dostarczaniu wysokiej jakości
-          produktów i usług.
-        </p>
+        <div className="about-us">
+          <p>
+            Jesteśmy pasjonatami ksiązek i kawy, dlatego postanowiliśmy się z
+            wami podzielić naszym zamiłowaniem. Czytaj z kawą to nie tylko
+            przestrzeń do poszukiwania swoich nowych lektur, ale również
+            przytulne miejsce, gdzie można spędzić czas przy dobrej lekturze i
+            pysznej kawie. Nasza oferta to różne gatunki książek, które
+            podbijały serca czytelników. W kawiarni serwujemy aromatyczną kawę
+            oraz przekąski, które umilają czas przy literaturze. Czytaj z kawą
+            to miejsce, gdzie każdy miłośnik literatury i kawy znajdzie coś dla
+            siebie.
+          </p>
+        </div>
       </section>
       <section>
         <h1>Produkty</h1>

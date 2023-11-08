@@ -1,28 +1,143 @@
-.homepage-photo {
-  text-align: right;
-  justify-content: right;
-  width: 61%;
-  float: right;
-  transform: rotate(5);
-  position: relative;
-}
-
-.homepage-photo .blackscreen div {
-  width: 30%;
-}
-img#main-photo {
-  text-align: right;
-  width: 50%;
-  height: 100%;
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-div.blackscreen {
-  width: 100%;
-  height: 20%;
-  position: relative;
+/* .blackscreen {
+  background-color: black;
   display: flex;
-  background-color: #161616;
+  height: 30vh;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px;
+  flex: 1;
+}
+
+.img-main-page-photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: relative; /* Ustaw pozycję na względną, aby dodatkowy element mógł być ustawiony względem niego */
+/* } */
+
+/* #main-photo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; /* Dopasowuje zdjęcie do diva, zachowując proporcje i wypełniając całą przestrzeń */
+/* position: absolute; Ustaw pozycję na absolutną, aby zdjęcie zajęło całą dostępną przestrzeń wewnątrz diva */
+/* top: 0; */
+/* left: 0; */
+/* width: 100%; */
+/* height: 100%; */
+/* z-index: -1; Ustaw z-indeks na niższą wartość, aby tło było pod tekstem */
+/* } */
+.homepage-photo {
+  background-color: black;
+  text-align: right;
+  width: 100%;
+}
+#main-photo {
+  width: 30%;
+  /* height: 70% !important; */
+}
+
+img#main-photo {
+  width: 70%;
+  height: 530.267px;
+  object-fit: cover;
+}
+
+.h1-image {
+  color: #fff;
+  /* position: fixed; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Zmiana właściwości flexbox na flex-start */
+  align-items: flex-start; /* Zmiana właściwości flexbox na flex-start */
+  position: relative;
+  /* text-align: right; */
+  top: -16.2rem;
+  right: -1%;
+  letter-spacing: 2px; /* Odstęp między literami */
+  word-spacing: 4px; /* Odstęp między słowami */
+  /* line-height: 1.2; */
+}
+.p-image {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Zmiana właściwości flexbox na flex-start */
+  align-items: flex-start; /* Zmiana właściwości flexbox na flex-start */
+  position: relative;
+  letter-spacing: 2px; /* Odstęp między literami */
+  word-spacing: 4px; /* Odstęp między słowami */
+  /* line-height: 1.2; */
+  top: -13.2rem;
+  right: -1.2%;
+  /* width: 23%; */
+}
+.button-image {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #204b33; /* Kolor ciemnego zielonego */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: -10rem;
+
+  width: 23%;
+  right: -2%;
+  /* height: %; */
+  text-align: center; /* Wyśrodkowanie tekstu */
+  font-size: 20px;
+  letter-spacing: 2px; /* Odstęp między literami */
+  word-spacing: 4px;
+}
+
+/* .h1-image::after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 4px; /* Wysokość "rozszarpania" */
+/* background-color: #fff; */
+/* margin-top: 10px; Odległość między tekstem a "rozszarpaniem" */
+/* }  */
+.info-image-container {
+  width: 100%;
+  /* height: 2%; */
+  margin-top: -160px;
+}
+
+@media (max-width: 768px) {
+  #main-photo {
+    width: 100%;
+    /* height: 70% !important; */
+  }
+
+  img#main-photo {
+    width: 100%;
+    height: 530.267px;
+    object-fit: cover;
+  }
+  .homepage-photo {
+    background-color: black;
+    /* text-align: right; */
+    width: 100%;
+  }
+  .h1-image {
+    justify-content: center;
+    align-items: center;
+  }
+  .p-image {
+    justify-content: center;
+    align-items: center;
+    top: -15rem;
+  }
+  .button-image {
+    width: 100%;
+    right: 0;
+    left: -2%;
+  }
 }

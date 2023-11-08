@@ -6,6 +6,7 @@ import HomePage from "./components/HomePage/HomePage";
 //mport {BusketSideBarProvider} from './components/SideBars/BusketSideBar';
 import AppRouters from "./components/AppRouters";
 import MainPhoto from "./components/HomePage/MainPhoto";
+import Footer from "./components/Footer/Footer";
 function App() {
   return (
     <React.Fragment>
@@ -13,8 +14,9 @@ function App() {
       <Navbar />
       <MainPhoto />
       <HomePage />
-      <AppRouters />
+      {/* <AppRouters /> */}
       {/* </BusketSideBarProvider> */}
+      <Footer />
     </React.Fragment>
   );
 }
