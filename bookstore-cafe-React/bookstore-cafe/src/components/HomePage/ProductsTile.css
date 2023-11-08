@@ -7,9 +7,20 @@
   text-align: center;
 }
 
+.image-container {
+  width: 600px;
+  height: 600px;
+  overflow: hidden;
+}
+
+img {
+  width: 70%;
+  height: 80%;
+  object-fit: contain; /* lub 'contain', w zależności od potrzeb */
+}
 .product-tile img {
-  max-width: 100%;
-  height: auto;
+  /* max-width: 50%;
+  height: auto; */
 }
 
 .product-tile h3 {

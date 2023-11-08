@@ -1,13 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBasketShopping, faBars } from "@fortawesome/free-solid-svg-icons";
 import { BusketSideBar } from "../SideBars/BusketSideBar";
+import { useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
   const [showMenuBars, setShowMenuBars] = useState(false);
-  const { isOpen, setIsOpen, handleClose } = useContext(BusketSideBar);
+  // const { isOpen, setIsOpen, handleClose } = useContext(BusketSideBar);
 
   const [busketOrderBar, setBusketOrderBar] = useState(false);
 
@@ -29,6 +30,15 @@ const Navbar = () => {
     );
   };
 
+  // const location = useLocation();
+
+  // // Sprawdź, czy jesteś na stronie WydarzeniaPage
+  // const isWydarzeniaPage = location.pathname === "/reservation";
+
+  // // Ukryj Navbar na WydarzeniaPage
+  // if (isWydarzeniaPage) {
+  //   return null;
+  // }
   return (
     <header>
       <nav className={`bar-icon ${showMenuBars ? "open" : ""}`}>

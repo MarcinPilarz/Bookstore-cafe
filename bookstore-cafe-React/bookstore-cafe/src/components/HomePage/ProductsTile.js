@@ -3,7 +3,9 @@ import "./ProductsTile.css";
 const ProductsTile = ({ title, image }) => {
   return (
     <div className="product-tile">
-      <img src={image} alt={title} />
+      <div className="image-container">
+        <img className="products" src={image} alt={title} />
+      </div>
       <h3>{title}</h3>
     </div>
   );

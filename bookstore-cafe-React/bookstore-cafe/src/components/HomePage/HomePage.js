@@ -2,11 +2,20 @@ import React, { useState } from "react";
 import "../HomePage/HomePage.css";
 import ProductsTile from "./ProductsTile";
 import ProductModal from "./ProductModal";
+import { Link } from "react-router-dom";
 const HomePage = () => {
   const products = [
-    { title: "Koszulki", image: "koszulki.jpg" },
-    { title: "Buty", image: "buty.jpg" },
-    { title: "Spodnie", image: "spodnie.jpg" },
+    {
+      title: "Książki",
+      image:
+        "https://storage.googleapis.com/springbootphoto/springbootphoto/KsiazkaKafelekProdukt.png",
+    },
+    {
+      title: "Kawy",
+      image:
+        "https://storage.googleapis.com/springbootphoto/springbootphoto/KawaKafelekProdukt.png",
+    },
+    { title: "Jedzenie", image: "jedzenie.jpg" },
     // Dodaj więcej produktów
   ];
 
@@ -25,17 +34,12 @@ const HomePage = () => {
   };
   return (
     <div className="homepage">
-      <img src="your-image.jpg" alt="Nasza firma" />
       <section>
         <h1>O Nas</h1>
         <p>
           Jesteśmy firmą specjalizującą się w dostarczaniu wysokiej jakości
           produktów i usług.
         </p>
-      </section>
-      <section>
-        <h1>Wydarzenia</h1>
-        <p>Bądź na bieżąco z naszymi najnowszymi wydarzeniami i promocjami.</p>
       </section>
       <section>
         <h1>Produkty</h1>
@@ -56,8 +60,19 @@ const HomePage = () => {
         <ProductModal productData={selectedProduct} closeModal={closeModal} />
       )}
       <section>
+        <h1>Wydarzenia</h1>
+        <p>Bądź na bieżąco z naszymi najnowszymi wydarzeniami i promocjami.</p>
+      </section>
+
+      <section>
         <h1>Rezerwacje</h1>
-        <p>Zarezerwuj u nas stolik lub usługę online i ciesz się wygodą.</p>
+        <p>
+          Chwila relaksu? Spotkanie ze znajomymi? Zarezerwuj u nas stolik i
+          przestań martwić się o brak miejsca.
+        </p>
+        <a href="/reservation">
+          <button>Zarezerwuj stolik</button>
+        </a>
       </section>
       <section>
         <h1>Komentarze</h1>
