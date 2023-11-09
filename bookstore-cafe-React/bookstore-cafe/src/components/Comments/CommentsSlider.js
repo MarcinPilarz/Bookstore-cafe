@@ -31,15 +31,31 @@ const CommentsSlider = () => {
     console.log("Nowa strona", newPage);
     console.log("cośtam", currentComments);
   };
+
+  const generatePagination = () => {
+    const numberOfPagination = 3;
+    const halfNumberOfPagination = Math.floor(numberOfPagination / 2);
+
+    const firstNumberOfPagination = Math.max(1, page - halfNumberOfPagination);
+    const lastNumberOfPagination = Math.min(
+      numberOfPage,
+      page + halfNumberOfPagination
+    );
+
+    return Array.from(
+      { length: lastNumberOfPagination - firstNumberOfPagination + 1 },
+      (_, i) => i + firstNumberOfPagination
+    );
+  };
   return (
     <div className="comments pagination">
-      {Array.from({ length: numberOfPage }, (_, i) => (
+      {generatePagination().map((numer) => (
         <span
-          key={`page-${i + 1}`}
-          onClick={() => handlePageClick(i + 1)}
-          className={i + 1 === page ? "active" : ""}
+          key={numer}
+          onClick={() => handlePageClick(numer)}
+          className={numer === page ? "active" : ""}
         >
-          {i + 1}
+          {numer}
         </span>
       ))}
       <div className="comments-all-window">
