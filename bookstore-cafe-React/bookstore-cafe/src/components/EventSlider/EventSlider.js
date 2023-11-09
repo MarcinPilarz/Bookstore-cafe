@@ -73,8 +73,12 @@ const EventSlider = () => {
           <EventCard event={nextEvent} />
         </div>
       </div>
-      <button onClick={handlePrev}>Poprzedni</button>
-      <button onClick={handleNext}>Następny</button>
+      <button className="prev-button" onClick={handlePrev}>
+        &#x2190;
+      </button>
+      <button className="next-button" onClick={handleNext}>
+        &#8594;
+      </button>
     </div>
   );
 };

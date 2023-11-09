@@ -4,6 +4,7 @@ import ProductsTile from "./ProductsTile";
 import ProductModal from "./ProductModal";
 import { Link } from "react-router-dom";
 import EventSlider from "../EventSlider/EventSlider";
+import CommentsSlider from "../Comments/CommentsSlider";
 import axios from "axios";
 const HomePage = () => {
   const products = [
@@ -110,6 +111,7 @@ const HomePage = () => {
           Przeczytaj opinie naszych klientów i podziel się swoim doświadczeniem.
         </p>
       </section>
+      <CommentsSlider />
     </div>
   );
 };

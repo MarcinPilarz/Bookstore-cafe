@@ -1,6 +1,6 @@
 package springboot.bookstorecafe.models;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDateTime;
 //import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
 import java.util.Objects;
@@ -26,7 +26,7 @@ public class Review {
 	private Integer rating;
 
 	@Column(name = "review_data")
-	private LocalDateTime reviewData;
+	private Date reviewData;
 
 	@Column(name = "number_of_likes")
 	private int numberOfLikes;
@@ -62,11 +62,11 @@ public class Review {
 		this.rating = rating;
 	}
 
-	public LocalDateTime getReviewData() {
+	public Date getReviewData() {
 		return reviewData;
 	}
 
-	public void setReviewData(LocalDateTime reviewData) {
+	public void setReviewData(Date reviewData) {
 		this.reviewData = reviewData;
 	}
 

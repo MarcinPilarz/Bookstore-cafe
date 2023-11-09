@@ -1,7 +1,8 @@
 package springboot.bookstorecafe.services;
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime; 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ReviewService implements MainService<Review> {
 	@Override
 	public void addItem(Review review) {
 
-		review.setReviewData(LocalDateTime.now());
+		review.setReviewData(new Date());
 
 		reviewRepo.save(review);
 
