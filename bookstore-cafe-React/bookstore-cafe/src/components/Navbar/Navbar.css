@@ -61,6 +61,8 @@ div.bar-icon {
 .navbar {
   list-style: none;
   display: flex;
+  position: relative;
+  left: 40px;
 }
 
 nav.open .hamburger {
@@ -126,6 +128,16 @@ div.busket-sidebar {
   border: none;
   cursor: pointer;
 }
+
+.logo-nav {
+  width: 100px;
+  position: absolute;
+  /* margin: 10px; */
+  padding: 2px;
+  top: -1px;
+  left: 4px;
+  opacity: 0.8;
+}
 @media (max-width: 768px) {
   .hamburger {
     display: block;
@@ -139,8 +151,22 @@ div.busket-sidebar {
     display: none;
   }
 
+  ul.navbar {
+    width: 87%;
+    position: relative;
+    /* right: 20px; */
+  }
   nav.open .navbar {
+    /* width: 100%; */
     display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    right: 30px;
+    /* margin: 0; */
+    padding: 0;
+
+    /* position: sticky; */
   }
 
   ul {
@@ -177,5 +203,19 @@ div.busket-sidebar {
   .clear-button {
     width: 100%; /* Pełna szerokość na małym ekranie */
     bottom: -320%;
+  }
+  .logo-nav {
+    top: -10px;
+  }
+}
+@media (max-width: 700px) {
+  ul.navbar {
+    width: 84%;
+  }
+}
+
+@media (max-width: 450px) {
+  ul.navbar {
+    width: 80%;
   }
 }

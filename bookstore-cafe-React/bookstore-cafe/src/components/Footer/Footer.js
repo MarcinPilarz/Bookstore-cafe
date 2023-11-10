@@ -6,7 +6,11 @@ const Footer = () => {
   return (
     <section>
       <footer className="top">
-        <img src="logo.svg" alt="Logo" />
+        <img
+          className="logo-footer"
+          src="https://storage.googleapis.com/springbootphoto/springbootphoto/Czytaj%20z%20Kaw%C4%85%20logo.png"
+          alt="Logo"
+        />
         <div className="links">
           <div className="links-column">
             <h2>Kontakt</h2>

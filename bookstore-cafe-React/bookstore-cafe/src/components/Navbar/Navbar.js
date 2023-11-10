@@ -45,6 +45,9 @@ const Navbar = () => {
   return (
     <header>
       <nav className={`bar-icon ${showMenuBars ? "open" : ""}`}>
+        <div className="logo-nav">
+          <img src="https://storage.googleapis.com/springbootphoto/springbootphoto/Czytaj%20z%20Kaw%C4%85%20logo.png"></img>
+        </div>
         <div onClick={toggleMenu} className="hamburger">
           <FontAwesomeIcon icon={faBars} />
         </div>

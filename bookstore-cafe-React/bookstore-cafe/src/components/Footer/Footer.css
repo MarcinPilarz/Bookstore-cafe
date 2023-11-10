@@ -1,3 +1,6 @@
+footer {
+  position: relative;
+}
 .top {
   background-color: #2c3b11;
   color: #fff;
@@ -24,6 +27,14 @@
   padding: 10px 0;
 }
 
+img.logo-footer {
+  width: 180px;
+  position: absolute;
+  left: 50%; /* Ustaw lewą krawędź na środek */
+  transform: translateX(
+    -50%
+  ); /* Przesuń obraz o połowę swojej szerokości w lewo */
+}
 @media (max-width: 768px) {
   .links-column {
     width: 100%;
