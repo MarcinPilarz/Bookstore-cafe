@@ -138,6 +138,23 @@ div.busket-sidebar {
   left: 4px;
   opacity: 0.8;
 }
+
+div.icon-container {
+}
+div.history-icon {
+  position: absolute;
+  /* display: block; */
+  right: 0;
+  /* top: 1.45rem;  */
+  /* left: 93%; */
+  margin-right: 30px;
+  top: 26px;
+  /* transform: translateY(-50%); Korekta pozycji w pionie */
+  width: 50px; /* Szerokość kwadratu */
+  height: 50px; /* Wysokość kwadratu */
+  color: #fff;
+  /* background-color: aqua; */
+}
 @media (max-width: 768px) {
   .hamburger {
     display: block;
@@ -183,11 +200,25 @@ div.busket-sidebar {
   .sign-in {
     margin-right: 0;
   }
+
+  div.history-icon {
+    position: absolute;
+    right: 0; /* Ustawienie na prawy brzeg */
+    /* top: 1.45rem;  */
+    top: 20px;
+
+    /* transform: translateY(-50%); Korekta pozycji w pionie */
+    width: 50px; /* Szerokość kwadratu */
+    height: 50px; /* Wysokość kwadratu */
+    color: #fff;
+    /* /* background-color: aqua; * */
+  }
   div.busket-icon {
     position: absolute;
     right: 0; /* Ustawienie na prawy brzeg */
     /* top: 1.45rem;  */
     top: 20px;
+
     /* transform: translateY(-50%); Korekta pozycji w pionie */
     width: 50px; /* Szerokość kwadratu */
     height: 50px; /* Wysokość kwadratu */
