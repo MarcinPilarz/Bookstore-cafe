@@ -159,3 +159,14 @@ button.more-info-button {
   top: -100%; /* Dostosuj margines w prawo według potrzeb */
   left: -3%;
 }
+
+h3#food-info {
+  position: relative;
+  top: -50%;
+  font-size: 12px;
+  /* margin-bottom: 5px;
+  padding-bottom: px; */
+}
+.weight-label {
+  margin-left: 30px;
+}

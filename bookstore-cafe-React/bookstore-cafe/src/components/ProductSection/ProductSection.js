@@ -79,12 +79,31 @@ const ProductSection = () => {
 
     case "BOOK":
       productInfo = (
-        <div className="product-list">
+        <div className="tile-products-border">
           {products.map((product) => (
-            <div key={product.product.idProduct}>
-              <h3>{product.product.productName}</h3>
-              <h3>{product.product.productPrice}</h3>
-              <img src={product.imageUrl} alt={product.title} />
+            <div className="tile-products-list" key={product.product.idProduct}>
+              <img
+                className="photo-list-products"
+                src={product.imageUrl}
+                alt={product.title}
+              />
+              <h3 className="produc-name-text">
+                {product.product.productName}
+              </h3>
+              <h3 className="product-price-text">
+                Cena: {product.product.productPrice} zł
+              </h3>
+              {/* <h3>{product.product.coffeeIntensity}</h3> */}
+              <h3 id="food-info">
+                <span className="calories-label">Autor:</span>
+                {product.product.author}
+                <span className="weight-label">Rodzaj:</span>
+                {product.product.genere}
+              </h3>
+              <div className="button-busket-info-container">
+                <button className="more-info-button">Szczegóły</button>
+                <button className="add-busket-button">Do koszyka</button>
+              </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
@@ -104,11 +123,20 @@ const ProductSection = () => {
               <h3 className="produc-name-text">
                 {product.product.productName}
               </h3>
-              <button className="add-busket-button">Do koszyka</button>
-              <button className="more-info-button">Szczegóły</button>
-              <h3>Cena:</h3>
-              <h3>{product.product.productPrice}</h3>
-
+              <h3 className="product-price-text">
+                Cena: {product.product.productPrice} zł
+              </h3>
+              {/* <h3>{product.product.coffeeIntensity}</h3> */}
+              <h3 id="food-info">
+                <span className="calories-label">Kalorie:</span>
+                {product.product.amountOfCalories}
+                <span className="weight-label">Waga potrawy:</span>
+                {product.product.foodWeight} g
+              </h3>
+              <div className="button-busket-info-container">
+                <button className="more-info-button">Szczegóły</button>
+                <button className="add-busket-button">Do koszyka</button>
+              </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
