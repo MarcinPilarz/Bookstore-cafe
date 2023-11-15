@@ -1,3 +1,161 @@
 li.active {
   color: blue; /* Zmiana koloru czcionki dla aktywnego elementu */
 }
+
+div.li-product-card a {
+  font-size: 18px;
+  color: black;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+div.li-product-card ul {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.productType-name {
+  display: flex;
+  justify-content: center;
+}
+/* .isBooksAcctive a :active {
+  background-color: blue;
+} */
+
+div.tile-products-list {
+  width: 25%;
+  height: 200px;
+  margin: 10px;
+  padding: 10px;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  border: 2px solid black;
+  border-radius: 2%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #6b5e2f;
+}
+
+div.tile-products-border {
+  margin-top: 100px;
+  display: flex;
+}
+
+div.tile-products-list > h3 {
+  color: #fff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -38%;
+}
+img.photo-list-products {
+  position: relative;
+  display: flex;
+  width: 70%;
+  height: 100px;
+  align-items: center;
+  top: -30%;
+  justify-content: center;
+  text-align: center;
+  left: 15%;
+  /* margin-right: 50px;
+    padding-right: 10px; */
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 300px;
+  background-color: green; */
+}
+
+.produc-name-text {
+  font-size: 20px;
+}
+div.tile-products-list h3.product-price-text {
+  position: relative;
+  top: -49%;
+  font-weight: normal;
+  font-size: 16px;
+}
+.button-busket-info-container {
+  position: relative;
+  /* width: 100%; */
+  top: -50%;
+  display: flex;
+  margin: 10px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-busket-button {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  /* top: -40px; */
+  margin-left: 10px;
+  margin-right: 10px;
+  left: -2%;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50;
+  font-weight: bold;
+}
+
+.more-info-button {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  /* top: -0px; */
+  margin-left: 10px;
+  margin-right: 10px;
+  left: -2%;
+  border: none;
+  border-radius: 4px;
+  background-color: #eccc68;
+  font-weight: bold;
+}
+/* .button-busket-info-container button.add-busket-button {
+  width: 20%;
+  height: 20%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+}
+button.more-info-button {
+  width: 20%;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+} */
+
+.coffee-intensity {
+  /* position: relative; */
+
+  /* top: -70%;
+  display: grid;
+  color: #fff; */
+  display: flex;
+  align-items: center;
+}
+
+.coffee-intensity {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  font-size: 12px;
+  /* top: -100%; */
+}
+
+.intensity-label {
+  position: relative;
+  top: -100%; /* Dostosuj margines w prawo według potrzeb */
+  left: -3%;
+}

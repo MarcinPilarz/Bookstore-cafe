@@ -3,7 +3,8 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
-
+import "./ProductSection.css";
+import CoffeeIntensity from "./CoffeeIntensity";
 const ProductSection = () => {
   //const { productType } = useParams();
   const [products, setProducts] = useState([]);
@@ -23,9 +24,9 @@ const ProductSection = () => {
 
   //     fetchData();
   //   }, [productType]);
-  const isBooksActive = productType === "BOOK" ? "active" : "";
-  const isCoffeeActive = productType === "COFFEE" ? "active" : "";
-  const isFoodActive = productType === "FOOD" ? "active" : "";
+  const isBooksActive = productType === "BOOK" ? "active-product" : "";
+  const isCoffeeActive = productType === "COFFEE" ? "active-product" : "";
+  const isFoodActive = productType === "FOOD" ? "active-product" : "";
   useEffect(() => {
     axios
       .get(`http://localhost:8080/images?productType=${productType}`)
@@ -43,12 +44,32 @@ const ProductSection = () => {
   switch (productType) {
     case "COFFEE":
       productInfo = (
-        <div className="product-list">
+        <div className="tile-products-border">
           {products.map((product) => (
-            <div key={product.product.idProduct}>
-              <h3>{product.product.productName}</h3>
-              <h3>{product.product.productPrice}</h3>
-              {/* <img src={product.image} alt={product.title} /> */}
+            <div className="tile-products-list" key={product.product.idProduct}>
+              <img
+                className="photo-list-products"
+                src={product.imageUrl}
+                alt={product.title}
+              />
+              <h3 className="produc-name-text">
+                {product.product.productName}
+              </h3>
+              <h3 className="product-price-text">
+                Cena: {product.product.productPrice} zł
+              </h3>
+              {/* <h3>{product.product.coffeeIntensity}</h3> */}
+              <h3 className="coffee-intensity">
+                <span className="intensity-label">Intensywność:</span>
+                <CoffeeIntensity
+                  className="coffee-intensity-circle"
+                  intensity={product.product.coffeeIntensity}
+                />
+              </h3>
+              <div className="button-busket-info-container">
+                <button className="more-info-button">Szczegóły</button>
+                <button className="add-busket-button">Do koszyka</button>
+              </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
@@ -63,7 +84,7 @@ const ProductSection = () => {
             <div key={product.product.idProduct}>
               <h3>{product.product.productName}</h3>
               <h3>{product.product.productPrice}</h3>
-              {/* <img src={product.image} alt={product.title} /> */}
+              <img src={product.imageUrl} alt={product.title} />
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
@@ -72,12 +93,22 @@ const ProductSection = () => {
       break;
     case "FOOD":
       productInfo = (
-        <div className="product-list">
+        <div className="tile-products-border">
           {products.map((product) => (
-            <div key={product.product.idProduct}>
-              <h3>{product.product.productName}</h3>
+            <div className="tile-products-list" key={product.product.idProduct}>
+              <img
+                className="photo-list-products"
+                src={product.imageUrl}
+                alt={product.title}
+              />
+              <h3 className="produc-name-text">
+                {product.product.productName}
+              </h3>
+              <button className="add-busket-button">Do koszyka</button>
+              <button className="more-info-button">Szczegóły</button>
+              <h3>Cena:</h3>
               <h3>{product.product.productPrice}</h3>
-              {/* <img src={product.image} alt={product.title} /> */}
+
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
@@ -95,8 +126,8 @@ const ProductSection = () => {
   return (
     <>
       <Navbar />
-      <h1>{productType}</h1>
-      <div>
+      <h1 className="productType-name">{productType}</h1>
+      <div className="li-product-card">
         <ul>
           <li className={isBooksActive}>
             <Link to="/products-page/BOOK">Książki</Link>
