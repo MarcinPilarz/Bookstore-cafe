@@ -16,6 +16,49 @@ const Navbar = () => {
 
   const [busketOrderBar, setBusketOrderBar] = useState(false);
   const [infoImageVisible, setinfoImageVisible] = useState(true);
+
+  const ProductsNavigate = () => {
+    const element = document.getElementById("products");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "/";
+    }
+
+    const element2 = document.getElementById("products");
+    if (element2) {
+      element2.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const ReservationNavigate = () => {
+    const element3 = document.getElementById("reservation");
+    if (element3) {
+      element3.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "/";
+    }
+
+    const element4 = document.getElementById("reservation");
+    if (element4) {
+      element4.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const EventsNavigate = () => {
+    const element5 = document.getElementById("events");
+    if (element5) {
+      element5.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "/";
+    }
+
+    const element6 = document.getElementById("events");
+    if (element6) {
+      element6.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const toggleMenu = () => {
     setShowMenuBars(!showMenuBars);
     setBusketOrderBar(false);
@@ -63,14 +106,14 @@ const Navbar = () => {
           </li>
           <li>
             {" "}
-            <a href="/products">Produkty</a>{" "}
+            <a onClick={ProductsNavigate}>Produkty</a>
           </li>
           <li>
-            <a href="/#">Rezerwacja</a>
+            <a onClick={ReservationNavigate}>Rezerwacja</a>
           </li>
           <li>
             {" "}
-            <a href="/#">Wydarzenia</a>{" "}
+            <a onClick={EventsNavigate}>Wydarzenia</a>{" "}
           </li>
 
           <li className="sign-in">

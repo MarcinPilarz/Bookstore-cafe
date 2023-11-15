@@ -21,6 +21,16 @@ img.img-main-page-photo {
   /* object-fit: cover; */
 }
 
+.product-tile h3 {
+  color: #333; /* Wybierz kolor tekstu, który jest widoczny na tle */
+  font-size: 16px; /* Ustaw odpowiedni rozmiar czcionki */
+  margin-top: 8px; /* Dodaj margines, aby odseparować tekst od obrazka */
+}
+/* .product-link {
+  width: 7200px;
+  height: 700px;
+  background-color: black;
+} */
 .homepage section {
   margin: 20px 0;
 }
