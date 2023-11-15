@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../HomePage/HomePage.css";
 import ProductsTile from "./ProductsTile";
-import ProductModal from "./ProductModal";
+import ProductModal from "./ReservationModal";
 import { Link, NavLink } from "react-router-dom";
 import EventSlider from "../EventSlider/EventSlider";
 import CommentsSlider from "../Comments/CommentsSlider";
@@ -36,8 +36,8 @@ const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [events, setEvents] = useState([]);
-  const openModal = (product) => {
-    setSelectedProduct(product);
+  const openModal = () => {
+    // setSelectedProduct(product);
     setIsModalOpen(true);
   };
 
@@ -89,7 +89,6 @@ const HomePage = () => {
                 key={index}
                 to={`/products-page/${product.productType}`}
                 className="product-tile"
-                onClick={() => openModal(product)}
               >
                 <img src={product.image} alt={product.title} />
                 <h3>{product.title}</h3>
@@ -101,9 +100,7 @@ const HomePage = () => {
             <ProductSection key={index} productType={product.productType} />
           ))} */}
         </section>
-        {isModalOpen && selectedProduct && (
-          <ProductModal productData={selectedProduct} closeModal={closeModal} />
-        )}
+
         <section id="events">
           <h1>Wydarzenia</h1>
           <p>
@@ -118,10 +115,12 @@ const HomePage = () => {
             Chwila relaksu? Spotkanie ze znajomymi? Zarezerwuj u nas stolik i
             przestań martwić się o brak miejsca.
           </p>
-          <a href="/reservation">
-            <button>Zarezerwuj stolik</button>
-          </a>
+
+          <button onClick={() => openModal()}>Zarezerwuj stolik</button>
         </section>
+        {isModalOpen && (
+          <ProductModal productData={selectedProduct} closeModal={closeModal} />
+        )}
         <section>
           <h1>Komentarze</h1>
           <p>

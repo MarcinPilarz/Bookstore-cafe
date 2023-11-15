@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ProductModal.css";
+import "./ReservationModal.css";
 const ProductModal = ({ productData, closeModal }) => {
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
 
@@ -17,8 +17,8 @@ const ProductModal = ({ productData, closeModal }) => {
   return (
     <div className="modal">
       {/* Wyświetlanie danych produktu na podstawie currentProductIndex */}
-      <button onClick={handlePrev}>Poprzedni</button>
-      <button onClick={handleNext}>Następny</button>
+      {/* <button onClick={handlePrev}>Poprzedni</button>
+      <button onClick={handleNext}>Następny</button> */}
       <button onClick={closeModal}>Zamknij</button>
     </div>
   );
