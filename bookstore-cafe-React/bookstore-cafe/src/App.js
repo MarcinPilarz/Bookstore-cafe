@@ -14,7 +14,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/products-page" element={<ProductSection />} />
+        <Route
+          path="/products-page/:productType"
+          element={<ProductSection />}
+        />
       </Routes>
     </BrowserRouter>
     // <React.Fragment>

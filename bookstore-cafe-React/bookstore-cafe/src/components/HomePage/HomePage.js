@@ -9,6 +9,7 @@ import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import MainPhoto from "./MainPhoto";
+import ProductSection from "../ProductSection/ProductSection";
 const HomePage = () => {
   const products = [
     {
@@ -84,18 +85,21 @@ const HomePage = () => {
           <h1>Produkty</h1>
           <div className="product-tiles">
             {products.map((product, index) => (
-              <NavLink
+              <Link
                 key={index}
-                to={`/products/${product.productType}`}
+                to={`/products-page/${product.productType}`}
                 className="product-tile"
-                activeClassName="active-product"
                 onClick={() => openModal(product)}
               >
                 <img src={product.image} alt={product.title} />
                 <h3>{product.title}</h3>
-              </NavLink>
+              </Link>
             ))}
           </div>
+          {/* Przekazanie productType do ProductSection */}
+          {/* {products.map((product, index) => (
+            <ProductSection key={index} productType={product.productType} />
+          ))} */}
         </section>
         {isModalOpen && selectedProduct && (
           <ProductModal productData={selectedProduct} closeModal={closeModal} />
