@@ -27,6 +27,8 @@ const ProductSection = () => {
   const isBooksActive = productType === "BOOK" ? "active-product" : "";
   const isCoffeeActive = productType === "COFFEE" ? "active-product" : "";
   const isFoodActive = productType === "FOOD" ? "active-product" : "";
+  const isAllProductsActive =
+    productType === "ALLPRODUCTS" ? "active-product" : "";
   useEffect(() => {
     axios
       .get(`http://localhost:8080/images?productType=${productType}`)
@@ -143,6 +145,58 @@ const ProductSection = () => {
         </div>
       );
       break;
+    case "ALLPRODUCTS":
+      productInfo = (
+        <div className="tile-products-border">
+          {products.map((product) => (
+            <div className="tile-products-list" key={product.product.idProduct}>
+              <img
+                className="photo-list-products"
+                src={product.imageUrl}
+                alt={product.title}
+              />
+              <h3 className="produc-name-text">
+                {product.product.productName}
+              </h3>
+              <h3 className="product-price-text">
+                Cena: {product.product.productPrice} zł
+              </h3>
+              {/* Dodaj warunek sprawdzający typ produktu i wyświetl odpowiednie informacje */}
+              {product.product.productType === "COFFEE" && (
+                <h3 className="coffee-intensity">
+                  <span className="intensity-label">Intensywność:</span>
+                  <CoffeeIntensity
+                    className="coffee-intensity-circle"
+                    intensity={product.product.coffeeIntensity}
+                  />
+                </h3>
+              )}
+              {product.product.productType === "BOOK" && (
+                <h3 id="food-info">
+                  <span className="calories-label">Autor:</span>
+                  {product.product.author}
+                  <span className="weight-label">Rodzaj:</span>
+                  {product.product.genere}
+                </h3>
+              )}
+              {product.product.productType === "FOOD" && (
+                <h3 id="food-info">
+                  <span className="calories-label">Kalorie:</span>
+                  {product.product.amountOfCalories}
+                  <span className="weight-label">Waga potrawy:</span>
+                  {product.product.foodWeight} g
+                </h3>
+              )}
+              {/* Dodaj inne dane produktu, jeśli są dostępne */}
+              <div className="button-busket-info-container">
+                <button className="more-info-button">Szczegóły</button>
+                <button className="add-busket-button">Do koszyka</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+      break;
     default:
       productInfo = (
         <div>
@@ -157,6 +211,9 @@ const ProductSection = () => {
       <h1 className="productType-name">{productType}</h1>
       <div className="li-product-card">
         <ul>
+          <li className={isAllProductsActive}>
+            <Link to="/products-page/ALLPRODUCTS">Wszystkie produkty</Link>
+          </li>
           <li className={isBooksActive}>
             <Link to="/products-page/BOOK">Książki</Link>
           </li>
