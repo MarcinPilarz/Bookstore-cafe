@@ -30,9 +30,9 @@ public class BookTableService implements MainService<BookTable> {
 
 	}
 
-	@Override
-	public void deleteItem(BookTable bookTable) {
-		bookTableRepo.delete(bookTable);
+	
+	public void deleteTable(Long idBookTable) {
+		bookTableRepo.deleteById(idBookTable);
 
 	}
 
@@ -55,5 +55,11 @@ public class BookTableService implements MainService<BookTable> {
 	public boolean isTableNumber(int tableNumber) {
 	
 		return bookTableRepo.findByTableNumber(tableNumber)==null;
+	}
+
+	@Override
+	public void deleteItem(BookTable bookTable) {
+		bookTableRepo.delete(bookTable);
+		
 	}
 }

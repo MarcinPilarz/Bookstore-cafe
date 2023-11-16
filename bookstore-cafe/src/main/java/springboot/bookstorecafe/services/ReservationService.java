@@ -48,6 +48,12 @@ public class ReservationService {
 			throw new RuntimeException("This table is reserved.");
 		}
 
+		
+		List<Reservation> existingReservations = reservationRepo.findByBookTableAndBokkingData(bookTable, bokkingData);
+		if (!existingReservations.isEmpty()) {
+			throw new RuntimeException("This table is already reserved for the specified date.");
+		}
+		
 		reservation.setPerson(person);
 		reservation.setBokkingData(bokkingData);
 		reservation.setNumberOfPeople(numberOfPeople);
@@ -56,7 +62,10 @@ public class ReservationService {
 		if (bookTable.getSeatingCapacity() < reservation.getNumberOfPeople()) {
 			throw new RuntimeException("This table is not suitable for the stated number of people");
 		}
-		bookTable.setReservation(true);
+		//bookTable.setReservation(true);
+		
+
+	    bookTable.setReservationDate(bokkingData);
 		reservationRepo.save(reservation);
 	}
 
@@ -99,4 +108,5 @@ public class ReservationService {
 		reservationRepo.delete(reservation);
 	}
 
+	
 }

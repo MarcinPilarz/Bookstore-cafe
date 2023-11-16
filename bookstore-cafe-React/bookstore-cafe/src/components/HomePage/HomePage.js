@@ -10,6 +10,7 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import MainPhoto from "./MainPhoto";
 import ProductSection from "../ProductSection/ProductSection";
+import ReservationModal from "./ReservationModal";
 const HomePage = () => {
   const products = [
     {
@@ -119,7 +120,10 @@ const HomePage = () => {
           <button onClick={() => openModal()}>Zarezerwuj stolik</button>
         </section>
         {isModalOpen && (
-          <ProductModal productData={selectedProduct} closeModal={closeModal} />
+          <ReservationModal
+            productData={selectedProduct}
+            closeModal={closeModal}
+          />
         )}
         <section>
           <h1>Komentarze</h1>

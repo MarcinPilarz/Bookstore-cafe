@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ReservationModal.css";
-const ProductModal = ({ productData, closeModal }) => {
+const ReservationModal = ({ productData, closeModal }) => {
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
 
   const handleNext = () => {
@@ -24,4 +24,4 @@ const ProductModal = ({ productData, closeModal }) => {
   );
 };
 
-export default ProductModal;
+export default ReservationModal;

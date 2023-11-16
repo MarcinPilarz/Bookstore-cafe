@@ -1,5 +1,7 @@
 package springboot.bookstorecafe.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,11 @@ public class BookTable {
 	@Column(name= "seating_capacity")
 	private int seatingCapacity;
 	
+	@Column(name = "reservation_date")
+    private LocalDate reservationDate;
+	
+
+
 	@Column(name = "isReservation")
 	private boolean isReservation;
 
@@ -59,5 +66,11 @@ public class BookTable {
 	}
 
 	
-	
+	public LocalDate getReservationDate() {
+		return reservationDate;
+	}
+
+	public void setReservationDate(LocalDate reservationDate) {
+		this.reservationDate = reservationDate;
+	}
 }
