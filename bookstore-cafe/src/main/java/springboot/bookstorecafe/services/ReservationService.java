@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -108,5 +109,10 @@ public class ReservationService {
 		reservationRepo.delete(reservation);
 	}
 
-	
+	@Scheduled(cron = "0 0 0 * * 1") // Każdy poniedziałek o północy
+    public void deleteOldReservations() {
+        LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
+        List<Reservation> oldReservations = reservationRepo.findByBokkingDataBefore(oneWeekAgo);
+        reservationRepo.deleteAll(oldReservations);
+    }
 }
