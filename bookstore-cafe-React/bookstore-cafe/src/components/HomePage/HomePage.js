@@ -69,17 +69,24 @@ const HomePage = () => {
         <section>
           <h1>O Nas</h1>
           <div className="about-us">
-            <p>
-              Jesteśmy pasjonatami ksiązek i kawy, dlatego postanowiliśmy się z
-              wami podzielić naszym zamiłowaniem. Czytaj z kawą to nie tylko
-              przestrzeń do poszukiwania swoich nowych lektur, ale również
-              przytulne miejsce, gdzie można spędzić czas przy dobrej lekturze i
-              pysznej kawie. Nasza oferta to różne gatunki książek, które
-              podbijały serca czytelników. W kawiarni serwujemy aromatyczną kawę
-              oraz przekąski, które umilają czas przy literaturze. Czytaj z kawą
-              to miejsce, gdzie każdy miłośnik literatury i kawy znajdzie coś
-              dla siebie.
-            </p>
+            <div className="p-about-us">
+              <p>
+                Jesteśmy pasjonatami ksiązek i kawy, dlatego postanowiliśmy się
+                z wami podzielić naszym zamiłowaniem. Czytaj z kawą to nie tylko
+                przestrzeń do poszukiwania swoich nowych lektur, ale również
+                przytulne miejsce, gdzie można spędzić czas przy dobrej lekturze
+                i pysznej kawie. Nasza oferta to różne gatunki książek, które
+                podbijały serca czytelników. W kawiarni serwujemy aromatyczną
+                kawę oraz przekąski, które umilają czas przy literaturze. Czytaj
+                z kawą to miejsce, gdzie każdy miłośnik literatury i kawy
+                znajdzie coś dla siebie.
+              </p>
+            </div>
+            <img
+              className="second-photo-home"
+              src="https://storage.googleapis.com/springbootphoto/springbootphoto/o%20nas%20zdjecie.jpg"
+              alt="zdjęcie-kaw"
+            />
           </div>
         </section>
         <section id="products">
@@ -117,7 +124,12 @@ const HomePage = () => {
             przestań martwić się o brak miejsca.
           </p>
 
-          <button onClick={() => openModal()}>Zarezerwuj stolik</button>
+          <button
+            className="reservation-button-click"
+            onClick={() => openModal()}
+          >
+            Zarezerwuj stolik
+          </button>
         </section>
         {isModalOpen && (
           <ReservationModal

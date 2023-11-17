@@ -42,7 +42,15 @@ img.img-main-page-photo {
   color: #204b33;
   font-size: 24px;
 }
-
+.reservation-button-click {
+  margin: 10px;
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #204b33;
+}
 .product-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -52,13 +60,59 @@ img.img-main-page-photo {
 
 .about-us {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Zmieniamy kierunek flexboxa na wiersz */
+  align-items: center; /* Centrujemy elementy w pionie */
   animation: slide-in 1s ease;
   text-align: justify;
   text-justify: inter-word;
+  font-size: 17px;
+}
+
+.about-us p {
+  width: 80%;
+  position: relative;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+  top: -20%;
+
+  /* right: 10%; */
+}
+
+.about-us img {
+  width: 25%;
+  position: relative;
+  left: 9%;
+  height: 20%;
+  margin-left: 20px; /* Dodatkowy odstęp między tekstem a obrazem */
+  /* border-radius: 76% 24% 80% 20%/39% 44% 56% 61%; */
+  border: 2px solid #204b33;
+  transform: rotate(10deg);
+}
+
+div.p-about-us {
+  width: 613px;
+  border: 7px dashed #204b33;
+  display: flex;
+  justify-content: center;
+}
+@media (max-width: 1057px) {
+  .about-us img {
+    display: none;
+  }
+
+  .about-us p {
+    width: 70%;
+  }
+
+  div.p-about-us {
+    width: 100%;
+    border: none;
+    justify-content: center;
+    align-items: center;
+  }
 }
