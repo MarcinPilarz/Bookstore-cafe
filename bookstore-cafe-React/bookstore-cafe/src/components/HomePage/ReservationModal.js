@@ -23,6 +23,13 @@ const ReservationModal = ({ closeModal }) => {
   //   }
   // };
 
+  const handleNumberOfPeopleChange = (e) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 1) {
+      setNumberOfPeople(value);
+    }
+  };
+
   const handleReservation = () => {
     const formData = {
       // productId: productData[currentProductIndex].id,
@@ -40,43 +47,85 @@ const ReservationModal = ({ closeModal }) => {
         console.error("Error during reservation:", error);
       });
   };
+
+  // const isTimeDisabled = (date) => {
+  //   // Pobierz obecną godzinę i minutę
+  //   const currentHour = new Date().getHours();
+  //   const currentMinute = new Date().getMinutes();
+
+  //   // Pobierz wybraną godzinę i minutę
+  //   const selectedHour = date.getHours();
+  //   const selectedMinute = date.getMinutes();
+
+  //   // Sprawdź, czy wybrana godzina jest wcześniejsza niż obecna
+  //   return (
+  //     selectedHour < currentHour ||
+  //     (selectedHour === currentHour && selectedMinute < currentMinute)
+  //   );
+  // };
+
   return (
     <div className="modal">
       {/* <h3>{productData[currentProductIndex].name}</h3>
       <p>{productData[currentProductIndex].description}</p> */}
 
       {/* Date Picker */}
-      <label>Data rezerwacji:</label>
-      <DatePicker
-        selected={reservationDate}
-        onChange={(date) => setReservationDate(date)}
-        dateFormat="yyyy-MM-dd"
-        minDate={new Date()} // Minimalna data to dzisiejsza data
-        maxDate={null} // Bez ograniczenia maksymalnej daty
-      />
-      <label>Dostępne stoliki:</label>
-      <Select
-        // options={tableOptions}
-        // value={selectedTable}
-        // onChange={handleTableChange}
-        isSearchable={false} // Opcjonalne: aby wyłączyć wyszukiwanie w comboboxie
-      />
+      <div className="reservation-container">
+        <div className="reservation-date">
+          <label>Data rezerwacji:</label>
+          <DatePicker
+            className="date-picker"
+            selected={reservationDate}
+            onChange={(date) => setReservationDate(date)}
+            showTimeSelect
+            timeFormat="HH:mm"
+            timeIntervals={15}
+            dateFormat="yyyy-MM-dd HH:mm"
+            minDate={new Date()} // Minimalna data to dzisiejsza data
+            maxDate={null} // Bez ograniczenia maksymalnej daty
+            // filterTime={isTimeDisabled}
+            // timeCaption="Godzina"
+          />
+        </div>
 
-      {/* Input na liczbę osób */}
-      <label>Liczba osób:</label>
-      <input
-        type="number"
-        value={numberOfPeople}
-        onChange={(e) => setNumberOfPeople(parseInt(e.target.value))}
-      />
+        <div className="reservation-table">
+          <label className="">Dostępne stoliki:</label>
+          <Select
+            className="input-select"
+            // options={tableOptions}
+            // value={selectedTable}
+            // onChange={handleTableChange}
+            isSearchable={false} // Opcjonalne: aby wyłączyć wyszukiwanie w comboboxie
+          />
+        </div>
+        {/* Input na liczbę osób */}
+        <div className="reservation-value-people">
+          <label>Liczba osób:</label>
+          <input
+            className="input-value-people"
+            type="number"
+            value={numberOfPeople}
+            onChange={handleNumberOfPeopleChange}
+          />
+        </div>
 
-      {/* Przyciski nawigacyjne */}
-      {/* <button onClick={handlePrev}>Poprzedni</button>
+        {/* Przyciski nawigacyjne */}
+        {/* <button onClick={handlePrev}>Poprzedni</button>
       <button onClick={handleNext}>Następny</button> */}
 
-      {/* Przycisk do dokonania rezerwacji */}
-      <button onClick={handleReservation}>Zarezerwuj</button>
-      <button onClick={closeModal}>Zamknij</button>
+        {/* Przycisk do dokonania rezerwacji */}
+      </div>
+      <div className="reservation-button-container">
+        <button className="close-modal-reservation" onClick={closeModal}>
+          Zamknij
+        </button>
+        <button
+          className="accept-modal-reservation"
+          onClick={handleReservation}
+        >
+          Zarezerwuj
+        </button>
+      </div>
     </div>
   );
 };

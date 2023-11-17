@@ -1,5 +1,9 @@
 /* Modal.css */
 .modal {
+  position: relative;
+  width: 60%;
+  right: -19%;
+  height: 250px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -20,11 +24,118 @@
 .modal button {
   margin: 10px;
   padding: 10px 20px;
-  background-color: #204b33; /* Kolor ciemnego zielonego */
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-/* Dodaj dodatkową stylizację, jeśli jest to konieczne */
+.reservation-button-container {
+  position: relative;
+  top: 45%;
+}
+
+.close-modal-reservation {
+  background-color: rgb(78, 19, 19);
+}
+
+.accept-modal-reservation {
+  background-color: #204b33;
+}
+
+.reservation-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-select {
+  position: relative;
+  width: 40%;
+  /* height: 30px; */
+  margin-top: 10px;
+  justify-content: center;
+  left: 30%;
+}
+
+/* .input-select .react-select__control {
+  width: 2%;
+  height: 20%;
+}
+
+.input-select .react-select__indicator-separator {
+  display: none; 
+}  */
+.input-value-people {
+  position: relative;
+  width: 40%;
+  height: 30px;
+  text-align: center;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  left: 30%;
+}
+.reservation-date,
+.reservation-value-people,
+.date-picker,
+.reservation-table {
+  flex: 1;
+  margin: 10px;
+}
+
+.reservation-date {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-picker {
+  height: 30px;
+  text-align: center;
+}
+.date-picker {
+  margin-left: 10px;
+}
+
+.react-datepicker__time-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.react-datepicker__time-list-item {
+  white-space: nowrap;
+}
+
+@media (max-width: 1042px) {
+  .modal {
+    position: relative;
+    width: 90%;
+    right: -2%;
+    height: auto; /* Zmieniamy wysokość na auto, aby dopasować do zawartości */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .reservation-date,
+  .reservation-value-people,
+  .date-picker,
+  .reservation-table,
+  .input-select,
+  .input-value-people {
+    width: 100%; /* Zmieniamy szerokość na 100% dla elementów, aby zajmowały całą dostępną szerokość */
+    margin: 10px 0; /* Dodajemy odstępy między elementami */
+    left: 0; /* Ustawiamy lewą krawędź na 0, aby elementy były na środku */
+  }
+
+  .reservation-container {
+    flex-direction: column;
+    align-items: center; /* Opcjonalnie możesz dodać wyśrodkowanie elementów na środku dla małych ekranów */
+  }
+}

@@ -2,6 +2,9 @@
   background-color: #61493e;
 } */
 
+body {
+  overflow-x: hidden;
+}
 .homepage {
   background-color: #fff;
   padding: 20px;
