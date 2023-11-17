@@ -183,22 +183,36 @@ h3#ook-info {
   left: 4%;
 }
 
+div.tile-products-list h3.coffee-intensity {
+  height: 37px;
+  position: relative;
+  /* top: 20%; */
+}
+
+.intensity-label {
+  display: flex;
+  top: -89%;
+  left: 120px;
+  /* font-size: 14px; */
+}
 @media (max-width: 768px) {
-  div.tile-products-list {
+  /* div#title-product-all-list {
+    height: 200px;
+  } */
+
+  /* div.tile-products-list {
     width: 40%;
     height: 200px;
     margin: 10px;
     padding: 10px;
     margin-top: 70px;
 
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
+    
     border: 2px solid black;
     border-radius: 2%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-color: #6b5e2f;
-  }
+  } */
 
   /* div.tile-products-border {
     margin-top: 100px;
@@ -209,10 +223,80 @@ h3#ook-info {
     margin-bottom: 20px;
   } */
 
-  .intensity-label {
+  /* .intensity-label {
     position: relative;
-    top: -100%; /* Dostosuj margines w prawo według potrzeb */
-    left: 10%;
+        left: 10%;
     font-size: 9px;
+  } */
+}
+@media (max-width: 990px) {
+  div.tile-products-list {
+    width: 200px;
+    height: 300px;
+  }
+
+  .button-busket-info-container {
+    position: relative;
+    width: 90%;
+    /* top: -50%; */
+    left: -2%;
+    /* top: -20%; */
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+
+    justify-content: center;
+    align-items: center;
+  }
+
+  .more-info-button {
+    /* margin-top: 10px; */
+  }
+  .add-busket-button {
+    margin-top: 10px;
+  }
+  h3#food-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .weight-label {
+    margin-top: 12px;
+    /* font-size: 14px; */
+    margin-left: 8px;
+  }
+  span {
+    font-size: 14px;
+  }
+
+  div.tile-products-list h3.product-price-text {
+    top: -44%;
+  }
+  div.tile-products-list > h3 {
+    margin-top: 25px;
+  }
+  .intensity-label {
+    display: flex;
+    top: -47%;
+    /* left: -2%; */
+    font-size: 14px;
+  }
+  /* h3.coffee-intensity {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+  } */
+
+  span.intensity-label {
+    left: 100px;
+  }
+
+  div.tile-products-list h3.coffee-intensity {
+    height: 116px;
+    position: relative;
+    /* top: 20%; */
   }
 }

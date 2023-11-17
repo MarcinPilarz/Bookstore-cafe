@@ -149,7 +149,11 @@ const ProductSection = () => {
       productInfo = (
         <div className="tile-products-border">
           {products.map((product) => (
-            <div className="tile-products-list" key={product.product.idProduct}>
+            <div
+              id="title-product-all-list"
+              className="tile-products-list"
+              key={product.product.idProduct}
+            >
               <img
                 className="photo-list-products"
                 src={product.imageUrl}
