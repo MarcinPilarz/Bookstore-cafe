@@ -23,11 +23,11 @@ a {
 .busket-icon {
   position: absolute;
   /* display: block; */
-  right: 0; /* Ustawienie na prawy brzeg */
+  right: 80px; /* Ustawienie na prawy brzeg */
   /* top: 1.45rem;  */
   top: 25px;
   /* transform: translateY(-50%); Korekta pozycji w pionie */
-  width: 50px; /* Szerokość kwadratu */
+  width: 20px; /* Szerokość kwadratu */
   height: 50px; /* Wysokość kwadratu */
   color: #fff;
   /* background-color: aqua; */
@@ -82,6 +82,18 @@ div.busket-sidebar {
   transform: translateY(9%);
 }
 
+div.history-sidebar {
+  width: 300px;
+  height: 400px;
+  background-color: rgb(213, 214, 214);
+  position: fixed;
+  transition: transform 0.3s;
+  top: 37px;
+  right: 0%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  transform: translateY(9%);
+}
 .order-items {
   padding: 20px;
 }
@@ -150,7 +162,7 @@ div.history-icon {
   margin-right: 30px;
   top: 26px;
   /* transform: translateY(-50%); Korekta pozycji w pionie */
-  width: 50px; /* Szerokość kwadratu */
+  width: 20px; /* Szerokość kwadratu */
   height: 50px; /* Wysokość kwadratu */
   color: #fff;
   /* background-color: aqua; */
@@ -203,24 +215,24 @@ div.history-icon {
 
   div.history-icon {
     position: absolute;
-    right: 0; /* Ustawienie na prawy brzeg */
+    right: 10; /* Ustawienie na prawy brzeg */
     /* top: 1.45rem;  */
     top: 20px;
 
     /* transform: translateY(-50%); Korekta pozycji w pionie */
-    width: 50px; /* Szerokość kwadratu */
+    width: 20px; /* Szerokość kwadratu */
     height: 50px; /* Wysokość kwadratu */
     color: #fff;
     /* /* background-color: aqua; * */
   }
   div.busket-icon {
     position: absolute;
-    right: 0; /* Ustawienie na prawy brzeg */
+    right: 80px; /* Ustawienie na prawy brzeg */
     /* top: 1.45rem;  */
     top: 20px;
 
     /* transform: translateY(-50%); Korekta pozycji w pionie */
-    width: 50px; /* Szerokość kwadratu */
+    width: 20px; /* Szerokość kwadratu */
     height: 50px; /* Wysokość kwadratu */
     color: #fff;
     /* /* background-color: aqua; * */

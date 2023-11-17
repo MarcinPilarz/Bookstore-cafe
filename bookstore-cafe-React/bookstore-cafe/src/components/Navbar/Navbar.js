@@ -15,6 +15,7 @@ const Navbar = () => {
   // const { isOpen, setIsOpen, handleClose } = useContext(BusketSideBar);
 
   const [busketOrderBar, setBusketOrderBar] = useState(false);
+  const [historyOrderBar, setHistoryOrderBar] = useState(false);
   const [infoImageVisible, setinfoImageVisible] = useState(true);
 
   const ProductsNavigate = () => {
@@ -71,6 +72,7 @@ const Navbar = () => {
   const busketBar = () => {
     setBusketOrderBar(!busketOrderBar);
     setShowMenuBars(false);
+    setHistoryOrderBar(false);
     setinfoImageVisible(!infoImageVisible);
     console.log(
       "Menu zostało przełączone. Aktualny stan menuOpen:",
@@ -80,6 +82,18 @@ const Navbar = () => {
     );
   };
 
+  const historyBar = () => {
+    setHistoryOrderBar(!historyOrderBar);
+    setShowMenuBars(false);
+    setBusketOrderBar(false);
+    setinfoImageVisible(!infoImageVisible);
+    console.log(
+      "Menu zostało przełączone. Aktualny stan menuOpen:",
+      !historyOrderBar,
+      "Stan napisów",
+      infoImageVisible
+    );
+  };
   // const location = useLocation();
 
   // // Sprawdź, czy jesteś na stronie WydarzeniaPage
@@ -158,8 +172,37 @@ const Navbar = () => {
             )}
           </div>
 
-          <div className="history-icon">
+          <div className="history-icon" onClick={historyBar}>
             <FontAwesomeIcon icon={faClock} />
+          </div>
+
+          <div
+            className={`history-sidebar${!historyOrderBar ? "openBusket" : ""}`}
+          >
+            {historyOrderBar && (
+              <div className="order-item-list">
+                <p>
+                  <b>Nazwa produktu:</b>
+                  <br />
+                  Americano{" "}
+                </p>
+                <p>
+                  <b>Ilość: </b>
+                  <br />2{" "}
+                </p>
+                <p>
+                  <b>Cena: </b>
+                  <br />
+                  40zł{" "}
+                </p>
+              </div>
+            )}
+            {historyOrderBar && (
+              <div className="button-container">
+                <button className="summary-button">Podsumowanie</button>
+                <button className="clear-button">Wyczyść</button>
+              </div>
+            )}
           </div>
         </div>
       </nav>
