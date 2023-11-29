@@ -8,6 +8,7 @@ public class ProductaAndProductPhotoInfoDTO {
 	    private Product product;
 	    
 	    
+	    
 	    public ProductaAndProductPhotoInfoDTO(String imageUrl, Product product) {
 	        this.imageUrl = imageUrl;
 	        this.product = product;

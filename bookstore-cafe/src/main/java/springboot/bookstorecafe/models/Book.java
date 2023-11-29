@@ -2,13 +2,7 @@ package springboot.bookstorecafe.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 public class Book extends Product {
@@ -53,6 +47,9 @@ public class Book extends Product {
 //	public void setTitle(String title) {
 //		this.title = title;
 //	}
+	
+	@Column(name="quantity_stock")
+	int quantityStock;
 
 	public String getAuthor() {
 		return author;
@@ -69,6 +66,17 @@ public class Book extends Product {
 	public void setGenere(String genere) {
 		this.genere = genere;
 	}
+
+	public int getQuantityStock() {
+		return quantityStock;
+	}
+
+	public void setQuantityStock(int quantityStock) {
+		this.quantityStock = quantityStock;
+	}
+	
+	
+	
 
 //	public String getDescription() {
 //		return description;

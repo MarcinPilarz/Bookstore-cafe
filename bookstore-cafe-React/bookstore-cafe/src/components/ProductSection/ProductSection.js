@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
+import SearchBarProducts from "./SearchBarProducts";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import "./ProductSection.css";
 import CoffeeIntensity from "./CoffeeIntensity";
+// props= searchResault
 const ProductSection = () => {
   //const { productType } = useParams();
   const [products, setProducts] = useState([]);
+  const [filterProducts, setFilterProducts] = useState([]);
+  const [searchProducts, setSearchProducts] = useState("");
   const { productType } = useParams();
   //   useEffect(() => {
   //     // Pobierz produkty dla danego productType z bazy danych
@@ -41,6 +45,21 @@ const ProductSection = () => {
         console.error("Błąd pobierania danych wydarzeń", error);
       });
   }, [productType]);
+
+  const handleSearch = (searchProducts) => {
+    setSearchProducts(searchProducts);
+    if (searchProducts.trim === "") {
+      setFilterProducts(products);
+    } else {
+      const filterResults = products.filter((product) =>
+        product.product.productName
+          .toLowerCase()
+          .includes(searchProducts.toLowerCase())
+      );
+
+      setFilterProducts(filterResults);
+    }
+  };
 
   let productInfo;
   switch (productType) {
@@ -82,7 +101,7 @@ const ProductSection = () => {
     case "BOOK":
       productInfo = (
         <div className="tile-products-border">
-          {products.map((product) => (
+          {filterProducts.map((product) => (
             <div className="tile-products-list" key={product.product.idProduct}>
               <img
                 className="photo-list-products"
@@ -228,6 +247,7 @@ const ProductSection = () => {
             <Link to="/products-page/FOOD">Jedzenie</Link>
           </li>
         </ul>
+        <SearchBarProducts onSearch={handleSearch} />
       </div>
       <div>{productInfo}</div>
       {/* <div>

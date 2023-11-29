@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -31,7 +33,6 @@ public class Person {
 	private String phoneNumber;
 
 	@OneToOne
-
 	@JoinColumn(name = "id_login_person")
 	private LoginPerson loginPerson;
 

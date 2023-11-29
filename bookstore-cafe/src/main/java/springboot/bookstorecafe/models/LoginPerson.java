@@ -1,13 +1,26 @@
 package springboot.bookstorecafe.models;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+
+import javax.persistence.Transient;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "login_person")
-public class LoginPerson {
+public class LoginPerson implements UserDetails, Serializable{
 
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_login_person")
@@ -19,11 +32,27 @@ public class LoginPerson {
 	@Column(name = "password")
 	private String password;
 
+	
+//	@Transient
+//    private String token;
+	
 	// @NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role_type")
 	private RoleType roleType;
 
+	
+	
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+	    if (roleType != null) {
+	       // return Collections.singleton(new SimpleGrantedAuthority(roleType.name()));
+	    	return List.of(new SimpleGrantedAuthority(roleType.name()));
+	    } else {
+	        // Możesz zwrócić pustą kolekcję, jeśli rola jest null
+	        return Collections.emptyList();
+	    }
+	}
 	public Long getIdLoginPerson() {
 		return idLoginPerson;
 	}
@@ -61,6 +90,15 @@ public class LoginPerson {
 		return Objects.hash(idLoginPerson);
 	}
 
+	
+//	public String getToken() {
+//		return token;
+//	}
+//
+//	public void setToken(String token) {
+//		this.token = token;
+//	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -71,6 +109,32 @@ public class LoginPerson {
 			return false;
 		LoginPerson other = (LoginPerson) obj;
 		return Objects.equals(idLoginPerson, other.idLoginPerson);
+	}
+	@Override
+	public String getUsername() {
+		// zwraca aktualna nazwe uzytkownika
+		//return this.email;
+		return email;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		// Sprawdzenie daty wygasniecia konta
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// sprawdzenie czy konto jest zablokowoane 
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true; // true =nie jest
+	}
+	@Override
+	public boolean isEnabled() {
+		// ssprawdzenie czy konto jest wlaczone
+		return true;
 	}
 
 }
