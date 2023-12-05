@@ -1,18 +1,18 @@
 import React from "react";
-import logo from "./logo.svg";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
 import HomePage from "./components/HomePage/HomePage";
 //mport {BusketSideBarProvider} from './components/SideBars/BusketSideBar';
-import AppRouters from "./components/AppRouters";
-import MainPhoto from "./components/HomePage/MainPhoto";
-import Footer from "./components/Footer/Footer";
-import ProductSection from "./components/ProductSection/ProductSection";
+import { Signin } from "./components/Login/Signin";
+import Signup from "./components/Login/Signup";
+import ProductSection from "./components/Footer/Footer";
 function App() {
   return (
+    // <BusketSideBarProvider>
     <BrowserRouter>
       <Routes>
+        <Route path="/newPerson" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
         <Route path="/" element={<HomePage />} />
         <Route
           path="/products-page/:productType"
@@ -20,6 +20,8 @@ function App() {
         />
       </Routes>
     </BrowserRouter>
+    // </BusketSideBarProvider>
+
     // <React.Fragment>
     //{/* <BusketSideBarProvider> */}
     //<Navbar />

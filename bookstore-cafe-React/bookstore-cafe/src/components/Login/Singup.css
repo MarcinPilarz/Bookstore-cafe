@@ -1,0 +1,290 @@
+body {
+  /* height: 400vh;
+  background: radial-gradient(circle at 0% 0%, green 50%, transparent 50%),
+    radial-gradient(circle at 100% 100%, white 50%, transparent 50%); */
+  /* Gradient zaokrąglony: zielony (50%) na górnym lewym rogu, biały (50%) na dolnym prawym rogu */
+  /* background-size: 50% 50%;
+  background-position: top left, bottom right;
+  background-repeat: no-repeat; */
+
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #4caf50 50%, #ffffff 50%); */
+}
+
+.singup-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(
+      to right,
+      /* rgb(46, 139, 87), */ rgb(60, 179, 113) 20%,
+      /* rgb(255, 255, 255) 20%, */ rgb(60, 179, 113) 40%,
+      rgb(46, 139, 87) 40%
+    ),
+    linear-gradient(
+      to bottom,
+      rgb(255, 255, 255),
+      rgb(46, 139, 87) 20%,
+      rgb(60, 179, 113) 20%,
+      rgb(255, 255, 255) 40%,
+      rgb(60, 179, 113) 40%,
+      rgb(46, 139, 87) 60%,
+      rgb(255, 255, 255) 60%
+    );
+  /* background: linear-gradient(135deg, #6ab29b 50%, #ffffff 50%); */
+  overflow: hidden;
+}
+
+.header-login {
+  position: relative;
+  display: flex;
+  justify-content: flex-end; /* Zmiana na flex-end, aby przenieść zawartość na koniec */
+  text-align: center;
+  color: #fff;
+  margin-left: auto; /* Wyśrodkowanie elementu na końcu */
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+}
+
+div.div-form-container {
+  width: 40%;
+  height: 100%;
+}
+div.singup-container {
+  width: 100%;
+  height: 100%;
+}
+form.form-container {
+  width: 80%;
+}
+.form-container {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 8px 8px;
+  padding: 40px;
+
+  position: relative;
+  width: 50%;
+  /* top: -180px; */
+  top: 0%;
+  left: 0%;
+  height: 420px;
+  margin: auto;
+}
+
+.input-login {
+  width: 80%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-top: 10px;
+  background-color: #f2f2f2;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+}
+
+.input-login::placeholder {
+  color: #999; /* Kolor tekstu w placeholderze */
+}
+
+.input-login:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+  background-color: #fff;
+}
+
+.input-login[title]::after {
+  content: "?";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #007bff;
+  font-weight: bold;
+  display: none;
+}
+
+.input-login[title]:hover::after {
+  display: block;
+}
+
+.singup-button {
+  display: inline-block;
+  padding: 12px 24px;
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+  transition: background-color 0.3s ease;
+}
+
+.singup-button:hover {
+  background-color: #45a049; /* Zmienia kolor podczas najechania myszką */
+}
+
+.logo-login {
+  margin-bottom: 20px;
+
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Dodaje zaokrąglone krawędzie do loga */
+  border: 2px solid #4caf50; /* Dodaje obramowanie wokół loga */
+}
+
+.toggle-buttons {
+  display: flex;
+  /* justify-content: center; lub align-items: center; dla centrowania w pionie
+  align-items: center; */
+}
+
+div.toggle-buttons {
+  position: relative;
+  width: 40%;
+  /* height: 100%; */
+  /* right: -20.8%; */
+  /* top: -55%; */
+}
+.toggle-buttons button {
+  /* Twoje dotychczasowe style przycisku */
+  position: relative;
+
+  width: 47.8%;
+  /* top: -180px; */
+  /* top: -100%; */
+  right: -2.2%;
+  padding: 10px 20px;
+  /* margin: 0 5px; */
+  border: none;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  background-color: #fff;
+  color: #333;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-buttons button.active {
+  font-size: 14px;
+  background-color: #d2b48c; /* kolor brązowy */
+}
+
+.header-login {
+  width: 60%;
+  height: 5%;
+}
+.header-login h1 span {
+  display: block;
+  position: relative;
+  top: 35%;
+
+  right: 50%;
+  border-right: 2px solid #fff;
+  margin-bottom: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 40px;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
+  opacity: 0; /* Ukryj na początku */
+  animation: typing 4s steps(20, end) forwards,
+    blink-caret 0.5s step-end infinite;
+}
+
+.header-login h1 span:first-child {
+  animation-delay: 0s; /* Pierwszy span zaczyna się od razu */
+}
+
+.header-login h1 span:nth-child(2) {
+  animation-delay: 4s; /* Drugi span zaczyna się po zakończeniu pierwszego */
+}
+
+.header-login h1 span:nth-child(3) {
+  animation-delay: 8s; /* Trzeci span zaczyna się po zakończeniu drugiego */
+}
+
+.header-login h1 span:nth-child(4) {
+  animation-delay: 12s; /* Czwarty span zaczyna się po zakończeniu trzeciego */
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+    opacity: 1; /* Pokaż na końcu animacji */
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #fff;
+  }
+}
+
+@media (max-width: 956px) {
+  .header-login h1 span {
+    visibility: hidden;
+    animation: none;
+    display: none;
+  }
+}
+/* .singup-section {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+/* header {
+  text-align: center;
+  margin-bottom: 20px;
+} */
+
+/* form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 10px;
+} */
+
+/* input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+} */
+.singup-section {
+  /* height: 100vh; */
+  /* height: 100%; */
+  /* background: linear-gradient(45deg, green 50%, white 50%); */
+}
