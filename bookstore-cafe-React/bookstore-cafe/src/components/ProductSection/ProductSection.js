@@ -6,12 +6,20 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import "./ProductSection.css";
 import CoffeeIntensity from "./CoffeeIntensity";
+import ProductDetails from "./ProductDetails";
 // props= searchResault
 const ProductSection = () => {
   //const { productType } = useParams();
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [showDetails, setShowDetails] = useState(false);
+  const [productSelectedId, setProdcutSelectedId] = useState(null);
+  const [detailsMap, setDetailsMap] = useState({});
   const { productType } = useParams();
   //   useEffect(() => {
   //     // Pobierz produkty dla danego productType z bazy danych
@@ -46,21 +54,35 @@ const ProductSection = () => {
       });
   }, [productType]);
 
-  const handleSearch = (searchProducts) => {
-    setSearchProducts(searchProducts);
-    if (searchProducts.trim === "") {
-      setFilterProducts(products);
-    } else {
-      const filterResults = products.filter((product) =>
-        product.product.productName
-          .toLowerCase()
-          .includes(searchProducts.toLowerCase())
-      );
-
-      setFilterProducts(filterResults);
-    }
+  const handleSearch = (searchQuery, filteredProducts) => {
+    setSearchQuery(searchQuery);
+    setFilteredProducts(filteredProducts);
   };
 
+  const handleTabClick = () => {
+    // Wyczyść stan Search Bara po kliknięciu w zakładkę
+    setSearchQuery("");
+    document.getElementById("searchInput").value = "";
+  };
+
+  const clearSearch = () => {
+    setSearchProducts("");
+    setFilterProducts(products);
+  };
+
+  const productDetails = () => {
+    // setProdcutSelectedId(productId);
+    // console.log("Productid:", productId);
+    setShowDetails(!showDetails);
+    console.log("Pokazane szczegoly", !showDetails);
+  };
+
+  const toggleDetails = (productId) => {
+    setDetailsMap((prevDetailsMap) => ({
+      ...prevDetailsMap,
+      [productId]: !prevDetailsMap[productId],
+    }));
+  };
   let productInfo;
   switch (productType) {
     case "COFFEE":
@@ -88,8 +110,32 @@ const ProductSection = () => {
                 />
               </h3>
               <div className="button-busket-info-container">
-                <button className="more-info-button">Szczegóły</button>
-                <button className="add-busket-button">Do koszyka</button>
+                <>
+                  <button
+                    className="more-info-button"
+                    // onClick={productDetails}
+                    // allProducts={products}
+                    onClick={() => toggleDetails(product.product.idProduct)}
+                  >
+                    Szczegóły
+                  </button>
+                  {detailsMap[product.product.idProduct] && (
+                    <ProductDetails
+                      onClose={() =>
+                        setDetailsMap((prevDetailsMap) => ({
+                          ...prevDetailsMap,
+                          [product.product.idProduct]: false,
+                        }))
+                      }
+                      productId={product.product.idProduct}
+                      allProducts={products}
+                    />
+                  )}
+                </>
+                <>
+                  {" "}
+                  <button className="add-busket-button">Do koszyka</button>
+                </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
@@ -101,7 +147,7 @@ const ProductSection = () => {
     case "BOOK":
       productInfo = (
         <div className="tile-products-border">
-          {filterProducts.map((product) => (
+          {products.map((product) => (
             <div className="tile-products-list" key={product.product.idProduct}>
               <img
                 className="photo-list-products"
@@ -122,8 +168,31 @@ const ProductSection = () => {
                 {product.product.genere}
               </h3>
               <div className="button-busket-info-container">
-                <button className="more-info-button">Szczegóły</button>
-                <button className="add-busket-button">Do koszyka</button>
+                <>
+                  <button
+                    className="more-info-button"
+                    // onClick={productDetails}
+                    // allProducts={products}
+                    onClick={() => toggleDetails(product.product.idProduct)}
+                  >
+                    Szczegóły
+                  </button>
+                  {detailsMap[product.product.idProduct] && (
+                    <ProductDetails
+                      onClose={() =>
+                        setDetailsMap((prevDetailsMap) => ({
+                          ...prevDetailsMap,
+                          [product.product.idProduct]: false,
+                        }))
+                      }
+                      productId={product.product.idProduct}
+                      allProducts={products}
+                    />
+                  )}
+                </>
+                <>
+                  <button className="add-busket-button">Do koszyka</button>
+                </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
@@ -155,8 +224,31 @@ const ProductSection = () => {
                 {product.product.foodWeight} g
               </h3>
               <div className="button-busket-info-container">
-                <button className="more-info-button">Szczegóły</button>
-                <button className="add-busket-button">Do koszyka</button>
+                <>
+                  <button
+                    className="more-info-button"
+                    // onClick={productDetails}
+                    // allProducts={products}
+                    onClick={() => toggleDetails(product.product.idProduct)}
+                  >
+                    Szczegóły
+                  </button>
+                  {detailsMap[product.product.idProduct] && (
+                    <ProductDetails
+                      onClose={() =>
+                        setDetailsMap((prevDetailsMap) => ({
+                          ...prevDetailsMap,
+                          [product.product.idProduct]: false,
+                        }))
+                      }
+                      productId={product.product.idProduct}
+                      allProducts={products}
+                    />
+                  )}
+                </>
+                <>
+                  <button className="add-busket-button">Do koszyka</button>
+                </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
@@ -212,8 +304,31 @@ const ProductSection = () => {
               )}
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
               <div className="button-busket-info-container">
-                <button className="more-info-button">Szczegóły</button>
-                <button className="add-busket-button">Do koszyka</button>
+                <>
+                  <button
+                    className="more-info-button"
+                    // onClick={productDetails}
+                    // allProducts={products}
+                    onClick={() => toggleDetails(product.product.idProduct)}
+                  >
+                    Szczegóły
+                  </button>
+                  {detailsMap[product.product.idProduct] && (
+                    <ProductDetails
+                      onClose={() =>
+                        setDetailsMap((prevDetailsMap) => ({
+                          ...prevDetailsMap,
+                          [product.product.idProduct]: false,
+                        }))
+                      }
+                      productId={product.product.idProduct}
+                      allProducts={products}
+                    />
+                  )}
+                </>
+                <>
+                  <button className="add-busket-button">Do koszyka</button>
+                </>
               </div>
             </div>
           ))}
@@ -235,41 +350,95 @@ const ProductSection = () => {
       <div className="li-product-card">
         <ul>
           <li className={isAllProductsActive}>
-            <Link to="/products-page/ALLPRODUCTS">Wszystkie produkty</Link>
+            <Link to="/products-page/ALLPRODUCTS" onClick={handleTabClick}>
+              Wszystkie produkty
+            </Link>
           </li>
           <li className={isBooksActive}>
-            <Link to="/products-page/BOOK">Książki</Link>
+            <Link to="/products-page/BOOK" onClick={handleTabClick}>
+              Książki
+            </Link>
           </li>
           <li className={isCoffeeActive}>
-            <Link to="/products-page/COFFEE">Kawy</Link>
+            <Link to="/products-page/COFFEE" onClick={handleTabClick}>
+              Kawy
+            </Link>
           </li>
           <li className={isFoodActive}>
-            <Link to="/products-page/FOOD">Jedzenie</Link>
+            <Link to="/products-page/FOOD" onClick={handleTabClick}>
+              Jedzenie
+            </Link>
           </li>
         </ul>
-        <SearchBarProducts onSearch={handleSearch} />
-      </div>
-      <div>{productInfo}</div>
-      {/* <div>
-        <h1>Strona z produktami: {productType}</h1>
-        <ul>
-          {categories.map((category) => (
-            <li key={category}>
-              <Link
-                to={`/products-page/${category}`}
-                className={category === productType ? "active" : ""}
+        <SearchBarProducts
+          allProducts={products}
+          onSearch={handleSearch}
+          productType={productType}
+          clearSearch={clearSearch}
+        />
+
+        {searchQuery.trim() === "" ? (
+          // Jeśli nic nie wpisano, wyświetl productInfo
+          <div>{productInfo}</div>
+        ) : (
+          // W przeciwnym razie, wyświetl przefiltrowane produkty
+          <div className="tile-products-border">
+            {filteredProducts.map((product) => (
+              // <div key={product.product.idProduct}>
+              <div
+                id="title-product-all-list"
+                className="tile-products-list"
+                key={product.product.idProduct}
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <ul>
-          {products.map((product) => (
-            <li key={product.id}>{product.title}</li>
-          ))}
-        </ul>
-      </div> */}
+                <img
+                  className="photo-list-products"
+                  src={product.imageUrl}
+                  alt={product.title}
+                />
+                <h3 className="produc-name-text">
+                  {product.product.productName}
+                </h3>
+                <h3 className="product-price-text">
+                  Cena: {product.product.productPrice} zł
+                </h3>
+                {/* Dodaj warunek sprawdzający typ produktu i wyświetl odpowiednie informacje */}
+                {product.product.productType === "COFFEE" && (
+                  <h3 className="coffee-intensity">
+                    <span className="intensity-label">Intensywność:</span>
+                    <CoffeeIntensity
+                      className="coffee-intensity-circle"
+                      intensity={product.product.coffeeIntensity}
+                    />
+                  </h3>
+                )}
+                {product.product.productType === "BOOK" && (
+                  <h3 id="food-info">
+                    <span className="calories-label">Autor:</span>
+                    {product.product.author}
+                    <span className="weight-label">Rodzaj:</span>
+                    {product.product.genere}
+                  </h3>
+                )}
+                {product.product.productType === "FOOD" && (
+                  <h3 id="food-info">
+                    <span className="calories-label">Kalorie:</span>
+                    {product.product.amountOfCalories}
+                    <span className="weight-label">Waga potrawy:</span>
+                    {product.product.foodWeight} g
+                  </h3>
+                )}
+                {/* Dodaj inne dane produktu, jeśli są dostępne */}
+                <div className="button-busket-info-container">
+                  <button className="more-info-button">Szczegóły</button>
+                  <button className="add-busket-button">Do koszyka</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        {/* </div> */}
+        {/* )} */}
+      </div>
       <Footer />
     </>
   );

@@ -1,35 +1,44 @@
 import React, { useState, useEffect } from "react";
+import ProductSection from "./ProductSection";
+const SearchBarProducts = ({ allProducts, onSearch, productType }) => {
+  const [searchQuery, setSearchQuery] = useState("");
 
-const SearchBarProducts = ({ onSearch }) => {
-  const [searchProducts, setSearchProducts] = useState("");
-
-  //useEffect;
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    onSearch(searchProducts);
-  };
   const handleSearchChange = (e) => {
-    // if (!e.target.value) return setSearchProducts(); //post
-    // const resultArray = posts.filter((post) =>
-    // post.title.includes(e.target.value) || post.body.includes(e.target.value));
+    const newSearchQuery = e.target.value;
+    setSearchQuery(newSearchQuery);
 
-    //setSearchProducts(resultsArray);
-    const newSearchProduct = e.target.value;
-    setSearchProducts(newSearchProduct);
-    onSearch(newSearchProduct);
+    // Filtrowanie produktów na podstawie wprowadzonego zapytania
+    const filteredProducts = allProducts.filter((product) =>
+      product.product.productName
+        .toLowerCase()
+        .includes(newSearchQuery.toLowerCase())
+    );
+
+    // Przekazanie przefiltrowanych produktów do komponentu nadrzędnego
+    onSearch(newSearchQuery, filteredProducts);
   };
+
+  const clearSearch = () => {
+    setSearchQuery(""); // Ustaw puste pole wyszukiwania
+    onSearch("", []); // Przekaż puste zapytanie i pustą listę do komponentu nadrzędnego
+  };
+  useEffect(() => {
+    // Wyczyść pole wyszukiwania po zmianie zakładki
+    clearSearch();
+  }, [productType]);
   return (
     <form className="search-bar">
       <input
+        id="searchInput"
         className="search-input"
         type="text"
         placeholder="Wyszukaj produkt"
-        value={searchProducts}
+        value={searchQuery}
         onChange={handleSearchChange}
-        // onChange={handleSearchChange}
       />
-      {/* <button type className="search-button"></button> */}
+      <button type="button" onClick={clearSearch}>
+        Wyczyść
+      </button>
     </form>
   );
 };

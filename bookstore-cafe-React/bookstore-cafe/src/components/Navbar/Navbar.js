@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBasketShopping,
   faBars,
+  faBasketShopping,
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
-import { BusketSideBar } from "../SideBars/BusketSideBar";
-import { useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 import "./Navbar.css";
 
 const Navbar = () => {

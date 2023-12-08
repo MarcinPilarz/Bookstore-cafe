@@ -9,7 +9,7 @@ import axios from "axios";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import MainPhoto from "./MainPhoto";
-import ProductSection from "../Footer/Footer";
+import ProductSection from "../ProductSection/ProductSection";
 import ReservationModal from "./ReservationModal";
 const HomePage = () => {
   const products = [

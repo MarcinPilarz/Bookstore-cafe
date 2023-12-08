@@ -122,6 +122,22 @@ div.tile-products-list h3.product-price-text {
   background-color: #eccc68;
   font-weight: bold;
 }
+
+.more-info-button:hover {
+  background-color: #d0b259;
+  cursor: pointer;
+}
+
+.add-busket-button:hover {
+  background-color: #3e8e40;
+  cursor: pointer;
+}
+.div-more-info-button {
+  margin-right: 20px;
+}
+.div-add-busket-button {
+  margin-right: 10px;
+}
 /* .button-busket-info-container button.add-busket-button {
   width: 20%;
   height: 20%;

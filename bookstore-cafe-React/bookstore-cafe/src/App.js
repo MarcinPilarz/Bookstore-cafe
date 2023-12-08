@@ -5,7 +5,7 @@ import HomePage from "./components/HomePage/HomePage";
 //mport {BusketSideBarProvider} from './components/SideBars/BusketSideBar';
 import { Signin } from "./components/Login/Signin";
 import Signup from "./components/Login/Signup";
-import ProductSection from "./components/Footer/Footer";
+import ProductSection from "./components/ProductSection/ProductSection";
 function App() {
   return (
     // <BusketSideBarProvider>
