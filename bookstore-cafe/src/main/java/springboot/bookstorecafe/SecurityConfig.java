@@ -27,6 +27,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import lombok.RequiredArgsConstructor;
 import springboot.bookstorecafe.models.LoginPerson;
@@ -65,33 +68,63 @@ public class SecurityConfig {
 	
 //	@Autowired
 //    private UserDetailsService userDetailsService;
-	
+//	
+//	  @Bean
+//	    public CorsFilter corsFilter() {
+//	        CorsConfiguration config = new CorsConfiguration();
+//	        config.setAllowCredentials(true);
+//	        config.addAllowedOrigin("http://localhost:3000"); // URL twojej aplikacji React
+//	        config.addAllowedHeader("*");
+//	        config.addAllowedMethod("*");
+//
+//	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//	        source.registerCorsConfiguration("/**", config); // Dla wszystkich ścieżek
+//
+//	        return new CorsFilter(source);
+//	    }
+//	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
 	}
 	
 	
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	    http.csrf(AbstractHttpConfigurer::disable)
-	        .authorizeHttpRequests(request ->
-	            request
+	 @Bean
+	    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	        http
+	            .cors().and() // Włączenie obsługi CORS
+	            .csrf().disable() // Wyłączenie CSRF
+	            .authorizeHttpRequests(auth -> auth
 	                .requestMatchers("/api/v1/auth/**").permitAll()
-	                .requestMatchers("/newPerson", "/reviews", "/images", "/person", "/loginPerson", "/events", "/deletePerson", "/newPerson", "/editPerson", "/signin","/refresh").permitAll()
-	                .requestMatchers("/reviews", "/api/v1/admin","/sayAdmin").hasAnyAuthority(RoleType.Pracownik.name())
-	                .requestMatchers("/api/v1/user", "/sayUser").hasAnyAuthority(RoleType.Klient.name())
-	                .requestMatchers("/events", "/api/v1/user", "/sayUser").hasAnyAuthority(RoleType.Wlasciciel.name())
-	                .anyRequest().authenticated()
-	        )
-	        .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	        .authenticationProvider(authenticationProvider())
-	        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+	                .requestMatchers("/newPerson", "/images", "/person", "/loginPerson", "/deletePerson", "/newPerson", "/editPerson", "/signin","/refresh","/loginPerson" ).permitAll()
+	                .requestMatchers("/api/v1/admin").hasAnyAuthority(RoleType.Pracownik.name())
+	                .requestMatchers("/sayAdmin","/api/v1/user", "/reviews", "/events", "/sayUser").hasAnyAuthority(RoleType.Klient.name(), RoleType.Pracownik.name(), RoleType.Wlasciciel.name())
+	                .requestMatchers("/api/v1/user", "/sayAdmin", "/sayUser").hasAnyAuthority(RoleType.Wlasciciel.name())
+	                .anyRequest().authenticated())
+	            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-	    return http.build();
-	}
+	        return http.build();
+	    }
 
-    
+//		@Bean
+//		public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		    http.csrf(AbstractHttpConfigurer::disable)
+//		        .authorizeHttpRequests(request ->
+//		            request
+//		                .requestMatchers("/api/v1/auth/**").permitAll()
+//		                .requestMatchers("/newPerson", "/images", "/person", "/loginPerson", "/deletePerson", "/newPerson", "/editPerson", "/signin","/refresh","/loginPerson", "/events" ).permitAll()
+//		                .requestMatchers("/api/v1/admin").hasAnyAuthority(RoleType.Pracownik.name())
+//		                .requestMatchers("/sayAdmin","/api/v1/user", "/reviews",  "/sayUser").hasAnyAuthority(RoleType.Klient.name(), RoleType.Pracownik.name(), RoleType.Wlasciciel.name())
+//		                .requestMatchers("/api/v1/user", "/sayAdmin", "/sayUser").hasAnyAuthority(RoleType.Wlasciciel.name())
+//		                .anyRequest().authenticated()
+//		        )
+//		        .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//		        .authenticationProvider(authenticationProvider())
+//		        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//		    return http.build();
+//		}
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider= new DaoAuthenticationProvider();

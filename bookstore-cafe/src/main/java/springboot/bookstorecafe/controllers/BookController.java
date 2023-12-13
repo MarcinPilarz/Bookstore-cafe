@@ -2,6 +2,7 @@ package springboot.bookstorecafe.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import springboot.bookstorecafe.models.ProductType;
 import springboot.bookstorecafe.services.BookService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class BookController {
 
 	@Autowired

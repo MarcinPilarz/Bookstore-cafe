@@ -1,21 +1,41 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../Login/LoginInfoContext";
 import "./CommentsSlider.css";
 const CommentsSlider = () => {
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);
+  const { authData } = useAuth();
+
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/reviews")
-      .then((response) => {
-        const reviewsData = response.data;
-        console.log("Pobrane dane z API:", reviewsData);
-        setReviews(reviewsData);
-      })
-      .catch((error) => {
-        console.error("Błąd pobierania danych wydarzeń", error);
-      });
-  }, []);
+    const fetchReviews = async () => {
+      // Zakładamy, że authData jest aktualne i pochodzi z kontekstu
+      if (authData.token && new Date().getTime() < authData.expirationTime) {
+        // Usuwanie cudzysłowów z początku i końca stringa tokena, jeśli istnieją
+
+        //.replace(/^"|"$/g, "");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${authData.token}`,
+          },
+        };
+
+        try {
+          const response = await axios.get(
+            "http://localhost:8080/reviews",
+            config
+          );
+          setReviews(response.data);
+        } catch (error) {
+          console.error("Błąd pobierania danych wydarzeń", error);
+        }
+      }
+    };
+
+    if (authData.token) {
+      fetchReviews();
+    }
+  }, [authData.token, authData.expirationTime]);
 
   const numberOfComments = 3;
   const numberOfPage = Math.ceil(reviews.length / numberOfComments);

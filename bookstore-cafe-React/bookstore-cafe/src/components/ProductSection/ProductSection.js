@@ -7,6 +7,8 @@ import Footer from "../Footer/Footer";
 import "./ProductSection.css";
 import CoffeeIntensity from "./CoffeeIntensity";
 import ProductDetails from "./ProductDetails";
+import { useCart } from "./BusketProducts";
+
 // props= searchResault
 const ProductSection = () => {
   //const { productType } = useParams();
@@ -20,7 +22,11 @@ const ProductSection = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [productSelectedId, setProdcutSelectedId] = useState(null);
   const [detailsMap, setDetailsMap] = useState({});
+
+  const [addedToCartList, setAddedToCartList] = useState([]);
   const { productType } = useParams();
+  const { addToBusket, productsList } = useCart();
+
   //   useEffect(() => {
   //     // Pobierz produkty dla danego productType z bazy danych
   //     const fetchData = async () => {
@@ -83,6 +89,16 @@ const ProductSection = () => {
       [productId]: !prevDetailsMap[productId],
     }));
   };
+
+  const handleAddToBusket = (product) => {
+    // Wywołaj funkcję addToBusket z całym obiektem produktu
+    console.log(product);
+    addToBusket(product);
+
+    // Dodaj productId do addedToCartList
+    setAddedToCartList((prevList) => [...prevList, product.product.idProduct]);
+  };
+
   let productInfo;
   switch (productType) {
     case "COFFEE":
@@ -327,7 +343,12 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
-                  <button className="add-busket-button">Do koszyka</button>
+                  <button
+                    className="add-busket-button"
+                    onClick={() => handleAddToBusket(product)}
+                  >
+                    Do koszyka
+                  </button>
                 </>
               </div>
             </div>

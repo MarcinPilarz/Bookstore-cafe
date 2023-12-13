@@ -2,9 +2,11 @@ import {
   faBars,
   faBasketShopping,
   faClock,
+  faCircleUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useCart } from "../ProductSection/BusketProducts";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -15,6 +17,8 @@ const Navbar = () => {
   const [historyOrderBar, setHistoryOrderBar] = useState(false);
   const [infoImageVisible, setinfoImageVisible] = useState(true);
 
+  const { busket, addToBusket } = useCart();
+  const [cartItemCount, setCartItemCount] = useState(0);
   const ProductsNavigate = () => {
     const element = document.getElementById("products");
     if (element) {
@@ -100,6 +104,29 @@ const Navbar = () => {
   // if (isWydarzeniaPage) {
   //   return null;
   // }
+
+  useEffect(() => {
+    // Aktualizuj liczbę produktów w koszyku po zmianie koszyka
+    setCartItemCount(busket.reduce((total, item) => total + item.quantity, 0));
+  }, [busket]);
+
+  const getProductInfo = (productId) => {
+    const product = busket.find((item) => item.productId === productId);
+
+    if (product && product.product) {
+      return {
+        productName:
+          product.product.productName || "Nazwa produktu niedostępna",
+        // inne parametry produktu, np. cena itp.
+      };
+    } else {
+      return {
+        productName: "Nazwa produktu niedostępna",
+        // inne domyślne wartości dla pozostałych parametrów
+      };
+    }
+  };
+
   return (
     <header>
       <nav className={`bar-icon ${showMenuBars ? "open" : ""}`}>
@@ -138,33 +165,34 @@ const Navbar = () => {
         <div className="icon-container">
           <div className="busket-icon" onClick={busketBar}>
             {" "}
-            <FontAwesomeIcon icon={faBasketShopping} />{" "}
+            <FontAwesomeIcon icon={faBasketShopping} />
+            <span className="amount-of-products">{cartItemCount}</span>
           </div>
           <div
             className={`busket-sidebar${!busketOrderBar ? "openBusket" : ""}`}
           >
-            {busketOrderBar && (
-              <div className="order-item-list">
-                <p>
-                  <b>Nazwa produktu:</b>
-                  <br />
-                  Americano{" "}
-                </p>
-                <p>
-                  <b>Ilość: </b>
-                  <br />2{" "}
-                </p>
-                <p>
-                  <b>Cena: </b>
-                  <br />
-                  40zł{" "}
-                </p>
-              </div>
-            )}
-            {busketOrderBar && (
-              <div className="button-container">
-                <button className="summary-button">Podsumowanie</button>
-                <button className="clear-button">Wyczyść</button>
+            {busket.length > 0 && busketOrderBar && (
+              <div className="busket-sidebar openBusket">
+                <div className="order-item-list">
+                  {busket.map((product) => (
+                    <div key={product.productId}>
+                      {" "}
+                      {/* Użyj unikalnego identyfikatora */}
+                      <p>
+                        <b>Nazwa produktu:</b>
+                        <br />
+                        {getProductInfo(product.productId)?.productName ||
+                          "Nazwa produktu niedostępna"}
+                      </p>
+                      <p>
+                        <b>Ilość: </b>
+                        <br />
+                        {product.quantity}
+                      </p>
+                      {/* inne informacje o produkcie */}
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -200,6 +228,9 @@ const Navbar = () => {
                 <button className="clear-button">Wyczyść</button>
               </div>
             )}
+          </div>
+          <div className="user-icon">
+            <FontAwesomeIcon icon={faCircleUser} />
           </div>
         </div>
       </nav>

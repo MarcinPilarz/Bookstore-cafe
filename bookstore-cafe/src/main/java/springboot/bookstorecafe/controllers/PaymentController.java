@@ -1,5 +1,6 @@
 package springboot.bookstorecafe.controllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,6 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import com.stripe.param.PaymentIntentCreateParams;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class PaymentController {
 
 	

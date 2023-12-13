@@ -1,16 +1,24 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Signin.css";
 //import { useHistory } from "react-router-dom";
-const AuthContext = React.createContext();
-const Signin = ({ children }) => {
+import { useAuth } from "./LoginInfoContext";
+import HomePage from "../HomePage/HomePage";
+// const AuthContext = React.createContext();
+const Signin = () => {
+  const { authData, setAuthData } = useAuth();
   const [isLoginActive, setIsLoginActive] = useState(true);
-
+  const navigate = useNavigate();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
   const [token, setToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
-  const [LoginData, setLoginData] = useState({
+  const [role, setRole] = useState(null);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
@@ -24,31 +32,54 @@ const Signin = ({ children }) => {
     try {
       const response = await axios.post(
         "http://localhost:8080/signin",
-        LoginData,
+        loginData,
         {
           timeout: 10000,
-
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      setToken(response.data.token);
-      setRefreshToken(response.data.refreshToken);
-      console.log("Zalogowano pomyślnie");
-      //console.log(response.token);
 
-      console.log("token", token);
-      console.log("rtoken", refreshToken);
-      setLoginData({
-        email: "",
-        password: "",
-      });
+      const expirationTime = new Date().getTime() + 15 * 60 * 1000; // 15 minut w milisekundach
+      //const expirationTime = new Date().getTime() + 10 * 60; // 15 minut w milisekundach
+
+      // Ustawienie danych uwierzytelniających w kontekście i localStorage
+      const newAuthData = {
+        token: response.data.token,
+        refreshToken: response.data.refreshToken,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        phoneNumber: response.data.phoneNumber,
+        idPerson: response.data.idPerson,
+        expirationTime: expirationTime,
+      };
+
+      localStorage.setItem("authData", JSON.stringify(newAuthData));
+      setAuthData(newAuthData); // Aktualizacja stanu w kontekście
+
+      // Ustawienie domyślnego nagłówka autoryzacji dla wszystkich żądań axios
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
+
+      navigate("/");
     } catch (error) {
       console.error("Błąd logowania:", error.message);
     }
   };
+  console.log("po handleLogin", authData);
 
+  useEffect(() => {
+    // Przekazywanie tokenów do innego komponentu
+    if (token && refreshToken) {
+      console.log("Przekazuję tokeny do innego komponentu");
+      console.log(token);
+
+      console.log(refreshToken);
+      // Tutaj przekazuj tokeny do innych komponentów
+    }
+  }, [token, refreshToken]);
   // useEffect(() => {
   //   // Tutaj możesz umieścić logikę sprawdzającą, czy użytkownik jest zalogowany
   //   // np. jeśli masz token w localStorage lub innym miejscu
@@ -64,13 +95,13 @@ const Signin = ({ children }) => {
   //   }
   // }, []); // Pusta tablica oznacza, że useEffect zostanie uruchomiony tylko raz po zamontowaniu komponentu
 
-  const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-      throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
-  };
+  // const useAuth = () => {
+  //   const context = useContext(AuthContext);
+  //   if (!context) {
+  //     throw new Error("useAuth must be used within an AuthProvider");
+  //   }
+  //   return context;
+  // };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -105,6 +136,16 @@ const Signin = ({ children }) => {
   // };
 
   return (
+    // <AuthContext.Provider
+    //   value={{
+    //     token,
+    //     refreshToken,
+    //     firstName,
+    //     lastName,
+    //     phoneNumber,
+    //     handleLogin,
+    //   }}
+    // >
     <section className="singup-section">
       <div className="singup-container">
         <header className="header-login">
@@ -152,7 +193,7 @@ const Signin = ({ children }) => {
                   pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                   placeholder="E-mail"
                   title="Podaj poprawny adres email."
-                  value={LoginData.email}
+                  value={loginData.email}
                   onChange={handleInputChange}
                   required
                 />
@@ -164,7 +205,7 @@ const Signin = ({ children }) => {
                   type="password"
                   name="password"
                   placeholder="Hasło"
-                  value={LoginData.password}
+                  value={loginData.password}
                   onChange={handleInputChange}
                   required
                 />
@@ -182,7 +223,8 @@ const Signin = ({ children }) => {
         </div>
       </div>
     </section>
+    // </AuthContext.Provider>
   );
 };
 
-export { Signin, AuthContext };
+export default Signin;

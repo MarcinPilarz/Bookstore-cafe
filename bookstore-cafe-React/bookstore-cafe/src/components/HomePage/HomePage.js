@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../HomePage/HomePage.css";
 import ProductsTile from "./ProductsTile";
 import ProductModal from "./ReservationModal";
@@ -11,6 +11,9 @@ import Footer from "../Footer/Footer";
 import MainPhoto from "./MainPhoto";
 import ProductSection from "../ProductSection/ProductSection";
 import ReservationModal from "./ReservationModal";
+import { AuthContext } from "../Login/Signin";
+import { useAuth } from "../Login/LoginInfoContext";
+
 const HomePage = () => {
   const products = [
     {
@@ -37,6 +40,11 @@ const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [events, setEvents] = useState([]);
+  const { authData } = useAuth();
+  // console.log("Po useAuth", authData);
+  useEffect(() => {
+    console.log("Po useAuth w Home Page", authData);
+  }, [authData]);
   const openModal = () => {
     // setSelectedProduct(product);
     setIsModalOpen(true);
@@ -68,6 +76,7 @@ const HomePage = () => {
       <div className="homepage">
         <section>
           <h1>O Nas</h1>
+          {console.log("Imie w HomePage:", authData)}
           <div className="about-us">
             <div className="p-about-us">
               <p>
@@ -123,20 +132,25 @@ const HomePage = () => {
             Chwila relaksu? Spotkanie ze znajomymi? Zarezerwuj u nas stolik i
             przestań martwić się o brak miejsca.
           </p>
-
-          <button
-            className="reservation-button-click"
-            onClick={() => openModal()}
-          >
-            Zarezerwuj stolik
-          </button>
+          {authData.token && authData.expirationTime ? (
+            <button
+              className="reservation-button-click"
+              onClick={() => openModal()}
+            >
+              Zarezerwuj stolik
+            </button>
+          ) : (
+            <button>zaloguj się</button>
+          )}
         </section>
+
         {isModalOpen && (
           <ReservationModal
             productData={selectedProduct}
             closeModal={closeModal}
           />
         )}
+
         <section>
           <h1>Komentarze</h1>
           <p>
@@ -144,7 +158,11 @@ const HomePage = () => {
             doświadczeniem.
           </p>
         </section>
+        {/* {authData.token && authData.expirationTime ? ( */}
         <CommentsSlider />
+        {/* ) : ( */}
+        {/* <button>Nie te uprawnienia</button> */}
+        {/* )} */}
       </div>
 
       <Footer />

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import springboot.bookstorecafe.models.OrderItem;
 import springboot.bookstorecafe.services.OrderItemService;
 import static springboot.bookstorecafe.DTO.mapper.OrderItemDTOMapper.mapOrderItemtoOrderItemInfo;
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class OrderItemController {
 
 	@Autowired

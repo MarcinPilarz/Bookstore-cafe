@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../Login/LoginInfoContext";
 import "./EventSlider.css";
 
 const EventSlider = () => {
   const [events, setEvents] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState("next");
+  const { authData } = useAuth();
   const prevIndex = currentIndex === 0 ? events.length - 1 : currentIndex - 1;
   const nextIndex = currentIndex === events.length - 1 ? 0 : currentIndex + 1;
 
@@ -23,18 +25,55 @@ const EventSlider = () => {
     setDirection("prev"); // Ustaw kierunek na Poprzedni
   };
 
+  // useEffect(() => {
+  //   console.log("Token przed ustawieniem nagłówka:", authData.token);
+
+  //   axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
+  //   console.log(
+  //     "Nagłówek Authorization ustawiony:",
+  //     axios.defaults.headers.common["Authorization"]
+  //   );
+
+  //   axios
+  //     .get("http://localhost:8080/events")
+  //     .then((response) => {
+  //       const eventsData = response.data;
+  //       console.log("Pobrane dane z API:", eventsData);
+  //       setEvents(eventsData);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Błąd pobierania danych wydarzeń", error);
+  //     });
+  // }, [authData.token]);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/events")
-      .then((response) => {
-        const eventsData = response.data;
-        console.log("Pobrane dane z API:", eventsData);
-        setEvents(eventsData);
-      })
-      .catch((error) => {
-        console.error("Błąd pobierania danych wydarzeń", error);
-      });
-  }, []);
+    const fetchEvents = async () => {
+      if (authData.token && new Date().getTime() < authData.expirationTime) {
+        try {
+          // Ustawienie nagłówka autoryzacji
+          const config = {
+            headers: {
+              Authorization: `Bearer ${authData.token}`,
+            },
+          };
+
+          // Wykonanie zapytania GET z dodanym nagłówkiem
+          const response = await axios.get(
+            "http://localhost:8080/events",
+            config
+          );
+          console.log("Pobrane dane z API:", response.data);
+          setEvents(response.data);
+        } catch (error) {
+          console.error("Błąd pobierania danych wydarzeń", error);
+        }
+      }
+    };
+
+    if (authData.token) {
+      fetchEvents();
+    }
+  }, [authData.token]);
 
   //   useEffect(() => {
   //     // Przesunięcie slidera o jedno wydarzenie w prawo co kilka sekund

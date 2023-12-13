@@ -23,18 +23,6 @@ a {
   margin-right: 2rem;
 }
 
-.busket-icon {
-  position: absolute;
-  /* display: block; */
-  right: 80px; /* Ustawienie na prawy brzeg */
-  /* top: 1.45rem;  */
-  top: 25px;
-  /* transform: translateY(-50%); Korekta pozycji w pionie */
-  width: 20px; /* Szerokość kwadratu */
-  height: 50px; /* Wysokość kwadratu */
-  color: #fff;
-  /* background-color: aqua; */
-}
 li:hover {
   cursor: pointer;
   background-color: #628326;
@@ -44,8 +32,8 @@ div.busket-icon:hover {
   color: bisque;
 }
 
-div.bar-icon {
-}
+/* div.bar-icon {
+} */
 
 .bar-icon .hamburger {
   width: 4.5%;
@@ -154,9 +142,37 @@ div.history-sidebar {
   opacity: 0.8;
 }
 
-div.icon-container {
+/* div.icon-container {
+} */
+
+.busket-icon {
+  position: absolute;
+  /* display: block; */
+  right: 120px; /* Ustawienie na prawy brzeg */
+  /* top: 1.45rem;  */
+  top: 25px;
+  /* transform: translateY(-50%); Korekta pozycji w pionie */
+  width: 20px; /* Szerokość kwadratu */
+  height: 50px; /* Wysokość kwadratu */
+  color: #fff;
+  /* background-color: aqua; */
 }
 div.history-icon {
+  position: absolute;
+  /* display: block; */
+  right: 40px;
+  /* top: 1.45rem;  */
+  /* left: 93%; */
+  margin-right: 30px;
+  top: 26px;
+  /* transform: translateY(-50%); Korekta pozycji w pionie */
+  width: 20px; /* Szerokość kwadratu */
+  height: 50px; /* Wysokość kwadratu */
+  color: #fff;
+  /* background-color: aqua; */
+}
+
+.user-icon {
   position: absolute;
   /* display: block; */
   right: 0;
@@ -230,7 +246,20 @@ div.history-icon {
   }
   div.busket-icon {
     position: absolute;
-    right: 80px; /* Ustawienie na prawy brzeg */
+    right: 10; /* Ustawienie na prawy brzeg */
+    /* top: 1.45rem;  */
+    top: 20px;
+
+    /* transform: translateY(-50%); Korekta pozycji w pionie */
+    width: 20px; /* Szerokość kwadratu */
+    height: 50px; /* Wysokość kwadratu */
+    color: #fff;
+    /* /* background-color: aqua; * */
+  }
+
+  .user-icon {
+    position: absolute;
+    right: 10; /* Ustawienie na prawy brzeg */
     /* top: 1.45rem;  */
     top: 20px;
 
