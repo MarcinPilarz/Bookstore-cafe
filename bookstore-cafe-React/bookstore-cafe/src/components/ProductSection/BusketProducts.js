@@ -3,24 +3,46 @@ import React, { createContext, useContext, useState } from "react";
 const BusketProducts = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [busket, setBusket] = useState([]);
-
+  const [busket, setBusket] = useState(() => {
+    const savedBusket = localStorage.getItem("busket");
+    const initialBusket = savedBusket ? JSON.parse(savedBusket) : [];
+    console.log("Initial busket from localStorage:", initialBusket);
+    return initialBusket;
+  });
   const addToBusket = (product) => {
     setBusket((prevCart) => {
-      const existingProductIndex = prevCart.findIndex(
-        (item) => item.productId === product.idProduct
-      );
+      console.log("PrevCart", prevCart);
+      const existingProduct = prevCart.find((item) => {
+        console.log("PrevCart w find", prevCart);
+        const isMatch = item.idProduct === product.idProduct;
+        console.log(
+          `Produkt ${item.idProduct} porównanie z ${product.idProduct}:`,
+          isMatch
+        );
+        return isMatch;
+      });
 
-      if (existingProductIndex !== -1) {
-        // Produkt jest już w koszyku, zwiększ ilość
-        return prevCart.map((item, index) =>
-          index === existingProductIndex
+      if (existingProduct) {
+        // Aktualizacja ilości istniejącego produktu
+        const updatedCart = prevCart.map((item) =>
+          item.id === product.idProduct
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
+        console.log(
+          "Koszyk po aktualizacji istniejącego produktu:",
+          updatedCart
+        );
+        localStorage.setItem("busket", JSON.stringify(updatedCart));
+        console.log("Updated busket:", updatedCart);
+        return updatedCart;
       } else {
-        // Produktu nie ma jeszcze w koszyku, dodaj go
-        return [...prevCart, { ...product, quantity: 1 }];
+        // Dodanie nowego produktu
+        const updatedCart = [...prevCart, { ...product, quantity: 1 }];
+        console.log("Koszyk po dodaniu nowego produktu:", updatedCart);
+        localStorage.setItem("busket", JSON.stringify(updatedCart));
+        console.log("Updated busket:", updatedCart);
+        return updatedCart;
       }
     });
   };

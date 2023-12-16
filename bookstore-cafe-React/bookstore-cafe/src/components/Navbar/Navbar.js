@@ -110,22 +110,22 @@ const Navbar = () => {
     setCartItemCount(busket.reduce((total, item) => total + item.quantity, 0));
   }, [busket]);
 
-  const getProductInfo = (productId) => {
-    const product = busket.find((item) => item.productId === productId);
+  // const getProductInfo = (productId) => {
+  //   const product = busket.find((item) => item.productId === productId);
 
-    if (product && product.product) {
-      return {
-        productName:
-          product.product.productName || "Nazwa produktu niedostępna",
-        // inne parametry produktu, np. cena itp.
-      };
-    } else {
-      return {
-        productName: "Nazwa produktu niedostępna",
-        // inne domyślne wartości dla pozostałych parametrów
-      };
-    }
-  };
+  //   if (product && product.product) {
+  //     return {
+  //       productName:
+  //         product.product.productName || "Nazwa produktu niedostępna",
+  //       // inne parametry produktu, np. cena itp.
+  //     };
+  //   } else {
+  //     return {
+  //       productName: "Nazwa produktu niedostępna",
+  //       // inne domyślne wartości dla pozostałych parametrów
+  //     };
+  //   }
+  // };
 
   return (
     <header>
@@ -175,14 +175,17 @@ const Navbar = () => {
               <div className="busket-sidebar openBusket">
                 <div className="order-item-list">
                   {busket.map((product) => (
-                    <div key={product.productId}>
-                      {" "}
+                    <div key={product.idProduct}>
+                      {console.log("Produkt w koszyku:", product)}
+                      {console.log(
+                        "product.productId W nVBAR",
+                        product.productId
+                      )}{" "}
                       {/* Użyj unikalnego identyfikatora */}
                       <p>
                         <b>Nazwa produktu:</b>
                         <br />
-                        {getProductInfo(product.productId)?.productName ||
-                          "Nazwa produktu niedostępna"}
+                        {product.productName}
                       </p>
                       <p>
                         <b>Ilość: </b>

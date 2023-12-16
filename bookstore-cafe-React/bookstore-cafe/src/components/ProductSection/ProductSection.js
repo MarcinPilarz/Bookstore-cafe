@@ -26,6 +26,7 @@ const ProductSection = () => {
   const [addedToCartList, setAddedToCartList] = useState([]);
   const { productType } = useParams();
   const { addToBusket, productsList } = useCart();
+  //const { busket } = useCart();
 
   //   useEffect(() => {
   //     // Pobierz produkty dla danego productType z bazy danych
@@ -91,12 +92,16 @@ const ProductSection = () => {
   };
 
   const handleAddToBusket = (product) => {
-    // Wywołaj funkcję addToBusket z całym obiektem produktu
-    console.log(product);
+    console.log("Console log w handleAddToBusket", product);
     addToBusket(product);
 
-    // Dodaj productId do addedToCartList
-    setAddedToCartList((prevList) => [...prevList, product.product.idProduct]);
+    // Dodaj cały obiekt produktu do addedToCartList
+    console.log("Dodawanie do addedToCartList", product);
+    console.log("Aktualny stan addedToCartList:", addedToCartList);
+    setAddedToCartList((prevList) => {
+      console.log("PrevList w setAddedToCartList:", prevList);
+      return [...prevList, product];
+    });
   };
 
   let productInfo;
@@ -345,7 +350,13 @@ const ProductSection = () => {
                 <>
                   <button
                     className="add-busket-button"
-                    onClick={() => handleAddToBusket(product)}
+                    onClick={() => {
+                      console.log(
+                        "Produkt w buuttonie do przeslania",
+                        product.product
+                      ); // Wyświetla informacje o produkcie w konsoli
+                      handleAddToBusket(product.product);
+                    }}
                   >
                     Do koszyka
                   </button>
