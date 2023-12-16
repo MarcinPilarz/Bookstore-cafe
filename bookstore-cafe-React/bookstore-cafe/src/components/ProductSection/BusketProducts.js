@@ -2,7 +2,8 @@ import React, { createContext, useContext, useState } from "react";
 
 const BusketProducts = createContext();
 
-export const CartProvider = ({ children }) => {
+export const CartProvider = ({ children, idPerson }) => {
+  //const busketKey = `busket_${idPerson}`;
   const [busket, setBusket] = useState(() => {
     const savedBusket = localStorage.getItem("busket");
     const initialBusket = savedBusket ? JSON.parse(savedBusket) : [];
@@ -11,49 +12,78 @@ export const CartProvider = ({ children }) => {
   });
   const addToBusket = (product) => {
     setBusket((prevCart) => {
-      console.log("PrevCart", prevCart);
-      const existingProduct = prevCart.find((item) => {
-        console.log("PrevCart w find", prevCart);
-        const isMatch = item.idProduct === product.idProduct;
-        console.log(
-          `Produkt ${item.idProduct} porównanie z ${product.idProduct}:`,
-          isMatch
-        );
-        return isMatch;
-      });
+      const existingProductIndex = prevCart.findIndex(
+        (item) => item.idProduct === product.idProduct
+      );
 
-      if (existingProduct) {
-        // Aktualizacja ilości istniejącego produktu
-        const updatedCart = prevCart.map((item) =>
-          item.id === product.idProduct
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-        console.log(
-          "Koszyk po aktualizacji istniejącego produktu:",
-          updatedCart
-        );
-        localStorage.setItem("busket", JSON.stringify(updatedCart));
-        console.log("Updated busket:", updatedCart);
-        return updatedCart;
+      if (existingProductIndex !== -1) {
+        // Sprawdź, czy dodanie kolejnej sztuki nie przekroczy limitu 10
+        if (prevCart[existingProductIndex].quantity < 10) {
+          const updatedCart = [...prevCart];
+          updatedCart[existingProductIndex] = {
+            ...updatedCart[existingProductIndex],
+            quantity: updatedCart[existingProductIndex].quantity + 1,
+          };
+
+          localStorage.setItem("busket", JSON.stringify(updatedCart));
+          return updatedCart;
+        } else {
+          // Jeśli limit zostałby przekroczony, nie dodawaj więcej i zwróć obecny koszyk
+          alert("Możesz dodać maksymalnie 10 sztuk tego produktu.");
+          return prevCart;
+        }
       } else {
-        // Dodanie nowego produktu
+        // Dodaj nowy produkt do koszyka z ilością 1
         const updatedCart = [...prevCart, { ...product, quantity: 1 }];
-        console.log("Koszyk po dodaniu nowego produktu:", updatedCart);
+
         localStorage.setItem("busket", JSON.stringify(updatedCart));
-        console.log("Updated busket:", updatedCart);
         return updatedCart;
       }
     });
   };
   const removeFromBusket = (productId) => {
-    setBusket((prevCart) =>
-      prevCart.filter((item) => item.productId !== productId)
-    );
+    setBusket((prevCart) => {
+      const updatedCart = prevCart.filter(
+        (item) => item.idProduct !== productId
+      );
+
+      // Zapisz zaktualizowany koszyk do localStorage
+      localStorage.setItem("busket", JSON.stringify(updatedCart));
+
+      return updatedCart;
+    });
   };
 
+  const clearBusket = () => {
+    setBusket([]); // Resetuje stan busket
+    localStorage.removeItem("busket"); // Usuwa dane z localStorage
+  };
+
+  const updateProductQuantity = (idProduct, newQuantity) => {
+    setBusket((prevCart) => {
+      const updatedCart = prevCart.map((item) => {
+        if (item.idProduct === idProduct) {
+          return { ...item, quantity: newQuantity };
+        }
+        return item;
+      });
+
+      // Zapisz zaktualizowany koszyk do localStorage
+      localStorage.setItem("busket", JSON.stringify(updatedCart));
+
+      return updatedCart;
+    });
+  };
   return (
-    <BusketProducts.Provider value={{ busket, addToBusket, removeFromBusket }}>
+    <BusketProducts.Provider
+      value={{
+        busket,
+        addToBusket,
+        removeFromBusket,
+        clearBusket,
+        updateProductQuantity,
+      }}
+    >
       {children}
     </BusketProducts.Provider>
   );

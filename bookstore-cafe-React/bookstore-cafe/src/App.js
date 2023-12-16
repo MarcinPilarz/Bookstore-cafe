@@ -8,6 +8,7 @@ import Signup from "./components/Login/Signup";
 import ProductSection from "./components/ProductSection/ProductSection";
 import { CartProvider } from "./components/ProductSection/BusketProducts";
 import { AuthProvider } from "./components/Login/LoginInfoContext";
+import OrderItem from "./components/Orders/OrderItem";
 function App() {
   return (
     // <BusketSideBarProvider>
@@ -18,6 +19,7 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           {/* <CartProvider> */}
           <Route path="/" element={<HomePage />} />
+          <Route path="/summaryOrder" element={<OrderItem />} />
           <Route
             path="/products-page/:productType"
             element={<ProductSection />}

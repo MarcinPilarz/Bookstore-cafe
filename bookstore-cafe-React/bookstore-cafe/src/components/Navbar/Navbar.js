@@ -6,9 +6,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useCart } from "../ProductSection/BusketProducts";
 import "./Navbar.css";
-
+import { useAuth } from "../Login/LoginInfoContext";
 const Navbar = () => {
   const [showMenuBars, setShowMenuBars] = useState(false);
   // const { isOpen, setIsOpen, handleClose } = useContext(BusketSideBar);
@@ -17,7 +18,11 @@ const Navbar = () => {
   const [historyOrderBar, setHistoryOrderBar] = useState(false);
   const [infoImageVisible, setinfoImageVisible] = useState(true);
 
-  const { busket, addToBusket } = useCart();
+  const { busket, clearBusket, updateProductQuantity, removeFromBusket } =
+    useCart();
+
+  const { authData } = useAuth();
+  const idPerson = authData.idPerson;
   const [cartItemCount, setCartItemCount] = useState(0);
   const ProductsNavigate = () => {
     const element = document.getElementById("products");
@@ -190,12 +195,33 @@ const Navbar = () => {
                       <p>
                         <b>Ilość: </b>
                         <br />
-                        {product.quantity}
+                        <input
+                          type="number"
+                          value={product.quantity}
+                          onChange={(e) =>
+                            updateProductQuantity(
+                              product.idProduct,
+                              Math.min(Math.max(1, e.target.value), 10)
+                            )
+                          }
+                          min="1"
+                          max="10"
+                        />
                       </p>
+                      <button
+                        onClick={() => removeFromBusket(product.idProduct)}
+                      >
+                        X
+                      </button>
                       {/* inne informacje o produkcie */}
                     </div>
                   ))}
                 </div>
+                <button>
+                  <Link to="/summaryOrder"> Podsumowanie</Link>
+                </button>
+                <button onClick={clearBusket}>Wyczyść koszyk</button>{" "}
+                {/* Przycisk Wyczyść */}
               </div>
             )}
           </div>

@@ -8,7 +8,7 @@ import "./ProductSection.css";
 import CoffeeIntensity from "./CoffeeIntensity";
 import ProductDetails from "./ProductDetails";
 import { useCart } from "./BusketProducts";
-
+import { useAuth } from "../Login/LoginInfoContext";
 // props= searchResault
 const ProductSection = () => {
   //const { productType } = useParams();
@@ -43,6 +43,9 @@ const ProductSection = () => {
 
   //     fetchData();
   //   }, [productType]);
+
+  const { authData } = useAuth();
+  const idPerson = authData.idPerson;
   const isBooksActive = productType === "BOOK" ? "active-product" : "";
   const isCoffeeActive = productType === "COFFEE" ? "active-product" : "";
   const isFoodActive = productType === "FOOD" ? "active-product" : "";

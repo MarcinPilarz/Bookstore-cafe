@@ -101,6 +101,8 @@ public class OrderItemService {
 														// produktów
 		orderItem.setTotalPrice(totalPrice);
 		
+		orderRepo.save(orderItem);
+		
 	//	int totalPriceCents = (int) (totalPrice * 100);
 		
 //		try {
@@ -113,29 +115,29 @@ public class OrderItemService {
 //	        );
 //		
 		
-
-		 try {
-	            Stripe.apiKey = stripeKey;
-
-	            // Przygotuj dane do płatności w Stripe
-	            Long totalPriceCents = (long) (totalPrice * 100); // W centach
-	            Charge charge = Charge.create(new ChargeCreateParamsBuilder()
-	                .setAmount(totalPriceCents)
-	                .setCurrency("usd")
-	                .setSource(tokenCreditCard) // Token karty kredytowej klienta
-	                .setDescription("Opis płatności")
-	                .build()
-	            );
-
-	            // Jeśli płatność przebiegnie pomyślnie, zapisz zamówienie
-	            orderRepo.save(orderItem);
-
-	            if (orderItem != null) {
-	                addItemToHistory(orderItem, person, products);
-	            } } catch (StripeException e) {
-	                // Obsłuż błąd płatności
-	                throw new RuntimeException("Błąd płatności: " + e.getMessage());
-	            }
+//
+//		 try {
+//	            Stripe.apiKey = stripeKey;
+//
+//	            // Przygotuj dane do płatności w Stripe
+//	            Long totalPriceCents = (long) (totalPrice * 100); // W centach
+//	            Charge charge = Charge.create(new ChargeCreateParamsBuilder()
+//	                .setAmount(totalPriceCents)
+//	                .setCurrency("usd")
+//	                .setSource(tokenCreditCard) // Token karty kredytowej klienta
+//	                .setDescription("Opis płatności")
+//	                .build()
+//	            );
+//
+//	            // Jeśli płatność przebiegnie pomyślnie, zapisz zamówienie
+//	            orderRepo.save(orderItem);
+//
+//	            if (orderItem != null) {
+//	                addItemToHistory(orderItem, person, products);
+//	            } } catch (StripeException e) {
+//	                // Obsłuż błąd płatności
+//	                throw new RuntimeException("Błąd płatności: " + e.getMessage());
+//	            }
 
 //		 } catch (StripeException e) {
 //		        // Płatność nie powiodła się, obsłuż błąd
