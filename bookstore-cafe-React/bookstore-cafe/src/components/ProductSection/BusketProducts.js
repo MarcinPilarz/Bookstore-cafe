@@ -1,15 +1,37 @@
-import React, { createContext, useContext, useState } from "react";
-
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "../Login/LoginInfoContext";
 const BusketProducts = createContext();
 
-export const CartProvider = ({ children, idPerson }) => {
-  //const busketKey = `busket_${idPerson}`;
-  const [busket, setBusket] = useState(() => {
-    const savedBusket = localStorage.getItem("busket");
-    const initialBusket = savedBusket ? JSON.parse(savedBusket) : [];
-    console.log("Initial busket from localStorage:", initialBusket);
-    return initialBusket;
-  });
+export const CartProvider = ({ children }) => {
+  const { authData } = useAuth(); // Pobranie danych autentykacji
+  const idPerson = authData.idPerson;
+  const busketKey = `busket_${idPerson}`;
+  // const [busket, setBusket] = useState(() => {
+  //   const savedBusket = localStorage.getItem("busket");
+  //   const initialBusket = savedBusket ? JSON.parse(savedBusket) : [];
+  //   console.log("Initial busket from localStorage:", initialBusket);
+  //   return initialBusket;
+  // const [busket, setBusket] = useState(() => {
+  //   const savedBusket = localStorage.getItem(busketKey);
+  //   return savedBusket ? JSON.parse(savedBusket) : [];
+  // });
+
+  const [busket, setBusket] = useState([]);
+
+  useEffect(() => {
+    // Klucz dla koszyka bazujący na idPerson
+    const busketKey = `busket_${authData.idPerson}`;
+
+    // Funkcja do ładowania koszyka z localStorage
+    const loadBusket = () => {
+      const savedBusket = localStorage.getItem(busketKey);
+      return savedBusket ? JSON.parse(savedBusket) : [];
+    };
+
+    // Ustawienie stanu koszyka po zmianie użytkownika
+    setBusket(loadBusket());
+  }, [authData.idPerson, authData.token]); // Uruchom ponownie, gdy zmienia się idPerson lub token
+
   const addToBusket = (product) => {
     setBusket((prevCart) => {
       const existingProductIndex = prevCart.findIndex(
@@ -25,7 +47,8 @@ export const CartProvider = ({ children, idPerson }) => {
             quantity: updatedCart[existingProductIndex].quantity + 1,
           };
 
-          localStorage.setItem("busket", JSON.stringify(updatedCart));
+          // localStorage.setItem("busket", JSON.stringify(updatedCart));
+          localStorage.setItem(busketKey, JSON.stringify(updatedCart));
           return updatedCart;
         } else {
           // Jeśli limit zostałby przekroczony, nie dodawaj więcej i zwróć obecny koszyk
@@ -36,7 +59,8 @@ export const CartProvider = ({ children, idPerson }) => {
         // Dodaj nowy produkt do koszyka z ilością 1
         const updatedCart = [...prevCart, { ...product, quantity: 1 }];
 
-        localStorage.setItem("busket", JSON.stringify(updatedCart));
+        // localStorage.setItem("busket", JSON.stringify(updatedCart));
+        localStorage.setItem(busketKey, JSON.stringify(updatedCart));
         return updatedCart;
       }
     });
@@ -48,15 +72,16 @@ export const CartProvider = ({ children, idPerson }) => {
       );
 
       // Zapisz zaktualizowany koszyk do localStorage
-      localStorage.setItem("busket", JSON.stringify(updatedCart));
-
+      // localStorage.setItem("busket", JSON.stringify(updatedCart));
+      localStorage.setItem(busketKey, JSON.stringify(updatedCart));
       return updatedCart;
     });
   };
 
   const clearBusket = () => {
     setBusket([]); // Resetuje stan busket
-    localStorage.removeItem("busket"); // Usuwa dane z localStorage
+    //localStorage.removeItem("busket"); // Usuwa dane z localStorage
+    localStorage.removeItem(busketKey);
   };
 
   const updateProductQuantity = (idProduct, newQuantity) => {
@@ -69,8 +94,8 @@ export const CartProvider = ({ children, idPerson }) => {
       });
 
       // Zapisz zaktualizowany koszyk do localStorage
-      localStorage.setItem("busket", JSON.stringify(updatedCart));
-
+      // localStorage.setItem("busket", JSON.stringify(updatedCart));
+      localStorage.setItem(busketKey, JSON.stringify(updatedCart));
       return updatedCart;
     });
   };
@@ -78,6 +103,7 @@ export const CartProvider = ({ children, idPerson }) => {
     <BusketProducts.Provider
       value={{
         busket,
+        setBusket,
         addToBusket,
         removeFromBusket,
         clearBusket,

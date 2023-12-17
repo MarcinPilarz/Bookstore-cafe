@@ -18,10 +18,15 @@ const Navbar = () => {
   const [historyOrderBar, setHistoryOrderBar] = useState(false);
   const [infoImageVisible, setinfoImageVisible] = useState(true);
 
-  const { busket, clearBusket, updateProductQuantity, removeFromBusket } =
-    useCart();
+  const {
+    busket,
+    setBusket,
+    clearBusket,
+    updateProductQuantity,
+    removeFromBusket,
+  } = useCart();
 
-  const { authData } = useAuth();
+  const { authData, logout } = useAuth();
   const idPerson = authData.idPerson;
   const [cartItemCount, setCartItemCount] = useState(0);
   const ProductsNavigate = () => {
@@ -115,6 +120,23 @@ const Navbar = () => {
     setCartItemCount(busket.reduce((total, item) => total + item.quantity, 0));
   }, [busket]);
 
+  const loadBusket = (idPerson) => {
+    const busketKey = `busket_${idPerson}`;
+    const savedBusket = localStorage.getItem(busketKey);
+    return savedBusket ? JSON.parse(savedBusket) : [];
+  };
+
+  useEffect(() => {
+    if (authData && authData.idPerson) {
+      // Wczytanie i ustawienie stanu koszyka dla zalogowanego użytkownika
+      const newBusket = loadBusket(authData.idPerson);
+      setBusket(newBusket);
+    } else {
+      // Jeśli użytkownik nie jest zalogowany, wyczyść koszyk
+      setBusket([]);
+    }
+  }, [authData, setBusket]);
+
   // const getProductInfo = (productId) => {
   //   const product = busket.find((item) => item.productId === productId);
 
@@ -132,6 +154,10 @@ const Navbar = () => {
   //   }
   // };
 
+  useEffect(() => {
+    // Logika wczytywania koszyka lub resetowania stanu
+    // w zależności od aktualnego idPerson
+  }, [authData.idPerson]);
   return (
     <header>
       <nav className={`bar-icon ${showMenuBars ? "open" : ""}`}>
@@ -160,7 +186,9 @@ const Navbar = () => {
           </li>
 
           <li className="sign-in">
-            <a href="/login">Zaloguj</a>
+            <a href="/login" onClick={logout}>
+              Zaloguj
+            </a>
           </li>
           <li className="sign-up">
             <a href="/login">Zarejestruj</a>

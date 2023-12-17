@@ -9,6 +9,7 @@ import ProductSection from "./components/ProductSection/ProductSection";
 import { CartProvider } from "./components/ProductSection/BusketProducts";
 import { AuthProvider } from "./components/Login/LoginInfoContext";
 import OrderItem from "./components/Orders/OrderItem";
+import StripePayment from "./components/Orders/StripePayment";
 function App() {
   return (
     // <BusketSideBarProvider>
@@ -20,6 +21,7 @@ function App() {
           {/* <CartProvider> */}
           <Route path="/" element={<HomePage />} />
           <Route path="/summaryOrder" element={<OrderItem />} />
+          <Route path="/stripe" element={<StripePayment />} />
           <Route
             path="/products-page/:productType"
             element={<ProductSection />}

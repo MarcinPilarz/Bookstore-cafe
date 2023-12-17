@@ -50,8 +50,15 @@ const AuthProvider = ({ children }) => {
   //     // Aktualizacja nagłówka axios po odświeżeniu strony
   //     axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
   //   }, [authData.token]);
+
+  const logout = () => {
+    setAuthData(null); // Czyszczenie stanu authData
+    localStorage.removeItem("authData"); // Usunięcie danych z localStorage
+    const busketKey = `busket_${authData.idPerson}`;
+    localStorage.removeItem(busketKey);
+  };
   return (
-    <LoginInfoContext.Provider value={{ authData, setAuthData }}>
+    <LoginInfoContext.Provider value={{ authData, setAuthData, logout }}>
       {children}
     </LoginInfoContext.Provider>
   );
