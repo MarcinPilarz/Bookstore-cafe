@@ -1,90 +1,69 @@
-import React, { useState } from "react";
-import "./StripePaymentStyle.css";
-const StripePayment = () => {
-  const [email, setEmail] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [cardDetails, setCardDetails] = useState({
-    number: "",
-    expiry: "",
-    cvc: "",
-  });
+import React from "react";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import axios from "axios";
+import { useCart } from "../ProductSection/BusketProducts";
+import { useAuth } from "../Login/LoginInfoContext";
 
-  const handleSubmit = (event) => {
+const StripePayment = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+
+  const { busket, clearBusket, updateProductQuantity, removeFromBusket } =
+    useCart();
+  const { authData } = useAuth();
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Tutaj logika przetwarzania płatności
-    console.log("Processing payment for:", email, fullName, cardDetails);
+
+    if (!stripe || !elements) {
+      console.log("Stripe.js hasn't loaded yet.");
+      return;
+    }
+
+    for (const item of busket) {
+      const cardElement = elements.getElement(CardElement);
+      const { error, token } = await stripe.createToken(cardElement);
+
+      if (error) {
+        console.log("Error:", error);
+      } else {
+        await processPaymentForProduct(item, token.id);
+      }
+    }
   };
 
-  const handleCardDetailsChange = (event) => {
-    const { name, value } = event.target;
-    setCardDetails({
-      ...cardDetails,
-      [name]: value,
-    });
+  const handleOrders = async (stripeToken) => {
+    const convertProdcutToProductId = busket.map((item) => ({
+      idProduct: item.idProduct,
+      quantity: item.quantity,
+    }));
+
+    // for (const product of convertProdcutToProductId) {
+    //   await OrderProducts(product, stripeToken);
+    // }
+  };
+
+  const processPaymentForProduct = async (product, stripeToken) => {
+    const url = `http://localhost:8080/addOrder?idPerson=${authData.idPerson}&idProduct=${product.idProduct}&quantity=${product.quantity}&token=${stripeToken}`;
+
+    try {
+      const response = await axios.post(url);
+      console.log("Odpowiedź serwera:", response.data);
+    } catch (error) {
+      console.error(
+        "Błąd podczas przetwarzania płatności dla produktu:",
+        error
+      );
+    }
   };
   return (
-    <div className="payment-form">
+    <div className="stripe-payment-form">
       <form onSubmit={handleSubmit}>
-        <div className="section">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            required
-          />
+        <div className="card-element-container">
+          <CardElement />
         </div>
-
-        <div className="section">
-          <label htmlFor="fullName">Full Name</label>
-          <input
-            type="text"
-            id="fullName"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            placeholder="Enter your full name"
-            required
-          />
-        </div>
-
-        <div className="section">
-          <label htmlFor="cardNumber">Card Number</label>
-          <input
-            type="text"
-            id="cardNumber"
-            name="number"
-            value={cardDetails.number}
-            onChange={handleCardDetailsChange}
-            placeholder="1234 5678 9012 3456"
-            required
-          />
-
-          <label htmlFor="expiry">Expiry Date</label>
-          <input
-            type="text"
-            id="expiry"
-            name="expiry"
-            value={cardDetails.expiry}
-            onChange={handleCardDetailsChange}
-            placeholder="MM/YY"
-            required
-          />
-
-          <label htmlFor="cvc">CVC</label>
-          <input
-            type="text"
-            id="cvc"
-            name="cvc"
-            value={cardDetails.cvc}
-            onChange={handleCardDetailsChange}
-            placeholder="CVC"
-            required
-          />
-        </div>
-
-        <button type="submit">Submit Payment</button>
+        <button type="submit" disabled={!stripe}>
+          Zapłać
+        </button>
       </form>
     </div>
   );

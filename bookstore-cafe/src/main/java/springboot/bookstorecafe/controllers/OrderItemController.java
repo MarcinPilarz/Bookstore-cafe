@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,16 +44,21 @@ public class OrderItemController {
 	public List<OrderItemDTO> getOrdersDTO(){
 		return mapOrderItemtoOrderItemInfo(orderService.findAllItems());
 	}
-	@PostMapping(value="/addOrder")
-	public ResponseEntity<String> addOrderItem(@RequestParam Long idPerson, @RequestParam Long idProduct, LocalDateTime dateOrder, int quantity){
-	
-		//OrderItem orderItem= new OrderItem();
-		
-	
-		orderService.addItem(idPerson, idProduct, quantity, null);
-		return ResponseEntity.ok("Order item added successfully");
-	
-	}
+	@PostMapping("/addOrder")
+	public ResponseEntity<String> addOrder(
+            @RequestParam Long idPerson,
+            @RequestParam Long idProduct,
+            @RequestParam int quantity,
+            @RequestParam String token) {
+
+        try {
+            orderService.addItem(idPerson, idProduct, quantity, token);
+            return ResponseEntity.ok("Zamówienie zostało pomyślnie złożone");
+        } catch (Exception e) {
+            // Obsługa błędów, np. niepowodzenie płatności lub błędy serwera
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Nie udało się złożyć zamówienia: " + e.getMessage());
+        }
+    }
 	
 	@DeleteMapping(value="/deleteOrder")
 	public ResponseEntity<String> deleteOrderItem(@RequestParam Long idOrderItem){

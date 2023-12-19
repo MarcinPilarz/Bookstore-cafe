@@ -43,8 +43,8 @@ public class OrderItemService {
 
 	private FoodRepository foodRepo;
 
-	@Value("${stripe.apikey}")
-	String stripeKey;
+	 @Autowired
+	    private StripeService stripeService;
 	
 	@Autowired
 	private OrderHistoryRepository orderHistoryRepo;
@@ -68,7 +68,7 @@ public class OrderItemService {
 		return orderRepo.findAll();
 	}
 
-	public void addItem(Long idPerson, Long idProduct, int quantity, String tokenCreditCard) {
+	public void addItem(Long idPerson, Long idProduct, int quantity, String token)throws StripeException {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
@@ -91,17 +91,44 @@ public class OrderItemService {
 		// person.setOrderItem(orderItem);
 		
 		
+		 
+
+	        // Przetwarzanie płatności Stripe
+		
+		 double totalPrice = calculateTotalPrice(products, quantity);
+	        
+		//double totalPrice = orderItem.getTotalPrice();
+		//Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych
+        //stripeService.chargePayment(token, totalPrice);
+		orderItem.setTotalPrice(totalPrice);
 		orderItem.setPerson(person);
 		orderItem.addProductWithQuantity(products, quantity);
 		// orderItem.addProductWithQuantity(products, quantity);
 		orderItem.setQuantity(quantity);
 		orderItem.setDateOrder(LocalDateTime.now().withNano(0));
-
-		Double totalPrice = orderItem.getTotalPrice(); // Obliczanie łącznej ceny na podstawie ilości zamówionych
-														// produktów
-		orderItem.setTotalPrice(totalPrice);
 		
+		if (totalPrice <= 0) {
+	        throw new IllegalArgumentException("Całkowita cena zamówienia musi być większa niż 0");
+	    }
+		Charge charge = stripeService.chargePayment(token, totalPrice);
+        if (!charge.getPaid()) {
+            throw new RuntimeException("Płatność nie powiodła się");
+        }
 		orderRepo.save(orderItem);
+		
+		 //Double totalPrice = orderItem.getTotalPrice(); // Obliczenie całkowitej ceny
+
+	        // Najpierw próbuj przetworzyć płatność
+//	        boolean paymentSuccess = stripeService.chargePayment(tokenCreditCard, totalPrice);
+//	        
+//	        if (paymentSuccess) {
+//	            // Jeśli płatność się powiedzie, zapisz zamówienie
+//	            orderRepo.save(orderItem);
+//	        } else {
+//	            // W przeciwnym razie rzuć wyjątek lub zwróć informację o błędzie
+//	            throw new RuntimeException("Payment failed");
+//	        }
+	    
 		
 	//	int totalPriceCents = (int) (totalPrice * 100);
 		
@@ -145,6 +172,10 @@ public class OrderItemService {
 //		    }
 	}
 
+	
+	 private double calculateTotalPrice(Product products, int quantity) {
+	        return products.getProductPrice() * quantity;
+	    }
 	public void addItemToHistory(OrderItem oldOrder, Person person2, Product products) {
 
 		OrderHistory orderHistory = new OrderHistory();
