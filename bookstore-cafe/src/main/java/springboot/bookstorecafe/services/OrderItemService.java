@@ -91,7 +91,9 @@ public class OrderItemService {
 		// person.setOrderItem(orderItem);
 		
 		
-		 
+		String firstName = person.getFirstName();
+	    String lastName = person.getLastName();
+	    String productName = products.getProductName();
 
 	        // Przetwarzanie płatności Stripe
 		
@@ -110,7 +112,7 @@ public class OrderItemService {
 		if (totalPrice <= 0) {
 	        throw new IllegalArgumentException("Całkowita cena zamówienia musi być większa niż 0");
 	    }
-		Charge charge = stripeService.chargePayment(token, totalPrice);
+		Charge charge = stripeService.chargePayment(token, totalPrice,productName, firstName, lastName);
         if (!charge.getPaid()) {
             throw new RuntimeException("Płatność nie powiodła się");
         }

@@ -22,7 +22,7 @@ public class StripeService {
 	        Stripe.apiKey = apiKey;
 	    }
 
-	 public Charge chargePayment(String token, double amount) throws StripeException {
+	 public Charge chargePayment(String token, double amount, String productName, String firstName, String lastName) throws StripeException {
 	        Map<String, Object> chargeParams = new HashMap<>();
 	        int amountInCents = (int)(amount * 100);
 	        if (amountInCents < 1) {
@@ -31,7 +31,7 @@ public class StripeService {
 	        chargeParams.put("amount", amountInCents);
 	        chargeParams.put("currency", "pln"); // Ustawienie waluty (tutaj USD)
 	        chargeParams.put("source", token); // Token płatności otrzymany z frontendu
-	        chargeParams.put("description", "Opłata za zamówienie"); // Opis transakcji
+	        chargeParams.put("description", "Opłata za zamówienie: "+ " " + productName + ", Klient: " + firstName + " " + lastName); // Opis transakcji
 
 	        return Charge.create(chargeParams); // Wywołanie API Stripe do przetworzenia płatności
 	    }
