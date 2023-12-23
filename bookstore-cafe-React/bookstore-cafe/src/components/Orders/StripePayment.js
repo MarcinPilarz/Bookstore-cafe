@@ -8,6 +8,24 @@ const StripePayment = () => {
   const stripe = useStripe();
   const elements = useElements();
 
+  const CARD_ELEMENT_OPTIONS = {
+    style: {
+      base: {
+        color: "#32325d",
+        fontFamily: "Arial, sans-serif",
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#aab7c4",
+        },
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a",
+      },
+    },
+  };
+
   const { busket, clearBusket, updateProductQuantity, removeFromBusket } =
     useCart();
   const { authData } = useAuth();
@@ -59,7 +77,7 @@ const StripePayment = () => {
     <div className="stripe-payment-form">
       <form onSubmit={handleSubmit}>
         <div className="card-element-container">
-          <CardElement />
+          <CardElement options={CARD_ELEMENT_OPTIONS} />
         </div>
         <button type="submit" disabled={!stripe}>
           Zapłać

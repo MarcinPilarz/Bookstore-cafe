@@ -2,6 +2,7 @@ import React from "react";
 import { useCart } from "../ProductSection/BusketProducts";
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const OrderItem = () => {
   const { busket, clearBusket, updateProductQuantity, removeFromBusket } =
@@ -74,7 +75,9 @@ const OrderItem = () => {
       </div>
 
       {/* <button onClick={handleOrders}>Zapłać</button> */}
-      <button>Zapłać</button>
+      <button>
+        <Link to="/stripe"> Zapłać</Link>
+      </button>
     </div>
   );
 };

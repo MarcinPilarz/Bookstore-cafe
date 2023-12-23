@@ -94,6 +94,7 @@ public class OrderItemService {
 		String firstName = person.getFirstName();
 	    String lastName = person.getLastName();
 	    String productName = products.getProductName();
+	    
 
 	        // Przetwarzanie płatności Stripe
 		
