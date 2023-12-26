@@ -1,0 +1,32 @@
+.dashboard {
+    font-family: Arial, sans-serif;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+}
+
+.tabs button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.tabs button:hover {
+    background-color: #ddd;
+}
+
+.content {
+    padding: 20px;
+    min-height: 200px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}

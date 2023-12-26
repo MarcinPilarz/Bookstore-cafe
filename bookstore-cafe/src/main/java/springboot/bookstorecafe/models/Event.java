@@ -4,7 +4,8 @@ package springboot.bookstorecafe.models;
 
 import java.util.Date;
 
- 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -30,6 +31,7 @@ public class Event {
 	private Date eventsDate;
 
 	@ManyToOne
+	
 	@JoinColumn(name = "id_person")
 	private Person person;
 

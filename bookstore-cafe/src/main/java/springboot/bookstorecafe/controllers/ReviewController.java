@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.persistence.EntityNotFoundException;
 import springboot.bookstorecafe.DTO.UpdateReviewDTO;
 import springboot.bookstorecafe.models.Person;
+import springboot.bookstorecafe.models.Reservation;
 import springboot.bookstorecafe.models.Review;
 import springboot.bookstorecafe.repositories.PersonRepository;
 import springboot.bookstorecafe.services.ReviewService;
@@ -35,6 +36,17 @@ public class ReviewController {
 	public List<Review> getReviews(){
 		return reviewService.findAllItems();
 	}
+	
+	@GetMapping(value= "/reviews/person")
+	public ResponseEntity<List<Review>> getPersonReservations(@RequestParam Long personId) {
+        try {
+            List<Review> reviews = reviewService.getReviewPerson(personId);
+            return ResponseEntity.ok(reviews);
+        } catch (RuntimeException e) {
+            // Możesz dostosować obsługę błędów w zależności od Twoich potrzeb
+            return ResponseEntity.notFound().build();
+        }
+    }
 	
 	
 	@PostMapping(value="/newComment")

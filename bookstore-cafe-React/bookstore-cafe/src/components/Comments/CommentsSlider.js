@@ -10,7 +10,7 @@ const CommentsSlider = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       // Zakładamy, że authData jest aktualne i pochodzi z kontekstu
-      if (authData.token && new Date().getTime() < authData.expirationTime) {
+      if (authData?.token && new Date().getTime() < authData?.expirationTime) {
         // Usuwanie cudzysłowów z początku i końca stringa tokena, jeśli istnieją
 
         //.replace(/^"|"$/g, "");
@@ -32,10 +32,10 @@ const CommentsSlider = () => {
       }
     };
 
-    if (authData.token) {
+    if (authData?.token) {
       fetchReviews();
     }
-  }, [authData.token, authData.expirationTime]);
+  }, [authData?.token, authData?.expirationTime]);
 
   const numberOfComments = 3;
   const numberOfPage = Math.ceil(reviews.length / numberOfComments);

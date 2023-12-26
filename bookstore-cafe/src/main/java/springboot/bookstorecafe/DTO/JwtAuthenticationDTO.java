@@ -1,5 +1,7 @@
 package springboot.bookstorecafe.DTO;
 
+import springboot.bookstorecafe.models.RoleType;
+
 public class JwtAuthenticationDTO {
 
 	
@@ -10,7 +12,7 @@ Long idPerson;
 String firstName;
 String lastName;
 String phoneNumber;
-	
+RoleType roleType;
 
 
 	
@@ -55,6 +57,12 @@ public void setPhoneNumber(String phoneNumber) {
 	}
 	public void setRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
+	}
+	public RoleType getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(RoleType roleType) {
+		this.roleType = roleType;
 	}
 	
 	

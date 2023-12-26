@@ -67,7 +67,13 @@ public class OrderItemService {
 
 		return orderRepo.findAll();
 	}
-
+	
+	
+	public List<OrderItem> getOrdersPerson(Long personId){
+		Person person = personRepo.findById(personId)
+				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
+		return person.getOrderItems();
+	}
 	public void addItem(Long idPerson, Long idProduct, int quantity, String token)throws StripeException {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
@@ -118,7 +124,7 @@ public class OrderItemService {
             throw new RuntimeException("Płatność nie powiodła się");
         }
 		orderRepo.save(orderItem);
-		
+		addItemToHistory(orderItem, person, products);
 		 //Double totalPrice = orderItem.getTotalPrice(); // Obliczenie całkowitej ceny
 
 	        // Najpierw próbuj przetworzyć płatność

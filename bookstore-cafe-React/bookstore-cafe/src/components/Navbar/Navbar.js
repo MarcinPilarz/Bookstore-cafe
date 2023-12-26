@@ -17,7 +17,7 @@ const Navbar = () => {
   const [busketOrderBar, setBusketOrderBar] = useState(false);
   const [historyOrderBar, setHistoryOrderBar] = useState(false);
   const [infoImageVisible, setinfoImageVisible] = useState(true);
-
+  const [userActionBar, setUserActionBar]= useState(false);
   const {
     busket,
     setBusket,
@@ -27,7 +27,7 @@ const Navbar = () => {
   } = useCart();
 
   const { authData, logout } = useAuth();
-  const idPerson = authData.idPerson;
+  const idPerson = authData?.idPerson;
   const [cartItemCount, setCartItemCount] = useState(0);
   const ProductsNavigate = () => {
     const element = document.getElementById("products");
@@ -71,14 +71,25 @@ const Navbar = () => {
     }
   };
 
+
+const userBar = () => {
+  setUserActionBar(!userActionBar);
+  setShowMenuBars(false);
+  setBusketOrderBar(false);
+  setinfoImageVisible(!infoImageVisible);
+  console.log("UserBar", !userActionBar)
+}
   const toggleMenu = () => {
     setShowMenuBars(!showMenuBars);
     setBusketOrderBar(false);
+    setUserActionBar(false);
     console.log(
       "Menu zostało przełączone. Aktualny stan menuOpen:",
       !showMenuBars
     );
   };
+
+  
 
   const busketBar = () => {
     setBusketOrderBar(!busketOrderBar);
@@ -157,7 +168,7 @@ const Navbar = () => {
   useEffect(() => {
     // Logika wczytywania koszyka lub resetowania stanu
     // w zależności od aktualnego idPerson
-  }, [authData.idPerson]);
+  }, [authData?.idPerson]);
   return (
     <header>
       <nav className={`bar-icon ${showMenuBars ? "open" : ""}`}>
@@ -185,14 +196,7 @@ const Navbar = () => {
             <a onClick={EventsNavigate}>Wydarzenia</a>{" "}
           </li>
 
-          <li className="sign-in">
-            <a href="/login" onClick={logout}>
-              Zaloguj
-            </a>
-          </li>
-          <li className="sign-up">
-            <a href="/login">Zarejestruj</a>
-          </li>
+        
         </ul>
 
         <div className="icon-container">
@@ -286,9 +290,38 @@ const Navbar = () => {
               </div>
             )}
           </div>
-          <div className="user-icon">
+
+          <div className="user-icon" onClick={userBar}>
             <FontAwesomeIcon icon={faCircleUser} />
           </div>
+          {userActionBar && authData?.token==null && (
+            <div>
+            <Link to="/signin">Zaloguj się</Link>
+            <Link to="/signup">Zarejestruj się</Link>
+            </div>
+          )}
+
+          {userActionBar && authData?.token && (
+            <div>
+              {authData?.roleType ==="Klient" &&(
+                <Link to="/user-panel">Mój profil</Link>
+                
+              )}
+
+{authData?.roleType ==="Pracownik" &&(
+                <div>Profil pracownika</div>
+                
+              )}
+              {authData?.roleType ==="Wlasciciel" &&(
+                <div>Profil administratora</div>
+                
+              )}
+              {/* zmien role na klienta jesli pracownik i wlasciciel ma wolne */}
+              <div  onClick={logout}>Wyloguj</div>
+            </div>
+          )}
+
+
         </div>
       </nav>
     </header>

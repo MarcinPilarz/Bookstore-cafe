@@ -132,7 +132,7 @@ const HomePage = () => {
             Chwila relaksu? Spotkanie ze znajomymi? Zarezerwuj u nas stolik i
             przestań martwić się o brak miejsca.
           </p>
-          {authData.token && authData.expirationTime ? (
+          {authData?.token && authData?.expirationTime ? (
             <button
               className="reservation-button-click"
               onClick={() => openModal()}

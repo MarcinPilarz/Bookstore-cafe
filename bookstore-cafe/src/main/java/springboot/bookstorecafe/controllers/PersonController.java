@@ -76,6 +76,19 @@ public class PersonController {
 		return mapPersonToPersonInfo(personService.findAllItems());
 
 	}
+	
+	@GetMapping(value="/personDetails")
+	public ResponseEntity<Person> getPersonDetails(@RequestParam Long id){
+		 try {
+	            Person person = personService.displayUserInfo(id);
+	            return ResponseEntity.ok(person);
+	        } catch (RuntimeException e) {
+	            // Obsługa wyjątku, np. gdy osoba nie zostanie znaleziona
+	            return ResponseEntity.notFound().build();
+	        }
+	    }
+	
+	
 //.............
 	//Logowanie
 	@PostMapping("/signin")

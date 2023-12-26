@@ -36,8 +36,15 @@ public class ReservationService {
 
 		return reservationRepo.findAll();
 	}
+	
+	public List<Reservation> getPersonReservations(Long personId) {
+		Person person = personRepo.findById(personId)
+				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
+		
+		return person.getReservations();
+	}
 
-	public void bookTable(Long idPerson, Long idBookTable, Long idReservation, LocalDate bokkingData,
+	public void bookTable(Long idPerson, Long idBookTable, LocalDate bokkingData,
 			int numberOfPeople) {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));

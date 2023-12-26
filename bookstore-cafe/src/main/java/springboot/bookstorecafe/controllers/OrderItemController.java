@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import springboot.bookstorecafe.DTO.OrderItemDTO;
 import springboot.bookstorecafe.models.OrderItem;
+import springboot.bookstorecafe.models.Reservation;
 import springboot.bookstorecafe.services.OrderItemService;
 import static springboot.bookstorecafe.DTO.mapper.OrderItemDTOMapper.mapOrderItemtoOrderItemInfo;
 @RestController
@@ -40,6 +41,17 @@ public class OrderItemController {
 	    }
 	}
 
+	 @GetMapping("/orders/person")
+	    public ResponseEntity<List<OrderItem>> getPersonOrders(@RequestParam Long personId) {
+	        try {
+	            List<OrderItem> orders = orderService.getOrdersPerson(personId);
+	            return ResponseEntity.ok(orders);
+	        } catch (RuntimeException e) {
+	            // Możesz dostosować obsługę błędów w zależności od Twoich potrzeb
+	            return ResponseEntity.notFound().build();
+	        }
+	    }
+	 
 	@GetMapping(value="/ordersDTO")
 	public List<OrderItemDTO> getOrdersDTO(){
 		return mapOrderItemtoOrderItemInfo(orderService.findAllItems());

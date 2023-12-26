@@ -97,6 +97,7 @@ public class LoginPersonService implements LoginPersonInterface, AuthenticationS
 		jwtDTO.setPhoneNumber(person.getPhoneNumber());
 		jwtDTO.setIdPerson(person.getIdPerson());
 		jwtDTO.setIdLoginPerson(idLoginPerson);
+		jwtDTO.setRoleType(user.getRoleType());
 		return (jwtDTO);
 
 	}

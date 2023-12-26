@@ -4,7 +4,7 @@ import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import "./Footer.css";
 const Footer = () => {
   return (
-    <section>
+    <section className="footer-section">
       <footer className="top">
         <img
           className="logo-footer"

@@ -89,6 +89,17 @@ public class PersonService implements MainService<Person> {
 		personRepo.save(person);
 
 	}
+	
+	public Person displayUserInfo(Long id) {
+		Person person = personRepo.findById(id)
+				.orElseThrow(() -> new RuntimeException("There is no such person: " + id));
+		
+		Person getPerson= new Person();
+		getPerson.setFirstName(person.getFirstName());
+		getPerson.setEvent(person.getEvent());
+	
+		return person;
+	}
 
 	@Override
 	public Person findById(Long id) {

@@ -22,8 +22,8 @@ public class OrderHistoryController {
 	private OrderHistoryService orderService;
 	
 
-	@GetMapping("/history/{personId}")
-    public ResponseEntity<List<OrderHistory>> getHistoryByPerson(@PathVariable Long personId) {
+	@GetMapping("/history")
+    public ResponseEntity<List<OrderHistory>> getHistoryByPerson(@RequestParam Long personId) {
         List<OrderHistory> orderHistory = orderService.findByPersonId(personId);
         return ResponseEntity.ok(orderHistory);
         

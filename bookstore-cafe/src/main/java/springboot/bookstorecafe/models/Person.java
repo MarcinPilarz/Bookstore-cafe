@@ -1,10 +1,10 @@
 package springboot.bookstorecafe.models;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.Transient;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -51,7 +51,7 @@ public class Person {
 	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<OrderItem> orderItems = new ArrayList<>();
-
+//
 	@OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private List<OrderHistory> orderHistory = new ArrayList<>();

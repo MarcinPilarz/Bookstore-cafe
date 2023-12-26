@@ -8,8 +8,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.models.Review;
-
+import springboot.bookstorecafe.repositories.PersonRepository;
 import springboot.bookstorecafe.repositories.ReviewRepostory;
 
 @Service
@@ -18,6 +19,8 @@ public class ReviewService implements MainService<Review> {
 	@Autowired
 	private ReviewRepostory reviewRepo;
 
+	@Autowired
+	private PersonRepository personRepo;
 	@Override
 	public List<Review> findAllItems() {
 		List<Review> reviews = reviewRepo.findAll();
@@ -30,6 +33,12 @@ public class ReviewService implements MainService<Review> {
 		}
 	}
 
+	public List<Review> getReviewPerson (Long personId){
+		Person person = personRepo.findById(personId)
+				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
+		
+		return person.getReview();
+	}
 	@Override
 	public void addItem(Review review) {
 

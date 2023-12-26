@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import "./App.css";
 import HomePage from "./components/HomePage/HomePage";
 //mport {BusketSideBarProvider} from './components/SideBars/BusketSideBar';
@@ -10,24 +10,30 @@ import { CartProvider } from "./components/ProductSection/BusketProducts";
 import { AuthProvider } from "./components/Login/LoginInfoContext";
 import OrderItem from "./components/Orders/OrderItem";
 import StripePayment from "./components/Orders/StripePayment";
+import UserPanel from "./components/Panels/UserPanel";
 function App() {
   return (
     // <BusketSideBarProvider>
     <AuthProvider>
       <BrowserRouter>
+      
+
         <Routes>
-          <Route path="/newPerson" element={<Signup />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           {/* <CartProvider> */}
           <Route path="/" element={<HomePage />} />
           <Route path="/summaryOrder" element={<OrderItem />} />
           <Route path="/stripe" element={<StripePayment />} />
+          <Route path="/user-panel" element={<UserPanel/>} />
           <Route
             path="/products-page/:productType"
             element={<ProductSection />}
-          />
+            />
           {/* </CartProvider> */}
+          {/* <Route path="/" element={<AuthProvider><HomePage /></AuthProvider>} /> */}
         </Routes>
+           
       </BrowserRouter>
     </AuthProvider>
     // </BusketSideBarProvider>

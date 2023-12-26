@@ -45,7 +45,7 @@ const ProductSection = () => {
   //   }, [productType]);
 
   const { authData } = useAuth();
-  const idPerson = authData.idPerson;
+  const idPerson = authData?.idPerson;
   const isBooksActive = productType === "BOOK" ? "active-product" : "";
   const isCoffeeActive = productType === "COFFEE" ? "active-product" : "";
   const isFoodActive = productType === "FOOD" ? "active-product" : "";

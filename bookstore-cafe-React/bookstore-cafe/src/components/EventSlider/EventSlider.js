@@ -48,7 +48,7 @@ const EventSlider = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      if (authData.token && new Date().getTime() < authData.expirationTime) {
+      if (authData?.token && new Date().getTime() < authData?.expirationTime) {
         try {
           // Ustawienie nagłówka autoryzacji
           const config = {
@@ -70,10 +70,10 @@ const EventSlider = () => {
       }
     };
 
-    if (authData.token) {
+    if (authData?.token) {
       fetchEvents();
     }
-  }, [authData.token]);
+  }, [authData?.token]);
 
   //   useEffect(() => {
   //     // Przesunięcie slidera o jedno wydarzenie w prawo co kilka sekund
