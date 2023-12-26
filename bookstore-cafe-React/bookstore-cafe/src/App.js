@@ -11,6 +11,7 @@ import { AuthProvider } from "./components/Login/LoginInfoContext";
 import OrderItem from "./components/Orders/OrderItem";
 import StripePayment from "./components/Orders/StripePayment";
 import UserPanel from "./components/Panels/UserPanel";
+import EmployeePanel from "./components/Panels/EmployeePanel";
 function App() {
   return (
     // <BusketSideBarProvider>
@@ -26,6 +27,7 @@ function App() {
           <Route path="/summaryOrder" element={<OrderItem />} />
           <Route path="/stripe" element={<StripePayment />} />
           <Route path="/user-panel" element={<UserPanel/>} />
+          <Route path="/employee-panel" element=< EmployeePanel/> />
           <Route
             path="/products-page/:productType"
             element={<ProductSection />}

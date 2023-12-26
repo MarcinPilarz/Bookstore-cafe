@@ -131,6 +131,7 @@ const UserPanel = () => {
                         <div>
                             <p>Imię: {clientData.firstName}</p>
                             <p>Nazwisko: {clientData.lastName}</p>
+                            <p>Telefon: {clientData.phoneNumber}</p>
                             {/* Sprawdź, czy loginPerson i email istnieją zanim spróbujesz wyrenderować email */}
                             {clientData.loginPerson && clientData.loginPerson.email && (
                                 <p>E-mail: {clientData.loginPerson.email}</p>
