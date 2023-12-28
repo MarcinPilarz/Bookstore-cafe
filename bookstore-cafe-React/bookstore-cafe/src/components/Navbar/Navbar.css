@@ -63,16 +63,93 @@ nav.open .hamburger {
 div.busket-sidebar {
   width: 300px;
   height: 400px;
-  background-color: rgb(213, 214, 214);
-  position: fixed;
-  transition: transform 0.3s;
-  top: 37px;
-  right: 0%;
+  background-color: #ffffff; /* Jasne tło dla nowocześniejszego wyglądu */
+  position: absolute;
+  top: 76px;
+  right: 0;
   overflow-x: hidden;
   overflow-y: auto;
-  transform: translateY(9%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtelny cień dla głębi */
+  border-left: 2px solid #e0e0e0; /* Delikatna linia oddzielająca od reszty treści */
+  z-index: 1000; /* Upewnij się, że jest wyżej niż inne elementy */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transform: translateX(0); /* Usunięcie przesunięcia w osi Y */
+  padding: 20px; /* Dodatkowa przestrzeń wewnątrz dla lepszego układu elementów */
 }
 
+.order-item-list div {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styl dla nazwy produktu */
+.order-item-list p {
+  font-size: 16px;
+  color: #333;
+  margin: 5px 0;
+}
+
+/* Styl dla inputu ilości */
+.order-item-list input[type="number"] {
+  width: 50px;
+  padding: 5px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Styl dla przycisku usuwania produktu */
+.order-item-list button {
+  background-color: #ff6666;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.order-item-list button:hover {
+  background-color: #ff4d4d;
+}
+
+/* Styl dla przycisków na dole koszyka */
+.busket-sidebar button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  text-align: center;
+}
+
+button#button-busket-color-reasume {
+  background-color: #4c661d;
+}
+
+button#button-busket-color-delete{
+  background-color: #c51616;
+}
+.busket-sidebar button:hover {
+  background-color: #d13d3d;
+}
+
+/* Styl dla linków */
+.busket-sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+.busket-sidebar a:hover {
+  color: #ccc;
+}
 div.history-sidebar {
   width: 300px;
   height: 400px;
@@ -185,6 +262,10 @@ div.history-icon {
   height: 50px; /* Wysokość kwadratu */
   color: #fff;
   /* background-color: aqua; */
+}
+
+span.amount-of-products:hover{
+  background: transparent;
 }
 @media (max-width: 768px) {
   .hamburger {
