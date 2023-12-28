@@ -97,25 +97,29 @@ public class ReservationService {
 		reservationRepo.save(reservation);
 	}
 
-	public void cancleReservation(Long idReservation, String lastName, String phoneNumber) {
+	public void cancleReservation(Long idReservation) {
 		Reservation reservation = reservationRepo.findById(idReservation)
 				.orElseThrow(() -> new RuntimeException("Name reservation not found" + idReservation));
 
-		if (!reservation.getBookTable().isReservation()) {
 
-			throw new RuntimeException("The reservation is no longer active.");
-		}
-
-		if (!reservation.getPerson().getLastName().equals(lastName)
-				|| !reservation.getPerson().getPhoneNumber().equals(phoneNumber)) {
-
-			throw new RuntimeException("Wrong last name or phone number! ");
-		}
+//		if (!reservation.getPerson().getLastName().equals(lastName)
+//				|| !reservation.getPerson().getPhoneNumber().equals(phoneNumber)) {
+//
+//			throw new RuntimeException("Wrong last name or phone number! ");
+//		}
 
 		reservation.getBookTable().setReservation(false);
 		reservationRepo.delete(reservation);
 	}
 
+	public void customEditionSeating(Reservation reservation) {
+		
+		reservationRepo.save(reservation);
+	}
+	
+	public Reservation findById (Long idReservation) {
+		return reservationRepo.findById(idReservation).orElse(null);
+	}
 	@Scheduled(cron = "0 0 0 * * 1") // Każdy poniedziałek o północy
     public void deleteOldReservations() {
         LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);

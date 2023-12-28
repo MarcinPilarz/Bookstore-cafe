@@ -3,16 +3,20 @@ import "./EmployeePanel.css";
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
 const EmployeePanel = () => {
-  const [activeTab, setActiveTab] = useState('rezerwacje');
+  const [activeTab, setActiveTab] = useState('zamowienia klientow');
   const [eventsPanel, setEventsPanel]= useState([]);
   const [editEventId, setEditEventsId]= useState(null);
+  const [editReservationId, setEditReservationId]= useState(null);
   const {authData}= useAuth();
   const [eventFormData, setEventFormData] = useState({
     eventName: '',
     eventDescription: '',
     
   });
-  
+  const [customEdtitReservationData, setCustomEditReservationData]= useState({
+    numberOfPeople: '',
+  })
+  const [reservationPanel, setReservationPanel]= useState([]);
   const handleAdd = () => {
     // Logika dodawania
     console.log('Dodawanie...');
@@ -153,10 +157,20 @@ const deleteEvent = async (id) => {
 const handleCreateEvent = async (e) => {
   e.preventDefault();
   
+  const formatDateForSpring = (date) => {
+    const pad = (num) => (num < 10 ? `0${num}` : num);
+
+    const year = date.getUTCFullYear();
+    const month = pad(date.getUTCMonth() + 1);
+    const day = pad(date.getUTCDate());
+    
+
+    return `${year}-${month}-${day}`;
+  };
   const newEvent = {
     eventName: eventFormData.eventName,
     eventDescription: eventFormData.eventDescription,
-    eventsDate: new Date().toISOString(), // data w formacie ISO
+    eventsDate: formatDateForSpring(new Date()), // data w formacie ISO
     person: {
       idPerson: authData.idPerson
     }
@@ -184,6 +198,8 @@ const handleCreateEvent = async (e) => {
     // Aktualizacja stanu wydarzeń dodając nowe wydarzenie
     setEventsPanel(currentEvents => [...currentEvents, addedEvent]);
 
+    console.log("Formatted Date:", formatDateForSpring(new Date()));
+console.log("Added Event:", addedEvent);
     // Opcjonalnie: Resetuj formularz
     setEventFormData({
       eventName: '',
@@ -196,11 +212,137 @@ const handleCreateEvent = async (e) => {
 };
 
 
+//Rezerwacje 
+
+
+useEffect(() => {
+  const fetchRezervation = async () => {
+    if (authData?.token && new Date().getTime() < authData?.expirationTime) {
+      try {
+        // Ustawienie nagłówka autoryzacji
+        const config = {
+          headers: {
+            Authorization: `Bearer ${authData.token}`,
+          },
+        };
+
+        // Wykonanie zapytania GET z dodanym nagłówkiem
+        const response = await axios.get(
+          "http://localhost:8080/reservations",
+          config
+        );
+        console.log("Pobrane dane z API:", response.data);
+        setReservationPanel(response.data);
+      } catch (error) {
+        console.error("Błąd pobierania danych rezerwacji", error);
+      }
+    }
+  };
+
+  if (authData?.token) {
+    fetchRezervation();
+  }
+}, [authData?.expirationTime, authData.token]);
+
+
+
+const editReservation =(id) =>{
+  setEditReservationId(id);
+  const reservationToEdit = reservationPanel.find((reservation) => reservation.idReservation===id);
+  setCustomEditReservationData({
+    numberOfPeople: reservationToEdit.numberOfPeople,
+   
+
+  });
+};
+
+const updateReservationInDatabase = async (id, updatedReservation) => {
+  try {
+    // Wysyłanie żądania PUT lub PATCH do Twojego API
+    const response = await fetch(`http://localhost:8080/customNumberOfPeople?idReservation=${id}`, {
+      method: 'PUT', // lub 'PATCH'
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedReservation)
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    // Możesz tutaj zaktualizować stan, jeśli jest to konieczne
+    // na przykład, aby odzwierciedlić zmiany w UI
+    setReservationPanel(currentReservations => {
+      return currentReservations.map(reservation => {
+        if (reservation.idReservation === id) {
+          return { ...updatedReservation, idReservation: id };
+        }
+        return reservation;
+      });
+    });
+
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+  }
+};
+const handleSaveReservation = (id) => {
+  // Znajdź wydarzenie, które ma zostać zaktualizowane
+  const reservationToUpdate = reservationPanel.find((reservation) => reservation.idReservation === id);
+  
+  if (reservationToUpdate) {
+    // Przygotuj zaktualizowane dane wydarzenia
+    const updatedReservation = {
+      ...reservationToUpdate,
+      numberOfPeople:customEdtitReservationData.numberOfPeople,
+      
+    };
+
+    // Zaktualizuj dane wydarzenia w Twoim stanie aplikacji lub bazie danych
+    // Ta część zależy od Twojej architektury i sposobu przechowywania danych
+    // Na przykład, możesz wywołać funkcję aktualizującą stan lub wysłać żądanie do API
+    updateReservationInDatabase(id, updatedReservation);
+
+    // Resetuj stan formularza i wyjdź z trybu edycji
+    setEditReservationId(null);
+    setCustomEditReservationData({
+      numberOfPeople: ''
+      
+    });
+  }
+};
+
+const deleteReservation = async (id) => {
+  // Potwierdzenie, że użytkownik chce usunąć wydarzenie
+  if (!window.confirm("Czy na pewno chcesz usunąć tą rezerwacje?")) {
+    return;
+  }
+
+  // Usuwanie z bazy danych za pomocą API
+  try {
+    const response = await fetch(`http://localhost:8080/cancleReservation?idReservation=${id}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    // Usunięcie wydarzenia ze stanu lokalnego
+    setReservationPanel(currentReservations => currentReservations.filter(reservation => reservation.idReservation !== id));
+
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+  }
+};
     return (
       <div className="dashboardContainer">
       <div className="dashboardSidebar">
           <h2 className="dashboardSidebarTitle">Panel pracownika</h2>
           <ul className="dashboardSidebarList">
+          <li className="dashboardSidebarItem" onClick={() => setActiveTab('zamowienia klientow')}>
+                 Zamówienia klientów
+              </li>
               <li className="dashboardSidebarItem" onClick={() => setActiveTab('rezerwacje')}>
                   Zarządzanie Rezerwacjami
               </li>
@@ -212,13 +354,63 @@ const handleCreateEvent = async (e) => {
       <div className="dashboardContent">
           {activeTab === 'rezerwacje' && (
               <section>
-                  <h3 className="dashboardContentTitle">Zarządzanie Rezerwacjami</h3>
+                    <h3 className="dashboardContentTitle">Zarządzanie Rezerwacjami</h3>
+                <table className="reservation-table">
+                  <thead>
+                    <tr>
+                      <th>Osoba rezerwująca</th>
+                      <th>Numer osoby rezerwującej</th>
+                      <th>Data rezerwacji</th>
+                      <th>Ilość osób</th>
+                      <th>Numer stolika</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {reservationPanel.map((reservation)=>(
+                    <tr key={reservation.idReservation}>
+                     <td>{reservation.person.firstName} {reservation.person.lastName}</td>
+                     <td>{reservation.person.phoneNumber}</td>
+                      <td>{reservation.bokkingData}</td>
+
+                      {editReservationId === reservation.idReservation ? (
+                     <input 
+                      type="text" 
+                      value={customEdtitReservationData.numberOfPeople} 
+                       onChange={(e) => setCustomEditReservationData({...customEdtitReservationData, numberOfPeople: e.target.value})}
+                      />
+                       ) : (
+                      reservation.numberOfPeople
+                         )}
+                     
+                     <td>{reservation.bookTable.tableNumber}</td>
+                     <td>
+                           {editReservationId === reservation.idReservation ? (
+                         <>
+                   <button onClick={() => handleSaveReservation(reservation.idReservation)}>Zapisz</button>
+                 <button onClick={() => setEditReservationId(null)} >Anuluj</button>
+                   </>
+                 ) : (
+                 <>
+          <button onClick={() => editReservation(reservation.idReservation)} >Edytuj</button>
+          <button onClick={() => deleteReservation(reservation.idReservation)} >Usuń</button>
+              </>
+               )}
+           </td>
+          </tr>
+            ))}
+
+                  </tbody>
+
+                </table>
+
                   <button className="dashboardButton" onClick={handleAdd}>Dodaj Rezerwację</button>
                   <button className="dashboardButton" onClick={handleEdit}>Edytuj Rezerwację</button>
                   <button className="dashboardButton" onClick={handleDelete}>Usuń Rezerwację</button>
                   {/* Tabela rezerwacji lub lista */}
               </section>
           )}
+
+
           {activeTab === 'wydarzenia' && (
               <section>
                   <h3 className="dashboardContentTitle">Zarządzanie Wydarzeniami</h3>
@@ -273,7 +465,7 @@ const handleCreateEvent = async (e) => {
     </td>
   </tr>
 ))}
-                    ))
+                    
                    { console.log("EditEventid", editEventId)}
                   </tbody>
                 </table>
@@ -296,6 +488,19 @@ const handleCreateEvent = async (e) => {
   </form>
 </section>
             
+              </section>
+          )}
+          {activeTab === 'zamowienia klientow' && (
+              <section>
+              <h3 className="dashboardContentTitle">Zamówienia klientów</h3>
+              <ul>
+                <li>
+                Dostępne zamówienia 
+                </li>
+                <li>
+                Oczękujące zamówienia
+                </li>
+              </ul>
               </section>
           )}
       </div>

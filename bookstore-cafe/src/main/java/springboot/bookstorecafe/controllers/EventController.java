@@ -48,7 +48,7 @@ public class EventController {
 		event.setEventDescription(updateEventDTO.eventDescription());
 
 		eventService.updateItem(event);
-		return ResponseEntity.ok("The event has been updated");
+		return ResponseEntity.ok("The event has been updated.");
 	}
 
 	@DeleteMapping(value = "/deleteEvent")
