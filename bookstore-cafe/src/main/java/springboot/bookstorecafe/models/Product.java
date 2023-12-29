@@ -78,6 +78,8 @@ public abstract class Product {
 //	@OneToOne(mappedBy = "product")
 //	private Food food;
 	
+	@Column(name="image_name")
+	private String imageName;
 	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private ProductImage productImage;
@@ -189,6 +191,14 @@ public abstract class Product {
 
 	public void setProductPrice(double productPrice) {
 		this.productPrice = productPrice;
+	}
+
+	public String getImageName() {
+		return imageName;
+	}
+
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
 	}
 
 	

@@ -18,6 +18,7 @@ import springboot.bookstorecafe.DTO.ProductaAndProductPhotoInfoDTO;
 import springboot.bookstorecafe.models.ProductType;
 
 import springboot.bookstorecafe.services.ProductImageService;
+import springboot.bookstorecafe.services.ProductService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -25,7 +26,8 @@ public class ProductImageController {
 
 	@Autowired
 	private ProductImageService imageService;
-
+	 @Autowired
+	    private ProductService productService;
 	@GetMapping("/images")
 	public ResponseEntity<List<ProductaAndProductPhotoInfoDTO>> getAllImagesWithProducts(
 			@RequestParam ProductType productType) {
@@ -46,4 +48,14 @@ public class ProductImageController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading photo");
 		}
 	}
+	
+	 @PostMapping("/uploadImage")
+	    public ResponseEntity<?> uploadProductImage(@RequestParam Long idProduct, @RequestParam("file") MultipartFile file) {
+	        try {
+	            productService.uploadProductImage(idProduct, file);
+	            return ResponseEntity.ok().body("Image uploaded successfully");
+	        } catch (RuntimeException e) {
+	            return ResponseEntity.badRequest().body(e.getMessage());
+	        }
+	    }
 }
