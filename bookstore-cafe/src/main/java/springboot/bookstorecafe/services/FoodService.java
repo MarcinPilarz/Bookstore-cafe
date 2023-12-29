@@ -1,5 +1,6 @@
 package springboot.bookstorecafe.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,13 @@ public class FoodService {
 		return productRepo.getProductsByProductType(productType);
 	}
 
+	
+	public List<Product> findAllFoodByType(ProductType productType) {
+        if (productType == ProductType.FOOD) {
+            return new ArrayList<>(foodRepo.getProductsByProductType(productType));
+        }
+        return new ArrayList<>();
+    }
 	public void addFood(Food food) {
 	
 		Food existingFood= foodRepo.findByProductName(food.getProductName());

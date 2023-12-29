@@ -1,7 +1,11 @@
 package springboot.bookstorecafe.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,26 +37,67 @@ public class CoffeeController {
 	@Autowired
 	private BookService bookService;
 
+//	@GetMapping(value = "/coffee")
+//	public Iterable<Product> getCoffee(@RequestParam ProductType productType) {
+//
+//		if (productType == ProductType.ALLPRODUCTS) {
+//
+//			List<Product> allProducts = new ArrayList<>();
+//			coffeeService.addAllItemsToList(allProducts, coffeeService.findAllItems());
+//			foodService.addAllItemsToList(allProducts, foodService.findAllFoods());
+//			bookService.addAllItemsToList(allProducts, bookService.findAllItems());
+//			return allProducts;
+//		} else if (productType == ProductType.COFFEE) {
+//			return coffeeService.findAllCoffeeByType(productType);
+//		} else if (productType == ProductType.FOOD) {
+//			return foodService.findAllFoodsByType(productType);
+//		} else if (productType == ProductType.BOOK) {
+//
+//			return bookService.findAllBooksByType(productType);
+//		}
+//		return null;
+//	}
+	
 	@GetMapping(value = "/coffee")
-	public Iterable<Product> getCoffee(@RequestParam ProductType productType) {
+	public ResponseEntity<List<Map<String, Object>>> getProductsByTypes(@RequestParam ProductType productType) {
+	    List<Product> products;
 
-		if (productType == ProductType.ALLPRODUCTS) {
+	    if (productType == ProductType.ALLPRODUCTS) {
+	        products = Stream.of(
+	            coffeeService.findAllCoffeeByType(ProductType.COFFEE),
+	            bookService.findAllBookByType(ProductType.BOOK),
+	            foodService.findAllFoodByType(ProductType.FOOD)
+	        ).flatMap(List::stream).collect(Collectors.toList());
+	    } else {
+	        products = getProductsByType(productType);
+	    }
 
-			List<Product> allProducts = new ArrayList<>();
-			coffeeService.addAllItemsToList(allProducts, coffeeService.findAllItems());
-			foodService.addAllItemsToList(allProducts, foodService.findAllFoods());
-			bookService.addAllItemsToList(allProducts, bookService.findAllItems());
-			return allProducts;
-		} else if (productType == ProductType.COFFEE) {
-			return coffeeService.findAllCoffeeByType(productType);
-		} else if (productType == ProductType.FOOD) {
-			return foodService.findAllFoodsByType(productType);
-		} else if (productType == ProductType.BOOK) {
+	    List<Map<String, Object>> productWithUrls = products.stream()
+	        .map(product -> {
+	            Map<String, Object> productMap = new HashMap<>();
+	            productMap.put("product", product);
+	            String imageName = product.getImageName();
+	            String imageUrl = imageName != null ? "https://storage.googleapis.com/springbootphoto/springbootphoto/" + imageName : null;
+	            productMap.put("imageUrl", imageUrl);
+	            return productMap;
+	        })
+	        .collect(Collectors.toList());
 
-			return bookService.findAllBooksByType(productType);
-		}
-		return null;
+	    return ResponseEntity.ok(productWithUrls);
 	}
+	    private List<Product> getProductsByType(ProductType productType) {
+	        switch (productType) {
+	            case COFFEE:
+	                return coffeeService.findAllCoffeeByType(productType);
+	            case BOOK:
+	                return bookService.findAllBookByType(productType);
+	            case FOOD:
+	                return foodService.findAllFoodByType(productType);
+	            default:
+	                return List.of();
+	        }
+	    }
+
 
 	@PostMapping(value = "/newCoffee")
 	public ResponseEntity<Coffee> newCoffee(@RequestParam ProductType coffeeType, @RequestBody Coffee newCoffee) {

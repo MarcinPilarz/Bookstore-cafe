@@ -1,5 +1,6 @@
 package springboot.bookstorecafe.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,21 @@ public class CoffeeService {
 		return coffeeRepo.findAll();
 	}
 
-	public List<Product> findAllCoffeeByType(ProductType productType) {
-		return productRepo.getProductsByProductType(productType);
-	}
-
+//	public List<Product> findAllCoffeeByType(ProductType productType) {
+//		return productRepo.getProductsByProductType(productType);
+//	}
+//	private List<Product> getProductsByType(ProductType productType) {
+//	    switch (productType) {
+//	        case COFFEE:
+//	            return coffeeService.findAllCoffeeByType(productType);
+//	        case FOOD:
+//	            return foodService.findAllFoodsByType(productType);
+//	        case BOOK:
+//	            return bookService.findAllBooksByType(productType);
+//	        default:
+//	            return new ArrayList<>();
+//	    }
+//	}
 	public void addCoffee(Coffee coffee) {
 
 		Coffee existingCoffee = coffeeRepo.findByProductName(coffee.getProductName());
@@ -40,6 +52,13 @@ public class CoffeeService {
 		coffeeRepo.save(coffee);
 
 	}
+	
+	public List<Product> findAllCoffeeByType(ProductType productType) {
+        if (productType == ProductType.COFFEE) {
+            return new ArrayList<>(coffeeRepo.getProductsByProductType(productType));
+        }
+        return new ArrayList<>();
+    }
 
 	public void deleteCoffee(Long idCoffee) {
 		coffeeRepo.deleteById(idCoffee);
