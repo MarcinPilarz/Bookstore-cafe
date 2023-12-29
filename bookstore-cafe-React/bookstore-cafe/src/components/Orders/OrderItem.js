@@ -3,7 +3,7 @@ import { useCart } from "../ProductSection/BusketProducts";
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import "./OrderItem.css"
 const OrderItem = () => {
   const { busket, clearBusket, updateProductQuantity, removeFromBusket } =
     useCart();
@@ -36,7 +36,7 @@ const OrderItem = () => {
   //   convertProdcutToProductId.forEach(OrderProducts);
   // };
   return (
-    <div className="order-item-list">
+    <div className="order-item-list-reasume">
       {busket.map((product) => (
         <div key={product.idProduct}>
           {console.log("Produkt w koszyku:", product)}

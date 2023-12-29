@@ -199,6 +199,7 @@ const userBar = () => {
         
         </ul>
 
+      </nav>
         <div className="icon-container">
           <div className="busket-icon" onClick={busketBar}>
             {" "}
@@ -249,12 +250,15 @@ const userBar = () => {
                     </div>
                   ))}
                 </div>
-                <button>
+                
+
+                <button id="button-busket-color-reasume">
                   <Link to="/summaryOrder"> Podsumowanie</Link>
                 </button>
-                <button onClick={clearBusket}>Wyczyść koszyk</button>{" "}
+                <button id="button-busket-color-delete" onClick={clearBusket}>Wyczyść koszyk</button>{" "}
                 {/* Przycisk Wyczyść */}
-              </div>
+                </div>
+             
             )}
           </div>
 
@@ -323,7 +327,6 @@ const userBar = () => {
 
 
         </div>
-      </nav>
     </header>
   );
 };

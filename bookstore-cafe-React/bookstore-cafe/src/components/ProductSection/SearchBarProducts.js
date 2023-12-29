@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ProductSection from "./ProductSection";
+import "./SearchBarProducts.css";
 const SearchBarProducts = ({ allProducts, onSearch, productType }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -36,7 +37,7 @@ const SearchBarProducts = ({ allProducts, onSearch, productType }) => {
         value={searchQuery}
         onChange={handleSearchChange}
       />
-      <button type="button" onClick={clearSearch}>
+      <button type="button" className="clear-button-search-bar"onClick={clearSearch}>
         Wyczyść
       </button>
     </form>

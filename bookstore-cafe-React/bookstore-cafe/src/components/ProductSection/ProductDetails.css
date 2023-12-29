@@ -1,21 +1,68 @@
+/* Styl ogólny dla kontenera ze szczegółami produktu */
 .product-details-container {
+  background-color: rgba(0, 0, 0, 0.7); /* Półprzezroczyste tło dla efektu modalnego */
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Styl dla treści szczegółów produktu */
+.product-details-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 80%;
+  max-width: 600px; /* Maksymalna szerokość kontenera */
+  overflow-y: auto;
+}
+
+/* Styl dla nagłówków i paragrafów */
+.product-details-content h2, .product-details-content p, .product-details-content h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Styl dla etykiet */
+.product-details-content .intensity-label,
+.product-details-content .author-label,
+.product-details-content .genre-label,
+.product-details-content .calories-label,
+.product-details-content .weight-label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+/* Styl dla informacji o kawie */
+.coffee-intensity {
   display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 1;
-  overflow: hidden;
 }
-.product-details-content {
-  width: 80%;
-  height: 60%;
-  background: rgb(232, 232, 232);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+
+.coffee-intensity-circle {
+  /* Dodaj tutaj styl dla wskaźnika intensywności kawy */
+}
+
+/* Styl dla informacji o książce */
+#book-info {
+  /* Styl dla informacji o książce */
+}
+
+/* Styl dla informacji o jedzeniu */
+#food-info {
+  /* Styl dla informacji o jedzeniu */
+}
+
+/* Dodatkowe media queries dla responsywności */
+@media (max-width: 768px) {
+  .product-details-content {
+    width: 95%;
+    padding: 15px;
+  }
 }
