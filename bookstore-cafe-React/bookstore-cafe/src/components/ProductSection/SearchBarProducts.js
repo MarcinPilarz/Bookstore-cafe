@@ -10,7 +10,7 @@ const SearchBarProducts = ({ allProducts, onSearch, productType }) => {
 
     // Filtrowanie produktów na podstawie wprowadzonego zapytania
     const filteredProducts = allProducts.filter((product) =>
-      product.product.productName
+      product.productName
         .toLowerCase()
         .includes(newSearchQuery.toLowerCase())
     );

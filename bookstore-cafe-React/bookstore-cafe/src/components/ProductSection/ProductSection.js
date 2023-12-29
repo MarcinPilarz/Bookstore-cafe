@@ -53,7 +53,8 @@ const ProductSection = () => {
     productType === "ALLPRODUCTS" ? "active-product" : "";
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/images?productType=${productType}`)
+      //.get(`http://localhost:8080/images?productType=${productType}`)
+      .get(`http://localhost:8080/products?productType=${productType}`)
       .then((response) => {
         const productsData = response.data;
         console.log("Pobrane dane produktow z API:", productsData);
@@ -113,24 +114,24 @@ const ProductSection = () => {
       productInfo = (
         <div className="tile-products-border">
           {products.map((product) => (
-            <div className="tile-products-list" key={product.product.idProduct}>
+            <div className="tile-products-list" key={product.idProduct}>
               <img
                 className="photo-list-products"
-                src={product.imageUrl}
+                src={product.imageName}
                 alt={product.title}
               />
               <h3 className="produc-name-text">
-                {product.product.productName}
+                {product.productName}
               </h3>
               <h3 className="product-price-text">
-                Cena: {product.product.productPrice} zł
+                Cena: {product.productPrice} zł
               </h3>
-              {/* <h3>{product.product.coffeeIntensity}</h3> */}
+              {/* <h3>{product.coffeeIntensity}</h3> */}
               <h3 className="coffee-intensity">
                 <span className="intensity-label">Intensywność:</span>
                 <CoffeeIntensity
                   className="coffee-intensity-circle"
-                  intensity={product.product.coffeeIntensity}
+                  intensity={product.coffeeIntensity}
                 />
               </h3>
               <div className="button-busket-info-container">
@@ -139,19 +140,19 @@ const ProductSection = () => {
                     className="more-info-button"
                     // onClick={productDetails}
                     // allProducts={products}
-                    onClick={() => toggleDetails(product.product.idProduct)}
+                    onClick={() => toggleDetails(product.idProduct)}
                   >
                     Szczegóły
                   </button>
-                  {detailsMap[product.product.idProduct] && (
+                  {detailsMap[product.idProduct] && (
                     <ProductDetails
                       onClose={() =>
                         setDetailsMap((prevDetailsMap) => ({
                           ...prevDetailsMap,
-                          [product.product.idProduct]: false,
+                          [product.idProduct]: false,
                         }))
                       }
-                      productId={product.product.idProduct}
+                      productId={product.idProduct}
                       allProducts={products}
                     />
                   )}
@@ -172,24 +173,24 @@ const ProductSection = () => {
       productInfo = (
         <div className="tile-products-border">
           {products.map((product) => (
-            <div className="tile-products-list" key={product.product.idProduct}>
+            <div className="tile-products-list" key={product.idProduct}>
               <img
                 className="photo-list-products"
-                src={product.imageUrl}
+                src={product.imageName}
                 alt={product.title}
               />
               <h3 className="produc-name-text">
-                {product.product.productName}
+                {product.productName}
               </h3>
               <h3 className="product-price-text">
-                Cena: {product.product.productPrice} zł
+                Cena: {product.productPrice} zł
               </h3>
-              {/* <h3>{product.product.coffeeIntensity}</h3> */}
+              {/* <h3>{product.coffeeIntensity}</h3> */}
               <h3 id="food-info">
                 <span className="calories-label">Autor:</span>
-                {product.product.author}
+                {product.author}
                 <span className="weight-label">Rodzaj:</span>
-                {product.product.genere}
+                {product.genere}
               </h3>
               <div className="button-busket-info-container">
                 <>
@@ -197,19 +198,19 @@ const ProductSection = () => {
                     className="more-info-button"
                     // onClick={productDetails}
                     // allProducts={products}
-                    onClick={() => toggleDetails(product.product.idProduct)}
+                    onClick={() => toggleDetails(product.idProduct)}
                   >
                     Szczegóły
                   </button>
-                  {detailsMap[product.product.idProduct] && (
+                  {detailsMap[product.idProduct] && (
                     <ProductDetails
                       onClose={() =>
                         setDetailsMap((prevDetailsMap) => ({
                           ...prevDetailsMap,
-                          [product.product.idProduct]: false,
+                          [product.idProduct]: false,
                         }))
                       }
-                      productId={product.product.idProduct}
+                      productId={product.idProduct}
                       allProducts={products}
                     />
                   )}
@@ -228,24 +229,24 @@ const ProductSection = () => {
       productInfo = (
         <div className="tile-products-border">
           {products.map((product) => (
-            <div className="tile-products-list" key={product.product.idProduct}>
+            <div className="tile-products-list" key={product.idProduct}>
               <img
                 className="photo-list-products"
-                src={product.imageUrl}
+                src={product.imageName}
                 alt={product.title}
               />
               <h3 className="produc-name-text">
-                {product.product.productName}
+                {product.productName}
               </h3>
               <h3 className="product-price-text">
-                Cena: {product.product.productPrice} zł
+                Cena: {product.productPrice} zł
               </h3>
-              {/* <h3>{product.product.coffeeIntensity}</h3> */}
+              {/* <h3>{product.coffeeIntensity}</h3> */}
               <h3 id="food-info">
                 <span className="calories-label">Kalorie:</span>
-                {product.product.amountOfCalories}
+                {product.amountOfCalories}
                 <span className="weight-label">Waga potrawy:</span>
-                {product.product.foodWeight} g
+                {product.foodWeight} g
               </h3>
               <div className="button-busket-info-container">
                 <>
@@ -253,19 +254,19 @@ const ProductSection = () => {
                     className="more-info-button"
                     // onClick={productDetails}
                     // allProducts={products}
-                    onClick={() => toggleDetails(product.product.idProduct)}
+                    onClick={() => toggleDetails(product.idProduct)}
                   >
                     Szczegóły
                   </button>
-                  {detailsMap[product.product.idProduct] && (
+                  {detailsMap[product.idProduct] && (
                     <ProductDetails
                       onClose={() =>
                         setDetailsMap((prevDetailsMap) => ({
                           ...prevDetailsMap,
-                          [product.product.idProduct]: false,
+                          [product.idProduct]: false,
                         }))
                       }
-                      productId={product.product.idProduct}
+                      productId={product.idProduct}
                       allProducts={products}
                     />
                   )}
@@ -287,43 +288,43 @@ const ProductSection = () => {
             <div
               id="title-product-all-list"
               className="tile-products-list"
-              key={product.product.idProduct}
+              key={product.idProduct}
             >
               <img
                 className="photo-list-products"
-                src={product.imageUrl}
+                src={product.imageName}
                 alt={product.title}
               />
               <h3 className="produc-name-text">
-                {product.product.productName}
+                {product.productName}
               </h3>
               <h3 className="product-price-text">
-                Cena: {product.product.productPrice} zł
+                Cena: {product.productPrice} zł
               </h3>
               {/* Dodaj warunek sprawdzający typ produktu i wyświetl odpowiednie informacje */}
-              {product.product.productType === "COFFEE" && (
+              {product.productType === "COFFEE" && (
                 <h3 className="coffee-intensity">
                   <span className="intensity-label">Intensywność:</span>
                   <CoffeeIntensity
                     className="coffee-intensity-circle"
-                    intensity={product.product.coffeeIntensity}
+                    intensity={product.coffeeIntensity}
                   />
                 </h3>
               )}
-              {product.product.productType === "BOOK" && (
+              {product.productType === "BOOK" && (
                 <h3 id="food-info">
                   <span className="calories-label">Autor:</span>
-                  {product.product.author}
+                  {product.author}
                   <span className="weight-label">Rodzaj:</span>
-                  {product.product.genere}
+                  {product.genere}
                 </h3>
               )}
-              {product.product.productType === "FOOD" && (
+              {product.productType === "FOOD" && (
                 <h3 id="food-info">
                   <span className="calories-label">Kalorie:</span>
-                  {product.product.amountOfCalories}
+                  {product.amountOfCalories}
                   <span className="weight-label">Waga potrawy:</span>
-                  {product.product.foodWeight} g
+                  {product.foodWeight} g
                 </h3>
               )}
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -333,19 +334,19 @@ const ProductSection = () => {
                     className="more-info-button"
                     // onClick={productDetails}
                     // allProducts={products}
-                    onClick={() => toggleDetails(product.product.idProduct)}
+                    onClick={() => toggleDetails(product.idProduct)}
                   >
                     Szczegóły
                   </button>
-                  {detailsMap[product.product.idProduct] && (
+                  {detailsMap[product.idProduct] && (
                     <ProductDetails
                       onClose={() =>
                         setDetailsMap((prevDetailsMap) => ({
                           ...prevDetailsMap,
-                          [product.product.idProduct]: false,
+                          [product.idProduct]: false,
                         }))
                       }
-                      productId={product.product.idProduct}
+                      productId={product.idProduct}
                       allProducts={products}
                     />
                   )}
@@ -356,9 +357,9 @@ const ProductSection = () => {
                     onClick={() => {
                       console.log(
                         "Produkt w buuttonie do przeslania",
-                        product.product
+                        product
                       ); // Wyświetla informacje o produkcie w konsoli
-                      handleAddToBusket(product.product);
+                      handleAddToBusket(product);
                     }}
                   >
                     Do koszyka
@@ -419,47 +420,47 @@ const ProductSection = () => {
           // W przeciwnym razie, wyświetl przefiltrowane produkty
           <div className="tile-products-border">
             {filteredProducts.map((product) => (
-              // <div key={product.product.idProduct}>
+              // <div key={product.idProduct}>
               <div
                 id="title-product-all-list"
                 className="tile-products-list"
-                key={product.product.idProduct}
+                key={product.idProduct}
               >
                 <img
                   className="photo-list-products"
-                  src={product.imageUrl}
+                  src={product.imageName}
                   alt={product.title}
                 />
                 <h3 className="produc-name-text">
-                  {product.product.productName}
+                  {product.productName}
                 </h3>
                 <h3 className="product-price-text">
-                  Cena: {product.product.productPrice} zł
+                  Cena: {product.productPrice} zł
                 </h3>
                 {/* Dodaj warunek sprawdzający typ produktu i wyświetl odpowiednie informacje */}
-                {product.product.productType === "COFFEE" && (
+                {product.productType === "COFFEE" && (
                   <h3 className="coffee-intensity">
                     <span className="intensity-label">Intensywność:</span>
                     <CoffeeIntensity
                       className="coffee-intensity-circle"
-                      intensity={product.product.coffeeIntensity}
+                      intensity={product.coffeeIntensity}
                     />
                   </h3>
                 )}
-                {product.product.productType === "BOOK" && (
+                {product.productType === "BOOK" && (
                   <h3 id="food-info">
                     <span className="calories-label">Autor:</span>
-                    {product.product.author}
+                    {product.author}
                     <span className="weight-label">Rodzaj:</span>
-                    {product.product.genere}
+                    {product.genere}
                   </h3>
                 )}
-                {product.product.productType === "FOOD" && (
+                {product.productType === "FOOD" && (
                   <h3 id="food-info">
                     <span className="calories-label">Kalorie:</span>
-                    {product.product.amountOfCalories}
+                    {product.amountOfCalories}
                     <span className="weight-label">Waga potrawy:</span>
-                    {product.product.foodWeight} g
+                    {product.foodWeight} g
                   </h3>
                 )}
                 {/* Dodaj inne dane produktu, jeśli są dostępne */}

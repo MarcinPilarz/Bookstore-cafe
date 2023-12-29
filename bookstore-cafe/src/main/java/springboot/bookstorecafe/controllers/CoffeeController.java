@@ -58,7 +58,7 @@ public class CoffeeController {
 //		return null;
 //	}
 	
-	@GetMapping(value = "/coffee")
+	@GetMapping(value = "/products")
 	public ResponseEntity<List<Product>> getProductsByTypes(@RequestParam ProductType productType) {
 	    List<Product> products;
 

@@ -3,7 +3,7 @@ import "./ProductDetails.css";
 import CoffeeIntensity from "./CoffeeIntensity";
 const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
   const selectedProduct = allProducts.find(
-    (product) => product.product.idProduct === productId
+    (product) => product.idProduct === productId
   );
 
   const detailedInformation = () => {
@@ -17,45 +17,45 @@ const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
       <div className="product-details-content">
         {selectedProduct ? (
           <>
-            <h2>{selectedProduct.product.productName}</h2>
-            <p>Price: {selectedProduct.product.productPrice} zł</p>
-            <p>Opis: {selectedProduct.product.productDescription}</p>
+            <h2>{selectedProduct.productName}</h2>
+            <p>Price: {selectedProduct.productPrice} zł</p>
+            <p>Opis: {selectedProduct.productDescription}</p>
             {/* Dodaj inne informacje o produkcie, które chcesz wyświetlić */}
             {/* <div>cos{detailedInformation}</div> */}
 
-            {selectedProduct.product.productType === "COFFEE" && (
+            {selectedProduct.productType === "COFFEE" && (
               <>
                 <h3 className="coffee-intensity">
                   <span className="intensity-label">Intensywność:</span>
                   <CoffeeIntensity
                     className="coffee-intensity-circle"
-                    intensity={selectedProduct.product.coffeeIntensity}
+                    intensity={selectedProduct.coffeeIntensity}
                   />
                 </h3>
                 {/* Dodaj inne informacje o kawie, jeśli są dostępne */}
               </>
             )}
 
-            {selectedProduct.product.productType === "BOOK" && (
+            {selectedProduct.productType === "BOOK" && (
               <>
                 <h3 id="book-info">
                   <span className="author-label">Autor:</span>
-                  {selectedProduct.product.author}
+                  {selectedProduct.author}
                   <span className="genre-label">Gatunek:</span>
-                  {selectedProduct.product.genere}
+                  {selectedProduct.genere}
                 </h3>
                 {/* Dodaj inne informacje o książce, jeśli są dostępne */}
               </>
             )}
 
             {/* Warunek dla jedzenia */}
-            {selectedProduct.product.productType === "FOOD" && (
+            {selectedProduct.productType === "FOOD" && (
               <>
                 <h3 id="food-info">
                   <span className="calories-label">Kalorie:</span>
-                  {selectedProduct.product.amountOfCalories}
+                  {selectedProduct.amountOfCalories}
                   <span className="weight-label">Waga potrawy:</span>
-                  {selectedProduct.product.foodWeight} g
+                  {selectedProduct.foodWeight} g
                 </h3>
                 {/* Dodaj inne informacje o jedzeniu, jeśli są dostępne */}
               </>
