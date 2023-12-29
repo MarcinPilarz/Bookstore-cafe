@@ -59,7 +59,7 @@ public class CoffeeController {
 //	}
 	
 	@GetMapping(value = "/coffee")
-	public ResponseEntity<List<Map<String, Object>>> getProductsByTypes(@RequestParam ProductType productType) {
+	public ResponseEntity<List<Product>> getProductsByTypes(@RequestParam ProductType productType) {
 	    List<Product> products;
 
 	    if (productType == ProductType.ALLPRODUCTS) {
@@ -72,18 +72,13 @@ public class CoffeeController {
 	        products = getProductsByType(productType);
 	    }
 
-	    List<Map<String, Object>> productWithUrls = products.stream()
-	        .map(product -> {
-	            Map<String, Object> productMap = new HashMap<>();
-	            productMap.put("product", product);
-	            String imageName = product.getImageName();
-	            String imageUrl = imageName != null ? "https://storage.googleapis.com/springbootphoto/springbootphoto/" + imageName : null;
-	            productMap.put("imageUrl", imageUrl);
-	            return productMap;
-	        })
-	        .collect(Collectors.toList());
+	    products.forEach(product -> {
+	        if (product.getImageName() != null) {
+	            product.setImageName("https://storage.googleapis.com/springbootphoto/springbootphoto/" + product.getImageName());
+	        }
+	    });
 
-	    return ResponseEntity.ok(productWithUrls);
+	    return ResponseEntity.ok(products);
 	}
 	    private List<Product> getProductsByType(ProductType productType) {
 	        switch (productType) {

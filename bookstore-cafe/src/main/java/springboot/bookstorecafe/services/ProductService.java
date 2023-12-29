@@ -108,7 +108,7 @@ public class ProductService {
 	        Product product = getProductByProductId(idProduct)
 	            .orElseThrow(() -> new RuntimeException("Product not found: " + idProduct));
 
-	        product.setImageName(imageUrl); // Ustawienie URL obrazu
+	        product.setImageName(file.getOriginalFilename()); // Ustawienie URL obrazu
 
 	        // Zaktualizuj produkt w odpowiednim repozytorium
 	        if (product instanceof Coffee) {
