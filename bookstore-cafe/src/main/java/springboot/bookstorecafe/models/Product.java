@@ -80,9 +80,9 @@ public abstract class Product {
 	
 	@Column(name="image_name")
 	private String imageName;
-	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JsonIgnore
-	private ProductImage productImage;
+//	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+//	@JsonIgnore
+//	private ProductImage productImage;
 
 	
 	@ManyToMany(mappedBy = "products")
@@ -141,9 +141,9 @@ public abstract class Product {
 //	}
 
 	
-	public ProductImage getProductImage() {
-		return productImage;
-	}
+//	public ProductImage getProductImage() {
+//		return productImage;
+//	}
 
 //	public Coffee getCoffee() {
 //		return coffee;
@@ -153,9 +153,9 @@ public abstract class Product {
 //		this.coffee = coffee;
 //	}
 
-	public void setProductImage(ProductImage productImage) {
-		this.productImage = productImage;
-	}
+//	public void setProductImage(ProductImage productImage) {
+//		this.productImage = productImage;
+//	}
 
 	public List<OrderItem> getOrderItems() {
 		return orderItems;

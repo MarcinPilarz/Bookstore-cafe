@@ -31,9 +31,9 @@ public class ProductImage {
 	private Blob image;
 	
 	
-	@OneToOne
-	@JoinColumn(name="id_product")
-	private Product product;
+//	@OneToOne
+//	@JoinColumn(name="id_product")
+//	private Product product;
 
 	public Long getIdProductImage() {
 		return idProductImage;
@@ -61,13 +61,13 @@ public class ProductImage {
 		this.image = image;
 	}
 
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+//	public Product getProduct() {
+//		return product;
+//	}
+//
+//	public void setProduct(Product product) {
+//		this.product = product;
+//	}
 	
 	
 	

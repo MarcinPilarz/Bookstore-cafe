@@ -28,26 +28,26 @@ public class ProductImageController {
 	private ProductImageService imageService;
 	 @Autowired
 	    private ProductService productService;
-	@GetMapping("/images")
-	public ResponseEntity<List<ProductaAndProductPhotoInfoDTO>> getAllImagesWithProducts(
-			@RequestParam ProductType productType) {
-		List<ProductaAndProductPhotoInfoDTO> imageInfoList = imageService.getAllImagesWithProducts(productType);
-		return ResponseEntity.ok(imageInfoList);
-	}
-
-	@PostMapping(value = "/addImage/{idProduct}")
-	public ResponseEntity<String> addImageProduct(@PathVariable Long idProduct, @RequestParam MultipartFile file) {
-		try {
-			imageService.uploadProductImage(idProduct, file);
-
-			// Blob blob= new javax.sql.rowset.SerialBlob(bytes);
-
-			return ResponseEntity.ok("Photo is added");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading photo");
-		}
-	}
+//	@GetMapping("/images")
+//	public ResponseEntity<List<ProductaAndProductPhotoInfoDTO>> getAllImagesWithProducts(
+//			@RequestParam ProductType productType) {
+//		List<ProductaAndProductPhotoInfoDTO> imageInfoList = imageService.getAllImagesWithProducts(productType);
+//		return ResponseEntity.ok(imageInfoList);
+//	}
+//
+//	@PostMapping(value = "/addImage/{idProduct}")
+//	public ResponseEntity<String> addImageProduct(@PathVariable Long idProduct, @RequestParam MultipartFile file) {
+//		try {
+//			imageService.uploadProductImage(idProduct, file);
+//
+//			// Blob blob= new javax.sql.rowset.SerialBlob(bytes);
+//
+//			return ResponseEntity.ok("Photo is added");
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading photo");
+//		}
+//	}
 	
 	 @PostMapping("/uploadImage")
 	    public ResponseEntity<?> uploadProductImage(@RequestParam Long idProduct, @RequestParam("file") MultipartFile file) {
