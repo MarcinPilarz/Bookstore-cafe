@@ -37,27 +37,35 @@ const StripePayment = () => {
       return;
     }
 
-    for (const item of busket) {
-      const cardElement = elements.getElement(CardElement);
-      const { error, token } = await stripe.createToken(cardElement);
+    // for (const item of busket) {
+    const cardElement = elements.getElement(CardElement);
+    const { error, token } = await stripe.createToken(cardElement);
 
-      if (error) {
-        console.log("Error:", error);
-      } else {
-        await processPaymentForProduct(item, token.id);
-      }
+    if (error) {
+      console.log("Error:", error);
+    } else {
+      await handleOrders(token.id);
     }
+    //  }
   };
 
   const handleOrders = async (stripeToken) => {
-    const convertProdcutToProductId = busket.map((item) => ({
-      idProduct: item.idProduct,
-      quantity: item.quantity,
-    }));
-
+    const idsProducts = busket.map((item) => item.idProduct);
+    const quantities = busket.map((item) => item.quantity);
     // for (const product of convertProdcutToProductId) {
     //   await OrderProducts(product, stripeToken);
     // }
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/addOrder?idPerson=${authData.idPerson}&idProduct=${idsProducts}&quantity=${quantities}&token=${stripeToken}`
+      );
+
+      console.log("Odpowiedź serwera:", response.data);
+      clearBusket(); // Opcjonalnie czyści koszyk po zakończeniu zamówienia
+    } catch (error) {
+      console.error("Błąd podczas tworzenia zamówienia:", error);
+    }
   };
 
   const processPaymentForProduct = async (product, stripeToken) => {

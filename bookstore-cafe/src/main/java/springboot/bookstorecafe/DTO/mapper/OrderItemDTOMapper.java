@@ -8,9 +8,9 @@ import springboot.bookstorecafe.models.OrderItem;
 
 public class OrderItemDTOMapper {
 
-	public static List<OrderItemDTO> mapOrderItemtoOrderItemInfo(List<OrderItem> orderItem){
-		
-		return orderItem.stream().map(orderItemDTO -> new OrderItemDTO(orderItemDTO.getIdOrder(),orderItemDTO.getDateOrder(),orderItemDTO.getQuantity(), orderItemDTO.getProducts(), orderItemDTO.getPerson().getFirstName(),orderItemDTO.getPerson().getLastName()))
-				.collect(Collectors.toList());
-	}
+//	public static List<OrderItemDTO> mapOrderItemtoOrderItemInfo(List<OrderItem> orderItem){
+//		
+//		return orderItem.stream().map(orderItemDTO -> new OrderItemDTO(orderItemDTO.getIdOrder(),orderItemDTO.getDateOrder(),orderItemDTO.getQuantity(), orderItemDTO.getProducts(), orderItemDTO.getPerson().getFirstName(),orderItemDTO.getPerson().getLastName()))
+//				.collect(Collectors.toList());
+//	}
 }

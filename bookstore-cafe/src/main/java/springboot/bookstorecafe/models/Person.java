@@ -48,14 +48,18 @@ public class Person {
 	@JsonIgnore
 	private List<Event> event = new ArrayList<>();
 
-	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<OrderItem> orderItems = new ArrayList<>();
+//	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+//	@JsonIgnore
+//	private List<OrderItem> orderItems = new ArrayList<>();
 //
 	@OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private List<OrderHistory> orderHistory = new ArrayList<>();
 
+	
+	 @OneToMany(mappedBy = "person")
+	 @JsonIgnore
+	    private List<WholeOrderPerson> orders = new ArrayList<>();
 	public Long getIdPerson() {
 		return idPerson;
 	}
@@ -125,13 +129,13 @@ public class Person {
 		return Objects.hash(idPerson);
 	}
 
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
-	}
+//	public List<OrderItem> getOrderItems() {
+//		return orderItems;
+//	}
+//
+//	public void setOrderItems(List<OrderItem> orderItems) {
+//		this.orderItems = orderItems;
+//	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -152,5 +156,14 @@ public class Person {
 	public void setOrderHistory(List<OrderHistory> orderHistory) {
 		this.orderHistory = orderHistory;
 	}
+
+	public List<WholeOrderPerson> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<WholeOrderPerson> orders) {
+		this.orders = orders;
+	}
+	
 
 }

@@ -84,10 +84,14 @@ public abstract class Product {
 //	@JsonIgnore
 //	private ProductImage productImage;
 
+//	
+//	@ManyToMany(mappedBy = "products")
+//	@JsonIgnore
+//	private List<OrderItem> orderItems = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "products")
-	@JsonIgnore
-	private List<OrderItem> orderItems = new ArrayList<>();
+	 @OneToMany(mappedBy = "product")
+	 @JsonIgnore
+	    private List<OrderProduct> orderProducts = new ArrayList<>();
 
 	@OneToMany(mappedBy = "product")
 	@JsonIgnore
@@ -157,13 +161,13 @@ public abstract class Product {
 //		this.productImage = productImage;
 //	}
 
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
-	}
+//	public List<OrderItem> getOrderItems() {
+//		return orderItems;
+//	}
+//
+//	public void setOrderItems(List<OrderItem> orderItems) {
+//		this.orderItems = orderItems;
+//	}
 
 	public String getProductDescription() {
 		return productDescription;
@@ -199,6 +203,14 @@ public abstract class Product {
 
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
+	}
+
+	public List<OrderProduct> getOrderProducts() {
+		return orderProducts;
+	}
+
+	public void setOrderProducts(List<OrderProduct> orderProducts) {
+		this.orderProducts = orderProducts;
 	}
 
 	
