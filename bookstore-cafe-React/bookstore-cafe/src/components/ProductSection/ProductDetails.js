@@ -18,13 +18,13 @@ const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
         {selectedProduct ? (
           <>
             <h2>{selectedProduct.productName}</h2>
-            <p>Price: {selectedProduct.productPrice} zł</p>
             <p>Opis: {selectedProduct.productDescription}</p>
+            <p>Price: {selectedProduct.productPrice} zł</p>
             {/* Dodaj inne informacje o produkcie, które chcesz wyświetlić */}
             {/* <div>cos{detailedInformation}</div> */}
 
             {selectedProduct.productType === "COFFEE" && (
-              <>
+              <div className="coffee-intensity-container">
                 <h3 className="coffee-intensity">
                   <span className="intensity-label">Intensywność:</span>
                   <CoffeeIntensity
@@ -33,7 +33,7 @@ const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
                   />
                 </h3>
                 {/* Dodaj inne informacje o kawie, jeśli są dostępne */}
-              </>
+              </div>
             )}
 
             {selectedProduct.productType === "BOOK" && (

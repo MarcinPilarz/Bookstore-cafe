@@ -53,6 +53,7 @@ const Signin = () => {
         phoneNumber: response.data.phoneNumber,
         idPerson: response.data.idPerson,
         roleType: response.data.roleType,
+        email: response.data.email,
         expirationTime: expirationTime,
       };
 

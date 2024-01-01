@@ -35,7 +35,8 @@ const AuthProvider = ({ children }) => {
       phoneNumber: null,
       idPerson: null,
       expirationTime: null,
-      roleType:null,
+      email: null,
+      roleType: null,
     };
   });
 
@@ -59,7 +60,7 @@ const AuthProvider = ({ children }) => {
       const busketKey = `busket_${authData.idPerson}`;
       localStorage.removeItem(busketKey); // Najpierw usuń dane z localStorage
     }
-    
+
     setAuthData(null); // Następnie czyść stan authData
     localStorage.removeItem("authData"); // Usuń dane authData z localStorage
   };

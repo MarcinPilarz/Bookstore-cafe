@@ -22,15 +22,24 @@ public class BookService {
 	@Autowired
 	private ProductRepository productRepo;
 
+	
+	
 	public Iterable<Book> findAllItems() {
 
 		return bookRepo.findAll();
 	}
 
-	public Iterable<Product> findAllBooksByType(ProductType productType) {
-		return productRepo.getProductsByProductType(productType);
-	}
+//	public Iterable<Product> findAllBooksByType(ProductType productType) {
+//		return productRepo.getProductsByProductType(productType);
+//	}
 
+	public List<Product> findAllBooksByType(ProductType productType) {
+        if (productType == ProductType.BOOK) {
+            return new ArrayList<>(bookRepo.getProductsByProductType(productType));
+        }
+        return new ArrayList<>();
+    }
+	
 	public void addItem(Book book) {
 		Book existingBook= bookRepo.findByProductName(book.getProductName());
 		if(existingBook != null) {
@@ -41,7 +50,7 @@ public class BookService {
 	}
 
 	public List<Product> findAllBookByType(ProductType productType) {
-        if (productType == ProductType.COFFEE) {
+        if (productType == ProductType.BOOK) {
             return new ArrayList<>(bookRepo.getProductsByProductType(productType));
         }
         return new ArrayList<>();

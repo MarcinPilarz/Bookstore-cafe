@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../ProductSection/BusketProducts";
 import "./Navbar.css";
 import { useAuth } from "../Login/LoginInfoContext";
+import RoleToggle from "./RoleToggle";
 const Navbar = () => {
   const [showMenuBars, setShowMenuBars] = useState(false);
   // const { isOpen, setIsOpen, handleClose } = useContext(BusketSideBar);
@@ -17,7 +18,7 @@ const Navbar = () => {
   const [busketOrderBar, setBusketOrderBar] = useState(false);
   const [historyOrderBar, setHistoryOrderBar] = useState(false);
   const [infoImageVisible, setinfoImageVisible] = useState(true);
-  const [userActionBar, setUserActionBar]= useState(false);
+  const [userActionBar, setUserActionBar] = useState(false);
   const {
     busket,
     setBusket,
@@ -71,14 +72,13 @@ const Navbar = () => {
     }
   };
 
-
-const userBar = () => {
-  setUserActionBar(!userActionBar);
-  setShowMenuBars(false);
-  setBusketOrderBar(false);
-  setinfoImageVisible(!infoImageVisible);
-  console.log("UserBar", !userActionBar)
-}
+  const userBar = () => {
+    setUserActionBar(!userActionBar);
+    setShowMenuBars(false);
+    setBusketOrderBar(false);
+    setinfoImageVisible(!infoImageVisible);
+    console.log("UserBar", !userActionBar);
+  };
   const toggleMenu = () => {
     setShowMenuBars(!showMenuBars);
     setBusketOrderBar(false);
@@ -88,8 +88,6 @@ const userBar = () => {
       !showMenuBars
     );
   };
-
-  
 
   const busketBar = () => {
     setBusketOrderBar(!busketOrderBar);
@@ -195,138 +193,134 @@ const userBar = () => {
             {" "}
             <a onClick={EventsNavigate}>Wydarzenia</a>{" "}
           </li>
-
-        
         </ul>
-
       </nav>
-        <div className="icon-container">
-          <div className="busket-icon" onClick={busketBar}>
-            {" "}
-            <FontAwesomeIcon icon={faBasketShopping} />
-            <span className="amount-of-products">{cartItemCount}</span>
-          </div>
-          <div
-            className={`busket-sidebar${!busketOrderBar ? "openBusket" : ""}`}
-          >
-            {busket.length > 0 && busketOrderBar && (
-              <div className="busket-sidebar openBusket">
-                <div className="order-item-list">
-                  {busket.map((product) => (
-                    <div key={product.idProduct}>
-                      {console.log("Produkt w koszyku:", product)}
-                      {console.log(
-                        "product.productId W nVBAR",
-                        product.productId
-                      )}{" "}
-                      {/* Użyj unikalnego identyfikatora */}
-                      <p>
-                        <b>Nazwa produktu:</b>
-                        <br />
-                        {product.productName}
-                      </p>
-                      <p>
-                        <b>Ilość: </b>
-                        <br />
-                        <input
-                          type="number"
-                          value={product.quantity}
-                          onChange={(e) =>
-                            updateProductQuantity(
-                              product.idProduct,
-                              Math.min(Math.max(1, e.target.value), 10)
-                            )
-                          }
-                          min="1"
-                          max="10"
-                        />
-                      </p>
-                      <button
-                        onClick={() => removeFromBusket(product.idProduct)}
-                      >
-                        X
-                      </button>
-                      {/* inne informacje o produkcie */}
-                    </div>
-                  ))}
-                </div>
-                
-
-                <button id="button-busket-color-reasume">
-                  <Link to="/summaryOrder"> Podsumowanie</Link>
-                </button>
-                <button id="button-busket-color-delete" onClick={clearBusket}>Wyczyść koszyk</button>{" "}
-                {/* Przycisk Wyczyść */}
-                </div>
-             
-            )}
-          </div>
-
-          <div className="history-icon" onClick={historyBar}>
-            <FontAwesomeIcon icon={faClock} />
-          </div>
-
-          <div
-            className={`history-sidebar${!historyOrderBar ? "openBusket" : ""}`}
-          >
-            {historyOrderBar && (
+      <div className="icon-container">
+        <div className="busket-icon" onClick={busketBar}>
+          {" "}
+          <FontAwesomeIcon icon={faBasketShopping} />
+          <span className="amount-of-products">{cartItemCount}</span>
+        </div>
+        <div className={`busket-sidebar${!busketOrderBar ? "openBusket" : ""}`}>
+          {busket.length > 0 && busketOrderBar && (
+            <div className="busket-sidebar openBusket">
               <div className="order-item-list">
-                <p>
-                  <b>Nazwa produktu:</b>
-                  <br />
-                  Americano{" "}
-                </p>
-                <p>
-                  <b>Ilość: </b>
-                  <br />2{" "}
-                </p>
-                <p>
-                  <b>Cena: </b>
-                  <br />
-                  40zł{" "}
-                </p>
+                {busket.map((product) => (
+                  <div key={product.idProduct}>
+                    {console.log("Produkt w koszyku:", product)}
+                    {console.log(
+                      "product.productId W nVBAR",
+                      product.productId
+                    )}{" "}
+                    {/* Użyj unikalnego identyfikatora */}
+                    <p>
+                      <b>Nazwa produktu:</b>
+                      <br />
+                      {product.productName}
+                    </p>
+                    <p>
+                      <b>Ilość: </b>
+                      <br />
+                      <input
+                        type="number"
+                        value={product.quantity}
+                        onChange={(e) =>
+                          updateProductQuantity(
+                            product.idProduct,
+                            Math.min(Math.max(1, e.target.value), 10)
+                          )
+                        }
+                        min="1"
+                        max="10"
+                      />
+                    </p>
+                    <button onClick={() => removeFromBusket(product.idProduct)}>
+                      X
+                    </button>
+                    {/* inne informacje o produkcie */}
+                  </div>
+                ))}
               </div>
-            )}
-            {historyOrderBar && (
-              <div className="button-container">
-                <button className="summary-button">Podsumowanie</button>
-                <button className="clear-button">Wyczyść</button>
-              </div>
-            )}
-          </div>
+              <button id="button-busket-color-reasume">
+                <Link to="/summaryOrder"> Podsumowanie</Link>
+              </button>
+              <button id="button-busket-color-delete" onClick={clearBusket}>
+                Wyczyść koszyk
+              </button>{" "}
+              {/* Przycisk Wyczyść */}
+            </div>
+          )}
+        </div>
 
-          <div className="user-icon" onClick={userBar}>
-            <FontAwesomeIcon icon={faCircleUser} />
-          </div>
-          {userActionBar && authData?.token==null && (
-            <div>
+        <div className="history-icon" onClick={historyBar}>
+          <FontAwesomeIcon icon={faClock} />
+        </div>
+
+        <div
+          className={`history-sidebar${!historyOrderBar ? "openBusket" : ""}`}
+        >
+          {historyOrderBar && (
+            <div className="order-item-list">
+              <p>
+                <b>Nazwa produktu:</b>
+                <br />
+                Americano{" "}
+              </p>
+              <p>
+                <b>Ilość: </b>
+                <br />2{" "}
+              </p>
+              <p>
+                <b>Cena: </b>
+                <br />
+                40zł{" "}
+              </p>
+            </div>
+          )}
+          {historyOrderBar && (
+            <div className="button-container">
+              <button className="summary-button">Podsumowanie</button>
+              <button className="clear-button">Wyczyść</button>
+            </div>
+          )}
+        </div>
+
+        <div className="user-icon" onClick={userBar}>
+          <FontAwesomeIcon icon={faCircleUser} />
+        </div>
+        {userActionBar && authData?.token == null && (
+          <div>
             <Link to="/signin">Zaloguj się</Link>
             <Link to="/signup">Zarejestruj się</Link>
-            </div>
-          )}
+          </div>
+        )}
 
-          {userActionBar && authData?.token && (
-            <div>
-              {authData?.roleType ==="Klient" &&(
+        {userActionBar && authData?.token && (
+          <div>
+            {authData?.roleType === "Klient" && (
+              <>
                 <Link to="/user-panel">Mój profil</Link>
-                
-              )}
+                <RoleToggle />
+              </>
+            )}
 
-{authData?.roleType ==="Pracownik" &&(
+            {authData?.roleType === "Pracownik" && (
+              <>
                 <div>Profil pracownika</div>
-                
-              )}
-              {authData?.roleType ==="Wlasciciel" &&(
+                <RoleToggle />
+              </>
+            )}
+            {authData?.roleType === "Wlasciciel" && (
+              <>
                 <div>Profil administratora</div>
-                
-              )}
-              {/* zmien role na klienta jesli pracownik i wlasciciel ma wolne */}
-              <div  onClick={logout}>Wyloguj</div>
-            </div>
-          )}
-
-
-        </div>
+                <RoleToggle />
+              </>
+            )}
+            {/* zmien role na klienta jesli pracownik i wlasciciel ma wolne */}
+            <div onClick={logout}>Wyloguj</div>
+          </div>
+        )}
+      </div>
     </header>
   );
 };

@@ -1,6 +1,11 @@
 /* Styl ogólny dla kontenera ze szczegółami produktu */
 .product-details-container {
-  background-color: rgba(0, 0, 0, 0.7); /* Półprzezroczyste tło dla efektu modalnego */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); /* Półprzezroczyste tło dla efektu modalnego */
   position: fixed;
   top: 0;
   left: 0;
@@ -24,11 +29,20 @@
 }
 
 /* Styl dla nagłówków i paragrafów */
-.product-details-content h2, .product-details-content p, .product-details-content h3 {
+.product-details-content h2,
+.product-details-content p,
+.product-details-content h3 {
   color: #333;
   margin-bottom: 10px;
+  letter-spacing: 1.5px;
+  line-height: 1.5;
 }
 
+.product-details-content h2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
 /* Styl dla etykiet */
 .product-details-content .intensity-label,
 .product-details-content .author-label,
@@ -45,7 +59,13 @@
   align-items: center;
 }
 
-.coffee-intensity-circle {
+div.intensity-display div.intensity-circle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
   /* Dodaj tutaj styl dla wskaźnika intensywności kawy */
 }
 

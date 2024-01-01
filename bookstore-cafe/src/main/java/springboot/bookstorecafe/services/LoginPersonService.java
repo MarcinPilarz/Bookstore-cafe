@@ -97,6 +97,7 @@ public class LoginPersonService implements LoginPersonInterface, AuthenticationS
 		jwtDTO.setPhoneNumber(person.getPhoneNumber());
 		jwtDTO.setIdPerson(person.getIdPerson());
 		jwtDTO.setIdLoginPerson(idLoginPerson);
+		jwtDTO.setEmail(user.getEmail());
 		jwtDTO.setRoleType(user.getRoleType());
 		return (jwtDTO);
 
@@ -114,6 +115,14 @@ public class LoginPersonService implements LoginPersonInterface, AuthenticationS
 			return jwtDTO;
 		}
 		return null;
+	}
+	
+	
+
+	public void updateRoleType(Long id, LoginPerson loginPerson) {
+		
+		loginRepo.save(loginPerson);
+		
 	}
 	// ............................................
 //	@Override

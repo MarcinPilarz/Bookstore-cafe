@@ -12,6 +12,7 @@ Long idPerson;
 String firstName;
 String lastName;
 String phoneNumber;
+String email;
 RoleType roleType;
 
 
@@ -63,6 +64,12 @@ public void setPhoneNumber(String phoneNumber) {
 	}
 	public void setRoleType(RoleType roleType) {
 		this.roleType = roleType;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

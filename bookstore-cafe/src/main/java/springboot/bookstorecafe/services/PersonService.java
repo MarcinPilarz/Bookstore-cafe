@@ -44,6 +44,7 @@ public class PersonService implements MainService<Person> {
 
 	 
 	
+	
 	public void registerPeopleToStripe(Person person, LoginPerson loginPerson) {
 		
 		try {
@@ -89,6 +90,7 @@ public class PersonService implements MainService<Person> {
 		personRepo.save(person);
 
 	}
+	
 	
 	public Person displayUserInfo(Long id) {
 		Person person = personRepo.findById(id)

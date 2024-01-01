@@ -1,9 +1,11 @@
 package springboot.bookstorecafe.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -63,12 +65,11 @@ public class CoffeeController {
 	    List<Product> products;
 
 	    if (productType == ProductType.ALLPRODUCTS) {
-	        products = Stream.of(
-	            coffeeService.findAllCoffeeByType(ProductType.COFFEE),
-	            bookService.findAllBookByType(ProductType.BOOK),
-	            foodService.findAllFoodByType(ProductType.FOOD)
-	        ).flatMap(List::stream).collect(Collectors.toList());
-	    } else {
+	        products = new ArrayList<>();
+	        products.addAll(coffeeService.findAllCoffeeByType(ProductType.COFFEE));
+	        products.addAll(bookService.findAllBookByType(ProductType.BOOK));
+	        products.addAll(foodService.findAllFoodByType(ProductType.FOOD));
+	    } else  {
 	        products = getProductsByType(productType);
 	    }
 
