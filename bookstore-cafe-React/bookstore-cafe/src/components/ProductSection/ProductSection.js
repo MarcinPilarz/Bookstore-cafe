@@ -120,9 +120,7 @@ const ProductSection = () => {
                 src={product.imageName}
                 alt={product.title}
               />
-              <h3 className="produc-name-text">
-                {product.productName}
-              </h3>
+              <h3 className="produc-name-text">{product.productName}</h3>
               <h3 className="product-price-text">
                 Cena: {product.productPrice} zł
               </h3>
@@ -158,8 +156,15 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
-                  {" "}
-                  <button className="add-busket-button">Do koszyka</button>
+                  <button
+                    className="add-busket-button"
+                    onClick={() => {
+                      console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
+                      handleAddToBusket(product);
+                    }}
+                  >
+                    Do koszyka
+                  </button>
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -179,9 +184,7 @@ const ProductSection = () => {
                 src={product.imageName}
                 alt={product.title}
               />
-              <h3 className="produc-name-text">
-                {product.productName}
-              </h3>
+              <h3 className="produc-name-text">{product.productName}</h3>
               <h3 className="product-price-text">
                 Cena: {product.productPrice} zł
               </h3>
@@ -216,7 +219,15 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
-                  <button className="add-busket-button">Do koszyka</button>
+                  <button
+                    className="add-busket-button"
+                    onClick={() => {
+                      console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
+                      handleAddToBusket(product);
+                    }}
+                  >
+                    Do koszyka
+                  </button>
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -235,9 +246,7 @@ const ProductSection = () => {
                 src={product.imageName}
                 alt={product.title}
               />
-              <h3 className="produc-name-text">
-                {product.productName}
-              </h3>
+              <h3 className="produc-name-text">{product.productName}</h3>
               <h3 className="product-price-text">
                 Cena: {product.productPrice} zł
               </h3>
@@ -272,7 +281,15 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
-                  <button className="add-busket-button">Do koszyka</button>
+                  <button
+                    className="add-busket-button"
+                    onClick={() => {
+                      console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
+                      handleAddToBusket(product);
+                    }}
+                  >
+                    Do koszyka
+                  </button>
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -295,9 +312,7 @@ const ProductSection = () => {
                 src={product.imageName}
                 alt={product.title}
               />
-              <h3 className="produc-name-text">
-                {product.productName}
-              </h3>
+              <h3 className="produc-name-text">{product.productName}</h3>
               <h3 className="product-price-text">
                 Cena: {product.productPrice} zł
               </h3>
@@ -355,10 +370,7 @@ const ProductSection = () => {
                   <button
                     className="add-busket-button"
                     onClick={() => {
-                      console.log(
-                        "Produkt w buuttonie do przeslania",
-                        product
-                      ); // Wyświetla informacje o produkcie w konsoli
+                      console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
                       handleAddToBusket(product);
                     }}
                   >
@@ -431,9 +443,7 @@ const ProductSection = () => {
                   src={product.imageName}
                   alt={product.title}
                 />
-                <h3 className="produc-name-text">
-                  {product.productName}
-                </h3>
+                <h3 className="produc-name-text">{product.productName}</h3>
                 <h3 className="product-price-text">
                   Cena: {product.productPrice} zł
                 </h3>

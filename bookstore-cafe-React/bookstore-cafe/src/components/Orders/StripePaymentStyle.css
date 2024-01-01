@@ -1,95 +1,59 @@
-/* Styl ogólny i reset */
-/* * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-} */
-
-/* Styl kontenera formularza */
-.payment-form {
-  width: 100%;
-  max-width: 540px;
-  background: #fff;
-  padding: 35px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 40px auto;
+.stripe-payment-form {
+  background-color: #ffffff; /* Czyste białe tło */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
+  font-family: "Arial", sans-serif; /* Nowoczesna czcionka */
 }
 
-/* Styl sekcji */
-.payment-form .section {
-  margin-bottom: 24px;
-}
-
-/* Styl nagłówka sekcji */
-.payment-form .section-header {
-  font-size: 18px;
-  margin-bottom: 15px;
-  font-weight: 600;
-  color: #333;
-}
-
-/* Styl etykiety input */
-.payment-form label {
-  display: block;
-  margin-bottom: 8px;
-  color: #6b7c93;
-  font-size: 14px;
-}
-
-/* Stylizacja inputów */
-.payment-form input {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 15px;
-  border: 1px solid #dfe3e8;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #333;
-}
-
-/* Placeholder */
-.payment-form input::placeholder {
-  color: #9faab7;
-}
-
-/* Stylizacja przycisku */
-.payment-form button {
-  display: block;
-  width: calc(100% - 30px);
-  padding: 15px;
-  background-color: #635bff;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
-}
-
-.payment-form button:hover {
-  background-color: #535bf2;
-}
-
-/* Styl ikon płatności */
-.payment-form .payment-methods {
+.stripe-payment-form form {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 20px;
-}
-
-.payment-form .payment-methods img {
-  height: 32px;
-  width: auto;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .card-element-container {
-  padding: 10px;
-  background-color: white;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  background-color: #f7f7f7; /* Delikatne tło dla każdego pola */
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  color: #333333; /* Ciemniejszy kolor tekstu dla lepszej czytelności */
 }
-/* Dodatkowe style, jeśli są potrzebne */
+
+.stripe-payment-form label {
+  font-weight: bold; /* Pogrubione etykiety */
+  margin-bottom: 8px;
+  color: #333333;
+}
+
+.stripe-payment-form button {
+  background-color: #28a745; /* Zielony kolor przycisku */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px; /* Większa czcionka przycisku */
+  transition: background-color 0.3s; /* Animacja dla przycisku */
+}
+
+.stripe-payment-form button:hover {
+  background-color: #218838; /* Ciemniejszy kolor przy najechaniu */
+}
+
+.stripe-payment-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.payment-message {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #dff0d8; /* Jasnozielone tło dla pozytywnego komunikatu */
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  text-align: center;
+}

@@ -3,7 +3,6 @@ package springboot.bookstorecafe.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
-
 @Entity
 public class Book extends Product {
 
@@ -47,10 +46,30 @@ public class Book extends Product {
 //	public void setTitle(String title) {
 //		this.title = title;
 //	}
-	
-	@Column(name="quantity_stock")
-	int quantityStock;
 
+//	@Column(name="quantity_stock")
+//	int quantityStock;
+
+	@Column(name = "publishing_house")
+	private String publishingHouse;
+
+	@Column(name = "language")
+	private String language;
+	
+	@Column(name = "publication_date")
+	private String publicationDate;
+	
+	@Column(name = "book_cover")
+	private String bookCover;
+
+	@Column(name = "number_page")
+	private int numberPage;
+	
+	@Column(name="number_book_stock")
+	private int numberBookStock;
+
+	@Column(name="is_available")
+	private boolean isAvailable;
 	public String getAuthor() {
 		return author;
 	}
@@ -67,16 +86,71 @@ public class Book extends Product {
 		this.genere = genere;
 	}
 
-	public int getQuantityStock() {
-		return quantityStock;
+	public String getPublishingHouse() {
+		return publishingHouse;
 	}
 
-	public void setQuantityStock(int quantityStock) {
-		this.quantityStock = quantityStock;
+	public void setPublishingHouse(String publishingHouse) {
+		this.publishingHouse = publishingHouse;
 	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getPublicationDate() {
+		return publicationDate;
+	}
+
+	public void setPublicationDate(String publicationDate) {
+		this.publicationDate = publicationDate;
+	}
+
+	public String getBookCover() {
+		return bookCover;
+	}
+
+	public void setBookCover(String bookCover) {
+		this.bookCover = bookCover;
+	}
+
+	public int getNumberPage() {
+		return numberPage;
+	}
+
+	public void setNumberPage(int numberPage) {
+		this.numberPage = numberPage;
+	}
+
+	public int getNumberBookStock() {
+		return numberBookStock;
+	}
+
+	public void setNumberBookStock(int numberBookStock) {
+		this.numberBookStock = numberBookStock;
+	}
+
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
+
 	
 	
-	
+//	public int getQuantityStock() {
+//		return quantityStock;
+//	}
+//
+//	public void setQuantityStock(int quantityStock) {
+//		this.quantityStock = quantityStock;
+//	}
 
 //	public String getDescription() {
 //		return description;

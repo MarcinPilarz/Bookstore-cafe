@@ -19,7 +19,7 @@ const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
           <>
             <h2>{selectedProduct.productName}</h2>
             <p>Opis: {selectedProduct.productDescription}</p>
-            <p>Price: {selectedProduct.productPrice} zł</p>
+            <p>Cena: {selectedProduct.productPrice} zł</p>
             {/* Dodaj inne informacje o produkcie, które chcesz wyświetlić */}
             {/* <div>cos{detailedInformation}</div> */}
 
@@ -39,10 +39,22 @@ const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
             {selectedProduct.productType === "BOOK" && (
               <>
                 <h3 id="book-info">
-                  <span className="author-label">Autor:</span>
+                  <span className="author-label-details">Autor:</span>
                   {selectedProduct.author}
                   <span className="genre-label">Gatunek:</span>
                   {selectedProduct.genere}
+                  {<br />}
+                  <span className="publishingHouse-label">Wydawnictwo:</span>
+                  {selectedProduct.publishingHouse}
+                  <span className="language-label">Język:</span>
+                  {selectedProduct.language}
+                  {<br />}
+                  <span className="publication-date-label">Rok wydania:</span>
+                  {selectedProduct.publicationDate}
+                  <span className="book-cover-label">Okładka:</span>
+                  {selectedProduct.bookCover}
+                  <span className="number-page-label">Liczba stron:</span>
+                  {selectedProduct.numberPage}
                 </h3>
                 {/* Dodaj inne informacje o książce, jeśli są dostępne */}
               </>
