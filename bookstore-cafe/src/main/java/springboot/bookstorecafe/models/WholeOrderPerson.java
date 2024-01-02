@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,6 +33,12 @@ public class WholeOrderPerson {
     @Column(name = "total_price")
     private Double totalPrice;
 
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name="order_status")
+    private OrderStatus orderStatus;
+    
+    
     @ManyToOne
     @JoinColumn(name = "id_person")
     private Person person;
@@ -88,6 +96,15 @@ public List<OrderProduct> getOrder() {
 
 public void setOrder(List<OrderProduct> order) {
 	this.order = order;
+}
+
+
+public OrderStatus getOrderStatus() {
+    return orderStatus;
+}
+
+public void setOrderStatus(String displayStatus) {
+    this.orderStatus = OrderStatus.fromDisplayStatus(displayStatus);
 }
    
    

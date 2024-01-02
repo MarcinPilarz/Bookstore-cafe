@@ -22,6 +22,7 @@ import springboot.bookstorecafe.models.Food;
 import springboot.bookstorecafe.models.OrderHistory;
 import springboot.bookstorecafe.models.OrderItem;
 import springboot.bookstorecafe.models.OrderProduct;
+import springboot.bookstorecafe.models.OrderStatus;
 import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.models.Product;
 import springboot.bookstorecafe.models.ProductType;
@@ -239,6 +240,7 @@ public class OrderService {
 	    WholeOrderPerson order = new WholeOrderPerson();
 	    order.setDateOrder(LocalDateTime.now().withNano(0));
 	    order.setTotalPrice(totalPrice);
+	    order.setOrderStatus("W trakcie");
 	    order.setPerson(person);
 	    order = wholeOrderRepo.save(order);
 
