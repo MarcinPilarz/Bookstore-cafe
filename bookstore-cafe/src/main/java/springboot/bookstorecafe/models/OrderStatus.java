@@ -16,13 +16,15 @@ public enum OrderStatus {
 	        return displayStatus;
 	    }
 	    
-	    public static OrderStatus fromDisplayStatus(String displayStatus ){
+	    public static OrderStatus fromDisplayStatus(String displayStatus) {
 	        for (OrderStatus status : values()) {
-	            if (status.getDisplayStatus().equals(displayStatus)) {
+	            if (status.getDisplayStatus().equalsIgnoreCase(displayStatus)) {
 	                return status;
 	            }
 	        }
+	        System.out.println("Nieznany displayName: " + displayStatus); // Logowanie do debugowania
 	        throw new IllegalArgumentException("Nieznany displayName: " + displayStatus);
 	    }
+
    
 }

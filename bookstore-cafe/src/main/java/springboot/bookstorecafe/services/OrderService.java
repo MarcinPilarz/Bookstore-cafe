@@ -88,6 +88,9 @@ public class OrderService {
 	}
 	
 	
+	
+	
+	
 //	public List<OrderItem> getOrdersPerson(Long personId){
 //		Person person = personRepo.findById(personId)
 //				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
@@ -265,6 +268,15 @@ public class OrderService {
 	 private double calculateTotalPrice(Product products, int quantity) {
 	        return products.getProductPrice() * quantity;
 	    }
+	 
+	 
+	 public void updateOrderStatus(Long orderId, String displayStatus) {
+		    WholeOrderPerson order = wholeOrderRepo.findById(orderId)
+		        .orElseThrow(() -> new RuntimeException("Order not found"));
+		    order.setOrderStatus(displayStatus); // Przekazuje ciąg znaków bezpośrednio
+		    wholeOrderRepo.save(order);
+		}
+
 //	public void addItemToHistory(OrderItem oldOrder, Person person2, Product products) {
 //
 //		OrderHistory orderHistory = new OrderHistory();

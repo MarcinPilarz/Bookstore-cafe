@@ -17,6 +17,9 @@ const EmployeePanel = () => {
   });
   const [reservationPanel, setReservationPanel] = useState([]);
   const [orderPanel, setOrderPanel] = useState([]);
+
+  const [orderStatuses, setOrderStatuses] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("");
   const handleAdd = () => {
     // Logika dodawania
     console.log("Dodawanie...");
@@ -369,6 +372,21 @@ const EmployeePanel = () => {
     }
   }, [authData?.expirationTime, authData.token]);
 
+  useEffect(() => {
+    axios.get("http://localhost:8080/order-status")
+      .then(response => {
+        setOrderStatuses(response.data);
+      })
+      .catch(error => {
+        console.error("Error fetching order statuses", error);
+      });
+  }, []);
+
+  const handleChangeStatus = (e) => {
+    setSelectedStatus(e.target.value);
+    // Tutaj możesz dodać logikę do aktualizacji statusu zamówienia w backendzie
+  };
+
   return (
     <div className="dashboardContainer">
       <div className="dashboardSidebar">
@@ -376,7 +394,7 @@ const EmployeePanel = () => {
         <ul className="dashboardSidebarList">
           <li
             className="dashboardSidebarItem"
-            onClick={() => setActiveTab("zamowienia klientow")}
+            onClick={() => setActiveTab("dostepne zamowienia")}
           >
             Zamówienia klientów
           </li>
@@ -395,6 +413,7 @@ const EmployeePanel = () => {
         </ul>
       </div>
       <div className="dashboardContent">
+
         {activeTab === "rezerwacje" && (
           <section>
             <h3 className="dashboardContentTitle">Zarządzanie Rezerwacjami</h3>
@@ -560,7 +579,7 @@ const EmployeePanel = () => {
                   </tr>
                 ))}
 
-                {console.log("EditEventid", editEventId)}
+                
               </tbody>
             </table>
             <section>
@@ -595,10 +614,10 @@ const EmployeePanel = () => {
             </section>
           </section>
         )}
-        {activeTab === "zamowienia klientow" && (
-          <section>
-            <h3 className="dashboardContentTitle">Zamówienia klientów</h3>
-            <ul>
+
+        {activeTab === "dostepne zamowienia" && (
+          <section className="orders-container">
+             <ul>
               <li onClick={() => setActiveTab("dostepne zamowienia")}>
                 Dostępne zamówienia
               </li>
@@ -606,10 +625,6 @@ const EmployeePanel = () => {
                 Oczękujące zamówienia
               </li>
             </ul>
-          </section>
-        )}
-        {activeTab === "dostepne zamowienia" && (
-          <section className="orders-container">
             {orderPanel.map((order) => {
               if (order.orderStatus !== "OCZEKIWANIE_NA_DOSTAWE") {
                 return (
@@ -629,7 +644,17 @@ const EmployeePanel = () => {
                         </li>
                       ))}
                     </ul>
-                    <div>Status zamówienia {order.orderStatus}</div>
+                    <div>
+      {orderStatuses.length > 0 && (
+        <select value={selectedStatus} onChange={handleChangeStatus}>
+          {orderStatuses.map((status, index) => (
+            <option key={index} value={status}>
+              {status}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
                   </div>
                 );
               } else {
@@ -638,6 +663,56 @@ const EmployeePanel = () => {
             })}
           </section>
         )}
+
+         {activeTab === "oczekujace zamowienia" && (
+          <section>
+            <ul>
+              <li onClick={() => setActiveTab("dostepne zamowienia")}>
+                Dostępne zamówienia
+              </li>
+              <li onClick={() => setActiveTab("oczekujace zamowienia")}>
+                Oczękujące zamówienia
+              </li>
+            </ul>
+
+            {orderPanel.map((order) => {
+              if (order.orderStatus === "OCZEKIWANIE_NA_DOSTAWE") {
+                return (
+                  <div key={order.idWholeOrderPerson} className="order-item">
+                    <div className="order-date">
+                      Data zamówienia: {order.dateOrder}
+                    </div>
+                    <div className="order-person">
+                      Złożone przez: {order.person.firstName}{" "}
+                      {order.person.lastName}
+                    </div>
+                    <div className="order-products">Zamówione produkty:</div>
+                    <ul className="products-list">
+                      {order.order.map((item) => (
+                        <li key={item.idOrderProduct} className="product-item">
+                          {item.product.productName} (Ilość: {item.quantity})
+                        </li>
+                      ))}
+                    </ul>
+                    <div>
+      {orderStatuses.length > 0 && (
+        <select value={selectedStatus} onChange={handleChangeStatus}>
+          {orderStatuses.map((status, index) => (
+            <option key={index} value={status}>
+              {status}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </section>
+         )}
       </div>
     </div>
   );
