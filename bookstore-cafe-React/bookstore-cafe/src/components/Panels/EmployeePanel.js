@@ -732,64 +732,66 @@ const getDisplayNameForStatus = (status) => {
         )}
 
          {activeTab === "oczekujace zamowienia" && (
-          <section>
-            <ul>
-              <li onClick={() => setActiveTab("dostepne zamowienia")}>
-                Dostępne zamówienia
-              </li>
-              <li onClick={() => setActiveTab("oczekujace zamowienia")}>
-                Oczękujące zamówienia
-              </li>
-            </ul>
+          <section className="orders-container">
+          <ul>
+           <li onClick={() => setActiveTab("dostepne zamowienia")}>
+             Dostępne zamówienia
+           </li>
+           <li onClick={() => setActiveTab("oczekujace zamowienia")}>
+             Oczękujące zamówienia
+           </li>
+         </ul>
+         {orderPanel.map((order) => {
+           if (order.orderStatus === "OCZEKIWANIE_NA_DOSTAWE") {
+             const currentStatus = getCurrentStatusForOrder(order);
+             return (
+               <div key={order.idWholeOrderPerson} className="order-item">
+                 <div className="order-date">
+                   Data zamówienia: {order.dateOrder}
+                 </div>
+                 <div className="order-person">
+                   Złożone przez: {order.person.firstName}{" "}
+                   {order.person.lastName}
+                 </div>
+                 <div className="order-products">Zamówione produkty:</div>
+                 <ul className="products-list">
+                   {order.order.map((item) => (
+                     <li key={item.idOrderProduct} className="product-item">
+                       {item.product.productName} (Ilość: {item.quantity})
+                     </li>
+                   ))}
+                 </ul>
+               
+                 <div>
 
-            {orderPanel.map((order) => {
-              if (order.orderStatus === "OCZEKIWANIE_NA_DOSTAWE") {
-                const currentStatus = getCurrentStatusForOrder(order);
-                return (
-                  <div key={order.idWholeOrderPerson} className="order-item">
-                    <div className="order-date">
-                      Data zamówienia: {order.dateOrder}
-                    </div>
-                    <div className="order-person">
-                      Złożone przez: {order.person.firstName}{" "}
-                      {order.person.lastName}
-                    </div>
-                    <div className="order-products">Zamówione produkty:</div>
-                    <ul className="products-list">
-                      {order.order.map((item) => (
-                        <li key={item.idOrderProduct} className="product-item">
-                          {item.product.productName} (Ilość: {item.quantity})
-                        </li>
-                      ))}
-                    </ul>
-                    <div>
-      {orderStatuses.length > 0 && (
-        <>
-     <select value={currentStatus} onChange={(e) => handleChangeStatus(order.idWholeOrderPerson, e.target.value)}>
-          {orderStatuses.map((status, index) => (
-            <option key={index} value={status}>
-              {status}
-            </option>
-          ))}
-        </select>
-         <button onClick={() => updateOrderStatus(order.idWholeOrderPerson, currentStatus)}>
-         Zaktualizuj status
-       </button>
-          </>
-        
-      )}
-      <button onClick={updateOrderStatus}>
-                Zaktualizuj status
-            </button>
-    </div>
-                  </div>
-                );
-              } else {
-                return null;
-              }
-            })}
-          </section>
-         )}
+                 Aktualny status: {getDisplayNameForStatus(order.orderStatus)}
+                 </div>
+               
+                 <div>
+   {orderStatuses.length > 0 && (
+     <>
+     <select value={getCurrentStatusForOrder(order)} onChange={(e) => handleChangeStatus(order.idWholeOrderPerson, e.target.value)}>
+       {orderStatuses.map((status, index) => (
+         <option key={index} value={status}>
+           {status}
+         </option>
+       ))}
+     </select>
+       <button onClick={() => updateOrderStatus(order.idWholeOrderPerson, currentStatus)}>
+       Zaktualizuj status
+     </button>
+       </>
+   )}
+ </div>
+
+               </div>
+             );
+           } else {
+             return null;
+           }
+         })}
+       </section>
+     )}
       </div>
     </div>
   );
