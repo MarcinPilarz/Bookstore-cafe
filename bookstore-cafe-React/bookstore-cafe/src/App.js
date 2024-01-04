@@ -12,6 +12,7 @@ import OrderItem from "./components/Orders/OrderItem";
 import StripePayment from "./components/Orders/StripePayment";
 import UserPanel from "./components/Panels/UserPanel";
 import EmployeePanel from "./components/Panels/EmployeePanel";
+import OwnerPanel from "./components/Panels/OwnerPanel";
 function App() {
   return (
     // <BusketSideBarProvider>
@@ -28,6 +29,7 @@ function App() {
           <Route path="/stripe" element={<StripePayment />} />
           <Route path="/user-panel" element={<UserPanel/>} />
           <Route path="/employee-panel" element=< EmployeePanel/> />
+          <Route path="/owner-panel" element=<OwnerPanel/>/>
           <Route
             path="/products-page/:productType"
             element={<ProductSection />}

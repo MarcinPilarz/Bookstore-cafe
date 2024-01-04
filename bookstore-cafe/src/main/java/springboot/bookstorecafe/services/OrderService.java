@@ -275,30 +275,33 @@ public class OrderService {
 		        .orElseThrow(() -> new RuntimeException("Order not found"));
 		    order.setOrderStatus(displayStatus); // Przekazuje ciąg znaków bezpośrednio
 		    wholeOrderRepo.save(order);
+		    if (displayStatus.equals("Odebrane")) {
+		        addOrderToHistory(order);
+		        deleteItem(orderId);
+		    }
 		}
 
-//	public void addItemToHistory(OrderItem oldOrder, Person person2, Product products) {
-//
-//		OrderHistory orderHistory = new OrderHistory();
-//
-//		orderHistory.setIdOrderHistory(oldOrder.getIdOrder());
-//		orderHistory.setDateOrder(oldOrder.getDateOrder());
-//		orderHistory.setQuantity(oldOrder.getQuantity());
-//		orderHistory.setTotalPrice(oldOrder.getTotalPrice());
-//		orderHistory.setPerson(person2);
-//		orderHistory.setProduct(products);
-//		orderHistoryRepo.save(orderHistory);
-//
-//		Long idPerson = orderHistory.getPerson().getIdPerson();
-//		List<OrderHistory> orderHistoryList = orderHistoryRepo.findByPersonIdPerson(idPerson);
-//
-//		if (orderHistoryList.size() > 20) {
-//			orderHistory = orderHistoryList.get(0);
-//
-//			orderHistoryRepo.delete(orderHistory);
-//		}
-//
-//	}
+	 public void addOrderToHistory(WholeOrderPerson order) {
+		    for (OrderProduct orderProduct : order.getOrder()) {
+		        OrderHistory orderHistory = new OrderHistory();
+
+		        orderHistory.setIdOrderHistory(order.getIdWholeOrderPerson());
+		        orderHistory.setDateOrder(order.getDateOrder());
+		        orderHistory.setQuantity(orderProduct.getQuantity());
+		        orderHistory.setTotalPrice(order.getTotalPrice());
+		        orderHistory.setPerson(order.getPerson());
+		        orderHistory.setProduct(orderProduct.getProduct());
+		        orderHistoryRepo.save(orderHistory);
+		    }
+
+		    // Sprawdzanie i usuwanie starych wpisów z historii, jeśli jest ich więcej niż 20
+		    Long idPerson = order.getPerson().getIdPerson();
+		    List<OrderHistory> orderHistoryList = orderHistoryRepo.findByPersonIdPerson(idPerson);
+		    if (orderHistoryList.size() > 20) {
+		        OrderHistory oldestHistoryItem = orderHistoryList.get(0);
+		        orderHistoryRepo.delete(oldestHistoryItem);
+		    }
+		}
 
 	// ?
 //	public void updateItem(@RequestParam Long idOrderItem,OrderItem orderItem) {
@@ -306,18 +309,18 @@ public class OrderService {
 //		
 //	}
 
-	public void deleteItem(Long idOrderItem) {
+	public void deleteItem(Long orderId) {
 
-		OrderItem orderItem = orderRepo.findById(idOrderItem)
-				.orElseThrow(() -> new RuntimeException("There is no such order: " + idOrderItem));
+		 WholeOrderPerson order  = wholeOrderRepo.findById(orderId)
+				.orElseThrow(() -> new RuntimeException("There is no such order: " + orderId));
 
-		orderRepo.delete(orderItem);
+		 wholeOrderRepo.delete(order);
 	}
 
-	public OrderItem findById(Long id) {
-
-		return orderRepo.findById(id).orElse(null);
-	}
+//	public OrderItem findById(Long id) {
+//
+//		return orderRepo.findById(id).orElse(null);
+//	}
 
 //	private void priceAllProducts(OrderItem orderItems) {
 //

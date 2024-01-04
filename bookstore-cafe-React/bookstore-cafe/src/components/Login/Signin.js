@@ -41,7 +41,8 @@ const Signin = () => {
         }
       );
 
-      const expirationTime = new Date().getTime() + 60 * 60 * 1000; // 15 minut w milisekundach
+      const expirationTime = new Date().getTime() +604800000; 
+      // 60 * 60 * 1000; // 15 minut w milisekundach
       //const expirationTime = new Date().getTime() + 10 * 60; // 15 minut w milisekundach
 
       // Ustawienie danych uwierzytelniających w kontekście i localStorage

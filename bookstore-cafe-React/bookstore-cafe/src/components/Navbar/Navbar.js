@@ -306,13 +306,13 @@ const Navbar = () => {
 
             {authData?.roleType === "Pracownik" && (
               <>
-                <div>Profil pracownika</div>
+                <Link to="/employee-panel">Profil pracownika</Link>
                 <RoleToggle />
               </>
             )}
             {authData?.roleType === "Wlasciciel" && (
               <>
-                <div>Profil administratora</div>
+                <Link to="/owner-panel">Profil administratora</Link>
                 <RoleToggle />
               </>
             )}

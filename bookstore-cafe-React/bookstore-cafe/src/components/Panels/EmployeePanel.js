@@ -360,34 +360,51 @@ const EmployeePanel = () => {
           const response = await axios.get("http://localhost:8080/orders", config);
           console.log("Pobrane dane z API ZAMOWIENIA:", response.data);
           setOrderPanel(response.data);
+  
+          // Aktualizacja stanu selectedStatuses
+          const newSelectedStatuses = {};
+          response.data.forEach(order => {
+            newSelectedStatuses[order.idWholeOrderPerson] = order.orderStatus;
+          });
+          setSelectedStatuses(newSelectedStatuses);
+  
         } catch (error) {
           console.error("Błąd pobierania danych zamowien", error);
         }
       }
     };
-
+  
     if (authData?.token) {
       fetchOrder();
     }
-  }, [authData?.expirationTime, authData?.token]);
+  }, [authData?.expirationTime, authData?.token]);;
 
   useEffect(() => {
-    axios.get("http://localhost:8080/order-status")
-      .then(response => {
+    const fetchOrderStatuses = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/order-status");
         setOrderStatuses(response.data);
-      })
-      .catch(error => {
+  
+        // Aktualizacja wybranych statusów dla każdego zamówienia
+        const newSelectedStatuses = {};
+        response.data.forEach(order => {
+          newSelectedStatuses[order.idWholeOrderPerson] = order.orderStatus;
+        });
+        setSelectedStatuses(newSelectedStatuses);
+      } catch (error) {
         console.error("Error fetching order statuses", error);
-      });
+      }
+    };
+  
+    fetchOrderStatuses();
   }, []);
-
   const handleChangeStatus = (orderId, newStatus) => {
-    setSelectedStatuses(prevStatuses => ({
-      ...prevStatuses,
-      [orderId]: newStatus
-    }));
+    setSelectedStatuses(prevStatuses => {
+      const updatedStatuses = {...prevStatuses, [orderId]: newStatus};
+      console.log('Updated statuses:', updatedStatuses);
+      return updatedStatuses;
+    });
   };
-
   const getCurrentStatusForOrder = (order) => {
     return selectedStatuses[order.idWholeOrderPerson] || order.orderStatus;
   };
@@ -398,13 +415,22 @@ const EmployeePanel = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${authData.token}`, // Dodaj token autoryzacyjny, jeśli jest wymagany
+          Authorization: `Bearer ${authData.token}`,
         },
         body: JSON.stringify({ orderStatus: newStatus })
       });
+  
       if (response.ok) {
         console.log("Status zamówienia zaktualizowany");
-        // Tutaj możesz dodać logikę do odświeżenia listy zamówień
+  
+        // Aktualizacja stanu orderPanel z nowym statusem
+        setOrderPanel(prevOrders =>
+          prevOrders.map(order => 
+            order.idWholeOrderPerson === orderId
+              ? { ...order, orderStatus: newStatus }
+              : order
+          )
+        );
       } else {
         console.error("Błąd podczas aktualizacji statusu zamówienia");
       }
@@ -412,7 +438,17 @@ const EmployeePanel = () => {
       console.error("Błąd: ", error);
     }
   };
+const statusDisplayNames = {
+  W_TRAKCIE: "W trakcie",
+  GOTOWE_DO_ODBIORU: "Gotowe do odbioru",
+  ODEBRANE: "Odebrane",
+  OCZEKIWANIE_NA_DOSTAWE: "Oczekiwanie na dostawę",
+  // Dodaj inne statusy według potrzeb
+};
 
+const getDisplayNameForStatus = (status) => {
+  return statusDisplayNames[status] || status;
+};
   return (
     <div className="dashboardContainer">
       <div className="dashboardSidebar">
@@ -517,15 +553,7 @@ const EmployeePanel = () => {
               </tbody>
             </table>
 
-            <button className="dashboardButton" onClick={handleAdd}>
-              Dodaj Rezerwację
-            </button>
-            <button className="dashboardButton" onClick={handleEdit}>
-              Edytuj Rezerwację
-            </button>
-            <button className="dashboardButton" onClick={handleDelete}>
-              Usuń Rezerwację
-            </button>
+           
             {/* Tabela rezerwacji lub lista */}
           </section>
         )}
@@ -671,10 +699,16 @@ const EmployeePanel = () => {
                         </li>
                       ))}
                     </ul>
+                  
+                    <div>
+
+                    Aktualny status: {getDisplayNameForStatus(order.orderStatus)}
+                    </div>
+                  
                     <div>
       {orderStatuses.length > 0 && (
         <>
-        <select value={currentStatus} onChange={(e) => handleChangeStatus(order.idWholeOrderPerson, e.target.value)}>
+        <select value={getCurrentStatusForOrder(order)} onChange={(e) => handleChangeStatus(order.idWholeOrderPerson, e.target.value)}>
           {orderStatuses.map((status, index) => (
             <option key={index} value={status}>
               {status}
