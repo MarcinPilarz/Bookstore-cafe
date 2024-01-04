@@ -3,7 +3,7 @@ import "./EmployeePanel.css";
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
 const EmployeePanel = () => {
-  const [activeTab, setActiveTab] = useState("zamowienia klientow");
+  const [activeTab, setActiveTab] = useState("dostepne zamowienia");
   const [eventsPanel, setEventsPanel] = useState([]);
   const [editEventId, setEditEventsId] = useState(null);
   const [editReservationId, setEditReservationId] = useState(null);
