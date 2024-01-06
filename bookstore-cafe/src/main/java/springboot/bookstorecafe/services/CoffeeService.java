@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import springboot.bookstorecafe.DTO.ProductDTO;
 import springboot.bookstorecafe.models.Coffee;
 import springboot.bookstorecafe.models.Product;
 import springboot.bookstorecafe.models.ProductType;
@@ -52,6 +53,19 @@ public class CoffeeService {
 		coffeeRepo.save(coffee);
 
 	}
+	
+	
+	public Coffee mapToCoffee(ProductDTO coffeeDTO) {
+		 Coffee coffee = new Coffee();
+		    coffee.setProductName(coffeeDTO.getProductName());
+		    coffee.setProductPrice(coffeeDTO.getProductPrice());
+		    coffee.setProductDescription(coffeeDTO.getProductDescription());
+		    coffee.setProductType(coffeeDTO.getProductType());
+		    coffee.setCoffeeIntensity(coffeeDTO.getCoffeeIntensity());
+		    // Ustaw inne specyficzne pola dla Coffee, jeśli są dostępne
+		    return coffee;
+	}
+	
 	
 	public List<Product> findAllCoffeeByType(ProductType productType) {
         if (productType == ProductType.COFFEE) {

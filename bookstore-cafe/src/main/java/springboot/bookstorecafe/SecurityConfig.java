@@ -96,7 +96,7 @@ public class SecurityConfig {
 	            .csrf().disable() // Wyłączenie CSRF
 	            .authorizeHttpRequests(auth -> auth
 	                .requestMatchers("/api/v1/auth/**").permitAll()
-	                .requestMatchers("/newPerson", "/images", "/person", "/loginPerson", "/deletePerson", "/newPerson", "/editPerson", "/signin","/refresh","/loginPerson", "/addOrder", "/personDetails", "/newEvent", "/orders","/reservations","/reservations/person", "/history", "/reviews/person", "/newReservation", "/newComment","/orders/person","/updateEvent", "/deleteEvent", "/customNumberOfPeople", "/cancleReservation","/coffee", "/uploadImage", "/addImage/{idProduct}", "/products", "/updateRoleType", "/order-status", "/update-order-status" ).permitAll()
+	                .requestMatchers("/newPerson", "/images", "/person", "/loginPerson", "/deletePerson", "/newPerson", "/editPerson", "/signin","/refresh","/loginPerson", "/addOrder", "/personDetails", "/newEvent", "/orders","/reservations","/reservations/person", "/history", "/reviews/person", "/newReservation", "/newComment","/orders/person","/updateEvent", "/deleteEvent", "/customNumberOfPeople", "/cancleReservation","/coffee", "/uploadImage", "/addImage/{idProduct}", "/products", "/updateRoleType", "/order-status", "/update-order-status", "/addProduct", "/updateProducts").permitAll()
 	                .requestMatchers("/api/v1/admin").hasAnyAuthority(RoleType.Pracownik.name())
 	                .requestMatchers("/sayAdmin","/api/v1/user", "/reviews", "/events", "/sayUser").hasAnyAuthority(RoleType.Klient.name(), RoleType.Pracownik.name(), RoleType.Wlasciciel.name())
 	                .requestMatchers("/api/v1/user", "/sayAdmin", "/sayUser").hasAnyAuthority(RoleType.Wlasciciel.name())

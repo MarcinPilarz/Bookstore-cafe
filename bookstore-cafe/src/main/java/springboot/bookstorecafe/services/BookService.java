@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import springboot.bookstorecafe.DTO.ProductDTO;
 import springboot.bookstorecafe.models.Book;
 import springboot.bookstorecafe.models.Product;
 import springboot.bookstorecafe.models.ProductType;
@@ -49,6 +50,27 @@ public class BookService {
 
 	}
 
+	public Book mapToBook(ProductDTO bookDTO) {
+	    Book book = new Book();
+	    book.setProductName(bookDTO.getProductName());
+	    book.setProductPrice(bookDTO.getProductPrice());
+	    book.setProductDescription(bookDTO.getProductDescription());
+	    book.setProductType(bookDTO.getProductType());
+	    book.setAuthor(bookDTO.getAuthor());
+	    book.setGenere(bookDTO.getGenere());
+	    book.setPublishingHouse(bookDTO.getPublishingHouse());
+	    book.setLanguage(bookDTO.getLanguage());
+	    book.setPublicationDate(bookDTO.getPublicationDate());
+	    book.setBookCover(bookDTO.getBookCover());
+	    book.setNumberPage(bookDTO.getNumberPage());
+	    book.setNumberBookStock(bookDTO.getNumberBookStock());
+	    book.setAvailable(true);
+	    // Ustaw inne specyficzne pola dla Book, jeśli są dostępne
+	    return book;
+	}
+	
+	
+	
 	public List<Product> findAllBookByType(ProductType productType) {
         if (productType == ProductType.BOOK) {
             return new ArrayList<>(bookRepo.getProductsByProductType(productType));

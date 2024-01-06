@@ -12,6 +12,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 
+import springboot.bookstorecafe.DTO.ProductDTO;
 import springboot.bookstorecafe.DTO.ProductaAndProductPhotoInfoDTO;
 import springboot.bookstorecafe.models.Book;
 import springboot.bookstorecafe.models.Coffee;
@@ -176,6 +177,18 @@ public class ProductService {
 	    throw new RuntimeException("Product not found with id: " + id);
 	}
 	
+//	public Product updateProduct(Long id, ProductDTO productDTO) {
+//        switch (productDTO.getProductType()) {
+//            case COFFEE:
+//                return updateCoffee(id, productDTO);
+//            case FOOD:
+//                return updateFood(id, productDTO);
+//            case BOOK:
+//                return updateBook(id, productDTO);
+//            default:
+//                throw new IllegalArgumentException("Nieznany typ produktu");
+//        }
+//    }
 	
 	
 	

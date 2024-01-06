@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./EmployeePanel.css";
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
-
+import { useParams, Link } from "react-router-dom";
 const OwnerPanel = () => {
   const [activeTab, setActiveTab] = useState("zamowienia klientow");
   const [eventsPanel, setEventsPanel] = useState([]);
@@ -26,6 +26,16 @@ const OwnerPanel = () => {
   const [selectedOrderId, setSelectedOrderId] = useState(null); // ID wybranego zamówienia do zaktualizowania
   const [statusPanel, setStatusPanel] = useState([]); 
 
+  const[productPanel, setProductPanel]= useState([]);
+  const [activeProductType, setActiveProductType] = useState('COFFEE'); // Domyślny typ produktu
+  const [showAddModal, setShowAddModal] = useState(false); 
+  const [newProductData, setNewProductData] = useState({
+    productName: '',
+    productPrice: '',
+    productDescription: '',
+    // Dodaj więcej pól zależnie od typu produktu
+    ...(activeProductType === 'BOOK' ? { numberBookStock: 0, isAvailable: false } : {})
+  });
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -437,8 +447,202 @@ const getDisplayNameForStatus = (status) => {
 };
 
 
-//
+//Produkty
 
+useEffect(() => {
+  axios.get(`http://localhost:8080/products?productType=${activeProductType}`)
+    .then(response => {
+      setProductPanel(response.data);
+      console.log("PRODUKTY Z PANELU", response.data)
+    })
+    .catch(error => {
+      console.error("Błąd pobierania danych produktów", error);
+    });
+}, [activeProductType]);
+
+const renderTableHeaders = () => {
+  const commonHeaders = [<th key="name">Nazwa</th>, <th key="price">Cena</th>, <th key="description">Opis</th>];
+
+  switch (activeProductType) {
+    case 'COFFEE':
+      return [...commonHeaders, <th key="intensity">Intensywność</th>];
+    case 'BOOK':
+      return [...commonHeaders, <th key="author">Autor</th>, <th key="genere">Gatunek</th>,<th key="publishingHouse">Wydawnictwo</th>,<th key="language">Język</th>, <th key="publicationDate">Data publikacji</th>, <th key="bookCover">Rodzaj okładki</th>,<th key="numberPage">Ilość stron</th>,<th key="numberBookStock">Ilość ksiązek w magazynie</th> ];
+    case 'FOOD':
+      return [...commonHeaders, <th key="amountOfCalories">Kalorie</th>, <th key="foodWeight">Waga</th>];
+    default:
+      return commonHeaders;
+  }
+};
+
+const renderTableRows = () => {
+  return productPanel.map((product, index) => (
+    <tr key={index}>
+      <td>{product.productName}</td>
+      <td>{product.productPrice}</td>
+      <td>{product.productDescription}</td>
+      {activeProductType === 'COFFEE' && <td>{product.coffeeIntensity}</td>}
+      {activeProductType === 'BOOK' && (
+        <>
+          <td>{product.author}</td>
+          <td>{product.genere}</td>
+          <td>{product.publishingHouse}</td>
+          <td>{product.language}</td>
+          <td>{product.publicationDate}</td>
+          <td>{product.bookCover}</td>
+          <td>{product.numberPage}</td>
+          
+          <td>{product.numberBookStock}</td>
+
+        </>
+      )}
+      {activeProductType === 'FOOD' && (
+      <>
+      <td>{product.amountOfCalories}</td> 
+      <td>{product.foodWeight}</td>
+      </>
+      )}
+    </tr>
+  ));
+};
+
+const handleAddProductClick = () => {
+  setShowAddModal(true);
+};
+
+const handleCloseModal = () => {
+  setShowAddModal(false);
+};
+
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  const updatedData = { ...newProductData, [name]: value };
+
+  if (activeProductType === 'BOOK' && name === 'numberBookStock') {
+    // Ustawienie isAvailable na TRUE, gdy numberBookStock > 0
+    updatedData.isAvailable = parseInt(value, 10) > 0;
+  }
+
+  setNewProductData(updatedData);
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post(`http://localhost:8080/addProduct`, {
+      ...newProductData,
+      productType: activeProductType
+    });
+    console.log("Produkt dodany", response.data);
+    setShowAddModal(false);
+    // Opcjonalnie: Odśwież listę produktów
+  } catch (error) {
+    console.error("Błąd dodawania produktu", error);
+  }
+};
+
+
+const renderAdditionalFields = () => {
+  switch (activeProductType) {
+    case 'COFFEE':
+      return (
+        <>
+          <input
+            type="number"
+            name="coffeeIntensity"
+            value={newProductData.coffeeIntensity || ''}
+            onChange={handleInputChange}
+            placeholder="Intensywność kawy"
+          />
+          {/* Dodaj tutaj inne specyficzne pola dla kawy */}
+        </>
+      );
+    case 'BOOK':
+      return (
+        <>
+          <input
+            type="text"
+            name="author"
+            value={newProductData.author || ''}
+            onChange={handleInputChange}
+            placeholder="Autor"
+          />
+          <input
+            type="text"
+            name="genere"
+            value={newProductData.genere || ''}
+            onChange={handleInputChange}
+            placeholder="Gatunek"
+          />
+          <input
+            type="text"
+            name="publishingHouse"
+            value={newProductData.publishingHouse || ''}
+            onChange={handleInputChange}
+            placeholder="Wydawnictwo"
+          />
+          <input
+            type="text"
+            name="language"
+            value={newProductData.language || ''}
+            onChange={handleInputChange}
+            placeholder="Język"
+          />
+          <input
+            type="text"
+            name="publicationDate"
+            value={newProductData.publicationDate || ''}
+            onChange={handleInputChange}
+            placeholder="Rok publikacji"
+          />
+          <input
+            type="text"
+            name="bookCover"
+            value={newProductData.bookCover || ''}
+            onChange={handleInputChange}
+            placeholder="Rodzaj okładki"
+          />
+          <input
+            type="number"
+            name="numberPage"
+            value={newProductData.numberPage || ''}
+            onChange={handleInputChange}
+            placeholder="Liczba stron"
+          />
+          <input
+            type="number"
+            name="numberBookStock"
+            value={newProductData.numberBookStock || ''}
+            onChange={handleInputChange}
+            placeholder="Ilość książek w magazynie"
+          />
+          {/* Dodaj tutaj inne specyficzne pola dla książek */}
+        </>
+      );
+    case 'FOOD':
+      return (
+        <>
+          <input
+            type="number"
+            name="amountOfCalories"
+            value={newProductData.amountOfCalories || ''}
+            onChange={handleInputChange}
+            placeholder="Kalorie"
+          />
+          <input
+            type="number"
+            name="foodWeight"
+            value={newProductData.foodWeight || ''}
+            onChange={handleInputChange}
+            placeholder="Waga"
+          />
+          {/* Dodaj tutaj inne specyficzne pola dla jedzenia */}
+        </>
+      );
+    default:
+      return null;
+  }
+};
 
   return (
     <div className="dashboardContainer">
@@ -459,15 +663,15 @@ const getDisplayNameForStatus = (status) => {
           </li>
           <li
             className="dashboardSidebarItem"
-            onClick={() => setActiveTab("wydarzenia")}
-          >
-            Zarządzanie Wydarzeniami
-          </li>
-          <li
-            className="dashboardSidebarItem"
             onClick={() => setActiveTab("produkty")}
           >
             Zarządzanie Produktami
+          </li>
+          <li
+            className="dashboardSidebarItem"
+            onClick={() => setActiveTab("wydarzenia")}
+          >
+            Zarządzanie Wydarzeniami
           </li>
           <li
             className="dashboardSidebarItem"
@@ -795,6 +999,62 @@ const getDisplayNameForStatus = (status) => {
          })}
        </section>
      )}
+
+
+{activeTab === "produkty" && (
+    <section className="product-container">
+    <h3 className="dashboardContentTitle">Zarządzanie Produktami</h3>
+    <div className="product-tabs">
+      <button onClick={() => setActiveProductType('COFFEE')}>Kawa</button>
+      <button onClick={() => setActiveProductType('BOOK')}>Książki</button>
+      <button onClick={() => setActiveProductType('FOOD')}>Jedzenie</button>
+    </div>
+    <div className="product-list">
+      <table>
+        <thead>
+          <tr>{renderTableHeaders()}</tr>
+        </thead>
+        <tbody>{renderTableRows()}</tbody>
+      </table>
+    </div>
+    <button onClick={handleAddProductClick}>Dodaj {activeProductType}</button>
+
+    
+    {showAddModal && (
+        <div className="add-product-modal">
+          <form onSubmit={handleSubmit}>
+            {/* Wspólne pola dla wszystkich produktów */}
+            <input
+              type="text"
+              name="productName"
+              value={newProductData.productName}
+              onChange={handleInputChange}
+              placeholder="Nazwa produktu"
+            />
+            <input
+              type="number"
+              name="productPrice"
+              value={newProductData.productPrice}
+              onChange={handleInputChange}
+              placeholder="Cena produktu"
+            />
+            <textarea
+              name="productDescription"
+              value={newProductData.productDescription}
+              onChange={handleInputChange}
+              placeholder="Opis produktu"
+            />
+
+            {/* Specyficzne pola dla poszczególnych typów produktów */}
+            {renderAdditionalFields()}
+
+            <button type="submit">Dodaj produkt</button>
+          </form>
+          <button onClick={handleCloseModal}>Zamknij</button>
+        </div>
+      )}
+    </section>
+)}
       </div>
     </div>
   );

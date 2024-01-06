@@ -20,13 +20,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import springboot.bookstorecafe.DTO.ProductDTO;
+import springboot.bookstorecafe.models.Book;
 import springboot.bookstorecafe.models.Coffee;
+import springboot.bookstorecafe.models.Food;
 import springboot.bookstorecafe.models.Product;
 import springboot.bookstorecafe.models.ProductType;
 
 import springboot.bookstorecafe.services.BookService;
 import springboot.bookstorecafe.services.CoffeeService;
 import springboot.bookstorecafe.services.FoodService;
+import springboot.bookstorecafe.services.ProductService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -39,6 +43,8 @@ public class CoffeeController {
 	@Autowired
 	private BookService bookService;
 
+	@Autowired
+	private ProductService productService;
 //	@GetMapping(value = "/coffee")
 //	public Iterable<Product> getCoffee(@RequestParam ProductType productType) {
 //
@@ -94,6 +100,70 @@ public class CoffeeController {
 	        }
 	    }
 
+	    
+	    @PostMapping(value = "/addProduct")
+	    public ResponseEntity<?> addProduct(@RequestBody ProductDTO productDTO) {
+	        switch (productDTO.getProductType()) {
+	            case COFFEE:
+	                Coffee coffee = coffeeService.mapToCoffee(productDTO);
+	                coffeeService.addCoffee(coffee);
+	                return ResponseEntity.ok(coffee);
+	            case FOOD:
+	                Food food = foodService.mapToFood(productDTO);
+	                foodService.addFood(food);
+	                return ResponseEntity.ok(food);
+	            case BOOK:
+	                Book book = bookService.mapToBook(productDTO);
+	                bookService.addItem(book);
+	                return ResponseEntity.ok(book);
+	            default:
+	                throw new IllegalArgumentException("Nieznany typ produktu");
+	        }
+	    }
+	    
+	    @PutMapping(value="/updateProducts")
+	    public ResponseEntity<?> updateProduct(@RequestParam Long id, @RequestBody ProductDTO productDTO) {
+	        Product product = productService.findById(id);
+
+	        if (product.getProductType() == ProductType.COFFEE) {
+	            Coffee coffee = (Coffee) product;
+	            // Ustawienie pól wspólnych
+	            updateCommonProductFields(coffee, productDTO);
+	            // Ustawienie pól specyficznych dla Coffee
+	            coffee.setCoffeeIntensity(productDTO.getCoffeeIntensity());
+	            coffeeService.updateCoffee(coffee);
+	        } else if (product.getProductType() == ProductType.BOOK) {
+	            Book book = (Book) product;
+	            // Ustawienie pól wspólnych
+	            updateCommonProductFields(book, productDTO);
+	            // Ustawienie pól specyficznych dla Book
+	            book.setAuthor(productDTO.getAuthor());
+	            book.setGenere(productDTO.getGenere());
+	            // ...inne pola dla Book
+	            bookService.updateItem(book);
+	        } else if (product.getProductType() == ProductType.FOOD) {
+	            Food food = (Food) product;
+	            // Ustawienie pól wspólnych
+	            updateCommonProductFields(food, productDTO);
+	            // Ustawienie pól specyficznych dla Food
+	            food.setFoodWeight(productDTO.getFoodWeight());
+	            food.setAmountOfCalories(productDTO.getAmountOfCalories());
+	            foodService.updateFood(food);
+	        } else {
+	            throw new IllegalArgumentException("Nieznany typ produktu");
+	        }
+
+	        return ResponseEntity.ok().build();
+	    }
+	    
+	    
+	    private void updateCommonProductFields(Product product, ProductDTO dto) {
+	        product.setProductName(dto.getProductName());
+	        product.setProductPrice(dto.getProductPrice());
+	        product.setProductDescription(dto.getProductDescription());
+	        // Ustaw inne wspólne pola
+	    }
+	    
 
 	@PostMapping(value = "/newCoffee")
 	public ResponseEntity<Coffee> newCoffee(@RequestParam ProductType coffeeType, @RequestBody Coffee newCoffee) {
