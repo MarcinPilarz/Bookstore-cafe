@@ -12,6 +12,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 
+import jakarta.persistence.EntityNotFoundException;
 import springboot.bookstorecafe.DTO.ProductDTO;
 import springboot.bookstorecafe.DTO.ProductaAndProductPhotoInfoDTO;
 import springboot.bookstorecafe.models.Book;
@@ -177,6 +178,18 @@ public class ProductService {
 	    throw new RuntimeException("Product not found with id: " + id);
 	}
 	
+	public void deleteProduct(Long id) {
+        // Sprawdź, czy produkt znajduje się w jednym z repozytoriów
+        if (coffeeRepo.existsById(id)) {
+            coffeeRepo.deleteById(id);
+        } else if (bookRepo.existsById(id)) {
+            bookRepo.deleteById(id);
+        } else if (foodRepo.existsById(id)) {
+            foodRepo.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("Produkt o ID " + id + " nie został znaleziony");
+        }
+    }
 //	public Product updateProduct(Long id, ProductDTO productDTO) {
 //        switch (productDTO.getProductType()) {
 //            case COFFEE:

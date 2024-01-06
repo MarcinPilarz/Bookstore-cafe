@@ -193,15 +193,8 @@ public class CoffeeController {
 	}
 
 	@DeleteMapping(value = "/deleteCoffee")
-	public ResponseEntity<Coffee> deleteCoffee(@RequestParam Long id) {
-
-		Product coffee = coffeeService.findById(id);
-		if (coffee != null) {
-
-			coffeeService.deleteCoffee(id);
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<?> deleteProduct(@RequestParam Long id) {
+	    productService.deleteProduct(id);
+	    return ResponseEntity.noContent().build();
 	}
 }

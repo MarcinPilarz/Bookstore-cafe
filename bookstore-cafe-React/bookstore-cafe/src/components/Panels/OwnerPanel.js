@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./EmployeePanel.css";
+import "./OwnerPanel.css"
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
@@ -38,6 +39,9 @@ const OwnerPanel = () => {
   });
   const [editingProduct, setEditingProduct] = useState(null);
   const [editingProductData, setEditingProductData] = useState({});
+  const [showImageUploadModal, setShowImageUploadModal] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -462,16 +466,29 @@ useEffect(() => {
     });
 }, [activeProductType]);
 
-const renderEditableCell = (value, name, id, placeholder) => {
-  return (
-    <input
-      type="text"
-      value={value}
-      name={name}
-      placeholder={placeholder}
-      onChange={(e) => handleInputChange(e, id)}
-    />
-  );
+const renderEditableCell = (value, name, id, placeholder, type = "text") => {
+  if (type === "number") {
+    return (
+      <input
+        type="number"
+        value={value}
+        name={name}
+        min="0"
+        placeholder={placeholder}
+        onChange={(e) => handleInputChange(e, id)}
+      />
+    );
+  } else {
+    return (
+      <input
+        type="text"
+        value={value}
+        name={name}
+        placeholder={placeholder}
+        onChange={(e) => handleInputChange(e, id)}
+      />
+    );
+  }
 };
 const renderTableHeaders = () => {
   const commonHeaders = [<th key="name">Nazwa</th>, <th key="price">Cena</th>, <th key="description">Opis</th>];
@@ -520,7 +537,40 @@ const renderTableHeaders = () => {
 // };
 
 
+const handleUploadImageClick = (productId) => {
+  // Ustaw stan dla ID produktu, do którego dodawane jest zdjęcie
+  setSelectedProductId(productId);
+  setShowImageUploadModal(true);
+};
+const handleFileChange = (e) => {
+  setSelectedFile(e.target.files[0]);
+};
 
+
+const handleImageUploadSubmit = async (e) => {
+  e.preventDefault();
+  if (!selectedFile) {
+    console.error("Nie wybrano pliku");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', selectedFile);
+
+  try {
+    await axios.post(`http://localhost:8080/uploadImage?idProduct=${selectedProductId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    console.log("Zdjęcie przesłane pomyślnie");
+    setShowImageUploadModal(false);
+    setSelectedFile(null);
+    setSelectedProductId(null);
+  } catch (error) {
+    console.error("Błąd przesyłania zdjęcia", error);
+  }
+};
 const renderTableRows = () => {
   return productPanel.map((product) => (
     <tr key={product.idProduct}>
@@ -545,7 +595,7 @@ const renderTableRows = () => {
               {renderEditableCell(editingProductData.language, 'language', product.idProduct, "Język")}
               {renderEditableCell(editingProductData.publicationDate, 'publicationDate', product.idProduct, "Rok produkcji")}
               {renderEditableCell(editingProductData.bookCover, 'bookCover', product.idProduct, "Rodzaj okładki")}
-              {renderEditableCell(editingProductData.numberPage, 'numberPage', product.idProduct, "Ilość stron")}
+              {renderEditableCell(editingProductData.numberPage, 'numberPage', product.idProduct, "Ilość stron", "number")}
               {renderEditableCell(editingProductData.numberBookStock, 'numberBookStock', product.idProduct, "Ilość w magazynie")}
               {/* Dodaj tutaj inne pola specyficzne dla książek do edycji */}
             </>
@@ -594,6 +644,10 @@ const renderTableRows = () => {
           <button onClick={() => handleEditClick(product)}>Edytuj</button>
         )}
       </td>
+      <td>
+        <button onClick={() => handleUploadImageClick(product.idProduct)}>Dodaj Zdjęcie</button>
+      </td>
+      <td> <button onClick={() => handleDeleteClick(product.idProduct)}>Usuń</button></td>
     </tr>
   ));
 };
@@ -685,7 +739,17 @@ const handleSubmit = async (e) => {
   }
 };
 
-
+const handleDeleteClick = async (id) => {
+  try {
+    await axios.delete(`http://localhost:8080/deleteCoffee?id=${id}`);
+    console.log("Produkt usunięty");
+    // Aktualizacja listy produktów po usunięciu
+    const updatedProductPanel = productPanel.filter(product => product.idProduct !== id);
+    setProductPanel(updatedProductPanel);
+  } catch (error) {
+    console.error("Błąd usuwania produktu", error);
+  }
+};
 const renderAdditionalFields = () => {
   switch (activeProductType) {
     case 'COFFEE':
@@ -1154,12 +1218,15 @@ const renderAdditionalFields = () => {
       <button onClick={() => setActiveProductType('FOOD')}>Jedzenie</button>
     </div>
     <div className="product-list">
-      <table>
+      <div className="table-container">
+
+      <table >
         <thead>
           <tr>{renderTableHeaders()}</tr>
         </thead>
         <tbody>{renderTableRows()}</tbody>
       </table>
+      </div>
     </div>
     <button onClick={handleAddProductClick}>Dodaj {activeProductType}</button>
 
@@ -1197,6 +1264,16 @@ const renderAdditionalFields = () => {
           <button onClick={handleCloseModal}>Zamknij</button>
         </div>
       )}
+      {showImageUploadModal && (
+  <div className="modal">
+    <form onSubmit={handleImageUploadSubmit}>
+      <input type="file" onChange={handleFileChange} />
+      <button type="submit">Prześlij Zdjęcie</button>
+    </form>
+    <button onClick={() => setShowImageUploadModal(false)}>Zamknij</button>
+    
+  </div>
+)}
     </section>
 )}
       </div>
