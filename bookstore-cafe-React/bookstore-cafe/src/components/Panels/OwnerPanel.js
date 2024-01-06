@@ -36,6 +36,8 @@ const OwnerPanel = () => {
     // Dodaj więcej pól zależnie od typu produktu
     ...(activeProductType === 'BOOK' ? { numberBookStock: 0, isAvailable: false } : {})
   });
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [editingProductData, setEditingProductData] = useState({});
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -460,6 +462,17 @@ useEffect(() => {
     });
 }, [activeProductType]);
 
+const renderEditableCell = (value, name, id, placeholder) => {
+  return (
+    <input
+      type="text"
+      value={value}
+      name={name}
+      placeholder={placeholder}
+      onChange={(e) => handleInputChange(e, id)}
+    />
+  );
+};
 const renderTableHeaders = () => {
   const commonHeaders = [<th key="name">Nazwa</th>, <th key="price">Cena</th>, <th key="description">Opis</th>];
 
@@ -475,33 +488,112 @@ const renderTableHeaders = () => {
   }
 };
 
-const renderTableRows = () => {
-  return productPanel.map((product, index) => (
-    <tr key={index}>
-      <td>{product.productName}</td>
-      <td>{product.productPrice}</td>
-      <td>{product.productDescription}</td>
-      {activeProductType === 'COFFEE' && <td>{product.coffeeIntensity}</td>}
-      {activeProductType === 'BOOK' && (
-        <>
-          <td>{product.author}</td>
-          <td>{product.genere}</td>
-          <td>{product.publishingHouse}</td>
-          <td>{product.language}</td>
-          <td>{product.publicationDate}</td>
-          <td>{product.bookCover}</td>
-          <td>{product.numberPage}</td>
+// const renderTableRows = () => {
+//   return productPanel.map((product, index) => (
+//     <tr key={index}>
+//       <td>{product.productName}</td>
+//       <td>{product.productPrice}</td>
+//       <td>{product.productDescription}</td>
+//       {activeProductType === 'COFFEE' && <td>{product.coffeeIntensity}</td>}
+//       {activeProductType === 'BOOK' && (
+//         <>
+//           <td>{product.author}</td>
+//           <td>{product.genere}</td>
+//           <td>{product.publishingHouse}</td>
+//           <td>{product.language}</td>
+//           <td>{product.publicationDate}</td>
+//           <td>{product.bookCover}</td>
+//           <td>{product.numberPage}</td>
           
-          <td>{product.numberBookStock}</td>
+//           <td>{product.numberBookStock}</td>
 
+//         </>
+//       )}
+//       {activeProductType === 'FOOD' && (
+//       <>
+//       <td>{product.amountOfCalories}</td> 
+//       <td>{product.foodWeight}</td>
+//       </>
+//       )}
+//     </tr>
+//   ));
+// };
+
+
+
+const renderTableRows = () => {
+  return productPanel.map((product) => (
+    <tr key={product.idProduct}>
+      {editingProduct === product.idProduct ? (
+        <>
+          {renderEditableCell(editingProductData.productName, 'productName', product.idProduct, "Nazwa produktu")}
+          {renderEditableCell(editingProductData.productPrice, 'productPrice', product.idProduct, "Cena produktu")}
+          {renderEditableCell(editingProductData.productDescription, 'productDescription', product.idProduct, "Opis produktu")}
+
+          {activeProductType === 'COFFEE' && (
+            <>
+              {renderEditableCell(editingProductData.coffeeIntensity, 'coffeeIntensity', product.idProduct, "Intensywność kawy")}
+              {/* Dodaj tutaj inne pola specyficzne dla kawy do edycji */}
+            </>
+          )}
+
+          {activeProductType === 'BOOK' && (
+            <>
+              {renderEditableCell(editingProductData.author, 'author', product.idProduct, "Autor")}
+              {renderEditableCell(editingProductData.genere, 'genere', product.idProduct, "Rodzaj")}
+              {renderEditableCell(editingProductData.publishingHouse, 'publishingHouse', product.idProduct, "Wydawnictwo")}
+              {renderEditableCell(editingProductData.language, 'language', product.idProduct, "Język")}
+              {renderEditableCell(editingProductData.publicationDate, 'publicationDate', product.idProduct, "Rok produkcji")}
+              {renderEditableCell(editingProductData.bookCover, 'bookCover', product.idProduct, "Rodzaj okładki")}
+              {renderEditableCell(editingProductData.numberPage, 'numberPage', product.idProduct, "Ilość stron")}
+              {renderEditableCell(editingProductData.numberBookStock, 'numberBookStock', product.idProduct, "Ilość w magazynie")}
+              {/* Dodaj tutaj inne pola specyficzne dla książek do edycji */}
+            </>
+          )}
+
+          {activeProductType === 'FOOD' && (
+            <>
+              {renderEditableCell(editingProductData.amountOfCalories, 'amountOfCalories', product.idProduct, "Kalorie")}
+              {renderEditableCell(editingProductData.foodWeight, 'foodWeight', product.idProduct, "Waga")}
+              {/* Dodaj tutaj inne pola specyficzne dla jedzenia do edycji */}
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          <td>{product.productName}</td>
+          <td>{product.productPrice}</td>
+          <td>{product.productDescription}</td>
+          {activeProductType === 'COFFEE' && <td>{product.coffeeIntensity}</td>}
+          {activeProductType === 'BOOK' && (
+            <>
+              <td>{product.author}</td>
+              <td>{product.genere}</td>
+              <td>{product.publishingHouse}</td>
+           <td>{product.language}</td>
+           <td>{product.publicationDate}</td>
+           <td>{product.bookCover}</td>
+           <td>{product.numberPage}</td>
+             <td>{product.numberBookStock}</td>
+              {/* Wyświetl inne pola książki */}
+            </>
+          )}
+          {activeProductType === 'FOOD' && (
+            <>
+              <td>{product.amountOfCalories}</td>
+              <td>{product.foodWeight}</td>
+              {/* Wyświetl inne pola jedzenia */}
+            </>
+          )}
         </>
       )}
-      {activeProductType === 'FOOD' && (
-      <>
-      <td>{product.amountOfCalories}</td> 
-      <td>{product.foodWeight}</td>
-      </>
-      )}
+      <td>
+        {editingProduct === product.idProduct ? (
+          <button onClick={() => handleSaveClick(product.idProduct)}>Zapisz</button>
+        ) : (
+          <button onClick={() => handleEditClick(product)}>Edytuj</button>
+        )}
+      </td>
     </tr>
   ));
 };
@@ -514,18 +606,70 @@ const handleCloseModal = () => {
   setShowAddModal(false);
 };
 
-const handleInputChange = (e) => {
+// const handleInputChange = (e) => {
+//   const { name, value } = e.target;
+//   const updatedData = { ...newProductData, [name]: value };
+
+//   if (activeProductType === 'BOOK' && name === 'numberBookStock') {
+//     // Ustawienie isAvailable na TRUE, gdy numberBookStock > 0
+//     updatedData.isAvailable = parseInt(value, 10) > 0;
+//   }
+
+//   setNewProductData(updatedData);
+// };
+
+const handleInputChange = (e, id) => {
   const { name, value } = e.target;
-  const updatedData = { ...newProductData, [name]: value };
-
+  let updatedData = { ...editingProductData, [name]: value };
+  const newData = { ...newProductData, [name]: value };
   if (activeProductType === 'BOOK' && name === 'numberBookStock') {
-    // Ustawienie isAvailable na TRUE, gdy numberBookStock > 0
-    updatedData.isAvailable = parseInt(value, 10) > 0;
+    const stockNumber = parseInt(value, 10);
+    updatedData = {
+      ...updatedData,
+      available: stockNumber > 0,
+     
+    };
   }
-
-  setNewProductData(updatedData);
+  console.log("updatedata", updatedData);
+  setNewProductData(newData);
+  setEditingProductData(updatedData);
 };
 
+
+
+const handleEditClick = (product) => {
+  setEditingProduct(product.idProduct);
+  setEditingProductData(product);
+};
+const handleSaveClick = async (id) => {
+  try {
+    // Aktualizacja isAvailable dla Book
+    let updatedData = {...editingProductData};
+    if (activeProductType === 'BOOK') {
+      const stockNumber = parseInt(updatedData.numberBookStock, 10);
+      updatedData.available = stockNumber > 0;
+    }
+
+    await axios.put(`http://localhost:8080/updateProducts?id=${id}`, updatedData);
+    console.log("Produkt zaktualizowany");
+
+    // Aktualizacja listy produktów w stanie
+    const updatedProductPanel = productPanel.map((product) => {
+      if (product.idProduct === id) {
+        return { ...product, ...updatedData };
+      }
+      return product;
+    });
+    setProductPanel(updatedProductPanel);
+
+    // Zakończenie edycji
+    setEditingProduct(null);
+    setEditingProductData({});
+    // Opcjonalnie: Odśwież listę produktów
+  } catch (error) {
+    console.error("Błąd aktualizacji produktu", error);
+  }
+};
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {

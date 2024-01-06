@@ -139,6 +139,13 @@ public class CoffeeController {
 	            // Ustawienie pól specyficznych dla Book
 	            book.setAuthor(productDTO.getAuthor());
 	            book.setGenere(productDTO.getGenere());
+	            book.setPublishingHouse(productDTO.getPublishingHouse());
+	    	    book.setLanguage(productDTO.getLanguage());
+	    	    book.setPublicationDate(productDTO.getPublicationDate());
+	    	    book.setBookCover(productDTO.getBookCover());
+	    	    book.setNumberPage(productDTO.getNumberPage());
+	    	    book.setNumberBookStock(productDTO.getNumberBookStock());
+	    	    book.setAvailable(productDTO.isAvailable());
 	            // ...inne pola dla Book
 	            bookService.updateItem(book);
 	        } else if (product.getProductType() == ProductType.FOOD) {
