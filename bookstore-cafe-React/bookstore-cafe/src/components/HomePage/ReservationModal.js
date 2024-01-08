@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
+import { useAuth } from "../Login/LoginInfoContext";
 import "react-datepicker/dist/react-datepicker.css";
 import "./ReservationModal.css";
 
@@ -10,7 +11,7 @@ const ReservationModal = ({ closeModal }) => {
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
   const [reservationDate, setReservationDate] = useState(new Date());
   const [numberOfPeople, setNumberOfPeople] = useState(1);
-
+  const { authData, logout } = useAuth();
   // const handleNext = () => {
   //   if (currentProductIndex < productData.length - 1) {
   //     setCurrentProductIndex(currentProductIndex + 1);
@@ -64,6 +65,24 @@ const ReservationModal = ({ closeModal }) => {
   //   );
   // };
 
+  const handleSubmitReservation = async () => {
+    const formattedDate = reservationDate.toISOString().split('T')[0]; // Formatowanie daty do formatu YYYY-MM-DD
+    var idPerson = authData.idPerson /* ID użytkownika, np. pobrane z kontekstu lub stanu aplikacji */;
+  
+   try {
+  const response = await axios.post(`http://localhost:8080/newReservation?idPerson=${authData.idPerson}&bokkingData=${formattedDate}&numberOfPeople=${numberOfPeople}`, {
+    // idPerson: idPerson,
+    // bokkingData: formattedDate,
+    // numberOfPeople: numberOfPeople,
+  });
+      console.log("Pomyslna rejestracja!")
+      // Obsługa odpowiedzi, np. wyświetlenie potwierdzenia
+    } catch (error) {
+      // Obsługa błędów, np. wyświetlenie komunikatu o błędzie
+      // error("Nie udało się zarezerwować stolika.")
+    }
+  };
+
   return (
     <div className="modal">
       {/* <h3>{productData[currentProductIndex].name}</h3>
@@ -88,16 +107,7 @@ const ReservationModal = ({ closeModal }) => {
           />
         </div>
 
-        <div className="reservation-table">
-          <label className="">Dostępne stoliki:</label>
-          <Select
-            className="input-select"
-            // options={tableOptions}
-            // value={selectedTable}
-            // onChange={handleTableChange}
-            isSearchable={false} // Opcjonalne: aby wyłączyć wyszukiwanie w comboboxie
-          />
-        </div>
+       
         {/* Input na liczbę osób */}
         <div className="reservation-value-people">
           <label>Liczba osób:</label>
@@ -121,7 +131,7 @@ const ReservationModal = ({ closeModal }) => {
         </button>
         <button
           className="accept-modal-reservation"
-          onClick={handleReservation}
+          onClick={handleSubmitReservation}
         >
           Zarezerwuj
         </button>
