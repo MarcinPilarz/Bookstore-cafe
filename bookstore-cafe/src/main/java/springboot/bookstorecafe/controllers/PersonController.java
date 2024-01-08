@@ -36,6 +36,7 @@ import springboot.bookstorecafe.models.LoginPerson;
 
 import springboot.bookstorecafe.models.Person;
 import springboot.bookstorecafe.models.RoleType;
+import springboot.bookstorecafe.repositories.PersonRepository;
 import springboot.bookstorecafe.services.AuthenticationService;
 import springboot.bookstorecafe.services.LoginPersonService;
 import springboot.bookstorecafe.services.PersonService;
@@ -62,6 +63,8 @@ public class PersonController {
 	@Autowired
 	private AuthenticationService authenticationService;
 	
+	@Autowired
+	private PersonRepository personRepo;
 	String stripeKey;
 	@GetMapping(value = "/person")
 	public List<Person> getPerson() {
@@ -69,6 +72,11 @@ public class PersonController {
 		return personService.findAllItems();
 
 	}
+	
+	@GetMapping(value="/employees")
+	 public ResponseEntity<List<PersonAndPersonLoginDTO>> getEmployees() {
+        return ResponseEntity.ok(loginService.getEmployeesByRole());
+    }
 
 	@GetMapping(value = "/personDTO")
 	public List<PersonDTO> getPersonDTO() {
@@ -142,6 +150,64 @@ public class PersonController {
 		}
 	}
 	
+	
+	@PutMapping(value = "/editUser")
+	public ResponseEntity<PersonAndPersonLoginDTO> editUser(@RequestParam Long id, @RequestBody PersonAndPersonLoginDTO updateUserDTO) {
+	    // Znajdź istniejącego użytkownika na podstawie ID
+	    Person person = personService.findById(id);
+	    if (person == null) {
+	        return ResponseEntity.notFound().build();
+	    }
+
+	    // Aktualizuj dostępne dane osoby
+	    if (updateUserDTO.firstName() != null && !updateUserDTO.firstName().isEmpty()) {
+	        person.setFirstName(updateUserDTO.firstName());
+	    }
+	    if (updateUserDTO.lastName() != null && !updateUserDTO.lastName().isEmpty()) {
+	        person.setLastName(updateUserDTO.lastName());
+	    }
+	    if (updateUserDTO.phoneNumber() != null && !updateUserDTO.phoneNumber().isEmpty()) {
+	        person.setPhoneNumber(updateUserDTO.phoneNumber());
+	    }
+
+	    personService.updateItem(person);
+
+	    // Aktualizuj dane logowania
+	    var loginPersonId = person.getLoginPerson().getIdLoginPerson();
+	    LoginPerson loginPerson = loginService.findById(loginPersonId);
+	    if (loginPerson != null) {
+	        if (updateUserDTO.email() != null && !updateUserDTO.email().isEmpty()) {
+	            loginPerson.setEmail(updateUserDTO.email());
+	        }
+	        if (updateUserDTO.password() != null && !updateUserDTO.password().isEmpty()) {
+	            String encodedPassword = passwordEncoder.encode(updateUserDTO.password());
+	            loginPerson.setPassword(encodedPassword);
+	        }
+
+	        loginService.updateItem(loginPerson);
+	    } else {
+	        System.out.println("PersonLogin jest null");
+	    }
+
+	    // Przygotuj DTO do odpowiedzi
+	    PersonAndPersonLoginDTO responseDTO = new PersonAndPersonLoginDTO(
+	       
+	    	person.getIdPerson(),
+	        person.getFirstName(),
+	        person.getLastName(),
+	        loginPerson != null ? loginPerson.getEmail() : null,
+	       loginPersonId, 
+	       person.getPhoneNumber(),
+	        "Rola",
+	        null
+	    );
+
+	    return ResponseEntity.ok(responseDTO);
+	}
+
+
+
+
 	@GetMapping("/sayAdmin")
 	public ResponseEntity<String> sayHello(){
 		return ResponseEntity.ok("Hi Pracownik");
@@ -203,7 +269,11 @@ public class PersonController {
 		Person person = personService.findById(id);
 
 		if (person != null) {
+			LoginPerson loginPerson=loginService.findById(person.getLoginPerson().getIdLoginPerson());
+			
 			personService.deleteItem(personService.findById(id));
+			loginService.deleteItem(loginPerson);
+			
 			return ResponseEntity.noContent().build();
 		} else {
 			return ResponseEntity.notFound().build();

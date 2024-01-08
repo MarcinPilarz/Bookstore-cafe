@@ -24,14 +24,14 @@ public class BookstoreCafeApplication implements CommandLineRunner {
 	
 	public void run(String...args) {
 	
-		LoginPerson adminAccount= loginRepository.findByRoleType(RoleType.Wlasciciel);
-		if(null == adminAccount) {
-			LoginPerson loginPerson= new LoginPerson();
-			
-			loginPerson.setEmail("wlasciciel@wp.pl");
-			loginPerson.setRoleType(RoleType.Wlasciciel);
-			loginPerson.setPassword(new BCryptPasswordEncoder().encode("admin"));
-			loginRepository.save(loginPerson);
-		}
+//		LoginPerson adminAccount= loginRepository.findByRoleType(RoleType.Wlasciciel);
+//		if(null == adminAccount) {
+//			LoginPerson loginPerson= new LoginPerson();
+//			
+//			loginPerson.setEmail("wlasciciel@wp.pl");
+//			loginPerson.setRoleType(RoleType.Wlasciciel);
+//			loginPerson.setPassword(new BCryptPasswordEncoder().encode("admin"));
+//			loginRepository.save(loginPerson);
+//		}
 	}
 }

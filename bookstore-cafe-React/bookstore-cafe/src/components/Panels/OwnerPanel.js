@@ -42,6 +42,19 @@ const OwnerPanel = () => {
   const [showImageUploadModal, setShowImageUploadModal] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const [employeePanel, setEmployeePanel] = useState([]);
+  const [showAddEditModal, setShowAddEditModal] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [newEmployeeData, setNewEmployeeData] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: '',
+    roleType: 'Pracownik',
+    password: ''
+  });
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -852,6 +865,177 @@ const renderAdditionalFields = () => {
   }
 };
 
+//PRACOWNICY-------------------------------------------------------------
+useEffect(() => {
+  fetchEmployees();
+}, []);
+const fetchEmployees = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/employees');
+    setEmployeePanel(response.data);
+  } catch (error) {
+    console.error('Error fetching employees', error);
+  }
+};
+
+const handleAddEmployeeClick = () => {
+  setShowAddEditModal(true);
+  setIsEditMode(false);
+  setNewEmployeeData({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    email: '',
+    roleType: 'Pracownik',
+    password: ''
+  });
+};
+
+const handleEditEmployeeClick = (employee) => {
+  setShowAddEditModal(true);
+  setIsEditMode(true);
+  setSelectedEmployee(employee);
+  setNewEmployeeData({
+    ...employee,
+    password: '' // Ustaw puste hasło
+  });
+};
+
+
+const handleAddEmployee = async (employeeData) => {
+  
+  if (!employeeData.email.includes('@')) {
+    alert('Podany e-mail jest niepoprawny. Upewnij się, że zawiera znak @.');
+    return; 
+  }
+  try {
+    await axios.post('http://localhost:8080/newPerson', employeeData);
+    fetchEmployees(); // Ponowne pobranie listy pracowników po dodaniu nowego
+    console.log("Pracownik został pomyślnie zarejestrowany")
+  } catch (error) {
+    console.error('Error adding employee', error);
+  }
+};
+
+const handleInputEmployeeChange = (e) => {
+  const { name, value } = e.target;
+  setNewEmployeeData({ ...newEmployeeData, [name]: value });
+};
+
+// Funkcja aktualizująca dane pracownika
+const handleUpdateEmployee = async (id, employeeData) => {
+  if (!id) {
+    console.error('Identyfikator użytkownika jest niezdefiniowany');
+    return;
+  }
+
+  try {
+    await axios.put(`http://localhost:8080/editUser?id=${id}`, employeeData);
+    fetchEmployees();
+    console.log("Użytkownik został pomyślnie zaktualizowany");
+  } catch (error) {
+    console.error('Error updating employee', error);
+  }
+};
+
+const handleCloseModalEmployee = () => {
+  setShowAddEditModal(false);
+};
+
+// Funkcja usuwająca pracownika
+const handleDeleteEmployee = async (id) => {
+  try {
+    await axios.delete(`http://localhost:8080/deletePerson?id=${id}`);
+    fetchEmployees(); // Ponowne pobranie listy pracowników po usunięciu
+    console.log("Usunięto Pracownika");
+  } catch (error) {
+    console.error('Error deleting employee', error);
+  }
+};
+
+// Obsługa formularza do dodawania/edycji pracownika
+const handleSubmitEmployee = (e) => {
+  e.preventDefault();
+  const employeeData = { ...newEmployeeData };
+
+  if (isEditMode) {
+    handleUpdateEmployee(selectedEmployee.idPerson, employeeData);
+  } else {
+    handleAddEmployee(employeeData);
+  }
+
+  setShowAddEditModal(false);
+};
+
+const handleGeneratePassword = () => {
+  const password = generateRandomPassword();
+  setNewEmployeeData({ ...newEmployeeData, password });
+};
+
+const generateRandomPassword = () => {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let password = '';
+  for (let i = 0; i < 8; i++) {
+    password += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return password;
+};
+const renderModalForm = () => {
+  return (
+    <div className="modal">
+      <form onSubmit={handleSubmitEmployee}>
+        <input
+          type="text"
+          name="firstName"
+          value={newEmployeeData.firstName}
+          onChange={handleInputEmployeeChange}
+          placeholder="Imię"
+        />
+        <input
+          type="text"
+          name="lastName"
+          value={newEmployeeData.lastName}
+          onChange={handleInputEmployeeChange}
+          placeholder="Nazwisko"
+        />
+        <input
+          type="text"
+          name="phoneNumber"
+          maxLength={9}
+          value={newEmployeeData.phoneNumber}
+          onChange={handleInputEmployeeChange}
+          placeholder="Numer telefonu"
+        />
+        <input
+          type="email"
+          name="email"
+          value={newEmployeeData.email}
+          onChange={handleInputEmployeeChange}
+          placeholder="Email"
+        />
+        {!isEditMode && (
+        <input
+          type="text"
+          name="password"
+          value={newEmployeeData.password}
+          onChange={handleInputEmployeeChange}
+          placeholder="Hasło"
+        />
+      )}
+
+{!isEditMode && (
+        <button type="button" onClick={handleGeneratePassword}>Generuj Hasło</button>
+
+)}
+
+
+        <button type="submit">{isEditMode ? 'Zapisz zmiany' : 'Dodaj Pracownika'}</button>
+      </form>
+      <button onClick={handleCloseModalEmployee}>Zamknij</button>
+    </div>
+  );
+};
+
   return (
     <div className="dashboardContainer">
       <div className="dashboardSidebar">
@@ -862,6 +1046,12 @@ const renderAdditionalFields = () => {
             onClick={() => setActiveTab("dostepne zamowienia")}
           >
             Zamówienia klientów
+          </li>
+          <li
+            className="dashboardSidebarItem"
+            onClick={() => setActiveTab("pracownicy")}
+          >
+            Zarządzanie Pracownikami
           </li>
           <li
             className="dashboardSidebarItem"
@@ -880,12 +1070,6 @@ const renderAdditionalFields = () => {
             onClick={() => setActiveTab("wydarzenia")}
           >
             Zarządzanie Wydarzeniami
-          </li>
-          <li
-            className="dashboardSidebarItem"
-            onClick={() => setActiveTab("pracownicy")}
-          >
-            Zarządzanie Pracownikami
           </li>
         </ul>
       </div>
@@ -1274,6 +1458,48 @@ const renderAdditionalFields = () => {
     
   </div>
 )}
+    </section>
+)}
+{activeTab === "pracownicy" && (
+    <section className="product-container">
+    <h3 className="dashboardContentTitle">Zarządzanie Pracownikami</h3>
+    
+    <div>
+    <button onClick={handleAddEmployeeClick}>Dodaj Pracownika</button>
+
+    {/* Tabela pracowników */}
+    <table>
+      <thead>
+        <tr>
+          <th>Imię</th>
+          <th>Nazwisko</th>
+          <th>Numer Telefonu</th>
+          <th>Email</th>
+          <th>Akcje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {employeePanel.map((employee) => (
+          <tr key={employee.id}>
+            <td>{employee.firstName}</td>
+            <td>{employee.lastName}</td>
+            <td>{employee.phoneNumber}</td>
+            <td>{employee.email}</td>
+            <td>
+              <button onClick={() => handleEditEmployeeClick(employee)}>Edytuj</button>
+              <button onClick={() => handleDeleteEmployee(employee.idPerson)}>Usuń</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    {showAddEditModal && renderModalForm()}
+    {/* Tutaj umieść formularz modalny dla dodawania/edycji pracownika
+    {showAddEditModal && (
+      // ...formularz modalny...
+    )} */}
+  </div>
+    
     </section>
 )}
       </div>

@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../Login/LoginInfoContext";
+import ReactStars from 'react-rating-stars-component';
 import "./CommentsSlider.css";
 const CommentsSlider = () => {
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);
   const { authData } = useAuth();
+  const [comment, setComment] = React.useState('');
+  const [reviewContent, setReviewContent] = useState('');
+  const [rating, setRating] = useState(0);
+  const fetchReviews = async () => {
+    // Zakładamy, że authData jest aktualne i pochodzi z kontekstu
+    if (authData?.token && new Date().getTime() < authData?.expirationTime) {
+      // Usuwanie cudzysłowów z początku i końca stringa tokena, jeśli istnieją
 
-  useEffect(() => {
-    const fetchReviews = async () => {
-      // Zakładamy, że authData jest aktualne i pochodzi z kontekstu
-      if (authData?.token && new Date().getTime() < authData?.expirationTime) {
-        // Usuwanie cudzysłowów z początku i końca stringa tokena, jeśli istnieją
+      //.replace(/^"|"$/g, "");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${authData.token}`,
+        },
+      };
 
-        //.replace(/^"|"$/g, "");
-        const config = {
-          headers: {
-            Authorization: `Bearer ${authData.token}`,
-          },
-        };
-
-        try {
-          const response = await axios.get(
-            "http://localhost:8080/reviews",
-            config
-          );
-          setReviews(response.data);
-        } catch (error) {
-          console.error("Błąd pobierania danych wydarzeń", error);
-        }
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/reviews",
+          config
+        );
+        setReviews(response.data);
+      } catch (error) {
+        console.error("Błąd pobierania danych wydarzeń", error);
       }
-    };
+    }
+  };
+  useEffect(() => {
+   
 
     if (authData?.token) {
       fetchReviews();
@@ -67,13 +71,65 @@ const CommentsSlider = () => {
       (_, i) => i + firstNumberOfPagination
     );
   };
+ 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const reviewData = {
+      reviewContent,
+      rating
+    }
+
+    // const config = {
+    //   headers: { Authorization: `Bearer ${token}` }
+    // };
+  
+    try {
+      const response = await axios.post(`http://localhost:8080/newComment?idPerson=${authData?.idPerson}`, reviewData); //, config
+      console.log('Odpowiedź serwera:', response.data);
+      setReviewContent('');
+      setRating(0);
+      await fetchReviews(); 
+    } catch (error) {
+      console.error('Błąd podczas wysyłania recenzji:', error);
+    }
+   
+  };
+  
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+  };
+
   return (
+    <>
+<div className="add-comment-container">
+<form onSubmit={handleSubmit}>
+      <textarea
+        value={reviewContent}
+        maxLength={250}
+        onChange={(e) => setReviewContent(e.target.value)}
+        placeholder="Twoja recenzja..."
+      />
+      <ReactStars
+        count={5}
+        onChange={handleRatingChange}
+        size={24}
+        isHalf={true}
+        activeColor="#ffd700"
+      />
+      <button type="submit">Dodaj recenzję</button>
+    </form>
+  );
+
+
+</div>
+
     <div className="comments pagination">
       {generatePagination().map((numer) => (
         <span
-          key={numer}
-          onClick={() => handlePageClick(numer)}
-          className={numer === page ? "active" : ""}
+        key={numer}
+        onClick={() => handlePageClick(numer)}
+        className={numer === page ? "active" : ""}
         >
           {numer}
         </span>
@@ -93,6 +149,7 @@ const CommentsSlider = () => {
         ))}
       </div>
     </div>
+        </>
   );
 };
 

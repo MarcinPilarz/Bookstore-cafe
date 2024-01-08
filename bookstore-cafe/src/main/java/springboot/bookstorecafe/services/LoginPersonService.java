@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.crypto.SecretKey;
 
@@ -32,6 +33,7 @@ import springboot.bookstorecafe.DTO.PersonAndPersonLoginDTO;
 import springboot.bookstorecafe.DTO.RefreshTokenDTO;
 import springboot.bookstorecafe.models.LoginPerson;
 import springboot.bookstorecafe.models.Person;
+import springboot.bookstorecafe.models.RoleType;
 import springboot.bookstorecafe.repositories.LoginPersonInterface;
 import springboot.bookstorecafe.repositories.LoginPersonRepository;
 import springboot.bookstorecafe.repositories.PersonRepository;
@@ -144,6 +146,32 @@ public class LoginPersonService implements LoginPersonInterface, AuthenticationS
 //		 */
 //		return new BCryptPasswordEncoder();
 //	}
+	public List<PersonAndPersonLoginDTO> getEmployeesByRole() {
+		   List<LoginPerson> loginPersons = loginRepo.findByRoleType(RoleType.Pracownik);
+		   List<PersonAndPersonLoginDTO> dtos = new ArrayList<>();
+
+		   for (LoginPerson loginPerson : loginPersons) {
+		       Optional<Person> personOpt = personRepo.findByLoginPerson_IdLoginPerson(loginPerson.getIdLoginPerson());
+
+		       if (personOpt.isPresent()) {
+		           Person person = personOpt.get();
+		           PersonAndPersonLoginDTO dto = new PersonAndPersonLoginDTO(
+		              
+		        		   person.getIdPerson(),
+		        		   person.getFirstName(),
+		               person.getLastName(),
+		               person.getPhoneNumber(),
+		               loginPerson.getIdLoginPerson(),
+		               loginPerson.getEmail(),
+		               loginPerson.getPassword(),
+		               loginPerson.getRoleType()
+		              
+		           );
+		           dtos.add(dto);
+		       }
+		   }
+		   return dtos;
+		}
 
 	public List<LoginPerson> findAllItems() {
 
@@ -162,6 +190,12 @@ public class LoginPersonService implements LoginPersonInterface, AuthenticationS
 		loginRepo.save(loginPerson);
 	}
 
+	
+
+	public void updateItem(LoginPerson loginPerson) {
+		loginRepo.save(loginPerson);
+
+	}
 //	public String generateToken(UserDetails userDetails) {
 //
 //		SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);

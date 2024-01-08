@@ -91,11 +91,11 @@ public class OrderService {
 	
 	
 	
-//	public List<OrderItem> getOrdersPerson(Long personId){
-//		Person person = personRepo.findById(personId)
-//				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
-//		return person.getOrderItems();
-//	}
+	public List<WholeOrderPerson> getOrdersPerson(Long personId){
+		Person person = personRepo.findById(personId)
+				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
+		return person.getOrders();
+	}
 //	public void addItem(Long idPerson, Long idProduct, int quantity, String token)throws StripeException {
 //		Person person = personRepo.findById(idPerson)
 //				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));

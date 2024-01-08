@@ -30,3 +30,39 @@
     border: 1px solid #ccc;
     margin-top: 10px;
 }
+
+.orders-container {
+    max-height: 400px; /* Ustaw maksymalną wysokość */
+    overflow-y: auto;   /* Włącz przewijanie pionowe */
+    /* Dodaj inne potrzebne style, np. padding, marginesy itd. */
+  }
+
+.order-container {
+    max-height: 400px; /* Maksymalna wysokość kontenera */
+    overflow-y: auto;   /* Włączenie pionowego przewijania */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Pozostałe style */
+  .product-item {
+    background-color: #ffffff;
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  
+  .product-item p {
+    margin: 4px 0;
+  }
+  
+  .data-order-highlight {
+    color: #007bff;
+    font-weight: bold;
+  }

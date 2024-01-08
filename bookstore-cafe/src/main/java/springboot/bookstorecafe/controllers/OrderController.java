@@ -50,16 +50,16 @@ public class OrderController {
 //	    }
 //	}
 
-//	 @GetMapping("/orders/person")
-//	    public ResponseEntity<List<OrderItem>> getPersonOrders(@RequestParam Long personId) {
-//	        try {
-//	            List<OrderItem> orders = orderService.getOrdersPerson(personId);
-//	            return ResponseEntity.ok(orders);
-//	        } catch (RuntimeException e) {
-//	            // Możesz dostosować obsługę błędów w zależności od Twoich potrzeb
-//	            return ResponseEntity.notFound().build();
-//	        }
-//	    }
+	 @GetMapping("/orders/person")
+	    public ResponseEntity<List<WholeOrderPerson>> getPersonOrders(@RequestParam Long personId) {
+	        try {
+	            List<WholeOrderPerson> orders = orderService.getOrdersPerson(personId);
+	            return ResponseEntity.ok(orders);
+	        } catch (RuntimeException e) {
+	            // Możesz dostosować obsługę błędów w zależności od Twoich potrzeb
+	            return ResponseEntity.notFound().build();
+	        }
+	    }
 	 
 //	@GetMapping(value="/ordersDTO")
 //	public List<OrderItemDTO> getOrdersDTO(){

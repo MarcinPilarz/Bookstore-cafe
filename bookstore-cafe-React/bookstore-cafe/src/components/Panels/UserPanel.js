@@ -213,26 +213,30 @@ const UserPanel = () => {
             //         <div>Brak rezerwacji.</div> // Wyświetlane, gdy nie ma rezerwacji
             // );
             return (
-                Array.isArray(clientOrdersData) && clientOrdersData.length > 0 ?
+                <div className='orders-container'>
+                  {Array.isArray(clientOrdersData) && clientOrdersData.length > 0 ?
                     clientOrdersData.map((orders, index) => {
-                        // Sprawdź, czy istnieje następne zamówienie i czy różnica czasu jest mniejsza niż 20 sekund
-                        const isCloseToNextOrder = index < clientOrdersData.length - 1 && 
-                                                   Math.abs(new Date(orders.dateOrder).getTime() - new Date(clientOrdersData[index + 1].dateOrder).getTime()) < 20000;
-            
-                        return (
-                            <div key={orders.idOrder}>
-                                {/* Wyświetl dateOrder tylko jeśli nie jest blisko następnego zamówienia */}
-                                {!isCloseToNextOrder && <p>Data zamówienia: {orders.dateOrder}</p>}
-                                <p>Ilość: {orders.quantity}</p>
-                                <p>Cena: {orders.totalPrice}</p>
-                                {orders.products.map((product) => (
-                                    <p key={product.idProduct}>Nazwa produktu: {product.productName}</p>
-                                ))}
+                      const isCloseToNextOrder = index < clientOrdersData.length - 1 && 
+                        Math.abs(new Date(orders.dateOrder).getTime() - new Date(clientOrdersData[index + 1].dateOrder).getTime()) < 20000;
+                        
+                      return (
+                        <div key={orders.idWholeOrderPerson} className="order-container">
+                          {!isCloseToNextOrder && <p className="data-order-highlight">Data zamówienia: {orders.dateOrder}</p>}
+                          <p>Status zamówienia: {orders.orderStatus}</p>
+                          <p>Cena: {orders.totalPrice}</p>
+                          {orders.order.map((productItem) => (
+                            <div key={productItem.idOrderProduct} className="product-item">
+                              <p>Ilość: {productItem.quantity}</p>
+                              <p>Nazwa produktu: {productItem.product.productName}</p>
                             </div>
-                        );
+                          ))}
+                        </div>
+                      );
                     }) :
                     <div>Brak rezerwacji.</div> // Wyświetlane, gdy nie ma rezerwacji
-            );
+                  }
+                </div>
+              );
           default:
               return <div>Dane osobowe</div>;
       }
