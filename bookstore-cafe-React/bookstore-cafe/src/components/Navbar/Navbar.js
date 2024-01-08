@@ -3,6 +3,7 @@ import {
   faBasketShopping,
   faClock,
   faCircleUser,
+  faBell
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
@@ -10,6 +11,7 @@ import { Link } from "react-router-dom";
 import { useCart } from "../ProductSection/BusketProducts";
 import "./Navbar.css";
 import { useAuth } from "../Login/LoginInfoContext";
+import axios from "axios";
 import RoleToggle from "./RoleToggle";
 const Navbar = () => {
   const [showMenuBars, setShowMenuBars] = useState(false);
@@ -26,7 +28,7 @@ const Navbar = () => {
     updateProductQuantity,
     removeFromBusket,
   } = useCart();
-
+  const [barNotification, setBarNotification]= useState([]);
   const { authData, logout } = useAuth();
   const idPerson = authData?.idPerson;
   const [cartItemCount, setCartItemCount] = useState(0);
@@ -167,6 +169,24 @@ const Navbar = () => {
     // Logika wczytywania koszyka lub resetowania stanu
     // w zależności od aktualnego idPerson
   }, [authData?.idPerson]);
+
+  useEffect(() => {
+    if (idPerson) { 
+    axios
+      .get(`http://localhost:8080/orders/person?personId=${idPerson}`)
+      .then((response) => {
+          const clientOrdersInfo = response.data;
+          console.log("Pobrane danych zamówień z API:", clientOrdersInfo);
+          setBarNotification(clientOrdersInfo);
+      })
+      .catch((error) => {
+          console.error("Błąd pobierania zamówień", error);
+      });
+    } else {
+        console.log("idPerson jest undefined lub pusty");
+        // Możesz tutaj obsłużyć sytuację, gdy idPerson jest undefined lub pusty
+    }
+}, [idPerson]);
   return (
     <header>
       <nav className={`bar-icon ${showMenuBars ? "open" : ""}`}>
@@ -253,7 +273,7 @@ const Navbar = () => {
         </div>
 
         <div className="history-icon" onClick={historyBar}>
-          <FontAwesomeIcon icon={faClock} />
+          <FontAwesomeIcon icon={faBell} />
         </div>
 
         <div
@@ -261,28 +281,18 @@ const Navbar = () => {
         >
           {historyOrderBar && (
             <div className="order-item-list">
-              <p>
-                <b>Nazwa produktu:</b>
-                <br />
-                Americano{" "}
-              </p>
-              <p>
-                <b>Ilość: </b>
-                <br />2{" "}
-              </p>
-              <p>
-                <b>Cena: </b>
-                <br />
-                40zł{" "}
-              </p>
+             {  barNotification.map((status) =>(
+                <div  key={status.idWholeOrderPerson}>
+                  
+                  <div> 
+                    Twoje zamówienie o numerze {status.idWholeOrderPerson} jest {status.orderStatus}
+                  </div>
+                  
+                   </div>
+              ))}
             </div>
           )}
-          {historyOrderBar && (
-            <div className="button-container">
-              <button className="summary-button">Podsumowanie</button>
-              <button className="clear-button">Wyczyść</button>
-            </div>
-          )}
+         
         </div>
 
         <div className="user-icon" onClick={userBar}>
