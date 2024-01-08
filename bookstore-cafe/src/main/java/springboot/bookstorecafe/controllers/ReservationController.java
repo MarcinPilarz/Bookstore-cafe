@@ -43,13 +43,13 @@ public class ReservationController {
 	            return ResponseEntity.notFound().build();
 	        }
 	    }
-	@PostMapping("/newReservation")
-	public void bookTable(@RequestParam Long idPerson, @RequestParam Long idBookTable,
-			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bokkingData,
-			@RequestParam int numberOfPeople) {
+	 @PostMapping("/newReservation")
+	 public void bookTable(@RequestParam Long idPerson,
+	                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bokkingData,
+	                       @RequestParam int numberOfPeople) {
 
-		reservationService.bookTable(idPerson, idBookTable, bokkingData, numberOfPeople);
-	}
+	     reservationService.bookTable(idPerson, bokkingData, numberOfPeople);
+	 }
 
 	@PostMapping("/newReservationEmployee")
 	public void bookTableEmployee(@RequestParam Long idPerson, @RequestParam Long idBookTable,

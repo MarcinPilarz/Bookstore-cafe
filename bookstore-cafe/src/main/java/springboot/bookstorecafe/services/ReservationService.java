@@ -2,6 +2,7 @@ package springboot.bookstorecafe.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -44,26 +45,31 @@ public class ReservationService {
 		return person.getReservations();
 	}
 
-	public void bookTable(Long idPerson, Long idBookTable, LocalDate bokkingData,
-			int numberOfPeople) {
+	public void bookTable(Long idPerson, LocalDate bookingData, int numberOfPeople) {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
-		BookTable bookTable = bookTableRepo.findById(idBookTable)
-				.orElseThrow(() -> new RuntimeException("There is no such table: " + idBookTable));
+		 List<BookTable> availableTables = bookTableRepo.findAvailableTablesByDate(bookingData); // Zakładam, że taka metoda istnieje
+		    if (availableTables.isEmpty()) {
+		        throw new RuntimeException("There are no available tables for the specified date.");
+		    }
+
+		    // Losowy wybór stolika
+		    Random random = new Random();
+		    BookTable bookTable = availableTables.get(random.nextInt(availableTables.size()));
 		Reservation reservation = new Reservation();
 		if (bookTable.isReservation()) {
 			throw new RuntimeException("This table is reserved.");
 		}
 
 		
-		List<Reservation> existingReservations = reservationRepo.findByBookTableAndBokkingData(bookTable, bokkingData);
+		List<Reservation> existingReservations = reservationRepo.findByBookTableAndBokkingData(bookTable, bookingData);
 		if (!existingReservations.isEmpty()) {
 			throw new RuntimeException("This table is already reserved for the specified date.");
 		}
 		
 		reservation.setPerson(person);
-		reservation.setBokkingData(bokkingData);
+		reservation.setBokkingData(bookingData);
 		reservation.setNumberOfPeople(numberOfPeople);
 		reservation.setBookTable(bookTable);
 
@@ -73,7 +79,7 @@ public class ReservationService {
 		//bookTable.setReservation(true);
 		
 
-	    bookTable.setReservationDate(bokkingData);
+	    bookTable.setReservationDate(bookingData);
 		reservationRepo.save(reservation);
 	}
 
