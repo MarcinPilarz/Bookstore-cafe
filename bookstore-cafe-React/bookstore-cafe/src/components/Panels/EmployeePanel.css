@@ -19,12 +19,33 @@
   list-style-type: none;
 }
 
+.dashboardSidebarList {
+  list-style-type: none; /* Usunięcie kropek listy */
+  /* padding: 0; Usunięcie domyślnego paddingu */
+  /* margin: 0; Usunięcie domyślnego marginesu */
+  display: grid;
+  padding: 10px;
+  margin-top: 20px;
+  font-size: 20px;
+}
+.dashboardSidebarList::after {
+  content: "";
+  display: table;
+  clear: both;
+}
 .dashboardSidebarItem {
   color: white;
   text-decoration: none;
   display: block;
-  padding: 10px;
-  border-bottom: 1px solid grey;
+  padding: 10px 15px; /* Zwiększony padding */
+  border-bottom: 1px solid #4b6584; /* Ciemniejsza linia oddzielająca */
+  cursor: pointer; /* Kursor wskaźnikowy */
+  transition: background-color 0.3s, color 0.3s; /* Animacja przy najechaniu */
+}
+
+.dashboardSidebarItem:hover {
+  background-color: #5d6d7e; /* Zmiana koloru tła przy najechaniu */
+  color: #ecf0f1; /* Zmiana koloru tekstu */
 }
 
 .dashboardContent {
