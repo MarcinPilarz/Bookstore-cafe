@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
+import { useCart } from "../ProductSection/BusketProducts";
 import "./RoleToggle.css";
 const RoleToggle = () => {
   const { authData, setAuthData } = useAuth();
-
+  const {
+    busket,
+    setBusket,
+    clearBusket,
+    updateProductQuantity,
+    removeFromBusket,
+  } = useCart();
   const getNextRole = () => {
     switch (authData.roleType) {
       case "Wlasciciel":
@@ -49,6 +56,7 @@ const RoleToggle = () => {
       localStorage.setItem("authData", JSON.stringify(updatedAuthData));
 
       // Opcjonalnie: odświeżenie strony
+      clearBusket();
       window.location.reload();
     } catch (error) {
       console.error("Error changing role", error);

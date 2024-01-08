@@ -1480,7 +1480,7 @@ const renderModalForm = () => {
       </thead>
       <tbody>
         {employeePanel.map((employee) => (
-          <tr key={employee.id}>
+          <tr key={employee.idPerson}>
             <td>{employee.firstName}</td>
             <td>{employee.lastName}</td>
             <td>{employee.phoneNumber}</td>

@@ -15,6 +15,69 @@ const UserPanel = () => {
     const {authData}= useAuth();
     const idPerson=authData?.idPerson;
 
+    const [isEditing, setIsEditing] = useState(false);
+    const [isChangingPassword, setIsChangingPassword] = useState(false);
+
+
+    const [editFormData, setEditFormData] = useState({
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+    });
+    const [passwordData, setPasswordData] = useState({
+      oldPassword: '',
+      newPassword: '',
+    });
+  
+    // Obsługa zmiany wartości w formularzach
+    const handleEditFormChange = (event) => {
+      setEditFormData({ ...editFormData, [event.target.name]: event.target.value });
+    };
+  
+    const handlePasswordFormChange = (event) => {
+      setPasswordData({ ...passwordData, [event.target.name]: event.target.value });
+    };
+  
+    // Funkcje do obsługi kliknięcia przycisku
+    const handleEditClick = () => {
+      setIsEditing(true);
+      setIsChangingPassword(false);
+    };
+  
+    const handleChangePasswordClick = () => {
+      setIsChangingPassword(true);
+      setIsEditing(false);
+    };
+  
+    // Funkcja do obsługi przesyłania formularza edycji
+    const handleEditSubmit = async (event) => {
+      event.preventDefault();
+      await handleUpdateEmployee(clientData.idPerson, editFormData);
+      setIsEditing(false);
+    };
+  
+    // Funkcja do obsługi przesyłania formularza zmiany hasła
+    const handleChangePasswordSubmit = async (event) => {
+      event.preventDefault();
+      // Tutaj zaimplementuj logikę zmiany hasła
+      setIsChangingPassword(false);
+    };
+  
+    // Przykład funkcji aktualizującej pracownika
+    const handleUpdateEmployee = async (id, employeeData) => {
+      if (!id) {
+        console.error('Identyfikator użytkownika jest niezdefiniowany');
+        return;
+      }
+  
+      try {
+        await axios.put(`http://localhost:8080/editUser?id=${id}`, employeeData);
+       // fetchEmployees();
+        console.log("Użytkownik został pomyślnie zaktualizowany");
+      } catch (error) {
+        console.error('Error updating employee', error);
+      }
+    };
    useEffect(() => {
     if (idPerson) {
         // Pierwsze żądanie HTTP
@@ -125,22 +188,69 @@ const UserPanel = () => {
         case 'personalData':
           
                 return (
-                    <div>
-                        <div>Dane osobowe</div>
-                        {clientData && (
-                        <div>
-                            <p>Imię: {clientData.firstName}</p>
-                            <p>Nazwisko: {clientData.lastName}</p>
-                            <p>Telefon: {clientData.phoneNumber}</p>
-                            {/* Sprawdź, czy loginPerson i email istnieją zanim spróbujesz wyrenderować email */}
-                            {clientData.loginPerson && clientData.loginPerson.email && (
-                                <p>E-mail: {clientData.loginPerson.email}</p>
-                            )}
-                        </div>
-                    )}
-                    </div>
-                );
-           
+                  <div>
+      <div>Dane osobowe</div>
+      {clientData && (
+        <div>
+          <p>Imię: {clientData.firstName}</p>
+          <p>Nazwisko: {clientData.lastName}</p>
+          <p>Telefon: {clientData.phoneNumber}</p>
+          {clientData.loginPerson && clientData.loginPerson.email && (
+            <p>E-mail: {clientData.loginPerson.email}</p>
+          )}
+          <button onClick={handleEditClick}>Edytuj Dane</button>
+          <button onClick={handleChangePasswordClick}>Zmień Hasło</button>
+
+          {isEditing && (
+            <form onSubmit={handleEditSubmit}>
+              <input
+                type="text"
+                name="firstName"
+                placeholder="Imię"
+                value={editFormData.firstName}
+                onChange={handleEditFormChange}
+              />
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Nazwisko"
+                value={editFormData.lastName}
+                onChange={handleEditFormChange}
+              />
+              <input
+                type="text"
+                name="phoneNumber"
+                placeholder="Telefon"
+                value={editFormData.phoneNumber}
+                onChange={handleEditFormChange}
+              />
+              <button type="submit">Zapisz zmiany</button>
+            </form>
+          )}
+
+          {isChangingPassword && (
+            <form onSubmit={handleChangePasswordSubmit}>
+              <input
+                type="password"
+                name="oldPassword"
+                placeholder="Stare Hasło"
+                value={passwordData.oldPassword}
+                onChange={handlePasswordFormChange}
+              />
+              <input
+                type="password"
+                name="newPassword"
+                placeholder="Nowe Hasło"
+                value={passwordData.newPassword}
+                onChange={handlePasswordFormChange}
+              />
+              <button type="submit">Zmień Hasło</button>
+            </form>
+          )}
+        </div>
+      )}
+    </div>
+              );
               
           case 'myReservations':
             return (

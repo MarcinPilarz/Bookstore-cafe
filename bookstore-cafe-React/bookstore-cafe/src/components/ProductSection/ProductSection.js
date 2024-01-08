@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import SearchBarProducts from "./SearchBarProducts";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
@@ -26,6 +26,7 @@ const ProductSection = () => {
   const [addedToCartList, setAddedToCartList] = useState([]);
   const { productType } = useParams();
   const { addToBusket, productsList } = useCart();
+  const navigate = useNavigate();
   //const { busket } = useCart();
 
   //   useEffect(() => {
@@ -107,7 +108,9 @@ const ProductSection = () => {
       return [...prevList, product];
     });
   };
-
+  const handleSigninClick = () =>{
+    navigate("/signin");
+  }
   let productInfo;
   switch (productType) {
     case "COFFEE":
@@ -156,15 +159,21 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
-                  <button
-                    className="add-busket-button"
-                    onClick={() => {
-                      console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
-                      handleAddToBusket(product);
-                    }}
-                  >
-                    Do koszyka
-                  </button>
+                {authData?.roleType=== "Klient" ?(
+
+                  
+<button
+className="add-busket-button"
+onClick={() => {
+  console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
+  handleAddToBusket(product);
+}}
+>
+  Do koszyka
+</button>
+  ) : (
+    <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
+  )}
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -219,15 +228,21 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
-                  <button
-                    className="add-busket-button"
-                    onClick={() => {
-                      console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
-                      handleAddToBusket(product);
-                    }}
-                  >
-                    Do koszyka
-                  </button>
+                {authData?.roleType=== "Klient" ?(
+
+                  
+<button
+className="add-busket-button"
+onClick={() => {
+  console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
+  handleAddToBusket(product);
+}}
+>
+  Do koszyka
+</button>
+  ) : (
+    <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
+  )}
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -281,15 +296,21 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
-                  <button
-                    className="add-busket-button"
-                    onClick={() => {
-                      console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
-                      handleAddToBusket(product);
-                    }}
-                  >
-                    Do koszyka
-                  </button>
+                {authData?.roleType=== "Klient" ?(
+
+                  
+<button
+className="add-busket-button"
+onClick={() => {
+  console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
+  handleAddToBusket(product);
+}}
+>
+  Do koszyka
+</button>
+  ) : (
+    <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
+  )}
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -367,15 +388,21 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
+                {authData?.roleType=== "Klient" ?(
+
+                  
                   <button
-                    className="add-busket-button"
-                    onClick={() => {
-                      console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
-                      handleAddToBusket(product);
-                    }}
+                  className="add-busket-button"
+                  onClick={() => {
+                    console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
+                    handleAddToBusket(product);
+                  }}
                   >
                     Do koszyka
                   </button>
+                    ) : (
+                      <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
+                    )}
                 </>
               </div>
             </div>
@@ -391,6 +418,7 @@ const ProductSection = () => {
       );
   }
 
+ 
   return (
     <>
       <Navbar />

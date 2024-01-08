@@ -25,6 +25,8 @@ const EmployeePanel = () => {
   const [selectedOrderId, setSelectedOrderId] = useState(null); // ID wybranego zamówienia do zaktualizowania
   const [statusPanel, setStatusPanel] = useState([]); 
 
+
+
   const handleAdd = () => {
     // Logika dodawania
     console.log("Dodawanie...");
@@ -40,6 +42,10 @@ const EmployeePanel = () => {
     console.log("Usuwanie...");
   };
 
+
+
+
+ 
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
