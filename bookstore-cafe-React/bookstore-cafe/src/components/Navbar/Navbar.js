@@ -78,6 +78,7 @@ const Navbar = () => {
     setUserActionBar(!userActionBar);
     setShowMenuBars(false);
     setBusketOrderBar(false);
+    setHistoryOrderBar(false);
     setinfoImageVisible(!infoImageVisible);
     console.log("UserBar", !userActionBar);
   };
@@ -93,6 +94,7 @@ const Navbar = () => {
 
   const busketBar = () => {
     setBusketOrderBar(!busketOrderBar);
+    setUserActionBar(false);
     setShowMenuBars(false);
     setHistoryOrderBar(false);
     setinfoImageVisible(!infoImageVisible);
@@ -106,6 +108,7 @@ const Navbar = () => {
 
   const historyBar = () => {
     setHistoryOrderBar(!historyOrderBar);
+    setUserActionBar(false);
     setShowMenuBars(false);
     setBusketOrderBar(false);
     setinfoImageVisible(!infoImageVisible);
@@ -294,43 +297,41 @@ const Navbar = () => {
           )}
          
         </div>
-
         <div className="user-icon" onClick={userBar}>
-          <FontAwesomeIcon icon={faCircleUser} />
-        </div>
-        {userActionBar && authData?.token == null && (
-          <div>
-            <Link to="/signin">Zaloguj się</Link>
-            <Link to="/signup">Zarejestruj się</Link>
-          </div>
-        )}
+  <FontAwesomeIcon icon={faCircleUser} />
+</div>
+{userActionBar && authData?.token == null && (
+  <div className="user-action-bar">
+    <Link to="/signin">Zaloguj się</Link>
+    <Link to="/signup">Zarejestruj się</Link>
+  </div>
+)}
 
-        {userActionBar && authData?.token && (
-          <div>
-            {authData?.roleType === "Klient" && (
-              <>
-                <Link to="/user-panel">Mój profil</Link>
-                <RoleToggle />
-              </>
-            )}
+{userActionBar && authData?.token && (
+  <div className="user-action-bar">
+    {authData?.roleType === "Klient" && (
+      <>
+        <Link to="/user-panel">Mój profil</Link>
+        <RoleToggle />
+      </>
+    )}
 
-            {authData?.roleType === "Pracownik" && (
-              <>
-                <Link to="/employee-panel">Profil pracownika</Link>
-                <RoleToggle />
-              </>
-            )}
-            {authData?.roleType === "Wlasciciel" && (
-              <>
-                <Link to="/owner-panel">Profil administratora</Link>
-                <RoleToggle />
-              </>
-            )}
-            {/* zmien role na klienta jesli pracownik i wlasciciel ma wolne */}
-            <div onClick={logout}>Wyloguj</div>
-          </div>
-        )}
-      </div>
+    {authData?.roleType === "Pracownik" && (
+      <>
+        <Link to="/employee-panel">Profil pracownika</Link>
+        <RoleToggle />
+      </>
+    )}
+    {authData?.roleType === "Wlasciciel" && (
+      <>
+        <Link to="/owner-panel">Profil administratora</Link>
+        <RoleToggle />
+      </>
+    )}
+    <div onClick={logout}>Wyloguj</div>
+  </div>
+)}
+</div>
     </header>
   );
 };

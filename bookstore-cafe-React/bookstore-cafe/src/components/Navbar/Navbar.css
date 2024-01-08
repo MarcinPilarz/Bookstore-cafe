@@ -66,7 +66,7 @@ div.busket-sidebar {
   background-color: #ffffff; /* Jasne tło dla nowocześniejszego wyglądu */
   position: absolute;
   top: 76px;
-  right: 0;
+  right: 5px;
   overflow-x: hidden;
   overflow-y: auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtelny cień dla głębi */
@@ -265,13 +265,92 @@ div.history-icon {
 }
 
 span.amount-of-products:hover{
-  background: transparent;
+  background: red;
 }
+
+
+
+.amount-of-products {
+  position: absolute; /* Pozycjonowanie względem busket-icon */
+  top: -4px; /* Umieszczenie nad ikoną */
+  right: 100%; /* Umieszczenie po prawej stronie ikony */
+  background-color: red; /* Czerwone tło */
+  color: white; /* Biały tekst */
+  border-radius: 50%; /* Okrągłe tło */
+  padding: 2px 5px; /* Padding */
+  font-size: 0.8em; /* Mniejszy rozmiar czcionki */
+  min-width: 20px; /* Minimalna szerokość, aby zachować okrągły kształt */
+  text-align: center; /* Wyśrodkowanie tekstu */
+}
+
+.user-icon {
+  cursor: pointer;
+  /* inne style dla ikony użytkownika */
+}
+
+.user-action-bar {
+  background-color: #f3f3f3;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute; /* Aby umiejscowić poniżej ikony użytkownika */
+  right: 10px; /* Dostosuj w zależności od położenia na stronie */
+  top: 70px; /* Dostosuj w zależności od wysokości nagłówka */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Aby był nad innymi elementami */
+}
+
+.user-action-bar a {
+  display: block; /* Każdy link na osobnej linii */
+  margin-bottom: 5px;
+  color: #333;
+  text-decoration: none;
+}
+
+.user-action-bar a:hover {
+  color: #007bff; /* Kolor przy hover */
+}
+
+.user-action-bar div {
+  cursor: pointer;
+  color: #333;
+  margin-top: 10px;
+}
+
+.user-action-bar div:hover {
+  color: #007bff; /* Kolor przy hover */
+}
+
+
+
+
+div.history-sidebar {
+  width: 300px;
+  height: 400px;
+  background-color: #ffffff; /* Jasne tło dla nowocześniejszego wyglądu */
+  position: absolute;
+  top: 76px;
+  right: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtelny cień dla głębi */
+  border-left: 2px solid #e0e0e0; /* Delikatna linia oddzielająca od reszty treści */
+  z-index: 1000; /* Upewnij się, że jest wyżej niż inne elementy */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transform: translateX(0); /* Usunięcie przesunięcia w osi Y */
+  padding: 20px; /* Dodatkowa przestrzeń wewnątrz dla lepszego układu elementów */
+}
+
+
+
+
+
+
 @media (max-width: 768px) {
   .hamburger {
     display: block;
   }
-
+  
   .hamburger:hover {
     cursor: pointer;
     color: bisque;
@@ -352,8 +431,17 @@ span.amount-of-products:hover{
   }
   div.busket-sidebar {
     width: 100%;
-    top: 25.2px;
+    top: 62.2px;
+    right: 0;
   }
+
+
+  div.history-sidebar {
+    width: 100%;
+    top: 62.2px;
+    right: 0;
+  }
+
 
   .summary-button,
   .clear-button {
