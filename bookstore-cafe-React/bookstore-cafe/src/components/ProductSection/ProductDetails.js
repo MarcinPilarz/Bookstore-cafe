@@ -13,64 +13,69 @@ const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
   };
 
   return (
-    <div className="product-details-container" onClick={onClose}>
-      <div className="product-details-content">
+    <div className="product-details-modal-container" onClick={onClose}>
+      <div className="product-details-modal-content">
         {selectedProduct ? (
           <>
-            <h2>{selectedProduct.productName}</h2>
-            <p>Opis: {selectedProduct.productDescription}</p>
-            <p>Cena: {selectedProduct.productPrice} zł</p>
-            {/* Dodaj inne informacje o produkcie, które chcesz wyświetlić */}
-            {/* <div>cos{detailedInformation}</div> */}
+            <h2 className="product-details-title">
+              {selectedProduct.productName}
+            </h2>
+            <p className="product-description">
+              Opis: {selectedProduct.productDescription}
+            </p>
+            <p className="product-price">
+              Cena: {selectedProduct.productPrice} zł
+            </p>
 
             {selectedProduct.productType === "COFFEE" && (
-              <div className="coffee-intensity-container">
-                <h3 className="coffee-intensity">
-                  <span className="intensity-label">Intensywność:</span>
-                  <CoffeeIntensity
-                    className="coffee-intensity-circle"
+              <div className="coffee-details-container">
+                <h3 className="coffee-intensity-title">
+                  <span className="intensity-title-label">Intensywność:</span>
+                  {/* <CoffeeIntensity
+                    className="coffee-intensity-display"
                     intensity={selectedProduct.coffeeIntensity}
-                  />
+                  /> */}
+                  {selectedProduct.coffeeIntensity}/10
                 </h3>
-                {/* Dodaj inne informacje o kawie, jeśli są dostępne */}
+                <p>
+                  Intensywność kawy w skali od 1 do 10 opisuje stopień jej
+                  smaku, aromatu, gęstości i mocy, gdzie 1 oznacza bardzo lekką,
+                  delikatną kawę, a 10 bardzo intensywną, mocną i z pełnym,
+                  głębokim smakiem.
+                </p>
               </div>
             )}
 
             {selectedProduct.productType === "BOOK" && (
-              <>
-                <h3 id="book-info">
-                  <span className="author-label-details">Autor:</span>
-                  {selectedProduct.author}
-                  <span className="genre-label">Gatunek:</span>
-                  {selectedProduct.genere}
-                  {<br />}
-                  <span className="publishingHouse-label">Wydawnictwo:</span>
-                  {selectedProduct.publishingHouse}
-                  <span className="language-label">Język:</span>
-                  {selectedProduct.language}
-                  {<br />}
-                  <span className="publication-date-label">Rok wydania:</span>
-                  {selectedProduct.publicationDate}
-                  <span className="book-cover-label">Okładka:</span>
-                  {selectedProduct.bookCover}
-                  <span className="number-page-label">Liczba stron:</span>
-                  {selectedProduct.numberPage}
-                </h3>
-                {/* Dodaj inne informacje o książce, jeśli są dostępne */}
-              </>
+              <div className="book-details-info">
+                <span className="book-author-label">Autor:</span>
+                {selectedProduct.author}
+                <span className="book-genre-label">Gatunek:</span>
+                {selectedProduct.genere}
+                <span className="book-publishing-house-label">
+                  Wydawnictwo:
+                </span>
+                {selectedProduct.publishingHouse}
+                <span className="book-language-label">Język:</span>
+                {selectedProduct.language}
+                <span className="book-publication-date-label">
+                  Rok wydania:
+                </span>
+                {selectedProduct.publicationDate}
+                <span className="book-cover-label">Okładka:</span>
+                {selectedProduct.bookCover}
+                <span className="book-page-count-label">Liczba stron:</span>
+                {selectedProduct.numberPage}
+              </div>
             )}
 
-            {/* Warunek dla jedzenia */}
             {selectedProduct.productType === "FOOD" && (
-              <>
-                <h3 id="food-info">
-                  <span className="calories-label">Kalorie:</span>
-                  {selectedProduct.amountOfCalories}
-                  <span className="weight-label">Waga potrawy:</span>
-                  {selectedProduct.foodWeight} g
-                </h3>
-                {/* Dodaj inne informacje o jedzeniu, jeśli są dostępne */}
-              </>
+              <div className="food-details-info">
+                <span className="food-calories-label">Kalorie:</span>
+                {selectedProduct.amountOfCalories}
+                <span className="food-weight-label">Waga potrawy:</span>
+                {selectedProduct.foodWeight} g
+              </div>
             )}
           </>
         ) : (
