@@ -256,11 +256,11 @@ div.tile-products-list h3.coffee-intensity {
 }
 
 .pagination-container {
-  width: 100%; /* Paginacja zajmuje całą szerokość kontenera */
+  width: 100%;
   display: flex;
-  justify-content: center; /* Centruje paginację */
+  justify-content: center;
 }
-.pagination {
+.pagination-products {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -287,7 +287,6 @@ div.tile-products-list h3.coffee-intensity {
   color: white;
 }
 
-/* Styl dla aktywnej strony (jeśli potrzebujesz) */
 .active-page {
   background-color: #007bff;
   color: white;

@@ -21,11 +21,11 @@ const EmployeePanel = () => {
   const [orderStatuses, setOrderStatuses] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedStatuses, setSelectedStatuses] = useState({});
-  const [selectedChangeStatus, setSelectedChangeStatus] = useState(orderStatuses[0] || "");
+  const [selectedChangeStatus, setSelectedChangeStatus] = useState(
+    orderStatuses[0] || ""
+  );
   const [selectedOrderId, setSelectedOrderId] = useState(null); // ID wybranego zamówienia do zaktualizowania
-  const [statusPanel, setStatusPanel] = useState([]); 
-
-
+  const [statusPanel, setStatusPanel] = useState([]);
 
   const handleAdd = () => {
     // Logika dodawania
@@ -42,10 +42,6 @@ const EmployeePanel = () => {
     console.log("Usuwanie...");
   };
 
-
-
-
- 
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -363,37 +359,39 @@ const EmployeePanel = () => {
               Authorization: `Bearer ${authData.token}`,
             },
           };
-          const response = await axios.get("http://localhost:8080/orders", config);
+          const response = await axios.get(
+            "http://localhost:8080/orders",
+            config
+          );
           console.log("Pobrane dane z API ZAMOWIENIA:", response.data);
           setOrderPanel(response.data);
-  
+
           // Aktualizacja stanu selectedStatuses
           const newSelectedStatuses = {};
-          response.data.forEach(order => {
+          response.data.forEach((order) => {
             newSelectedStatuses[order.idWholeOrderPerson] = order.orderStatus;
           });
           setSelectedStatuses(newSelectedStatuses);
-  
         } catch (error) {
           console.error("Błąd pobierania danych zamowien", error);
         }
       }
     };
-  
+
     if (authData?.token) {
       fetchOrder();
     }
-  }, [authData?.expirationTime, authData?.token]);;
+  }, [authData?.expirationTime, authData?.token]);
 
   useEffect(() => {
     const fetchOrderStatuses = async () => {
       try {
         const response = await axios.get("http://localhost:8080/order-status");
         setOrderStatuses(response.data);
-  
+
         // Aktualizacja wybranych statusów dla każdego zamówienia
         const newSelectedStatuses = {};
-        response.data.forEach(order => {
+        response.data.forEach((order) => {
           newSelectedStatuses[order.idWholeOrderPerson] = order.orderStatus;
         });
         setSelectedStatuses(newSelectedStatuses);
@@ -401,13 +399,13 @@ const EmployeePanel = () => {
         console.error("Error fetching order statuses", error);
       }
     };
-  
+
     fetchOrderStatuses();
   }, []);
   const handleChangeStatus = (orderId, newStatus) => {
-    setSelectedStatuses(prevStatuses => {
-      const updatedStatuses = {...prevStatuses, [orderId]: newStatus};
-      console.log('Updated statuses:', updatedStatuses);
+    setSelectedStatuses((prevStatuses) => {
+      const updatedStatuses = { ...prevStatuses, [orderId]: newStatus };
+      console.log("Updated statuses:", updatedStatuses);
       return updatedStatuses;
     });
   };
@@ -417,21 +415,24 @@ const EmployeePanel = () => {
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:8080/update-order-status?orderId=${orderId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authData.token}`,
-        },
-        body: JSON.stringify({ orderStatus: newStatus })
-      });
-  
+      const response = await fetch(
+        `http://localhost:8080/update-order-status?orderId=${orderId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authData.token}`,
+          },
+          body: JSON.stringify({ orderStatus: newStatus }),
+        }
+      );
+
       if (response.ok) {
         console.log("Status zamówienia zaktualizowany");
-  
+
         // Aktualizacja stanu orderPanel z nowym statusem
-        setOrderPanel(prevOrders =>
-          prevOrders.map(order => 
+        setOrderPanel((prevOrders) =>
+          prevOrders.map((order) =>
             order.idWholeOrderPerson === orderId
               ? { ...order, orderStatus: newStatus }
               : order
@@ -444,17 +445,17 @@ const EmployeePanel = () => {
       console.error("Błąd: ", error);
     }
   };
-const statusDisplayNames = {
-  W_TRAKCIE: "W trakcie",
-  GOTOWE_DO_ODBIORU: "Gotowe do odbioru",
-  ODEBRANE: "Odebrane",
-  OCZEKIWANIE_NA_DOSTAWE: "Oczekiwanie na dostawę",
-  // Dodaj inne statusy według potrzeb
-};
+  const statusDisplayNames = {
+    W_TRAKCIE: "W trakcie",
+    GOTOWE_DO_ODBIORU: "Gotowe do odbioru",
+    ODEBRANE: "Odebrane",
+    OCZEKIWANIE_NA_DOSTAWE: "Oczekiwanie na dostawę",
+    // Dodaj inne statusy według potrzeb
+  };
 
-const getDisplayNameForStatus = (status) => {
-  return statusDisplayNames[status] || status;
-};
+  const getDisplayNameForStatus = (status) => {
+    return statusDisplayNames[status] || status;
+  };
   return (
     <div className="dashboardContainer">
       <div className="dashboardSidebar">
@@ -481,172 +482,191 @@ const getDisplayNameForStatus = (status) => {
         </ul>
       </div>
       <div className="dashboardContent">
-
         {activeTab === "rezerwacje" && (
           <section>
             <h3 className="dashboardContentTitle">Zarządzanie Rezerwacjami</h3>
-            <table className="reservation-table">
-              <thead>
-                <tr>
-                  <th>Osoba rezerwująca</th>
-                  <th>Numer osoby rezerwującej</th>
-                  <th>Data rezerwacji</th>
-                  <th>Ilość osób</th>
-                  <th>Numer stolika</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reservationPanel.map((reservation) => (
-                  <tr key={reservation.idReservation}>
-                    <td>
-                      {reservation.person.firstName}{" "}
-                      {reservation.person.lastName}
-                    </td>
-                    <td>{reservation.person.phoneNumber}</td>
-                    <td>{reservation.bokkingData}</td>
-
-                    {editReservationId === reservation.idReservation ? (
-                      <input
-                        type="text"
-                        value={customEdtitReservationData.numberOfPeople}
-                        onChange={(e) =>
-                          setCustomEditReservationData({
-                            ...customEdtitReservationData,
-                            numberOfPeople: e.target.value,
-                          })
-                        }
-                      />
-                    ) : (
-                      reservation.numberOfPeople
-                    )}
-
-                    <td>{reservation.bookTable.tableNumber}</td>
-                    <td>
-                      {editReservationId === reservation.idReservation ? (
-                        <>
-                          <button
-                            onClick={() =>
-                              handleSaveReservation(reservation.idReservation)
-                            }
-                          >
-                            Zapisz
-                          </button>
-                          <button onClick={() => setEditReservationId(null)}>
-                            Anuluj
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() =>
-                              editReservation(reservation.idReservation)
-                            }
-                          >
-                            Edytuj
-                          </button>
-                          <button
-                            onClick={() =>
-                              deleteReservation(reservation.idReservation)
-                            }
-                          >
-                            Usuń
-                          </button>
-                        </>
-                      )}
-                    </td>
+            <div className="reservation-table-container">
+              <table className="reservation-table">
+                <thead>
+                  <tr>
+                    <th>Osoba rezerwująca</th>
+                    <th>Numer osoby rezerwującej</th>
+                    <th>Data rezerwacji</th>
+                    <th>Ilość osób</th>
+                    <th>Numer stolika</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-
-           
-            {/* Tabela rezerwacji lub lista */}
+                </thead>
+                <tbody>
+                  {reservationPanel.map((reservation) => (
+                    <tr key={reservation.idReservation}>
+                      <td>
+                        {reservation.person.firstName}{" "}
+                        {reservation.person.lastName}
+                      </td>
+                      <td>{reservation.person.phoneNumber}</td>
+                      <td>{reservation.bokkingData}</td>
+                      <td>
+                        {editReservationId === reservation.idReservation ? (
+                          <input
+                            type="text"
+                            className="reservation-input"
+                            value={customEdtitReservationData.numberOfPeople}
+                            onChange={(e) =>
+                              setCustomEditReservationData({
+                                ...customEdtitReservationData,
+                                numberOfPeople: e.target.value,
+                              })
+                            }
+                          />
+                        ) : (
+                          reservation.numberOfPeople
+                        )}
+                      </td>
+                      <td>{reservation.bookTable.tableNumber}</td>
+                      <td>
+                        {editReservationId === reservation.idReservation ? (
+                          <>
+                            <button
+                              className="save-button"
+                              onClick={() =>
+                                handleSaveReservation(reservation.idReservation)
+                              }
+                            >
+                              Zapisz
+                            </button>
+                            <button
+                              className="cancel-button"
+                              onClick={() => setEditReservationId(null)}
+                            >
+                              Anuluj
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              className="edit-button"
+                              onClick={() =>
+                                editReservation(reservation.idReservation)
+                              }
+                            >
+                              Edytuj
+                            </button>
+                            <button
+                              className="delete-button"
+                              onClick={() =>
+                                deleteReservation(reservation.idReservation)
+                              }
+                            >
+                              Usuń
+                            </button>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </section>
         )}
-
         {activeTab === "wydarzenia" && (
           <section>
             <h3 className="dashboardContentTitle">Zarządzanie Wydarzeniami</h3>
-            <table className="events-table">
-              <thead>
-                <tr>
-                  <th>Nazwa wydarzenia</th>
-                  <th>Opis wydarzenia</th>
-                  <th>Data opublikowania</th>
-                  <th>Osoba publikująca</th>
-                </tr>
-              </thead>
-              <tbody>
-                {eventsPanel.map((events) => (
-                  <tr key={events.idEvent}>
-                    <td>
-                      {editEventId === events.idEvent ? (
-                        <input
-                          type="text"
-                          value={eventFormData.eventName}
-                          onChange={(e) =>
-                            setEventFormData({
-                              ...eventFormData,
-                              eventName: e.target.value,
-                            })
-                          }
-                        />
-                      ) : (
-                        events.eventName
-                      )}
-                    </td>
-                    <td>
-                      {editEventId === events.idEvent ? (
-                        <input
-                          type="text"
-                          value={eventFormData.eventDescription}
-                          onChange={(e) =>
-                            setEventFormData({
-                              ...eventFormData,
-                              eventDescription: e.target.value,
-                            })
-                          }
-                        />
-                      ) : (
-                        events.eventDescription
-                      )}
-                    </td>
-                    <td>{events.eventsDate}</td>
-                    <td>
-                      {events.person.firstName} {events.person.lastName}
-                    </td>
-                    <td>
-                      {editEventId === events.idEvent ? (
-                        <>
-                          <button onClick={() => handleSave(events.idEvent)}>
-                            Zapisz
-                          </button>
-                          <button onClick={() => setEditEventsId(null)}>
-                            Anuluj
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button onClick={() => editEvent(events.idEvent)}>
-                            Edytuj
-                          </button>
-                          <button onClick={() => deleteEvent(events.idEvent)}>
-                            Usuń
-                          </button>
-                        </>
-                      )}
-                    </td>
+            <div className="events-table-container">
+              <table className="events-table">
+                <thead>
+                  <tr>
+                    <th>Nazwa wydarzenia</th>
+                    <th>Opis wydarzenia</th>
+                    <th>Data opublikowania</th>
+                    <th>Osoba publikująca</th>
                   </tr>
-                ))}
-
-                
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {eventsPanel.map((events) => (
+                    <tr key={events.idEvent}>
+                      <td>
+                        {editEventId === events.idEvent ? (
+                          <input
+                            type="text"
+                            className="event-input" // Dodana klasa dla input
+                            value={eventFormData.eventName}
+                            onChange={(e) =>
+                              setEventFormData({
+                                ...eventFormData,
+                                eventName: e.target.value,
+                              })
+                            }
+                          />
+                        ) : (
+                          events.eventName
+                        )}
+                      </td>
+                      <td>
+                        {editEventId === events.idEvent ? (
+                          <textarea
+                            className="event-description-input"
+                            value={eventFormData.eventDescription}
+                            onChange={(e) =>
+                              setEventFormData({
+                                ...eventFormData,
+                                eventDescription: e.target.value,
+                              })
+                            }
+                            maxLength="200"
+                          />
+                        ) : (
+                          events.eventDescription
+                        )}
+                      </td>
+                      <td>{events.eventsDate}</td>
+                      <td>
+                        {events.person.firstName} {events.person.lastName}
+                      </td>
+                      <td>
+                        {editEventId === events.idEvent ? (
+                          <>
+                            <button
+                              className="save-button"
+                              onClick={() => handleSave(events.idEvent)}
+                            >
+                              Zapisz
+                            </button>
+                            <button
+                              className="cancel-button"
+                              onClick={() => setEditEventsId(null)}
+                            >
+                              Anuluj
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              className="edit-button"
+                              onClick={() => editEvent(events.idEvent)}
+                            >
+                              Edytuj
+                            </button>
+                            <button
+                              className="delete-button"
+                              onClick={() => deleteEvent(events.idEvent)}
+                            >
+                              Usuń
+                            </button>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <section>
               <h3 className="dashboardContentTitle">Dodaj Nowe Wydarzenie</h3>
-              <form onSubmit={handleCreateEvent}>
+              <form onSubmit={handleCreateEvent} className="events-form">
                 <input
                   type="text"
+                  className="event-input"
                   value={eventFormData.eventName}
                   onChange={(e) =>
                     setEventFormData({
@@ -658,6 +678,8 @@ const getDisplayNameForStatus = (status) => {
                 />
                 <input
                   type="text"
+                  maxLength={200}
+                  className="event-input"
                   value={eventFormData.eventDescription}
                   onChange={(e) =>
                     setEventFormData({
@@ -674,10 +696,9 @@ const getDisplayNameForStatus = (status) => {
             </section>
           </section>
         )}
-
         {activeTab === "dostepne zamowienia" && (
           <section className="orders-container">
-             <ul>
+            <ul>
               <li onClick={() => setActiveTab("dostepne zamowienia")}>
                 Dostępne zamówienia
               </li>
@@ -705,29 +726,43 @@ const getDisplayNameForStatus = (status) => {
                         </li>
                       ))}
                     </ul>
-                  
-                    <div>
 
-                    Aktualny status: {getDisplayNameForStatus(order.orderStatus)}
-                    </div>
-                  
                     <div>
-      {orderStatuses.length > 0 && (
-        <>
-        <select value={getCurrentStatusForOrder(order)} onChange={(e) => handleChangeStatus(order.idWholeOrderPerson, e.target.value)}>
-          {orderStatuses.map((status, index) => (
-            <option key={index} value={status}>
-              {status}
-            </option>
-          ))}
-        </select>
-          <button onClick={() => updateOrderStatus(order.idWholeOrderPerson, currentStatus)}>
-          Zaktualizuj status
-        </button>
-          </>
-      )}
-    </div>
- 
+                      Aktualny status:{" "}
+                      {getDisplayNameForStatus(order.orderStatus)}
+                    </div>
+
+                    <div>
+                      {orderStatuses.length > 0 && (
+                        <>
+                          <select
+                            value={getCurrentStatusForOrder(order)}
+                            onChange={(e) =>
+                              handleChangeStatus(
+                                order.idWholeOrderPerson,
+                                e.target.value
+                              )
+                            }
+                          >
+                            {orderStatuses.map((status, index) => (
+                              <option key={index} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </select>
+                          <button
+                            onClick={() =>
+                              updateOrderStatus(
+                                order.idWholeOrderPerson,
+                                currentStatus
+                              )
+                            }
+                          >
+                            Zaktualizuj status
+                          </button>
+                        </>
+                      )}
+                    </div>
                   </div>
                 );
               } else {
@@ -737,67 +772,81 @@ const getDisplayNameForStatus = (status) => {
           </section>
         )}
 
-         {activeTab === "oczekujace zamowienia" && (
+        {activeTab === "oczekujace zamowienia" && (
           <section className="orders-container">
-          <ul>
-           <li onClick={() => setActiveTab("dostepne zamowienia")}>
-             Dostępne zamówienia
-           </li>
-           <li onClick={() => setActiveTab("oczekujace zamowienia")}>
-             Oczękujące zamówienia
-           </li>
-         </ul>
-         {orderPanel.map((order) => {
-           if (order.orderStatus === "OCZEKIWANIE_NA_DOSTAWE") {
-             const currentStatus = getCurrentStatusForOrder(order);
-             return (
-               <div key={order.idWholeOrderPerson} className="order-item">
-                 <div className="order-date">
-                   Data zamówienia: {order.dateOrder}
-                 </div>
-                 <div className="order-person">
-                   Złożone przez: {order.person.firstName}{" "}
-                   {order.person.lastName}
-                 </div>
-                 <div className="order-products">Zamówione produkty:</div>
-                 <ul className="products-list">
-                   {order.order.map((item) => (
-                     <li key={item.idOrderProduct} className="product-item">
-                       {item.product.productName} (Ilość: {item.quantity})
-                     </li>
-                   ))}
-                 </ul>
-               
-                 <div>
+            <ul>
+              <li onClick={() => setActiveTab("dostepne zamowienia")}>
+                Dostępne zamówienia
+              </li>
+              <li onClick={() => setActiveTab("oczekujace zamowienia")}>
+                Oczękujące zamówienia
+              </li>
+            </ul>
+            {orderPanel.map((order) => {
+              if (order.orderStatus === "OCZEKIWANIE_NA_DOSTAWE") {
+                const currentStatus = getCurrentStatusForOrder(order);
+                return (
+                  <div key={order.idWholeOrderPerson} className="order-item">
+                    <div className="order-date">
+                      Data zamówienia: {order.dateOrder}
+                    </div>
+                    <div className="order-person">
+                      Złożone przez: {order.person.firstName}{" "}
+                      {order.person.lastName}
+                    </div>
+                    <div className="order-products">Zamówione produkty:</div>
+                    <ul className="products-list">
+                      {order.order.map((item) => (
+                        <li key={item.idOrderProduct} className="product-item">
+                          {item.product.productName} (Ilość: {item.quantity})
+                        </li>
+                      ))}
+                    </ul>
 
-                 Aktualny status: {getDisplayNameForStatus(order.orderStatus)}
-                 </div>
-               
-                 <div>
-   {orderStatuses.length > 0 && (
-     <>
-     <select value={getCurrentStatusForOrder(order)} onChange={(e) => handleChangeStatus(order.idWholeOrderPerson, e.target.value)}>
-       {orderStatuses.map((status, index) => (
-         <option key={index} value={status}>
-           {status}
-         </option>
-       ))}
-     </select>
-       <button onClick={() => updateOrderStatus(order.idWholeOrderPerson, currentStatus)}>
-       Zaktualizuj status
-     </button>
-       </>
-   )}
- </div>
+                    <div>
+                      Aktualny status:{" "}
+                      {getDisplayNameForStatus(order.orderStatus)}
+                    </div>
 
-               </div>
-             );
-           } else {
-             return null;
-           }
-         })}
-       </section>
-     )}
+                    <div>
+                      {orderStatuses.length > 0 && (
+                        <>
+                          <select
+                            value={getCurrentStatusForOrder(order)}
+                            onChange={(e) =>
+                              handleChangeStatus(
+                                order.idWholeOrderPerson,
+                                e.target.value
+                              )
+                            }
+                          >
+                            {orderStatuses.map((status, index) => (
+                              <option key={index} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </select>
+                          <button
+                            onClick={() =>
+                              updateOrderStatus(
+                                order.idWholeOrderPerson,
+                                currentStatus
+                              )
+                            }
+                          >
+                            Zaktualizuj status
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </section>
+        )}
       </div>
     </div>
   );

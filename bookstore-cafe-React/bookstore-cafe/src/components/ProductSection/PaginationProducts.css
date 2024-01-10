@@ -1,4 +1,4 @@
-.pagination {
+.pagination-products {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,8 +30,7 @@
   color: white;
 }
 
-/* Styl dla aktywnej strony (jeśli potrzebujesz) */
 .active-page {
-  background-color: rgb(165, 165, 0); /* Żółty kolor tła dla aktywnej strony */
-  color: black; /* Kolor tekstu, dostosuj według potrzeb */
+  background-color: rgb(165, 165, 0);
+  color: black;
 }

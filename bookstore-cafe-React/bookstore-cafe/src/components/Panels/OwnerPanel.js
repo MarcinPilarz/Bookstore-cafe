@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./EmployeePanel.css";
 import "./OwnerPanel.css";
+import "./EmployeePanel.css";
+
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";

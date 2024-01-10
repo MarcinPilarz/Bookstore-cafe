@@ -14,7 +14,7 @@ const PaginationProducts = ({
 
   return (
     <nav className="nav-background">
-      <ul className="pagination">
+      <ul className="pagination-products">
         {pageNumbers.map((number) => (
           <li key={number} className="page-item">
             <a

@@ -114,3 +114,168 @@
   font-size: 16px;
   border-left: 5px solid #0056b3;
 }
+
+/* Reservation table */
+.reservation-table-container {
+  overflow-x: auto; /* Umożliwia przewijanie poziome */
+  overflow-y: auto; /* Umożliwia przewijanie pionowe */
+  max-height: 400px; /* Ustawia maksymalną wysokość kontenera */
+  margin-bottom: 20px;
+}
+
+.reservation-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reservation-table thead {
+  background-color: #007bff;
+  /* color: white; */
+}
+
+.reservation-table th,
+.reservation-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.reservation-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+/* Style dla inputów */
+.reservation-table input[type="text"] {
+  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style dla przycisków */
+.reservation-table button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #ffc107;
+}
+.delete-button {
+  background-color: #dc3545;
+}
+.save-button {
+  background-color: #28a745;
+}
+.cancel-button {
+  background-color: #6c757d;
+}
+
+/* Responsywność */
+@media screen and (max-width: 600px) {
+  .reservation-table th,
+  .reservation-table td {
+    padding: 5px;
+  }
+  .reservation-table button {
+    font-size: 0.8rem;
+  }
+}
+
+/* Events */
+.events-table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: auto; /* Umożliwia przewijanie poziome */
+  margin-bottom: 20px;
+}
+
+.events-table {
+  width: 100%;
+  min-width: 600px; /* Minimalna szerokość tabeli, aby zachować układ kolumn */
+  border-collapse: collapse;
+}
+
+.events-table,
+.events-form {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.events-table thead {
+  background-color: #4caf50;
+  /* color: white; */
+}
+
+.events-table th,
+.events-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.events-table tbody tr:nth-child(odd) {
+  background-color: #e8f5e9; /* Lekko zielony dla naprzemiennych wierszy */
+}
+
+/* Styl dla dużego inputu opisu wydarzenia */
+.events-table .event-description-input {
+  width: 95%;
+  height: 60px; /* Większa wysokość dla obszerniejszego opisu */
+  padding: 8px;
+  margin: 4px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical; /* Pozwala na zmianę rozmiaru w pionie */
+}
+
+.events-table input[type="text"],
+.events-form input[type="text"] {
+  width: 95%;
+  padding: 8px;
+  margin: 4px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Styl dla przycisków */
+.events-table .edit-button,
+.events-form .edit-button {
+  background-color: #ffc107; /* Żółty dla edycji */
+}
+
+.events-table .save-button,
+.events-form .save-button {
+  background-color: #4caf50; /* Zielony dla zapisywania */
+}
+
+.events-table .cancel-button,
+.events-form .cancel-button {
+  background-color: #6c757d; /* Szary dla anulowania */
+}
+
+.events-table button:hover,
+.events-form button:hover {
+  opacity: 0.9; /* Lekkie przyciemnienie przy najechaniu */
+}
+
+.events-form {
+  text-align: center;
+}
+
+.events-form input[type="submit"] {
+  background-color: #008cba; /* Niebieski kolor przycisku Dodaj */
+}
+
+@media screen and (max-width: 600px) {
+  .events-table th,
+  .events-table td,
+  .events-form input[type="text"] {
+    padding: 5px;
+    font-size: 0.9em;
+  }
+}
