@@ -9,6 +9,7 @@ import CoffeeIntensity from "./CoffeeIntensity";
 import ProductDetails from "./ProductDetails";
 import { useCart } from "./BusketProducts";
 import { useAuth } from "../Login/LoginInfoContext";
+import PaginationProducts from "./PaginationProducts";
 // props= searchResault
 const ProductSection = () => {
   //const { productType } = useParams();
@@ -27,6 +28,18 @@ const ProductSection = () => {
   const { productType } = useParams();
   const { addToBusket, productsList } = useCart();
   const navigate = useNavigate();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(12);
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
   //const { busket } = useCart();
 
   //   useEffect(() => {
@@ -89,6 +102,11 @@ const ProductSection = () => {
     console.log("Pokazane szczegoly", !showDetails);
   };
 
+  useEffect(() => {
+    // Resetuj numer strony na 1, za każdym razem gdy productType się zmienia
+    setCurrentPage(1);
+  }, [productType]); // Dodaj productType jako zależność efektu
+
   const toggleDetails = (productId) => {
     setDetailsMap((prevDetailsMap) => ({
       ...prevDetailsMap,
@@ -116,7 +134,7 @@ const ProductSection = () => {
     case "COFFEE":
       productInfo = (
         <div className="tile-products-border">
-          {products.map((product) => (
+          {currentProducts.map((product) => (
             <div className="tile-products-list" key={product.idProduct}>
               <img
                 className="photo-list-products"
@@ -182,6 +200,14 @@ const ProductSection = () => {
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
+          <div className="pagination-container">
+            <PaginationProducts
+              itemsPerPage={productsPerPage}
+              totalItems={products.length}
+              paginate={paginate}
+              currentPage={currentPage}
+            />
+          </div>
         </div>
       );
       break;
@@ -189,7 +215,7 @@ const ProductSection = () => {
     case "BOOK":
       productInfo = (
         <div className="tile-products-border">
-          {products.map((product) => (
+          {currentProducts.map((product) => (
             <div className="tile-products-list" key={product.idProduct}>
               <img
                 className="photo-list-products"
@@ -254,13 +280,20 @@ const ProductSection = () => {
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
+          <div className="pagination-container">
+            <PaginationProducts
+              itemsPerPage={productsPerPage}
+              totalItems={products.length}
+              paginate={paginate}
+            />
+          </div>
         </div>
       );
       break;
     case "FOOD":
       productInfo = (
         <div className="tile-products-border">
-          {products.map((product) => (
+          {currentProducts.map((product) => (
             <div className="tile-products-list" key={product.idProduct}>
               <img
                 className="photo-list-products"
@@ -325,13 +358,20 @@ const ProductSection = () => {
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
+          <div className="pagination-container">
+            <PaginationProducts
+              itemsPerPage={productsPerPage}
+              totalItems={products.length}
+              paginate={paginate}
+            />
+          </div>
         </div>
       );
       break;
     case "ALLPRODUCTS":
       productInfo = (
         <div className="tile-products-border">
-          {products.map((product) => (
+          {currentProducts.map((product) => (
             <div
               id="title-product-all-list"
               className="tile-products-list"
@@ -419,6 +459,13 @@ const ProductSection = () => {
               </div>
             </div>
           ))}
+          <div className="pagination-container">
+            <PaginationProducts
+              itemsPerPage={productsPerPage}
+              totalItems={products.length}
+              paginate={paginate}
+            />
+          </div>
         </div>
       );
       break;

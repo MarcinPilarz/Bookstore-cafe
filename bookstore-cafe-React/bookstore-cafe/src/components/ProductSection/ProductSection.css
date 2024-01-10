@@ -211,6 +211,15 @@ div.tile-products-list h3.coffee-intensity {
   left: 120px;
   /* font-size: 14px; */
 }
+
+.active-product {
+  /* Zwiększony rozmiar czcionki dla aktywnego linku */
+  border-bottom: 2px solid green; /* Użyj dolnego obramowania jako podkreślenia */
+  padding-bottom: 2px; /* D
+}
+
+
+
 @media (max-width: 768px) {
   /* div#title-product-all-list {
     height: 200px;
@@ -245,6 +254,45 @@ div.tile-products-list h3.coffee-intensity {
     font-size: 9px;
   } */
 }
+
+.pagination-container {
+  width: 100%; /* Paginacja zajmuje całą szerokość kontenera */
+  display: flex;
+  justify-content: center; /* Centruje paginację */
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin-top: 20px;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 5px;
+}
+
+.page-link {
+  border: 1px solid #007bff;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #007bff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.page-link:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Styl dla aktywnej strony (jeśli potrzebujesz) */
+.active-page {
+  background-color: #007bff;
+  color: white;
+}
+
 @media (max-width: 990px) {
   div.tile-products-list {
     width: 200px;

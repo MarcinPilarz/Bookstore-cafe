@@ -143,3 +143,143 @@
 .submit-button:hover {
   background-color: #245423;
 }
+
+/* Orderhistory */
+/* Kontener główny historii zamówień */
+.order-history-container {
+  max-height: 400px; /* Ustaw maksymalną wysokość kontenera */
+  overflow-y: auto;
+  background-color: #f0f0f0; /* Jasne tło dla kontrastu */
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+/* Styl dla każdego zamówienia */
+.order-history-item {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px; /* Odstęp między zamówieniami */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień dla głębi */
+}
+
+.order-history-item p {
+  margin: 5px 0; /* Odstępy między liniami */
+  color: #333; /* Ciemniejszy kolor tekstu dla czytelności */
+}
+
+.order-history-item p:first-of-type {
+  color: #008000; /* Zielony kolor dla nazwy produktu */
+  font-weight: bold;
+}
+
+.no-orders {
+  text-align: center;
+  color: #808080;
+  padding: 20px;
+}
+
+/* Reservations */
+
+.reservations-section {
+  display: flex;
+  justify-content: space-between; /* Rozkłada główne elementy na całej szerokości */
+  align-items: flex-start; /* Wyrównuje elementy do góry */
+  padding: 20px;
+}
+.reservations-container {
+  flex: 1; /* Zajmuje dostępną przestrzeń, ale pozwala na rozszerzenie informacji kontaktowej */
+  margin-right: 20px;
+  background-color: #f4f4f4; /* Jasne tło dla kontrastu z ciemnozielonym */
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.reservation-item {
+  background-color: #fff;
+  border-left: 5px solid rgb(100, 88, 0); /* Akcent kolorystyczny pasujący do ciemnozielonego */
+  padding: 15px;
+  margin-bottom: 15px; /* Odstęp między rezerwacjami */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Delikatny cień dla głębi */
+}
+
+.reservation-item p {
+  margin: 10px 0;
+  color: #333;
+  font-size: 16px; /* Czytelny rozmiar czcionki */
+}
+
+.no-reservations {
+  text-align: center;
+  color: #808080;
+  padding: 20px;
+}
+
+.contact-info {
+  width: 300px; /* Stała szerokość dla informacji kontaktowej */
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.contact-info p {
+  margin: 10px 0;
+  color: #333;
+}
+/* Comments */
+
+.comments-container {
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.comment-item {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comment-item p {
+  margin: 10px 0;
+  color: #333;
+}
+
+.no-comments {
+  text-align: center;
+  color: #808080;
+  padding: 20px;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.checkbox-label {
+  margin-left: 5px;
+  font-size: 14px;
+}

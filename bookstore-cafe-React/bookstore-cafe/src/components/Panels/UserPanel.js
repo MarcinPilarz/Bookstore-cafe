@@ -17,7 +17,7 @@ const UserPanel = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
-
+  const [selectedComments, setSelectedComments] = useState([]);
   const [editFormData, setEditFormData] = useState({
     firstName: "",
     lastName: "",
@@ -197,6 +197,51 @@ const UserPanel = () => {
     }
   }, [idPerson]);
 
+  const handleCheckboxChange = (commentId, isChecked) => {
+    if (isChecked) {
+      setSelectedComments([...selectedComments, commentId]);
+    } else {
+      setSelectedComments(selectedComments.filter((id) => id !== commentId));
+    }
+  };
+
+  const deleteComments = async () => {
+    const successfullyDeleted = [];
+
+    for (const commentId of selectedComments) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/deleteComment?id=${commentId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${authData?.token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        successfullyDeleted.push(commentId);
+        console.log(`Komentarz o ID ${commentId} został usunięty`);
+      } catch (error) {
+        console.error(
+          `Nie udało się usunąć komentarza o ID ${commentId}:`,
+          error
+        );
+      }
+    }
+
+    // Usuń zaznaczone komentarze z interfejsu użytkownika
+    const updatedReviews = clientReviewsData.filter(
+      (review) => !successfullyDeleted.includes(review.idReview)
+    );
+    setClientReviewsData(updatedReviews);
+    setSelectedComments([]); // Resetuj zaznaczone komentarze
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case "personalData":
@@ -287,55 +332,104 @@ const UserPanel = () => {
         );
 
       case "myReservations":
-        return Array.isArray(clientReservationData) &&
-          clientReservationData.length > 0 ? (
-          clientReservationData.map((reservation) => (
-            <div key={reservation.idReservation}>
-              {" "}
-              {/* Użyj unikalnego klucza dla każdej rezerwacji */}
-              <p>Data rezerwacji: {reservation.bokkingData}</p>
-              <p>Ilość zarezerwowanych miejsc: {reservation.numberOfPeople}</p>
-              {reservation.bookTable && (
-                <p>Numer stolika: {reservation.bookTable.idBookTable}</p>
+        return (
+          <div className="reservations-section">
+            <div className="reservations-container">
+              {Array.isArray(clientReservationData) &&
+              clientReservationData.length > 0 ? (
+                clientReservationData.map((reservation) => (
+                  <div
+                    key={reservation.idReservation}
+                    className="reservation-item"
+                  >
+                    <p>
+                      Data rezerwacji:{" "}
+                      {new Date(reservation.bookingDate).toLocaleDateString()}
+                    </p>
+                    <p>
+                      Ilość zarezerwowanych miejsc: {reservation.numberOfPeople}
+                    </p>
+                    {reservation.bookTable && (
+                      <p>Numer stolika: {reservation.bookTable.idBookTable}</p>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="no-reservations">Brak rezerwacji.</div>
               )}
             </div>
-          ))
-        ) : (
-          <div>Brak rezerwacji.</div>
-        ); // Wyświetlane, gdy nie ma rezerwacji
+            <div className="contact-info">
+              <p>
+                Jeśli masz jakieś pytania, chcesz odwołać lub zmodyfikować
+                rezerwację, zadzwoń pod numer:
+              </p>
+              <p>+48 123 456 789</p>
+            </div>
+          </div>
+        );
+
       case "orderHistory":
         return Array.isArray(clientHistoryOrdersData) &&
           clientHistoryOrdersData.length > 0 ? (
-          clientHistoryOrdersData.map((historyOrders) => (
-            <div key={historyOrders.idOrderHistory}>
-              {" "}
-              {/* Użyj unikalnego klucza dla każdej rezerwacji */}
-              {historyOrders.product && (
-                <p>Nazwa produktu: {historyOrders.product.productName}</p>
-              )}
-              <p>Ilość: {historyOrders.quantity}</p>
-              <p>Cena: {historyOrders.totalPrice}</p>
-              <p>Data zamówienia: {historyOrders.dateOrder}</p>
-            </div>
-          ))
+          <div className="order-history-container">
+            {clientHistoryOrdersData.map((historyOrders) => (
+              <div
+                key={historyOrders.idOrderHistory}
+                className="order-history-item"
+              >
+                {historyOrders.product && (
+                  <p>Nazwa produktu: {historyOrders.product.productName}</p>
+                )}
+                <p>Ilość: {historyOrders.quantity}</p>
+
+                <p>
+                  Data zamówienia:{" "}
+                  {new Date(historyOrders.dateOrder).toLocaleDateString()}
+                </p>
+              </div>
+            ))}
+          </div>
         ) : (
-          <div>Brak rezerwacji.</div>
-        ); // Wyświetlane, gdy nie ma rezerwacji
+          <div className="no-orders">Brak zamówień.</div>
+        );
       case "myComments":
-        return Array.isArray(clientReviewsData) &&
-          clientReviewsData.length > 0 ? (
-          clientReviewsData.map((reviews) => (
-            <div key={reviews.idReview}>
-              {" "}
-              {/* Użyj unikalnego klucza dla każdej rezerwacji */}
-              <p>Treść komenatza: {reviews.reviewContent}</p>
-              <p>Ocena: {reviews.rating}</p>
-              <p>Data opublikowania: {reviews.reviewData}</p>
-            </div>
-          ))
-        ) : (
-          <div>Brak komentarzy.</div>
-        ); // Wyświetlane, gdy nie ma rezerwacji
+        return (
+          <div className="comments-container">
+            {Array.isArray(clientReviewsData) &&
+            clientReviewsData.length > 0 ? (
+              clientReviewsData.map((review) => (
+                <div key={review.idReview} className="comment-item">
+                  <p>Treść komenatarza: {review.reviewContent}</p>
+                  <p>Ocena: {review.rating}</p>
+                  <p>
+                    Data opublikowania:{" "}
+                    {new Date(review.reviewData).toLocaleDateString()}
+                  </p>
+                  <div className="checkbox-container">
+                    <input
+                      type="checkbox"
+                      id={`checkbox-${review.idReview}`}
+                      onChange={(e) =>
+                        handleCheckboxChange(review.idReview, e.target.checked)
+                      }
+                    />
+                    <label
+                      htmlFor={`checkbox-${review.idReview}`}
+                      className="checkbox-label"
+                    >
+                      Zaznacz do usunięcia
+                    </label>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="no-comments">Brak komentarzy.</div>
+            )}
+            <button className="delete-button" onClick={deleteComments}>
+              Usuń zaznaczone
+            </button>
+          </div>
+        );
       case "myOrders":
         // return (
         //     Array.isArray(clientOrdersData) && clientOrdersData.length > 0 ?

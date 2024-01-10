@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="links">
           <div className="links-column">
             <h2>Kontakt</h2>
-            <a>Telefon: 111111111</a>
+            <a>Telefon: +48 123 456 789</a>
             <p>
               E-mail:
               <a> czytajzkawa@example.pl</a>
