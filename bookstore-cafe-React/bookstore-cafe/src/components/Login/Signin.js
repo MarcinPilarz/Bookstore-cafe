@@ -22,6 +22,7 @@ const Signin = () => {
     email: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
   //const history = useHistory();
   const handleRegisterClick = () => {
     // Przekierowanie do "/rejestruj"
@@ -228,7 +229,7 @@ const Signin = () => {
               <label>
                 <input
                   className="input-login"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Hasło"
                   value={loginData.password}
@@ -236,7 +237,13 @@ const Signin = () => {
                   required
                 />
               </label>
-
+              <button
+                type="button"
+                className="show-hide-password-button-signin"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Ukryj Hasło" : "Pokaż Hasło"}
+              </button>
               <button
                 type="button"
                 onClick={handleLogin}

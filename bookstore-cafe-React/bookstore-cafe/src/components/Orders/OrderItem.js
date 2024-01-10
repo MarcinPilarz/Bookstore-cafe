@@ -3,7 +3,7 @@ import { useCart } from "../ProductSection/BusketProducts";
 import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./OrderItem.css"
+import "./OrderItem.css";
 const OrderItem = () => {
   const { busket, clearBusket, updateProductQuantity, removeFromBusket } =
     useCart();
@@ -36,50 +36,58 @@ const OrderItem = () => {
   //   convertProdcutToProductId.forEach(OrderProducts);
   // };
   return (
-    <div className="order-item-list-reasume">
-      {busket.map((product) => (
-        <div key={product.idProduct}>
-          {console.log("Produkt w koszyku:", product)}
-          {console.log("product.productId W nVBAR", product.productId)}{" "}
-          {/* Użyj unikalnego identyfikatora */}
-          <p>
-            <b>Nazwa produktu:</b>
-            <br />
-            {product.productName}
-          </p>
-          <div>
-            <b>Ilość: </b>
-            <br />
-            <div>
-              <input
-                type="number"
-                value={product.quantity}
-                onChange={(e) =>
-                  updateProductQuantity(
-                    product.idProduct,
-                    Math.min(Math.max(1, e.target.value), 10)
-                  )
-                }
-                min="1"
-                max="10"
-              />
+    <div className="order-summary">
+      <div className="order-items-container">
+        {busket.map((product) => (
+          <div className="order-item" key={product.idProduct}>
+            <p className="product-name">
+              <b>Nazwa produktu:</b> {product.productName}
+            </p>
+            <div className="quantity-price">
+              <div className="quantity">
+                <b>Ilość:</b>
+                <input
+                  type="number"
+                  value={product.quantity}
+                  onChange={(e) =>
+                    updateProductQuantity(
+                      product.idProduct,
+                      Math.min(Math.max(1, e.target.value), 10)
+                    )
+                  }
+                  min="1"
+                  max="10"
+                />
+              </div>
+              <div className="price">
+                <b>Cena:</b>{" "}
+                {(product.productPrice * product.quantity).toFixed(2)} zł
+              </div>
             </div>
-            <div>Cena: {product.productPrice * product.quantity}</div>
+            <button
+              className="remove-item"
+              onClick={() => removeFromBusket(product.idProduct)}
+            >
+              Usuń
+            </button>
           </div>
-          <button onClick={() => removeFromBusket(product.idProduct)}>X</button>
-          {/* inne informacje o produkcie */}
-        </div>
-      ))}
-      <div className="total-price">
-        <p>Łączna cena: {totalPrice.toFixed(2)} zł</p>
+        ))}
       </div>
 
-      {/* <button onClick={handleOrders}>Zapłać</button> */}
-      <button>
-        <Link to="/stripe"> Zapłać</Link>
-      </button>
+      <div className="order-summary-details">
+        <div className="total-price">
+          <p>Łączna cena: {totalPrice.toFixed(2)} zł</p>
+        </div>
+        <div className="order-pickup-method">
+          <p>
+            Metoda odbioru: <strong>Odbiór tylko w lokalu</strong>
+          </p>
+        </div>
+        <button className="pay-button">
+          <Link to="/stripe">Zapłać</Link>
+        </button>
+      </div>
     </div>
   );
 };
-
 export default OrderItem;

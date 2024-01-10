@@ -1,99 +1,110 @@
-/* Styl ogólny dla listy produktów w podsumowaniu */
-.order-item-list-reasume {
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: auto;
-    max-width: 600px; /* Maksymalna szerokość dla responsywności */
+.order-summary {
+  display: flex;
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 600px; /* Opcjonalne: ograniczenie wysokości */
+}
+
+.order-items-container {
+  flex: 1;
+  overflow-y: auto; /* Włącza przewijanie */
+  margin-right: 20px; /* Odstęp od sekcji podsumowania */
+}
+
+.order-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 15px 0;
+}
+
+.product-name {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.quantity-price {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.quantity input {
+  width: 50px;
+  padding: 5px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.remove-item {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.remove-item:hover {
+  background-color: #cc0000;
+}
+
+.order-summary-details {
+  flex-basis: 300px; /* Stała szerokość dla sekcji podsumowania */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Wyświetla elementy od lewej strony */
+}
+
+.total-price {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.order-pickup-method {
+  background-color: #fff3cd; /* Jasnożółty tło dla wyróżnienia */
+  border: 1px solid #ffeeba; /* Subtelna obramówka */
+  border-radius: 8px; /* Zaokrąglone rogi */
+  padding: 10px; /* Wewnętrzny odstęp */
+  margin-bottom: 20px; /* Odstęp od ceny */
+  color: #856404; /* Kolor tekstu */
+  font-size: 1em; /* Rozmiar czcionki */
+  text-align: center; /* Wyśrodkowany tekst */
+}
+
+.pay-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%; /* Pełna szerokość w sekcji podsumowania */
+}
+
+.pay-button:hover {
+  background-color: #388e3c;
+}
+
+/* Style responsywne */
+@media (max-width: 768px) {
+  .order-summary {
+    flex-direction: column;
+    max-height: none; /* Usuwa ograniczenie wysokości dla mniejszych ekranów */
   }
-  
-  /* Styl dla poszczególnych produktów */
-  .order-item-list-reasume > div {
-    background-color: #ffffff;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-wrap: wrap; /* Zapewnia responsywność */
-    align-items: center;
-  }
-  
-  /* Styl dla tekstu produktu */
-  .order-item-list-reasume p {
-    margin: 10px 0;
-    color: #333;
-    flex-basis: 100%; /* Zapewnia, że tekst zajmuje całą szerokość na małych ekranach */
-  }
-  
-  /* Styl dla inputu ilości */
-  .order-item-list-reasume input[type="number"] {
-    width: 60px;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    text-align: center;
-    margin-right: 10px;
-  }
-  
-  /* Styl dla przycisku usuwania */
-  .order-item-list-reasume button {
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .order-item-list-reasume button:hover {
-    background-color: #ff3333;
-  }
-  
-  /* Styl dla sekcji z łączną ceną */
-  .total-price {
-    text-align: center;
-    padding: 15px;
-    font-size: 18px;
-    color: #333;
-    border-top: 1px solid #e0e0e0;
-    margin-top: 20px;
-  }
-  
-  /* Styl dla przycisku płatności */
-  .order-item-list-reasume .button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+
+  .order-summary-details {
     width: 100%;
-    text-align: center;
-    margin-top: 10px;
+    margin-right: 0; /* Usuwa odstęp */
+    align-items: center; /* Wyśrodkowuje elementy w sekcji podsumowania */
   }
-  
-  .order-item-list-reasume .button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Styl dla linku */
-  .order-item-list-reasume a {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .order-item-list-reasume a:hover {
-    color: #ccc;
-  }
-  
-  @media (max-width: 600px) {
-    .order-item-list-reasume {
-      width: 100%;
-      max-width: 100%;
-      box-shadow: none;
-      border-radius: 0;
-    }
-  }
-  
+}

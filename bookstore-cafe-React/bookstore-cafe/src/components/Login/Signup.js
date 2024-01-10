@@ -20,6 +20,8 @@ const Signup = () => {
     password: "",
     roleType: "Klient",
   });
+  const [repeatedPassword, setRepeatedPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const handleLoginClick = () => {
     // Przekierowanie do "/zaloguj"
     window.location.href = "/signin";
@@ -50,6 +52,10 @@ const Signup = () => {
   };
 
   const handleRegisterSubmit = async () => {
+    if (registrationData.password !== repeatedPassword) {
+      alert("Hasła nie są takie same!");
+      return;
+    }
     try {
       const response = await axios.post(
         "http://localhost:8080/newPerson",
@@ -74,7 +80,7 @@ const Signup = () => {
         password: "",
         roleType: "",
       });
-
+      setRepeatedPassword("");
       console.log("Zarejestrowano pomyślnie");
     } catch (error) {
       console.error("Błąd rejestracji:", error.message);
@@ -213,7 +219,7 @@ const Signup = () => {
               <label>
                 <input
                   className="input-login"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Hasło"
                   value={registrationData.password}
@@ -224,11 +230,19 @@ const Signup = () => {
               <label>
                 <input
                   className="input-login"
-                  type="password"
-                  name="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Powtórz hasło"
+                  value={repeatedPassword}
+                  onChange={(e) => setRepeatedPassword(e.target.value)}
                 />
               </label>
+              <button
+                type="button"
+                className="show-hide-password-button"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Ukryj Hasło" : "Pokaż Hasło"}
+              </button>
               <button
                 type="button"
                 className="singup-button"
