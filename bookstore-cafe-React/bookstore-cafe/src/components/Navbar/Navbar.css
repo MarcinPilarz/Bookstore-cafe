@@ -134,7 +134,7 @@ button#button-busket-color-reasume {
   background-color: #4c661d;
 }
 
-button#button-busket-color-delete{
+button#button-busket-color-delete {
   background-color: #c51616;
 }
 .busket-sidebar button:hover {
@@ -264,11 +264,9 @@ div.history-icon {
   /* background-color: aqua; */
 }
 
-span.amount-of-products:hover{
+span.amount-of-products:hover {
   background: red;
 }
-
-
 
 .amount-of-products {
   position: absolute; /* Pozycjonowanie względem busket-icon */
@@ -321,9 +319,6 @@ span.amount-of-products:hover{
   color: #007bff; /* Kolor przy hover */
 }
 
-
-
-
 div.history-sidebar {
   width: 300px;
   height: 400px;
@@ -341,16 +336,11 @@ div.history-sidebar {
   padding: 20px; /* Dodatkowa przestrzeń wewnątrz dla lepszego układu elementów */
 }
 
-
-
-
-
-
 @media (max-width: 768px) {
   .hamburger {
     display: block;
   }
-  
+
   .hamburger:hover {
     cursor: pointer;
     color: bisque;
@@ -435,13 +425,11 @@ div.history-sidebar {
     right: 0;
   }
 
-
   div.history-sidebar {
     width: 100%;
     top: 62.2px;
     right: 0;
   }
-
 
   .summary-button,
   .clear-button {

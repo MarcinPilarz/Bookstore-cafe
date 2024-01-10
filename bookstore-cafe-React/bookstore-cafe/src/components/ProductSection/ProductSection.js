@@ -108,9 +108,9 @@ const ProductSection = () => {
       return [...prevList, product];
     });
   };
-  const handleSigninClick = () =>{
+  const handleSigninClick = () => {
     navigate("/signin");
-  }
+  };
   let productInfo;
   switch (productType) {
     case "COFFEE":
@@ -159,21 +159,24 @@ const ProductSection = () => {
                   )}
                 </>
                 <>
-                {authData?.roleType=== "Klient" ?(
-
-                  
-<button
-className="add-busket-button"
-onClick={() => {
-  console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
-  handleAddToBusket(product);
-}}
->
-  Do koszyka
-</button>
-  ) : (
-    <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
-  )}
+                  {authData?.roleType === "Klient" ? (
+                    <button
+                      className="add-busket-button"
+                      onClick={() => {
+                        console.log(
+                          "Produkt w buuttonie do przeslania",
+                          product
+                        ); // Wyświetla informacje o produkcie w konsoli
+                        handleAddToBusket(product);
+                      }}
+                    >
+                      Do koszyka
+                    </button>
+                  ) : (
+                    <button onClick={handleSigninClick}>
+                      Zaloguj się jako klient
+                    </button>
+                  )}
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -228,21 +231,24 @@ onClick={() => {
                   )}
                 </>
                 <>
-                {authData?.roleType=== "Klient" ?(
-
-                  
-<button
-className="add-busket-button"
-onClick={() => {
-  console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
-  handleAddToBusket(product);
-}}
->
-  Do koszyka
-</button>
-  ) : (
-    <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
-  )}
+                  {authData?.roleType === "Klient" ? (
+                    <button
+                      className="add-busket-button"
+                      onClick={() => {
+                        console.log(
+                          "Produkt w buuttonie do przeslania",
+                          product
+                        ); // Wyświetla informacje o produkcie w konsoli
+                        handleAddToBusket(product);
+                      }}
+                    >
+                      Do koszyka
+                    </button>
+                  ) : (
+                    <button onClick={handleSigninClick}>
+                      Zaloguj się jako klient
+                    </button>
+                  )}
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -296,21 +302,24 @@ onClick={() => {
                   )}
                 </>
                 <>
-                {authData?.roleType=== "Klient" ?(
-
-                  
-<button
-className="add-busket-button"
-onClick={() => {
-  console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
-  handleAddToBusket(product);
-}}
->
-  Do koszyka
-</button>
-  ) : (
-    <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
-  )}
+                  {authData?.roleType === "Klient" ? (
+                    <button
+                      className="add-busket-button"
+                      onClick={() => {
+                        console.log(
+                          "Produkt w buuttonie do przeslania",
+                          product
+                        ); // Wyświetla informacje o produkcie w konsoli
+                        handleAddToBusket(product);
+                      }}
+                    >
+                      Do koszyka
+                    </button>
+                  ) : (
+                    <button onClick={handleSigninClick}>
+                      Zaloguj się jako klient
+                    </button>
+                  )}
                 </>
               </div>
               {/* Dodaj inne dane produktu, jeśli są dostępne */}
@@ -388,21 +397,24 @@ onClick={() => {
                   )}
                 </>
                 <>
-                {authData?.roleType=== "Klient" ?(
-
-                  
-                  <button
-                  className="add-busket-button"
-                  onClick={() => {
-                    console.log("Produkt w buuttonie do przeslania", product); // Wyświetla informacje o produkcie w konsoli
-                    handleAddToBusket(product);
-                  }}
-                  >
-                    Do koszyka
-                  </button>
-                    ) : (
-                      <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
-                    )}
+                  {authData?.roleType === "Klient" ? (
+                    <button
+                      className="add-busket-button"
+                      onClick={() => {
+                        console.log(
+                          "Produkt w buuttonie do przeslania",
+                          product
+                        ); // Wyświetla informacje o produkcie w konsoli
+                        handleAddToBusket(product);
+                      }}
+                    >
+                      Do koszyka
+                    </button>
+                  ) : (
+                    <button onClick={handleSigninClick}>
+                      Zaloguj się jako klient
+                    </button>
+                  )}
                 </>
               </div>
             </div>
@@ -418,11 +430,10 @@ onClick={() => {
       );
   }
 
- 
   return (
     <>
       <Navbar />
-      <h1 className="productType-name">{productType}</h1>
+      {/* <h1 className="productType-name">{productType}</h1> */}
       <div className="li-product-card">
         <ul>
           <li className={isAllProductsActive}>

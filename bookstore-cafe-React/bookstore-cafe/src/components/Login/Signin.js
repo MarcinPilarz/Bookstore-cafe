@@ -27,7 +27,7 @@ const Signin = () => {
     // Przekierowanie do "/rejestruj"
     window.location.href = "/signup";
   };
-
+  const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
   const handleLogin = async () => {
     try {
       const response = await axios.post(
@@ -41,7 +41,7 @@ const Signin = () => {
         }
       );
 
-      const expirationTime = new Date().getTime() +604800000; 
+      const expirationTime = new Date().getTime() + 604800000;
       // 60 * 60 * 1000; // 15 minut w milisekundach
       //const expirationTime = new Date().getTime() + 10 * 60; // 15 minut w milisekundach
 
@@ -138,6 +138,29 @@ const Signin = () => {
   //   }
   // };
 
+  const handleForgotPasswordClick = (e) => {
+    e.preventDefault();
+    setShowResetPasswordForm(true);
+  };
+
+  const handleResetPassword = async () => {
+    if (!loginData.email) {
+      console.error("Adres email jest niezdefiniowany");
+      return;
+    }
+
+    try {
+      await axios.post("http://localhost:8080/reset-password", {
+        email: loginData.email,
+      });
+      console.log(
+        "Instrukcje dotyczące resetowania hasła zostały wysłane na email."
+      );
+      setShowResetPasswordForm(false);
+    } catch (error) {
+      console.error("Błąd podczas resetowania hasła", error);
+    }
+  };
   return (
     // <AuthContext.Provider
     //   value={{
@@ -221,6 +244,31 @@ const Signin = () => {
               >
                 Zaloguj się
               </button>
+              {showResetPasswordForm && (
+                <div className="reset-password-form">
+                  <input
+                    className="input-login"
+                    type="email"
+                    name="email"
+                    placeholder="E-mail"
+                    value={loginData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <button
+                    onClick={handleResetPassword}
+                    className="reset-password-button"
+                  >
+                    Wyślij link resetujący hasło
+                  </button>
+                </div>
+              )}
+
+              <div className="forgot-password">
+                <a href="#" onClick={handleForgotPasswordClick}>
+                  Zapomniałem hasła
+                </a>
+              </div>
             </div>
           </form>
         </div>

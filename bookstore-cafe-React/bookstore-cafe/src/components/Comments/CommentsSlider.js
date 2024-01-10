@@ -111,6 +111,7 @@ const CommentsSlider = () => {
             placeholder="Twoja recenzja..."
           />
           <ReactStars
+            classNames={"star-raiting"}
             count={5}
             onChange={handleRatingChange}
             size={24}
@@ -119,7 +120,6 @@ const CommentsSlider = () => {
           />
           <button type="submit">Dodaj recenzję</button>
         </form>
-        );
       </div>
 
       <div className="comments pagination">

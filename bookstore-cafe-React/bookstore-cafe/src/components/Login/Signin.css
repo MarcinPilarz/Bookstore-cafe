@@ -1,101 +1,183 @@
-.form-container-login {
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 0 0 8px 8px;
-  padding: 40px;
-
-  position: relative;
-  width: 40%;
-  top: 0px;
-  left: 0%;
-  height: 400px;
-  margin: auto;
+.singup-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding: 20px;
 }
 
-.singup-button {
-  width: 85%;
+.singup-container {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 40px;
+  width: 100%;
+  max-width: 500px; /* Zwiększona maksymalna szerokość dla większych ekranów */
+}
+
+.header-login {
+  margin-bottom: 30px;
+}
+
+.h1-signin {
+  color: #2d4d2f; /* Ciemnozielony kolor tekstu */
+  text-align: center;
+  font-size: 2em; /* Zwiększony rozmiar czcionki */
 }
 
 .toggle-buttons-login {
   display: flex;
-  /* justify-content: center; lub align-items: center; dla centrowania w pionie
-    align-items: center; */
+  justify-content: space-around;
+  margin-bottom: 30px;
 }
 
 .toggle-buttons-login button {
-  /* Twoje dotychczasowe style przycisku */
-  position: relative;
-  width: 25.68%;
-  top: -180px;
-  right: 252.2px;
-  padding: 10px 20px;
-  /* margin: 0 5px; */
+  padding: 15px 30px; /* Zwiększony padding */
   border: none;
-  border-radius: 8px 8px 0 0;
+  border-radius: 4px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: #e7e7e7;
   color: #333;
-  font-size: 12px;
-  letter-spacing: 1.5px;
-  line-height: 1.5;
+  font-size: 1.2em; /* Zwiększony rozmiar czcionki */
   transition: background-color 0.3s ease;
 }
 
 .toggle-buttons-login button.active {
-  font-size: 14px;
-  background-color: #d2b48c; /* kolor brązowy */
+  background-color: #2d4d2f; /* Ciemnozielony kolor przycisku */
+  color: #fff;
 }
 
-.header-login h1.h1-signin span {
-  display: block;
-  position: relative;
-  top: 90%;
-
-  left: 150px;
-  border-right: 2px solid #fff;
-  margin-bottom: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 40px;
-  letter-spacing: 1.5px;
-  line-height: 1.5;
-  opacity: 0; /* Ukryj na początku */
-  animation: typing 4s steps(20, end) forwards,
-    blink-caret 0.5s step-end infinite;
+.form-container-login {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 40px; /* Zwiększony padding */
 }
 
-.header-login h1.h1-signin span:first-child {
-  animation-delay: 0s; /* Pierwszy span zaczyna się od razu */
+.input-login {
+  width: 100%;
+  padding: 15px; /* Zwiększony padding */
+  margin-bottom: 20px; /* Zwiększony margines */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em; /* Zwiększony rozmiar czcionki */
 }
 
-.header-login h1.h1-signin span:nth-child(2) {
-  animation-delay: 4s; /* Drugi span zaczyna się po zakończeniu pierwszego */
+.singup-button {
+  width: 100%;
+  background-color: #2d4d2f;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 15px; /* Zwiększony padding */
+  cursor: pointer;
+  font-size: 1.2em; /* Zwiększony rozmiar czcionki */
+  transition: background-color 0.3s;
 }
 
-.header-login h1.h1-signin span:nth-child(3) {
-  animation-delay: 8s; /* Trzeci span zaczyna się po zakończeniu drugiego */
-}
-
-.header-login h1.h1-signin span:nth-child(4) {
-  animation-delay: 12s; /* Czwarty span zaczyna się po zakończeniu trzeciego */
-}
-
-@keyframes typing {
-  from {
-    width: 0;
+/* Responsywność dla mniejszych ekranów */
+@media (max-width: 768px) {
+  .singup-container {
+    max-width: 400px;
   }
-  to {
-    width: 100%;
-    opacity: 1; /* Pokaż na końcu animacji */
+
+  .h1-signin {
+    font-size: 1.5em;
+  }
+
+  .toggle-buttons-login button {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+
+  .form-container-login {
+    padding: 30px;
+  }
+
+  .input-login,
+  .singup-button {
+    padding: 10px;
+    font-size: 0.9em;
   }
 }
 
-@keyframes blink-caret {
-  from,
-  to {
-    border-color: transparent;
+.forgot-password {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.forgot-password a {
+  color: #2d4d2f; /* Ciemnozielony kolor, pasujący do motywu */
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.reset-password-form {
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.input-login {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.input-login:focus {
+  outline: none;
+  border-color: #2e8b57;
+  box-shadow: 0 0 3px #2e8b57;
+}
+
+.reset-password-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2e8b57;
+  color: white;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+}
+
+.reset-password-button:hover {
+  background-color: #276644;
+}
+
+.forgot-password {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.forgot-password a {
+  color: #2e8b57;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 480px) {
+  .singup-container {
+    max-width: 90%;
   }
-  50% {
-    border-color: #fff;
+
+  .h1-signin,
+  .toggle-buttons-login button,
+  .input-login,
+  .singup-button {
+    font-size: 0.8em;
   }
 }

@@ -70,8 +70,6 @@ p.name-person {
   bottom: -10px;
 }
 
-
-
 .add-comment-container {
   max-width: 500px;
   margin: 0 auto;
@@ -111,6 +109,16 @@ p.name-person {
   background-color: #0056b3;
 }
 
+div.undefined.react-stars {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+div.undefined.react-stars span:hover {
+  background-color: transparent;
+}
 @media (max-width: 768px) {
   span {
     position: relative;
