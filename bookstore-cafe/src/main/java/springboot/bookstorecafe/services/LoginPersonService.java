@@ -1,33 +1,25 @@
 package springboot.bookstorecafe.services;
 
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-import javax.crypto.SecretKey;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import springboot.bookstorecafe.JwtAuthenticationFilter;
+
 import springboot.bookstorecafe.DTO.JwtAuthenticationDTO;
 import springboot.bookstorecafe.DTO.PersonAndPersonLoginDTO;
 import springboot.bookstorecafe.DTO.RefreshTokenDTO;
@@ -42,15 +34,8 @@ import springboot.bookstorecafe.repositories.PersonRepository;
 @RequiredArgsConstructor
 public class LoginPersonService implements LoginPersonInterface, AuthenticationService {
 
-	// , AuthenticationService
 	@Autowired
 	private LoginPersonRepository loginRepo;
-
-//	@Autowired
-//	private LoginPersonInterface loginPersonInterface;
-//	
-
-	// private PasswordEncoder passwordEncoder;
 
 	@Autowired
 	@Lazy
@@ -68,7 +53,7 @@ public class LoginPersonService implements LoginPersonInterface, AuthenticationS
 
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				// TODO Auto-generated method stub
+
 				return loginRepo.findByEmail(username)
 						.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 			}
@@ -118,60 +103,34 @@ public class LoginPersonService implements LoginPersonInterface, AuthenticationS
 		}
 		return null;
 	}
-	
-	
 
 	public void updateRoleType(Long id, LoginPerson loginPerson) {
-		
+
 		loginRepo.save(loginPerson);
-		
+
 	}
-	// ............................................
-//	@Override
-//	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//		LoginPerson loginPerson = loginRepo.findByEmail(email);
-//		if (loginPerson == null) {
-//			throw new UsernameNotFoundException("Invalid email or password.");
-//		}
-//		List<GrantedAuthority> authorities = new ArrayList<>();
-//		authorities.add(new SimpleGrantedAuthority(loginPerson.getRoleType().toString()));
-//		return new User(loginPerson.getEmail(), loginPerson.getPassword(), authorities);
-//	}
 
-//	private PasswordEncoder passwordEncoder() {
-//		/**
-//		 * Tworzy nowy PasswordEncoder (BCryptPasswordEncoder).
-//		 *
-//		 * @return nowy PasswordEncoder
-//		 */
-//		return new BCryptPasswordEncoder();
-//	}
 	public List<PersonAndPersonLoginDTO> getEmployeesByRole() {
-		   List<LoginPerson> loginPersons = loginRepo.findByRoleType(RoleType.Pracownik);
-		   List<PersonAndPersonLoginDTO> dtos = new ArrayList<>();
+		List<LoginPerson> loginPersons = loginRepo.findByRoleType(RoleType.Pracownik);
+		List<PersonAndPersonLoginDTO> dtos = new ArrayList<>();
 
-		   for (LoginPerson loginPerson : loginPersons) {
-		       Optional<Person> personOpt = personRepo.findByLoginPerson_IdLoginPerson(loginPerson.getIdLoginPerson());
+		for (LoginPerson loginPerson : loginPersons) {
+			Optional<Person> personOpt = personRepo.findByLoginPerson_IdLoginPerson(loginPerson.getIdLoginPerson());
 
-		       if (personOpt.isPresent()) {
-		           Person person = personOpt.get();
-		           PersonAndPersonLoginDTO dto = new PersonAndPersonLoginDTO(
-		              
-		        		   person.getIdPerson(),
-		        		   person.getFirstName(),
-		               person.getLastName(),
-		               person.getPhoneNumber(),
-		               loginPerson.getIdLoginPerson(),
-		               loginPerson.getEmail(),
-		               loginPerson.getPassword(),
-		               loginPerson.getRoleType()
-		              
-		           );
-		           dtos.add(dto);
-		       }
-		   }
-		   return dtos;
+			if (personOpt.isPresent()) {
+				Person person = personOpt.get();
+				PersonAndPersonLoginDTO dto = new PersonAndPersonLoginDTO(
+
+						person.getIdPerson(), person.getFirstName(), person.getLastName(), person.getPhoneNumber(),
+						loginPerson.getIdLoginPerson(), loginPerson.getEmail(), loginPerson.getPassword(),
+						loginPerson.getRoleType()
+
+				);
+				dtos.add(dto);
+			}
 		}
+		return dtos;
+	}
 
 	public List<LoginPerson> findAllItems() {
 
@@ -190,58 +149,9 @@ public class LoginPersonService implements LoginPersonInterface, AuthenticationS
 		loginRepo.save(loginPerson);
 	}
 
-	
-
 	public void updateItem(LoginPerson loginPerson) {
 		loginRepo.save(loginPerson);
 
 	}
-//	public String generateToken(UserDetails userDetails) {
-//
-//		SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-//
-//		Date now = new Date();
-//		Date expirationDate = new Date(now.getTime() + 86400000); // Token wygasa po 24 godzinach
-//
-//		return Jwts.builder().setSubject(userDetails.getUsername()).signWith(key).compact();
-//
-//	}
 
-//	private boolean passwordMatches(String rawPassword, String encodedPassword) {
-//
-//		return passwordEncoder().matches(rawPassword, encodedPassword);
-//	}
-
-//	public String loginUser(String email, String password) {
-//
-//		UserDetails userDetails = loadUserByUsername(email);
-//
-//		if (!passwordMatches(password, userDetails.getPassword())) {
-//			throw new BadCredentialsException("Nieprawidłowe hasło");
-//		}
-//
-//		// Generuj token JWT
-//		String token = generateToken(userDetails);
-//
-//		return token;
-//	}
-//	
-//	public LoginPerson getUserByUsername(String email) throws UsernameNotFoundException {
-//		LoginPerson loginPerson = loginRepo.findByEmail(email);
-//		if (loginPerson == null) {
-//			throw new UsernameNotFoundException("Użytkownik nie został znaleziony");
-//		}
-//		return loginPerson;
-//	}
-//	
-//	
-//	public LoginPerson loadUserByUsernameAsUser(String email) throws UsernameNotFoundException {
-//
-//		UserDetails userDetails = loadUserByUsername(email);
-//		if (userDetails instanceof LoginPerson) {
-//			return (LoginPerson) userDetails;
-//		} else {
-//			throw new IllegalStateException("Nieprawidłowa implementacja UserDetailsService");
-//		}
-//	}
 }

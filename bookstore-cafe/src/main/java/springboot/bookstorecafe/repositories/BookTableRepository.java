@@ -13,9 +13,8 @@ import springboot.bookstorecafe.models.BookTable;
 public interface BookTableRepository extends JpaRepository<BookTable, Long> {
 
 	BookTable findByTableNumber(int tableNumber);
-	
 
-    @Query("SELECT bt FROM BookTable bt WHERE bt.id NOT IN " +
-           "(SELECT res.bookTable.id FROM Reservation res WHERE res.bokkingData = :bokkingData)")
-    List<BookTable> findAvailableTablesByDate(LocalDate bokkingData);
+	@Query("SELECT bt FROM BookTable bt WHERE bt.id NOT IN "
+			+ "(SELECT res.bookTable.id FROM Reservation res WHERE res.bokkingData = :bokkingData)")
+	List<BookTable> findAvailableTablesByDate(LocalDate bokkingData);
 }

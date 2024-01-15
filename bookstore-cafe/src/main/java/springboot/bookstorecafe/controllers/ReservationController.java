@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,24 +32,24 @@ public class ReservationController {
 		return reservationService.getReservations();
 	}
 
-	
-	 @GetMapping("/reservations/person")
-	    public ResponseEntity<List<Reservation>> getPersonReservations(@RequestParam Long personId) {
-	        try {
-	            List<Reservation> reservations = reservationService.getPersonReservations(personId);
-	            return ResponseEntity.ok(reservations);
-	        } catch (RuntimeException e) {
-	            // Możesz dostosować obsługę błędów w zależności od Twoich potrzeb
-	            return ResponseEntity.notFound().build();
-	        }
-	    }
-	 @PostMapping("/newReservation")
-	 public void bookTable(@RequestParam Long idPerson,
-	                       @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bokkingData,
-	                       @RequestParam int numberOfPeople) {
+	@GetMapping("/reservations/person")
+	public ResponseEntity<List<Reservation>> getPersonReservations(@RequestParam Long personId) {
+		try {
+			List<Reservation> reservations = reservationService.getPersonReservations(personId);
+			return ResponseEntity.ok(reservations);
+		} catch (RuntimeException e) {
 
-	     reservationService.bookTable(idPerson, bokkingData, numberOfPeople);
-	 }
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@PostMapping("/newReservation")
+	public void bookTable(@RequestParam Long idPerson,
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate bokkingData,
+			@RequestParam int numberOfPeople) {
+
+		reservationService.bookTable(idPerson, bokkingData, numberOfPeople);
+	}
 
 	@PostMapping("/newReservationEmployee")
 	public void bookTableEmployee(@RequestParam Long idPerson, @RequestParam Long idBookTable,
@@ -59,19 +59,20 @@ public class ReservationController {
 
 		reservationService.bookTableEmployee(idPerson, idBookTable, idReservation, bokkingData, numberOfPeople);
 	}
-	
-	@PutMapping(value="/customNumberOfPeople")
-	public ResponseEntity<String> customEdit(@RequestParam Long idReservation, @RequestBody ReservationDTO customNumberOfPeople){
+
+	@PutMapping(value = "/customNumberOfPeople")
+	public ResponseEntity<String> customEdit(@RequestParam Long idReservation,
+			@RequestBody ReservationDTO customNumberOfPeople) {
 		Reservation reservation = reservationService.findById(idReservation);
-		
+
 		reservation.setNumberOfPeople(customNumberOfPeople.numberOfPeople());
-		
+
 		reservationService.customEditionSeating(reservation);
 		return ResponseEntity.ok("The seating has been successfully updated. ");
 	}
 
 	@DeleteMapping("/cancleReservation")
-	public void cancleReservation( @RequestParam Long idReservation) {
+	public void cancleReservation(@RequestParam Long idReservation) {
 
 		reservationService.cancleReservation(idReservation);
 	}

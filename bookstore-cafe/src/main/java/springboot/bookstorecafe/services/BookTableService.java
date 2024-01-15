@@ -22,15 +22,13 @@ public class BookTableService implements MainService<BookTable> {
 	@Override
 	public void addItem(BookTable bookTable) {
 
-		if(!isTableNumber(bookTable.getTableNumber()))
-		{
+		if (!isTableNumber(bookTable.getTableNumber())) {
 			throw new IllegalArgumentException("This table number already exists");
 		}
 		bookTableRepo.save(bookTable);
 
 	}
 
-	
 	public void deleteTable(Long idBookTable) {
 		bookTableRepo.deleteById(idBookTable);
 
@@ -38,8 +36,7 @@ public class BookTableService implements MainService<BookTable> {
 
 	@Override
 	public void updateItem(BookTable bookTable) {
-		if(!isTableNumber(bookTable.getTableNumber()))
-		{
+		if (!isTableNumber(bookTable.getTableNumber())) {
 			throw new IllegalArgumentException("This table number already exists");
 		}
 		bookTableRepo.save(bookTable);
@@ -53,13 +50,13 @@ public class BookTableService implements MainService<BookTable> {
 	}
 
 	public boolean isTableNumber(int tableNumber) {
-	
-		return bookTableRepo.findByTableNumber(tableNumber)==null;
+
+		return bookTableRepo.findByTableNumber(tableNumber) == null;
 	}
 
 	@Override
 	public void deleteItem(BookTable bookTable) {
 		bookTableRepo.delete(bookTable);
-		
+
 	}
 }

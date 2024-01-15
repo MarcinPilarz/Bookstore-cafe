@@ -1,6 +1,5 @@
 package springboot.bookstorecafe.services;
 
-import java.time.LocalDateTime; 
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +20,7 @@ public class ReviewService implements MainService<Review> {
 
 	@Autowired
 	private PersonRepository personRepo;
+
 	@Override
 	public List<Review> findAllItems() {
 		List<Review> reviews = reviewRepo.findAll();
@@ -33,12 +33,13 @@ public class ReviewService implements MainService<Review> {
 		}
 	}
 
-	public List<Review> getReviewPerson (Long personId){
+	public List<Review> getReviewPerson(Long personId) {
 		Person person = personRepo.findById(personId)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
-		
+
 		return person.getReview();
 	}
+
 	@Override
 	public void addItem(Review review) {
 
@@ -62,7 +63,6 @@ public class ReviewService implements MainService<Review> {
 
 	@Override
 	public Review findById(Long id) {
-		// TODO Auto-generated method stub
 		return reviewRepo.findById(id).orElse(null);
 	}
 

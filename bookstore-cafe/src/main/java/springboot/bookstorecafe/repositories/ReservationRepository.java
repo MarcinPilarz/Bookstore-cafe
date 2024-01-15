@@ -13,5 +13,6 @@ import springboot.bookstorecafe.models.Reservation;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
 	List<Reservation> findByBookTableAndBokkingData(BookTable bookTable, LocalDate bokkingData);
-	 List<Reservation> findByBokkingDataBefore(LocalDate date);
+
+	List<Reservation> findByBokkingDataBefore(LocalDate date);
 }

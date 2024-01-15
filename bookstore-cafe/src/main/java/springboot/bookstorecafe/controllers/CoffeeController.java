@@ -1,13 +1,8 @@
 package springboot.bookstorecafe.controllers;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,136 +40,115 @@ public class CoffeeController {
 
 	@Autowired
 	private ProductService productService;
-//	@GetMapping(value = "/coffee")
-//	public Iterable<Product> getCoffee(@RequestParam ProductType productType) {
-//
-//		if (productType == ProductType.ALLPRODUCTS) {
-//
-//			List<Product> allProducts = new ArrayList<>();
-//			coffeeService.addAllItemsToList(allProducts, coffeeService.findAllItems());
-//			foodService.addAllItemsToList(allProducts, foodService.findAllFoods());
-//			bookService.addAllItemsToList(allProducts, bookService.findAllItems());
-//			return allProducts;
-//		} else if (productType == ProductType.COFFEE) {
-//			return coffeeService.findAllCoffeeByType(productType);
-//		} else if (productType == ProductType.FOOD) {
-//			return foodService.findAllFoodsByType(productType);
-//		} else if (productType == ProductType.BOOK) {
-//
-//			return bookService.findAllBooksByType(productType);
-//		}
-//		return null;
-//	}
-	
+
 	@GetMapping(value = "/products")
 	public ResponseEntity<List<Product>> getProductsByTypes(@RequestParam ProductType productType) {
-	    List<Product> products;
+		List<Product> products;
 
-	    if (productType == ProductType.ALLPRODUCTS) {
-	        products = new ArrayList<>();
-	        products.addAll(coffeeService.findAllCoffeeByType(ProductType.COFFEE));
-	        products.addAll(bookService.findAllBookByType(ProductType.BOOK));
-	        products.addAll(foodService.findAllFoodByType(ProductType.FOOD));
-	    } else  {
-	        products = getProductsByType(productType);
-	    }
+		if (productType == ProductType.ALLPRODUCTS) {
+			products = new ArrayList<>();
+			products.addAll(coffeeService.findAllCoffeeByType(ProductType.COFFEE));
+			products.addAll(bookService.findAllBookByType(ProductType.BOOK));
+			products.addAll(foodService.findAllFoodByType(ProductType.FOOD));
+		} else {
+			products = getProductsByType(productType);
+		}
 
-	    products.forEach(product -> {
-	        if (product.getImageName() != null) {
-	            product.setImageName("https://storage.googleapis.com/springbootphoto/springbootphoto/" + product.getImageName());
-	        }
-	    });
+		products.forEach(product -> {
+			if (product.getImageName() != null) {
+				product.setImageName(
+						"https://storage.googleapis.com/springbootphoto/springbootphoto/" + product.getImageName());
+			}
+		});
 
-	    return ResponseEntity.ok(products);
+		return ResponseEntity.ok(products);
 	}
-	    private List<Product> getProductsByType(ProductType productType) {
-	        switch (productType) {
-	            case COFFEE:
-	                return coffeeService.findAllCoffeeByType(productType);
-	            case BOOK:
-	                return bookService.findAllBookByType(productType);
-	            case FOOD:
-	                return foodService.findAllFoodByType(productType);
-	            default:
-	                return List.of();
-	        }
-	    }
 
-	    
-	    @PostMapping(value = "/addProduct")
-	    public ResponseEntity<?> addProduct(@RequestBody ProductDTO productDTO) {
-	        switch (productDTO.getProductType()) {
-	            case COFFEE:
-	                Coffee coffee = coffeeService.mapToCoffee(productDTO);
-	                coffeeService.addCoffee(coffee);
-	                return ResponseEntity.ok(coffee);
-	            case FOOD:
-	                Food food = foodService.mapToFood(productDTO);
-	                foodService.addFood(food);
-	                return ResponseEntity.ok(food);
-	            case BOOK:
-	                Book book = bookService.mapToBook(productDTO);
-	                bookService.addItem(book);
-	                return ResponseEntity.ok(book);
-	            default:
-	                throw new IllegalArgumentException("Nieznany typ produktu");
-	        }
-	    }
-	    
-	    @PutMapping(value="/updateProducts")
-	    public ResponseEntity<?> updateProduct(@RequestParam Long id, @RequestBody ProductDTO productDTO) {
-	        Product product = productService.findById(id);
+	private List<Product> getProductsByType(ProductType productType) {
+		switch (productType) {
+		case COFFEE:
+			return coffeeService.findAllCoffeeByType(productType);
+		case BOOK:
+			return bookService.findAllBookByType(productType);
+		case FOOD:
+			return foodService.findAllFoodByType(productType);
+		default:
+			return List.of();
+		}
+	}
 
-	        if (product.getProductType() == ProductType.COFFEE) {
-	            Coffee coffee = (Coffee) product;
-	            // Ustawienie pól wspólnych
-	            updateCommonProductFields(coffee, productDTO);
-	            // Ustawienie pól specyficznych dla Coffee
-	            coffee.setCoffeeIntensity(productDTO.getCoffeeIntensity());
-	            coffeeService.updateCoffee(coffee);
-	        } else if (product.getProductType() == ProductType.BOOK) {
-	            Book book = (Book) product;
-	            // Ustawienie pól wspólnych
-	            updateCommonProductFields(book, productDTO);
-	            // Ustawienie pól specyficznych dla Book
-	            book.setAuthor(productDTO.getAuthor());
-	            book.setGenere(productDTO.getGenere());
-	            book.setPublishingHouse(productDTO.getPublishingHouse());
-	    	    book.setLanguage(productDTO.getLanguage());
-	    	    book.setPublicationDate(productDTO.getPublicationDate());
-	    	    book.setBookCover(productDTO.getBookCover());
-	    	    book.setNumberPage(productDTO.getNumberPage());
-	    	    book.setNumberBookStock(productDTO.getNumberBookStock());
-	    	    book.setAvailable(productDTO.isAvailable());
-	            // ...inne pola dla Book
-	            bookService.updateItem(book);
-	        } else if (product.getProductType() == ProductType.FOOD) {
-	            Food food = (Food) product;
-	            // Ustawienie pól wspólnych
-	            updateCommonProductFields(food, productDTO);
-	            // Ustawienie pól specyficznych dla Food
-	            food.setFoodWeight(productDTO.getFoodWeight());
-	            food.setAmountOfCalories(productDTO.getAmountOfCalories());
-	            foodService.updateFood(food);
-	        } else {
-	            throw new IllegalArgumentException("Nieznany typ produktu");
-	        }
+	@PostMapping(value = "/addProduct")
+	public ResponseEntity<?> addProduct(@RequestBody ProductDTO productDTO) {
+		switch (productDTO.getProductType()) {
+		case COFFEE:
+			Coffee coffee = coffeeService.mapToCoffee(productDTO);
+			coffeeService.addCoffee(coffee);
+			return ResponseEntity.ok(coffee);
+		case FOOD:
+			Food food = foodService.mapToFood(productDTO);
+			foodService.addFood(food);
+			return ResponseEntity.ok(food);
+		case BOOK:
+			Book book = bookService.mapToBook(productDTO);
+			bookService.addItem(book);
+			return ResponseEntity.ok(book);
+		default:
+			throw new IllegalArgumentException("Nieznany typ produktu");
+		}
+	}
 
-	        return ResponseEntity.ok().build();
-	    }
-	    
-	    
-	    private void updateCommonProductFields(Product product, ProductDTO dto) {
-	        product.setProductName(dto.getProductName());
-	        product.setProductPrice(dto.getProductPrice());
-	        product.setProductDescription(dto.getProductDescription());
-	        // Ustaw inne wspólne pola
-	    }
-	    
+	@PutMapping(value = "/updateProducts")
+	public ResponseEntity<?> updateProduct(@RequestParam Long id, @RequestBody ProductDTO productDTO) {
+		Product product = productService.findById(id);
+
+		if (product.getProductType() == ProductType.COFFEE) {
+			Coffee coffee = (Coffee) product;
+
+			updateCommonProductFields(coffee, productDTO);
+
+			coffee.setCoffeeIntensity(productDTO.getCoffeeIntensity());
+			coffeeService.updateCoffee(coffee);
+		} else if (product.getProductType() == ProductType.BOOK) {
+			Book book = (Book) product;
+
+			updateCommonProductFields(book, productDTO);
+
+			book.setAuthor(productDTO.getAuthor());
+			book.setGenere(productDTO.getGenere());
+			book.setPublishingHouse(productDTO.getPublishingHouse());
+			book.setLanguage(productDTO.getLanguage());
+			book.setPublicationDate(productDTO.getPublicationDate());
+			book.setBookCover(productDTO.getBookCover());
+			book.setNumberPage(productDTO.getNumberPage());
+			book.setNumberBookStock(productDTO.getNumberBookStock());
+			book.setAvailable(productDTO.isAvailable());
+
+			bookService.updateItem(book);
+		} else if (product.getProductType() == ProductType.FOOD) {
+			Food food = (Food) product;
+
+			updateCommonProductFields(food, productDTO);
+
+			food.setFoodWeight(productDTO.getFoodWeight());
+			food.setAmountOfCalories(productDTO.getAmountOfCalories());
+			foodService.updateFood(food);
+		} else {
+			throw new IllegalArgumentException("Unknown product type");
+		}
+
+		return ResponseEntity.ok().build();
+	}
+
+	private void updateCommonProductFields(Product product, ProductDTO dto) {
+		product.setProductName(dto.getProductName());
+		product.setProductPrice(dto.getProductPrice());
+		product.setProductDescription(dto.getProductDescription());
+
+	}
 
 	@PostMapping(value = "/newCoffee")
 	public ResponseEntity<Coffee> newCoffee(@RequestParam ProductType coffeeType, @RequestBody Coffee newCoffee) {
-		if (coffeeType == ProductType.COFFEE ) {
+		if (coffeeType == ProductType.COFFEE) {
 
 			newCoffee.setProductType(coffeeType);
 			coffeeService.addCoffee(newCoffee);
@@ -194,7 +168,7 @@ public class CoffeeController {
 
 	@DeleteMapping(value = "/deleteCoffee")
 	public ResponseEntity<?> deleteProduct(@RequestParam Long id) {
-	    productService.deleteProduct(id);
-	    return ResponseEntity.noContent().build();
+		productService.deleteProduct(id);
+		return ResponseEntity.noContent().build();
 	}
 }

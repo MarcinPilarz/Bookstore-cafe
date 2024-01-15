@@ -104,12 +104,6 @@ public class ReservationService {
 		Reservation reservation = reservationRepo.findById(idReservation)
 				.orElseThrow(() -> new RuntimeException("Name reservation not found" + idReservation));
 
-//		if (!reservation.getPerson().getLastName().equals(lastName)
-//				|| !reservation.getPerson().getPhoneNumber().equals(phoneNumber)) {
-//
-//			throw new RuntimeException("Wrong last name or phone number! ");
-//		}
-
 		reservation.getBookTable().setReservation(false);
 		reservationRepo.delete(reservation);
 	}

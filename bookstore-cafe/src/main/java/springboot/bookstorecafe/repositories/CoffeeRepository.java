@@ -4,9 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import springboot.bookstorecafe.models.Coffee;
 
-
 @Repository
 public interface CoffeeRepository extends ProductRepository<Coffee> {
-    //Coffee findByProductName(String productName);
-	
+
 }

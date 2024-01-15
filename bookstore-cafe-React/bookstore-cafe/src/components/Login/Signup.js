@@ -6,7 +6,7 @@ const Signup = () => {
   const [isLoginActive, setIsLoginActive] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [telephonNumber, setTelephonNumber] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -15,7 +15,7 @@ const Signup = () => {
   const [registrationData, setRegistrationData] = useState({
     firstName: "",
     lastName: "",
-    telephonNumber: "",
+    phoneNumber: "",
     email: "",
     password: "",
     roleType: "Klient",
@@ -32,7 +32,7 @@ const Signup = () => {
       console.log("Rejestracja:", {
         firstName,
         lastName,
-        telephonNumber,
+        phoneNumber,
         email,
         password,
         roleType,
@@ -40,7 +40,7 @@ const Signup = () => {
       const response = await axios.post("http://localhost:8080/newPerson", {
         firstName,
         lastName,
-        telephonNumber,
+        phoneNumber,
         email,
         password,
         roleType,
@@ -52,10 +52,10 @@ const Signup = () => {
   };
 
   const handleRegisterSubmit = async () => {
-    if (registrationData.password !== repeatedPassword) {
-      alert("Hasła nie są takie same!");
-      return;
-    }
+    // if (registrationData.password !== repeatedPassword) {
+    //   alert("Hasła nie są takie same!");
+    //   return;
+    // }
     try {
       const response = await axios.post(
         "http://localhost:8080/newPerson",
@@ -75,10 +75,10 @@ const Signup = () => {
       setRegistrationData({
         firstName: "",
         lastName: "",
-        telephonNumber: "",
+        phoneNumber: "",
         email: "",
         password: "",
-        roleType: "",
+        roleType: "Klient",
       });
       setRepeatedPassword("");
       console.log("Zarejestrowano pomyślnie");
@@ -195,8 +195,8 @@ const Signup = () => {
                       e.preventDefault();
                     }
                   }}
-                  name="telephonNumber"
-                  value={registrationData.telephonNumber}
+                  name="phoneNumber"
+                  value={registrationData.phoneNumber}
                   onChange={handleInputChange}
                 />
               </label>

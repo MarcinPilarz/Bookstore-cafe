@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import springboot.bookstorecafe.models.BookTable;
-import springboot.bookstorecafe.models.Person;
+
 import springboot.bookstorecafe.services.BookTableService;
 
 @RestController
@@ -36,24 +36,20 @@ public class BookTableController {
 		return ResponseEntity.ok(bookTable);
 
 	}
-	
-	
 
-	
-	@PutMapping(value="/editTable")
-	public ResponseEntity<BookTable> editTable(@RequestParam Long id, @RequestBody BookTable updateBookTable){
-		
-		BookTable bookTable= bookTableService.findById(id);
+	@PutMapping(value = "/editTable")
+	public ResponseEntity<BookTable> editTable(@RequestParam Long id, @RequestBody BookTable updateBookTable) {
+
+		BookTable bookTable = bookTableService.findById(id);
 		updateBookTable.setIdBookTable(bookTable.getIdBookTable());
 		bookTableService.updateItem(updateBookTable);
 		return ResponseEntity.ok(updateBookTable);
 	}
-	
-	
-	@DeleteMapping(value="/deleteTable")
-	public ResponseEntity<BookTable> editTable(@RequestParam Long id){
-		BookTable bookTable= bookTableService.findById(id);
-		
+
+	@DeleteMapping(value = "/deleteTable")
+	public ResponseEntity<BookTable> editTable(@RequestParam Long id) {
+		BookTable bookTable = bookTableService.findById(id);
+
 		if (bookTable != null) {
 			bookTableService.deleteItem(bookTableService.findById(id));
 			return ResponseEntity.noContent().build();
@@ -61,6 +57,5 @@ public class BookTableController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
-	
+
 }

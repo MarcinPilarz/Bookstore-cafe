@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import springboot.bookstorecafe.DTO.ProductDTO;
-import springboot.bookstorecafe.models.Coffee;
+
 import springboot.bookstorecafe.models.Food;
 import springboot.bookstorecafe.models.Product;
 import springboot.bookstorecafe.models.ProductType;
@@ -34,34 +34,34 @@ public class FoodService {
 		return productRepo.getProductsByProductType(productType);
 	}
 
-	
 	public List<Product> findAllFoodByType(ProductType productType) {
-        if (productType == ProductType.FOOD) {
-            return new ArrayList<>(foodRepo.getProductsByProductType(productType));
-        }
-        return new ArrayList<>();
-    }
+		if (productType == ProductType.FOOD) {
+			return new ArrayList<>(foodRepo.getProductsByProductType(productType));
+		}
+		return new ArrayList<>();
+	}
+
 	public void addFood(Food food) {
-	
-		Food existingFood= foodRepo.findByProductName(food.getProductName());
-		if (existingFood !=null) {
+
+		Food existingFood = foodRepo.findByProductName(food.getProductName());
+		if (existingFood != null) {
 			throw new IllegalArgumentException("Product with the same name already exists: " + food.getProductName());
 		}
 		food.setProductName(changingFoodNameSize(food.getProductName()));
 		foodRepo.save(food);
 
 	}
-	
+
 	public Food mapToFood(ProductDTO foodDTO) {
-	    Food food = new Food();
-	    food.setProductName(foodDTO.getProductName());
-	    food.setProductPrice(foodDTO.getProductPrice());
-	    food.setProductDescription(foodDTO.getProductDescription());
-	    food.setProductType(foodDTO.getProductType());
-	    food.setFoodWeight(foodDTO.getFoodWeight());
-	    food.setAmountOfCalories(foodDTO.getAmountOfCalories());
-	    // Ustaw inne specyficzne pola dla Food, jeśli są dostępne
-	    return food;
+		Food food = new Food();
+		food.setProductName(foodDTO.getProductName());
+		food.setProductPrice(foodDTO.getProductPrice());
+		food.setProductDescription(foodDTO.getProductDescription());
+		food.setProductType(foodDTO.getProductType());
+		food.setFoodWeight(foodDTO.getFoodWeight());
+		food.setAmountOfCalories(foodDTO.getAmountOfCalories());
+
+		return food;
 	}
 
 	public static String changingFoodNameSize(String input) {
@@ -78,7 +78,7 @@ public class FoodService {
 	}
 
 	public void updateFood(Food food) {
-		
+
 		food.setProductName(changingFoodNameSize(food.getProductName()));
 		foodRepo.save(food);
 

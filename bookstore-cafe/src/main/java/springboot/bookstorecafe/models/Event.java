@@ -1,11 +1,8 @@
 package springboot.bookstorecafe.models;
 
-
-
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -29,11 +26,11 @@ public class Event {
 
 	@NotNull
 	@Column(name = "events_date")
-	 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date eventsDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	private Date eventsDate;
 
 	@ManyToOne
-	
+
 	@JoinColumn(name = "id_person")
 	private Person person;
 

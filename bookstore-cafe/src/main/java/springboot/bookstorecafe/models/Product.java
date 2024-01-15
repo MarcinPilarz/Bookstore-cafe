@@ -45,7 +45,6 @@ public abstract class Product {
 	@Column(name = "product_type")
 	private ProductType productType;
 
-
 	@Column(name = "image_name")
 	private String imageName;
 

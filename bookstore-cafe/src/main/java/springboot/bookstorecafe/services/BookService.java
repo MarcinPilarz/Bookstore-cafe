@@ -19,31 +19,25 @@ public class BookService {
 
 	@Autowired
 	private BookRepository bookRepo;
-	@Qualifier("bookRepository") // Wskaźnik na repozytorium Coffee
+	@Qualifier("bookRepository") // Wskaźnik na repozytorium BOOK
 	@Autowired
 	private ProductRepository productRepo;
 
-	
-	
 	public Iterable<Book> findAllItems() {
 
 		return bookRepo.findAll();
 	}
 
-//	public Iterable<Product> findAllBooksByType(ProductType productType) {
-//		return productRepo.getProductsByProductType(productType);
-//	}
-
 	public List<Product> findAllBooksByType(ProductType productType) {
-        if (productType == ProductType.BOOK) {
-            return new ArrayList<>(bookRepo.getProductsByProductType(productType));
-        }
-        return new ArrayList<>();
-    }
-	
+		if (productType == ProductType.BOOK) {
+			return new ArrayList<>(bookRepo.getProductsByProductType(productType));
+		}
+		return new ArrayList<>();
+	}
+
 	public void addItem(Book book) {
-		Book existingBook= bookRepo.findByProductName(book.getProductName());
-		if(existingBook != null) {
+		Book existingBook = bookRepo.findByProductName(book.getProductName());
+		if (existingBook != null) {
 			throw new IllegalArgumentException("Product with the same name already exists: " + book.getProductName());
 		}
 		bookRepo.save(book);
@@ -51,32 +45,31 @@ public class BookService {
 	}
 
 	public Book mapToBook(ProductDTO bookDTO) {
-	    Book book = new Book();
-	    book.setProductName(bookDTO.getProductName());
-	    book.setProductPrice(bookDTO.getProductPrice());
-	    book.setProductDescription(bookDTO.getProductDescription());
-	    book.setProductType(bookDTO.getProductType());
-	    book.setAuthor(bookDTO.getAuthor());
-	    book.setGenere(bookDTO.getGenere());
-	    book.setPublishingHouse(bookDTO.getPublishingHouse());
-	    book.setLanguage(bookDTO.getLanguage());
-	    book.setPublicationDate(bookDTO.getPublicationDate());
-	    book.setBookCover(bookDTO.getBookCover());
-	    book.setNumberPage(bookDTO.getNumberPage());
-	    book.setNumberBookStock(bookDTO.getNumberBookStock());
-	    book.setAvailable(true);
-	    // Ustaw inne specyficzne pola dla Book, jeśli są dostępne
-	    return book;
+		Book book = new Book();
+		book.setProductName(bookDTO.getProductName());
+		book.setProductPrice(bookDTO.getProductPrice());
+		book.setProductDescription(bookDTO.getProductDescription());
+		book.setProductType(bookDTO.getProductType());
+		book.setAuthor(bookDTO.getAuthor());
+		book.setGenere(bookDTO.getGenere());
+		book.setPublishingHouse(bookDTO.getPublishingHouse());
+		book.setLanguage(bookDTO.getLanguage());
+		book.setPublicationDate(bookDTO.getPublicationDate());
+		book.setBookCover(bookDTO.getBookCover());
+		book.setNumberPage(bookDTO.getNumberPage());
+		book.setNumberBookStock(bookDTO.getNumberBookStock());
+		book.setAvailable(true);
+		// Ustaw inne specyficzne pola dla Book, jeśli są dostępne
+		return book;
 	}
-	
-	
-	
+
 	public List<Product> findAllBookByType(ProductType productType) {
-        if (productType == ProductType.BOOK) {
-            return new ArrayList<>(bookRepo.getProductsByProductType(productType));
-        }
-        return new ArrayList<>();
-    }
+		if (productType == ProductType.BOOK) {
+			return new ArrayList<>(bookRepo.getProductsByProductType(productType));
+		}
+		return new ArrayList<>();
+	}
+
 	public void deleteBook(Long idBook) {
 
 		bookRepo.deleteById(idBook);

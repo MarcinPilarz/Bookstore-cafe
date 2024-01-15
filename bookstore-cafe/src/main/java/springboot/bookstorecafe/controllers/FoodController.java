@@ -30,7 +30,7 @@ public class FoodController {
 			foodService.addFood(newFood);
 			return ResponseEntity.ok(newFood);
 		}
-		
+
 		return null;
 	}
 
@@ -42,7 +42,7 @@ public class FoodController {
 			updateFood.setIdProduct(food.getIdProduct());
 			updateFood.setProductType(foodType);
 			foodService.updateFood(updateFood);
-			
+
 			return ResponseEntity.ok(updateFood);
 		} else {
 			return ResponseEntity.notFound().build();

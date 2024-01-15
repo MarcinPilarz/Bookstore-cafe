@@ -13,33 +13,31 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name= "order_history")
+@Table(name = "order_history")
 public class OrderHistory {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_order_history")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_order_history")
 	private Long idOrderHistory;
-	
-	
-	@Column(name= "date_order")
+
+	@Column(name = "date_order")
 	private LocalDateTime dateOrder;
 
+	@Column(name = "quantity")
+	private int quantity;
 
-	@Column(name= "quantity")
-	private  int quantity;
-	
-	@Column(name="total_price")
+	@Column(name = "total_price")
 	private Double totalPrice;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_person")
+	@JoinColumn(name = "id_person")
 	private Person person;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_product")
+	@JoinColumn(name = "id_product")
 	private Product product;
-	
+
 	public Long getIdOrderHistory() {
 		return idOrderHistory;
 	}
@@ -64,7 +62,6 @@ public class OrderHistory {
 		this.quantity = quantity;
 	}
 
-	
 	public Double getTotalPrice() {
 		return totalPrice;
 	}
@@ -88,7 +85,5 @@ public class OrderHistory {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
-	
-	
+
 }

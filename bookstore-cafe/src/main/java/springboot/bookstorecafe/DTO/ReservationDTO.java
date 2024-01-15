@@ -1,5 +1,5 @@
 package springboot.bookstorecafe.DTO;
 
-public record ReservationDTO( int numberOfPeople) {
+public record ReservationDTO(int numberOfPeople) {
 
 }

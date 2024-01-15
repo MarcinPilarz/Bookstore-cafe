@@ -4,21 +4,19 @@ import springboot.bookstorecafe.models.Product;
 
 public class ProductaAndProductPhotoInfoDTO {
 
-	  private String imageUrl;
-	    private Product product;
-	    
-	    
-	    
-	    public ProductaAndProductPhotoInfoDTO(String imageUrl, Product product) {
-	        this.imageUrl = imageUrl;
-	        this.product = product;
-	    }
+	private String imageUrl;
+	private Product product;
 
-	    public String getImageUrl() {
-	        return imageUrl;
-	    }
+	public ProductaAndProductPhotoInfoDTO(String imageUrl, Product product) {
+		this.imageUrl = imageUrl;
+		this.product = product;
+	}
 
-	    public Product getProduct() {
-	        return product;
-	    }
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
 }

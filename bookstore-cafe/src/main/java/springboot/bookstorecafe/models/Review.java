@@ -1,14 +1,11 @@
 package springboot.bookstorecafe.models;
 
 import java.util.Date;
-import java.time.LocalDateTime;
-//import java.util.Date;  <-- Trzeba zobaczyć które jest poprawne 
+
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "review")
@@ -22,20 +19,16 @@ public class Review {
 	@Column(name = "review_content")
 	private String reviewContent;
 
+	@NotNull
 	@Column(name = "rating")
 	private Integer rating;
 
+	@NotNull
 	@Column(name = "review_data")
 	private Date reviewData;
 
-	@Column(name = "number_of_likes")
-	private int numberOfLikes;
-
-	
-
 	@ManyToOne
 	@JoinColumn(name = "id_person")
-	
 	private Person person;
 
 	public Long getIdReview() {
@@ -68,14 +61,6 @@ public class Review {
 
 	public void setReviewData(Date reviewData) {
 		this.reviewData = reviewData;
-	}
-
-	public int getNumberOfLikes() {
-		return numberOfLikes;
-	}
-
-	public void setNumberOfLikes(int numberOfLikes) {
-		this.numberOfLikes = numberOfLikes;
 	}
 
 	public Person getPerson() {

@@ -1,10 +1,8 @@
 package springboot.bookstorecafe.models;
 
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,15 +18,15 @@ public class Person {
 	@Column(name = "id_person")
 	private Long idPerson;
 
-	// @NotNull
+	@NotNull
 	@Column(name = "first_name")
 	private String firstName;
 
-	// @NotNull
+	@NotNull
 	@Column(name = "last_name")
 	private String lastName;
 
-	// @NotNull
+	@NotNull
 	@Column(name = "phone_number", length = 9)
 	private String phoneNumber;
 
@@ -48,18 +46,14 @@ public class Person {
 	@JsonIgnore
 	private List<Event> event = new ArrayList<>();
 
-//	@OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
-//	@JsonIgnore
-//	private List<OrderItem> orderItems = new ArrayList<>();
-//
 	@OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private List<OrderHistory> orderHistory = new ArrayList<>();
 
-	
-	 @OneToMany(mappedBy = "person")
-	 @JsonIgnore
-	    private List<WholeOrderPerson> orders = new ArrayList<>();
+	@OneToMany(mappedBy = "person")
+	@JsonIgnore
+	private List<WholeOrderPerson> orders = new ArrayList<>();
+
 	public Long getIdPerson() {
 		return idPerson;
 	}
@@ -129,14 +123,6 @@ public class Person {
 		return Objects.hash(idPerson);
 	}
 
-//	public List<OrderItem> getOrderItems() {
-//		return orderItems;
-//	}
-//
-//	public void setOrderItems(List<OrderItem> orderItems) {
-//		this.orderItems = orderItems;
-//	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -164,6 +150,5 @@ public class Person {
 	public void setOrders(List<WholeOrderPerson> orders) {
 		this.orders = orders;
 	}
-	
 
 }
