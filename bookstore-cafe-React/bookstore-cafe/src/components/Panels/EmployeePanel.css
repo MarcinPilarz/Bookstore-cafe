@@ -5,7 +5,7 @@
 
 .dashboardSidebar {
   width: 250px;
-  background-color: #333;
+  background-color: #48643b;
   color: white;
   padding: 20px;
 }
@@ -222,15 +222,14 @@
   background-color: #e8f5e9; /* Lekko zielony dla naprzemiennych wierszy */
 }
 
-/* Styl dla dużego inputu opisu wydarzenia */
 .events-table .event-description-input {
   width: 95%;
-  height: 60px; /* Większa wysokość dla obszerniejszego opisu */
+  height: 60px;
   padding: 8px;
   margin: 4px 0;
   border: 1px solid #ddd;
   border-radius: 4px;
-  resize: vertical; /* Pozwala na zmianę rozmiaru w pionie */
+  resize: vertical;
 }
 
 .events-table input[type="text"],

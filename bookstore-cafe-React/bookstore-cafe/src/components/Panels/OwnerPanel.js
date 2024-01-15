@@ -1557,7 +1557,7 @@ const OwnerPanel = () => {
                 </table>
               </div>
             </div>
-            <button onClick={handleAddProductClick}>
+            <button className="add-product-btn" onClick={handleAddProductClick}>
               Dodaj {activeProductType}
             </button>
 
@@ -1612,11 +1612,13 @@ const OwnerPanel = () => {
             <h3 className="dashboardContentTitle">Zarządzanie Pracownikami</h3>
 
             <div>
-              <button onClick={handleAddEmployeeClick}>Dodaj Pracownika</button>
+              <button className="btn btn-add" onClick={handleAddEmployeeClick}>
+                Dodaj Pracownika
+              </button>
 
               {/* Tabela pracowników */}
-              <table>
-                <thead>
+              <table className="employee-table">
+                <thead className="employee-table-header">
                   <tr>
                     <th>Imię</th>
                     <th>Nazwisko</th>
@@ -1634,11 +1636,13 @@ const OwnerPanel = () => {
                       <td>{employee.email}</td>
                       <td>
                         <button
+                          className="btn btn-edit"
                           onClick={() => handleEditEmployeeClick(employee)}
                         >
                           Edytuj
                         </button>
                         <button
+                          className="btn btn-delete"
                           onClick={() =>
                             handleDeleteEmployee(employee.idPerson)
                           }

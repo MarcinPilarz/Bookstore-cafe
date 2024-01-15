@@ -37,11 +37,11 @@ public class ReservationService {
 
 		return reservationRepo.findAll();
 	}
-	
+
 	public List<Reservation> getPersonReservations(Long personId) {
 		Person person = personRepo.findById(personId)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
-		
+
 		return person.getReservations();
 	}
 
@@ -49,25 +49,24 @@ public class ReservationService {
 		Person person = personRepo.findById(idPerson)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
-		 List<BookTable> availableTables = bookTableRepo.findAvailableTablesByDate(bookingData); // Zakładam, że taka metoda istnieje
-		    if (availableTables.isEmpty()) {
-		        throw new RuntimeException("There are no available tables for the specified date.");
-		    }
+		List<BookTable> availableTables = bookTableRepo.findAvailableTablesByDate(bookingData);
 
-		    // Losowy wybór stolika
-		    Random random = new Random();
-		    BookTable bookTable = availableTables.get(random.nextInt(availableTables.size()));
+		if (availableTables.isEmpty()) {
+			throw new RuntimeException("There are no available tables for the specified date.");
+		}
+
+		Random random = new Random();
+		BookTable bookTable = availableTables.get(random.nextInt(availableTables.size()));
 		Reservation reservation = new Reservation();
 		if (bookTable.isReservation()) {
 			throw new RuntimeException("This table is reserved.");
 		}
 
-		
 		List<Reservation> existingReservations = reservationRepo.findByBookTableAndBokkingData(bookTable, bookingData);
 		if (!existingReservations.isEmpty()) {
 			throw new RuntimeException("This table is already reserved for the specified date.");
 		}
-		
+
 		reservation.setPerson(person);
 		reservation.setBokkingData(bookingData);
 		reservation.setNumberOfPeople(numberOfPeople);
@@ -76,10 +75,8 @@ public class ReservationService {
 		if (bookTable.getSeatingCapacity() < reservation.getNumberOfPeople()) {
 			throw new RuntimeException("This table is not suitable for the stated number of people");
 		}
-		//bookTable.setReservation(true);
-		
 
-	    bookTable.setReservationDate(bookingData);
+		bookTable.setReservationDate(bookingData);
 		reservationRepo.save(reservation);
 	}
 
@@ -107,7 +104,6 @@ public class ReservationService {
 		Reservation reservation = reservationRepo.findById(idReservation)
 				.orElseThrow(() -> new RuntimeException("Name reservation not found" + idReservation));
 
-
 //		if (!reservation.getPerson().getLastName().equals(lastName)
 //				|| !reservation.getPerson().getPhoneNumber().equals(phoneNumber)) {
 //
@@ -119,17 +115,18 @@ public class ReservationService {
 	}
 
 	public void customEditionSeating(Reservation reservation) {
-		
+
 		reservationRepo.save(reservation);
 	}
-	
-	public Reservation findById (Long idReservation) {
+
+	public Reservation findById(Long idReservation) {
 		return reservationRepo.findById(idReservation).orElse(null);
 	}
+
 	@Scheduled(cron = "0 0 0 * * 1") // Każdy poniedziałek o północy
-    public void deleteOldReservations() {
-        LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
-        List<Reservation> oldReservations = reservationRepo.findByBokkingDataBefore(oneWeekAgo);
-        reservationRepo.deleteAll(oldReservations);
-    }
+	public void deleteOldReservations() {
+		LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
+		List<Reservation> oldReservations = reservationRepo.findByBokkingDataBefore(oneWeekAgo);
+		reservationRepo.deleteAll(oldReservations);
+	}
 }

@@ -100,6 +100,9 @@ const CommentsSlider = () => {
     setRating(newRating);
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toISOString().split("T")[0];
+  };
   return (
     <>
       <div className="add-comment-container">
@@ -135,7 +138,8 @@ const CommentsSlider = () => {
         <div className="comments-all-window">
           {currentComments.map((review, index) => (
             <div className="comment-window" key={index}>
-              <p className="data">{review.reviewData}</p>
+              <p className="data">{formatDate(review.reviewData)}</p>
+
               <ReactStars value={review.rating} edit={false} />
 
               <p className="review-content">{review.reviewContent}</p>

@@ -456,6 +456,9 @@ const EmployeePanel = () => {
   const getDisplayNameForStatus = (status) => {
     return statusDisplayNames[status] || status;
   };
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleString();
+  };
   return (
     <div className="dashboardContainer">
       <div className="dashboardSidebar">
@@ -712,7 +715,7 @@ const EmployeePanel = () => {
                 return (
                   <div key={order.idWholeOrderPerson} className="order-item">
                     <div className="order-date">
-                      Data zamówienia: {order.dateOrder}
+                      Data zamówienia: {formatDate(order.dateOrder)}
                     </div>
                     <div className="order-person">
                       Złożone przez: {order.person.firstName}{" "}

@@ -3,23 +3,13 @@ import { useAuth } from "../Login/LoginInfoContext";
 const BusketProducts = createContext();
 
 export const CartProvider = ({ children }) => {
-  const { authData } = useAuth(); // Pobranie danych autentykacji
+  const { authData } = useAuth();
   const idPerson = authData.idPerson;
   const busketKey = `busket_${idPerson}`;
-  // const [busket, setBusket] = useState(() => {
-  //   const savedBusket = localStorage.getItem("busket");
-  //   const initialBusket = savedBusket ? JSON.parse(savedBusket) : [];
-  //   console.log("Initial busket from localStorage:", initialBusket);
-  //   return initialBusket;
-  // const [busket, setBusket] = useState(() => {
-  //   const savedBusket = localStorage.getItem(busketKey);
-  //   return savedBusket ? JSON.parse(savedBusket) : [];
-  // });
 
   const [busket, setBusket] = useState([]);
 
   useEffect(() => {
-    // Klucz dla koszyka bazujący na idPerson
     const busketKey = `busket_${authData.idPerson}`;
 
     // Funkcja do ładowania koszyka z localStorage
@@ -93,8 +83,6 @@ export const CartProvider = ({ children }) => {
         return item;
       });
 
-      // Zapisz zaktualizowany koszyk do localStorage
-      // localStorage.setItem("busket", JSON.stringify(updatedCart));
       localStorage.setItem(busketKey, JSON.stringify(updatedCart));
       return updatedCart;
     });

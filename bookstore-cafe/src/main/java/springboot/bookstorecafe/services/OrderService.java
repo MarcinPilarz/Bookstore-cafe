@@ -1,6 +1,6 @@
 package springboot.bookstorecafe.services;
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime; 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +20,7 @@ import springboot.bookstorecafe.models.ChargeCreateParamsBuilder;
 import springboot.bookstorecafe.models.Coffee;
 import springboot.bookstorecafe.models.Food;
 import springboot.bookstorecafe.models.OrderHistory;
-import springboot.bookstorecafe.models.OrderItem;
+//import springboot.bookstorecafe.models.OrderItem;
 import springboot.bookstorecafe.models.OrderProduct;
 import springboot.bookstorecafe.models.OrderStatus;
 import springboot.bookstorecafe.models.Person;
@@ -31,7 +31,7 @@ import springboot.bookstorecafe.repositories.BookRepository;
 import springboot.bookstorecafe.repositories.CoffeeRepository;
 import springboot.bookstorecafe.repositories.FoodRepository;
 import springboot.bookstorecafe.repositories.OrderHistoryRepository;
-import springboot.bookstorecafe.repositories.OrderItemRepository;
+//import springboot.bookstorecafe.repositories.OrderItemRepository;
 import springboot.bookstorecafe.repositories.OrderProductRepository;
 import springboot.bookstorecafe.repositories.PersonRepository;
 import springboot.bookstorecafe.repositories.ProductRepository;
@@ -40,7 +40,7 @@ import springboot.bookstorecafe.repositories.WholeOrderPersonRepository;
 @Service
 public class OrderService {
 
-	private OrderItemRepository orderRepo;
+//	private OrderItemRepository orderRepo;
 
 	private PersonRepository personRepo;
 
@@ -50,48 +50,41 @@ public class OrderService {
 
 	private FoodRepository foodRepo;
 
-	 @Autowired
-	    private StripeService stripeService;
-	
+	@Autowired
+	private StripeService stripeService;
+
 	@Autowired
 	private OrderHistoryRepository orderHistoryRepo;
 
 	@Autowired
 	private OrderHistoryService orderHistoryService;
-	
-	
+
 	@Autowired
-    private List<ProductRepository<? extends Product>> repositories;
-	
-	
-	
-	@Autowired 
+	private List<ProductRepository<? extends Product>> repositories;
+
+	@Autowired
 	private WholeOrderPersonRepository wholeOrderRepo;
-	
-	@Autowired 
+
+	@Autowired
 	private OrderProductRepository orderProductRepo;
 
 	@Autowired
-	public OrderService(PersonRepository personRepo, OrderItemRepository orderRepo, CoffeeRepository coffeeRepo,
+	public OrderService(PersonRepository personRepo, CoffeeRepository coffeeRepo,
 			BookRepository bookRepo, FoodRepository foodRepo) {
 
 		this.personRepo = personRepo;
-		this.orderRepo = orderRepo;
+		
 		this.coffeeRepo = coffeeRepo;
 		this.bookRepo = bookRepo;
 		this.foodRepo = foodRepo;
 	}
 
-	public List<OrderItem> findAllItems() {
+//	public List<OrderItem> findAllItems() {
+//
+//		return orderRepo.findAll();
+//	}
 
-		return orderRepo.findAll();
-	}
-	
-	
-	
-	
-	
-	public List<WholeOrderPerson> getOrdersPerson(Long personId){
+	public List<WholeOrderPerson> getOrdersPerson(Long personId) {
 		Person person = personRepo.findById(personId)
 				.orElseThrow(() -> new RuntimeException("There is no such person: " + personId));
 		return person.getOrders();
@@ -147,9 +140,9 @@ public class OrderService {
 //        }
 //		orderRepo.save(orderItem);
 //		addItemToHistory(orderItem, person, products);
-		 //Double totalPrice = orderItem.getTotalPrice(); // Obliczenie całkowitej ceny
+	// Double totalPrice = orderItem.getTotalPrice(); // Obliczenie całkowitej ceny
 
-	        // Najpierw próbuj przetworzyć płatność
+	// Najpierw próbuj przetworzyć płatność
 //	        boolean paymentSuccess = stripeService.chargePayment(tokenCreditCard, totalPrice);
 //	        
 //	        if (paymentSuccess) {
@@ -159,10 +152,9 @@ public class OrderService {
 //	            // W przeciwnym razie rzuć wyjątek lub zwróć informację o błędzie
 //	            throw new RuntimeException("Payment failed");
 //	        }
-	    
-		
-	//	int totalPriceCents = (int) (totalPrice * 100);
-		
+
+	// int totalPriceCents = (int) (totalPrice * 100);
+
 //		try {
 //	        Charge charge = Charge.create(new ChargeCreateParamsBuilder()
 //	            .setAmount((long) totalPriceCents)
@@ -172,7 +164,7 @@ public class OrderService {
 //	            .build()
 //	        );
 //		
-		
+
 //
 //		 try {
 //	            Stripe.apiKey = stripeKey;
@@ -201,107 +193,106 @@ public class OrderService {
 //		        // Płatność nie powiodła się, obsłuż błąd
 //		        throw new RuntimeException("Błąd płatności: " + e.getMessage());
 //		    }
-	//}
-	
-	
+	// }
+
 	public List<WholeOrderPerson> findAllOrders() {
 
 		return wholeOrderRepo.findAll();
 	}
-	
-	public void addItems(Long idPerson, List<Long> idProduct, List<Integer> quantity, String token) throws StripeException {
-	    Person person = personRepo.findById(idPerson)
-	            .orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
-	    if (idProduct.size() != quantity.size()) {
-	        throw new IllegalArgumentException("Ilość produktów i ilości muszą być takie same");
-	    }
+	public void addItems(Long idPerson, List<Long> idProduct, List<Integer> quantity, String token)
+			throws StripeException {
+		Person person = personRepo.findById(idPerson)
+				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
-	    double totalPrice = 0;
-	    List<OrderProduct> orderProducts = new ArrayList<>();
+		if (idProduct.size() != quantity.size()) {
+			throw new IllegalArgumentException("Product quantity and quantity must be the same");
+		}
 
-	    for (int i = 0; i < idProduct.size(); i++) {
-	        Product product = findProductById(idProduct.get(i));
-	        int quantitys = quantity.get(i);
-	        totalPrice += calculateTotalPrice(product, quantitys);
+		double totalPrice = 0;
+		List<OrderProduct> orderProducts = new ArrayList<>();
 
-	        OrderProduct orderProduct = new OrderProduct();
-	        orderProduct.setProduct(product);
-	        orderProduct.setQuantity(quantitys);
-	        orderProducts.add(orderProduct);
-	    }
+		for (int i = 0; i < idProduct.size(); i++) {
+			Product product = findProductById(idProduct.get(i));
+			int quantitys = quantity.get(i);
+			totalPrice += calculateTotalPrice(product, quantitys);
 
-	    if (totalPrice <= 0) {
-	        throw new IllegalArgumentException("Całkowita cena zamówienia musi być większa niż 0");
-	    }
+			OrderProduct orderProduct = new OrderProduct();
+			orderProduct.setProduct(product);
+			orderProduct.setQuantity(quantitys);
+			orderProducts.add(orderProduct);
+		}
 
-	    Charge charge = stripeService.chargePayment(token, totalPrice, "Zamówienie", person.getFirstName(), person.getLastName());
-	    if (!charge.getPaid()) {
-	        throw new RuntimeException("Płatność nie powiodła się");
-	    }
+		if (totalPrice <= 0) {
+			throw new IllegalArgumentException("The total order price must be greater than 0");
+		}
 
-	    WholeOrderPerson order = new WholeOrderPerson();
-	    order.setDateOrder(LocalDateTime.now().withNano(0));
-	    order.setTotalPrice(totalPrice);
-	    order.setOrderStatus("W trakcie");
-	    order.setPerson(person);
-	    order = wholeOrderRepo.save(order);
+		Charge charge = stripeService.chargePayment(token, totalPrice, "Zamówienie", person.getFirstName(),
+				person.getLastName());
+		if (!charge.getPaid()) {
+			throw new RuntimeException("Payment failed");
+		}
 
-	    for (OrderProduct orderProduct : orderProducts) {
-	        orderProduct.setOrder(order);
-	        orderProductRepo.save(orderProduct);
-	    }
+		WholeOrderPerson order = new WholeOrderPerson();
+		order.setDateOrder(LocalDateTime.now().withNano(0));
+		order.setTotalPrice(totalPrice);
+		order.setOrderStatus("W trakcie");
+		order.setPerson(person);
+		order = wholeOrderRepo.save(order);
+
+		for (OrderProduct orderProduct : orderProducts) {
+			orderProduct.setOrder(order);
+			orderProductRepo.save(orderProduct);
+		}
 	}
 
-	    private Product findProductById(Long idProduct) {
-	        for (ProductRepository<? extends Product> repository : repositories) {
-	            Optional<? extends Product> product = repository.findById(idProduct);
-	            if (product.isPresent()) {
-	                return product.get();
-	            }
-	        }
-	        throw new RuntimeException("There is no such product: " + idProduct);
-	    }
+	private Product findProductById(Long idProduct) {
+		for (ProductRepository<? extends Product> repository : repositories) {
+			Optional<? extends Product> product = repository.findById(idProduct);
+			if (product.isPresent()) {
+				return product.get();
+			}
+		}
+		throw new RuntimeException("There is no such product: " + idProduct);
+	}
 
+	private double calculateTotalPrice(Product products, int quantity) {
+		return products.getProductPrice() * quantity;
+	}
 
-	
-	 private double calculateTotalPrice(Product products, int quantity) {
-	        return products.getProductPrice() * quantity;
-	    }
-	 
-	 
-	 public void updateOrderStatus(Long orderId, String displayStatus) {
-		    WholeOrderPerson order = wholeOrderRepo.findById(orderId)
-		        .orElseThrow(() -> new RuntimeException("Order not found"));
-		    order.setOrderStatus(displayStatus); // Przekazuje ciąg znaków bezpośrednio
-		    wholeOrderRepo.save(order);
-		    if (displayStatus.equals("Odebrane")) {
-		        addOrderToHistory(order);
-		        deleteItem(orderId);
-		    }
+	public void updateOrderStatus(Long orderId, String displayStatus) {
+		WholeOrderPerson order = wholeOrderRepo.findById(orderId)
+				.orElseThrow(() -> new RuntimeException("Order not found"));
+		order.setOrderStatus(displayStatus); // Przekazuje ciąg znaków bezpośrednio
+		wholeOrderRepo.save(order);
+		if (displayStatus.equals("Odebrane")) {
+			addOrderToHistory(order);
+			deleteItem(orderId);
+		}
+	}
+
+	public void addOrderToHistory(WholeOrderPerson order) {
+		for (OrderProduct orderProduct : order.getOrder()) {
+			OrderHistory orderHistory = new OrderHistory();
+
+			orderHistory.setIdOrderHistory(order.getIdWholeOrderPerson());
+			orderHistory.setDateOrder(order.getDateOrder());
+			orderHistory.setQuantity(orderProduct.getQuantity());
+			orderHistory.setTotalPrice(order.getTotalPrice());
+			orderHistory.setPerson(order.getPerson());
+			orderHistory.setProduct(orderProduct.getProduct());
+			orderHistoryRepo.save(orderHistory);
 		}
 
-	 public void addOrderToHistory(WholeOrderPerson order) {
-		    for (OrderProduct orderProduct : order.getOrder()) {
-		        OrderHistory orderHistory = new OrderHistory();
-
-		        orderHistory.setIdOrderHistory(order.getIdWholeOrderPerson());
-		        orderHistory.setDateOrder(order.getDateOrder());
-		        orderHistory.setQuantity(orderProduct.getQuantity());
-		        orderHistory.setTotalPrice(order.getTotalPrice());
-		        orderHistory.setPerson(order.getPerson());
-		        orderHistory.setProduct(orderProduct.getProduct());
-		        orderHistoryRepo.save(orderHistory);
-		    }
-
-		    // Sprawdzanie i usuwanie starych wpisów z historii, jeśli jest ich więcej niż 20
-		    Long idPerson = order.getPerson().getIdPerson();
-		    List<OrderHistory> orderHistoryList = orderHistoryRepo.findByPersonIdPerson(idPerson);
-		    if (orderHistoryList.size() > 20) {
-		        OrderHistory oldestHistoryItem = orderHistoryList.get(0);
-		        orderHistoryRepo.delete(oldestHistoryItem);
-		    }
+		// Sprawdzanie i usuwanie starych wpisów z historii, jeśli jest ich więcej niż
+		// 20
+		Long idPerson = order.getPerson().getIdPerson();
+		List<OrderHistory> orderHistoryList = orderHistoryRepo.findByPersonIdPerson(idPerson);
+		if (orderHistoryList.size() > 20) {
+			OrderHistory oldestHistoryItem = orderHistoryList.get(0);
+			orderHistoryRepo.delete(oldestHistoryItem);
 		}
+	}
 
 	// ?
 //	public void updateItem(@RequestParam Long idOrderItem,OrderItem orderItem) {
@@ -311,10 +302,10 @@ public class OrderService {
 
 	public void deleteItem(Long orderId) {
 
-		 WholeOrderPerson order  = wholeOrderRepo.findById(orderId)
+		WholeOrderPerson order = wholeOrderRepo.findById(orderId)
 				.orElseThrow(() -> new RuntimeException("There is no such order: " + orderId));
 
-		 wholeOrderRepo.delete(order);
+		wholeOrderRepo.delete(order);
 	}
 
 //	public OrderItem findById(Long id) {

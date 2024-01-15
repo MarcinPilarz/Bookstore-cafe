@@ -29,7 +29,6 @@ import springboot.bookstorecafe.repositories.ProductRepository;
 @Service
 public class ProductService {
 
-	
 	@Autowired
 	private Storage storage;
 
@@ -96,36 +95,34 @@ public class ProductService {
 //
 //	}
 
-	
 	public void uploadProductImage(Long idProduct, MultipartFile file) {
-	    String objectName = "springbootphoto/" + file.getOriginalFilename();
+		String objectName = "springbootphoto/" + file.getOriginalFilename();
 
-	    try {
-	        BlobId blobId = BlobId.of("springbootphoto", objectName);
-	        BlobInfo blobinfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
-	        storage.create(blobinfo, file.getBytes());
+		try {
+			BlobId blobId = BlobId.of("springbootphoto", objectName);
+			BlobInfo blobinfo = BlobInfo.newBuilder(blobId).setContentType("image/jpeg").build();
+			storage.create(blobinfo, file.getBytes());
 
-	        String imageUrl = "https://storage.googleapis.com/springbootphoto/" + file.getOriginalFilename();
+			String imageUrl = "https://storage.googleapis.com/springbootphoto/" + file.getOriginalFilename();
 
-	        Product product = getProductByProductId(idProduct)
-	            .orElseThrow(() -> new RuntimeException("Product not found: " + idProduct));
+			Product product = getProductByProductId(idProduct)
+					.orElseThrow(() -> new RuntimeException("Product not found: " + idProduct));
 
-	        product.setImageName(file.getOriginalFilename()); // Ustawienie URL obrazu
+			product.setImageName(file.getOriginalFilename());
 
-	        // Zaktualizuj produkt w odpowiednim repozytorium
-	        if (product instanceof Coffee) {
-	            coffeeRepo.save((Coffee) product);
-	        } else if (product instanceof Book) {
-	            bookRepo.save((Book) product);
-	        } else if (product instanceof Food) {
-	            foodRepo.save((Food) product);
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        throw new RuntimeException("Error uploading photo", e);
-	    }
+			if (product instanceof Coffee) {
+				coffeeRepo.save((Coffee) product);
+			} else if (product instanceof Book) {
+				bookRepo.save((Book) product);
+			} else if (product instanceof Food) {
+				foodRepo.save((Food) product);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("Error uploading photo", e);
+		}
 	}
-	
+
 	private Optional<Product> getProductByProductId(Long productId) {
 //		List<ProductRepository<? extends Product>> repositories = List.of(coffeeRepo, bookRepo, foodRepo);
 //
@@ -137,59 +134,59 @@ public class ProductService {
 //		}
 //
 //		return Optional.empty();
-		 Optional<? extends Product> product;
+		Optional<? extends Product> product;
 
-		    product = coffeeRepo.findById(productId);
-		    if (product.isPresent()) {
-		        return Optional.of(product.get());
-		    }
+		product = coffeeRepo.findById(productId);
+		if (product.isPresent()) {
+			return Optional.of(product.get());
+		}
 
-		    product = bookRepo.findById(productId);
-		    if (product.isPresent()) {
-		        return Optional.of(product.get());
-		    }
+		product = bookRepo.findById(productId);
+		if (product.isPresent()) {
+			return Optional.of(product.get());
+		}
 
-		    product = foodRepo.findById(productId);
-		    if (product.isPresent()) {
-		        return Optional.of(product.get());
-		    }
+		product = foodRepo.findById(productId);
+		if (product.isPresent()) {
+			return Optional.of(product.get());
+		}
 
-		    return Optional.empty();
+		return Optional.empty();
 	}
 
 	public Product findById(Long id) {
-	    Optional<? extends Product> product;
+		Optional<? extends Product> product;
 
-	    product = coffeeRepo.findById(id);
-	    if (product.isPresent()) {
-	        return product.get();
-	    }
+		product = coffeeRepo.findById(id);
+		if (product.isPresent()) {
+			return product.get();
+		}
 
-	    product = bookRepo.findById(id);
-	    if (product.isPresent()) {
-	        return product.get();
-	    }
+		product = bookRepo.findById(id);
+		if (product.isPresent()) {
+			return product.get();
+		}
 
-	    product = foodRepo.findById(id);
-	    if (product.isPresent()) {
-	        return product.get();
-	    }
+		product = foodRepo.findById(id);
+		if (product.isPresent()) {
+			return product.get();
+		}
 
-	    throw new RuntimeException("Product not found with id: " + id);
+		throw new RuntimeException("Product not found with id: " + id);
 	}
-	
+
 	public void deleteProduct(Long id) {
-        // Sprawdź, czy produkt znajduje się w jednym z repozytoriów
-        if (coffeeRepo.existsById(id)) {
-            coffeeRepo.deleteById(id);
-        } else if (bookRepo.existsById(id)) {
-            bookRepo.deleteById(id);
-        } else if (foodRepo.existsById(id)) {
-            foodRepo.deleteById(id);
-        } else {
-            throw new EntityNotFoundException("Produkt o ID " + id + " nie został znaleziony");
-        }
-    }
+		// Sprawdź, czy produkt znajduje się w jednym z repozytoriów
+		if (coffeeRepo.existsById(id)) {
+			coffeeRepo.deleteById(id);
+		} else if (bookRepo.existsById(id)) {
+			bookRepo.deleteById(id);
+		} else if (foodRepo.existsById(id)) {
+			foodRepo.deleteById(id);
+		} else {
+			throw new EntityNotFoundException("Produkt o ID " + id + " nie został znaleziony");
+		}
+	}
 //	public Product updateProduct(Long id, ProductDTO productDTO) {
 //        switch (productDTO.getProductType()) {
 //            case COFFEE:
@@ -202,9 +199,7 @@ public class ProductService {
 //                throw new IllegalArgumentException("Nieznany typ produktu");
 //        }
 //    }
-	
-	
-	
+
 //	@Autowired
 //	private ProductRepository productRepo;
 

@@ -115,14 +115,9 @@ const ProductSection = () => {
   };
 
   const handleAddToBusket = (product) => {
-    console.log("Console log w handleAddToBusket", product);
     addToBusket(product);
 
-    // Dodaj cały obiekt produktu do addedToCartList
-    console.log("Dodawanie do addedToCartList", product);
-    console.log("Aktualny stan addedToCartList:", addedToCartList);
     setAddedToCartList((prevList) => {
-      console.log("PrevList w setAddedToCartList:", prevList);
       return [...prevList, product];
     });
   };

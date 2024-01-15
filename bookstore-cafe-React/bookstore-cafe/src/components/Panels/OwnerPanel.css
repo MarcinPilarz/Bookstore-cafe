@@ -212,7 +212,7 @@ th {
 
 .product-container table thead {
   background-color: #4caf50;
-  color: white;
+  /* color: white; */
 }
 
 .product-container table th,
@@ -301,7 +301,7 @@ th {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  background-color: #4caf50; /* Zielony dla ogólnych przycisków */
+  background-color: #4caf50;
   color: white;
 }
 
@@ -310,19 +310,16 @@ th {
   background-color: #45a049;
 }
 
-/* Styl dla przycisku Edytuj */
 .product-container .edit-button {
   background-color: #ffc107; /* Żółty */
 }
 
-/* Styl dla przycisku Usuń */
 .product-container .delete-button {
-  background-color: #dc3545; /* Czerwony */
+  background-color: #dc3545;
 }
 
-/* Styl dla przycisku Dodaj */
 .product-container .add-button {
-  background-color: #007bff; /* Niebieski */
+  background-color: #007bff;
 }
 
 .product-container .table-container {
@@ -338,7 +335,7 @@ th {
 
 .product-container table thead {
   background-color: #4caf50;
-  color: white;
+  /* color: white; */
 }
 
 .product-container table th,
@@ -352,7 +349,6 @@ th {
   background-color: #f2f2f2;
 }
 
-/* Styl dla pól input */
 .product-container input[type="text"],
 .product-container input[type="number"],
 .product-container textarea {
@@ -413,4 +409,50 @@ th {
   .product-container textarea {
     width: 90%;
   }
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.btn-add {
+  background-color: #007bff; /* Niebieski dla przycisku Dodaj */
+}
+
+.btn-edit {
+  background-color: #ffc107; /* Żółty dla przycisku Edytuj */
+}
+
+.btn-delete {
+  background-color: #dc3545; /* Czerwony dla przycisku Usuń */
+}
+
+/* Styl tabeli */
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+  text-align: left;
+  padding: 8px;
+}
+
+.employee-table thead {
+  background-color: #28a745; /* Zielony dla nagłówka tabeli */
+  /* color: white; */
+}
+
+.employee-table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+.employee-table tr:hover {
+  background-color: #ddd;
 }

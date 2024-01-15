@@ -53,7 +53,7 @@ img#main-photo {
   position: relative;
   /* text-align: right; */
   top: -16.2rem;
-  right: -1%;
+  right: -5%;
   letter-spacing: 2px; /* Odstęp między literami */
   word-spacing: 4px; /* Odstęp między słowami */
   /* line-height: 1.2; */
@@ -69,7 +69,7 @@ img#main-photo {
   word-spacing: 4px; /* Odstęp między słowami */
   /* line-height: 1.2; */
   top: -13.2rem;
-  right: -1.2%;
+  right: -2.2%;
   /* width: 23%; */
 }
 .button-image {

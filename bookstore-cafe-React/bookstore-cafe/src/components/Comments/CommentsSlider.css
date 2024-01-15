@@ -115,6 +115,8 @@ div.undefined.react-stars {
   justify-content: center;
   align-items: center;
   text-align: center;
+  position: relative;
+  top: -5px;
 }
 div.undefined.react-stars span:hover {
   background-color: transparent;
