@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Singup.css";
 const Signup = () => {
@@ -11,7 +11,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [roleType, setRoleType] = useState("");
-
+  const naviage = useNavigate();
   const [registrationData, setRegistrationData] = useState({
     firstName: "",
     lastName: "",
@@ -27,35 +27,11 @@ const Signup = () => {
     window.location.href = "/signin";
   };
 
-  const handlePeopleRegister = async () => {
-    try {
-      console.log("Rejestracja:", {
-        firstName,
-        lastName,
-        phoneNumber,
-        email,
-        password,
-        roleType,
-      });
-      const response = await axios.post("http://localhost:8080/newPerson", {
-        firstName,
-        lastName,
-        phoneNumber,
-        email,
-        password,
-        roleType,
-      });
-      console.log("Odpowiedź po rejestracji:", response.data);
-    } catch (error) {
-      console.error("Błąd rejestracji:", error.message);
-    }
-  };
-
   const handleRegisterSubmit = async () => {
-    // if (registrationData.password !== repeatedPassword) {
-    //   alert("Hasła nie są takie same!");
-    //   return;
-    // }
+    if (registrationData.password !== repeatedPassword) {
+      alert("Hasła nie są takie same!");
+      return;
+    }
     try {
       const response = await axios.post(
         "http://localhost:8080/newPerson",
@@ -82,6 +58,7 @@ const Signup = () => {
       });
       setRepeatedPassword("");
       console.log("Zarejestrowano pomyślnie");
+      naviage("/signin");
     } catch (error) {
       console.error("Błąd rejestracji:", error.message);
       console.error("Szczegóły błędu:", error.stack);

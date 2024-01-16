@@ -29,7 +29,6 @@ export const CartProvider = ({ children }) => {
       );
 
       if (existingProductIndex !== -1) {
-        // Sprawdź, czy dodanie kolejnej sztuki nie przekroczy limitu 10
         if (prevCart[existingProductIndex].quantity < 10) {
           const updatedCart = [...prevCart];
           updatedCart[existingProductIndex] = {
@@ -37,19 +36,15 @@ export const CartProvider = ({ children }) => {
             quantity: updatedCart[existingProductIndex].quantity + 1,
           };
 
-          // localStorage.setItem("busket", JSON.stringify(updatedCart));
           localStorage.setItem(busketKey, JSON.stringify(updatedCart));
           return updatedCart;
         } else {
-          // Jeśli limit zostałby przekroczony, nie dodawaj więcej i zwróć obecny koszyk
           alert("Możesz dodać maksymalnie 10 sztuk tego produktu.");
           return prevCart;
         }
       } else {
-        // Dodaj nowy produkt do koszyka z ilością 1
         const updatedCart = [...prevCart, { ...product, quantity: 1 }];
 
-        // localStorage.setItem("busket", JSON.stringify(updatedCart));
         localStorage.setItem(busketKey, JSON.stringify(updatedCart));
         return updatedCart;
       }

@@ -186,7 +186,10 @@ const ProductSection = () => {
                       Do koszyka
                     </button>
                   ) : (
-                    <button onClick={handleSigninClick}>
+                    <button
+                      className="else-add-busket-button"
+                      onClick={handleSigninClick}
+                    >
                       Zaloguj się jako klient
                     </button>
                   )}
@@ -266,13 +269,15 @@ const ProductSection = () => {
                       Do koszyka
                     </button>
                   ) : (
-                    <button onClick={handleSigninClick}>
+                    <button
+                      className="else-add-busket-button"
+                      onClick={handleSigninClick}
+                    >
                       Zaloguj się jako klient
                     </button>
                   )}
                 </>
               </div>
-              {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
           <div className="pagination-container">
@@ -344,13 +349,15 @@ const ProductSection = () => {
                       Do koszyka
                     </button>
                   ) : (
-                    <button onClick={handleSigninClick}>
+                    <button
+                      className="else-add-busket-button"
+                      onClick={handleSigninClick}
+                    >
                       Zaloguj się jako klient
                     </button>
                   )}
                 </>
               </div>
-              {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
           <div className="pagination-container">
@@ -381,7 +388,7 @@ const ProductSection = () => {
               <h3 className="product-price-text">
                 Cena: {product.productPrice} zł
               </h3>
-              {/* Dodaj warunek sprawdzający typ produktu i wyświetl odpowiednie informacje */}
+
               {product.productType === "COFFEE" && (
                 <h3 className="coffee-intensity">
                   <span className="intensity-label">Intensywność:</span>
@@ -446,7 +453,10 @@ const ProductSection = () => {
                       Do koszyka
                     </button>
                   ) : (
-                    <button onClick={handleSigninClick}>
+                    <button
+                      className="else-add-busket-button"
+                      onClick={handleSigninClick}
+                    >
                       Zaloguj się jako klient
                     </button>
                   )}

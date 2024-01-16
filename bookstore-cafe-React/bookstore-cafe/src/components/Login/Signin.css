@@ -13,7 +13,7 @@
   border-radius: 8px;
   padding: 40px;
   width: 100%;
-  max-width: 500px; /* Zwiększona maksymalna szerokość dla większych ekranów */
+  max-width: 500px;
 }
 
 .header-login {
@@ -21,9 +21,9 @@
 }
 
 .h1-signin {
-  color: #2d4d2f; /* Ciemnozielony kolor tekstu */
+  color: #2d4d2f;
   text-align: center;
-  font-size: 2em; /* Zwiększony rozmiar czcionki */
+  font-size: 2em;
 }
 
 .toggle-buttons-login {
@@ -33,34 +33,34 @@
 }
 
 .toggle-buttons-login button {
-  padding: 15px 30px; /* Zwiększony padding */
+  padding: 15px 30px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   background-color: #e7e7e7;
   color: #333;
-  font-size: 1.2em; /* Zwiększony rozmiar czcionki */
+  font-size: 1.2em;
   transition: background-color 0.3s ease;
 }
 
 .toggle-buttons-login button.active {
-  background-color: #2d4d2f; /* Ciemnozielony kolor przycisku */
+  background-color: #2d4d2f;
   color: #fff;
 }
 
 .form-container-login {
   background-color: #fff;
   border-radius: 8px;
-  padding: 40px; /* Zwiększony padding */
+  padding: 40px;
 }
 
 .input-login {
   width: 100%;
-  padding: 15px; /* Zwiększony padding */
-  margin-bottom: 20px; /* Zwiększony margines */
+  padding: 15px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 1em; /* Zwiększony rozmiar czcionki */
+  font-size: 1em;
 }
 
 .singup-button {
@@ -69,13 +69,12 @@
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 15px; /* Zwiększony padding */
+  padding: 15px;
   cursor: pointer;
-  font-size: 1.2em; /* Zwiększony rozmiar czcionki */
+  font-size: 1.2em;
   transition: background-color 0.3s;
 }
 
-/* Responsywność dla mniejszych ekranów */
 @media (max-width: 768px) {
   .singup-container {
     max-width: 400px;
@@ -107,22 +106,13 @@
 }
 
 .forgot-password a {
-  color: #2d4d2f; /* Ciemnozielony kolor, pasujący do motywu */
+  color: #2d4d2f;
   font-size: 0.9em;
   text-decoration: none;
 }
 
 .forgot-password a:hover {
   text-decoration: underline;
-}
-
-.reset-password-form {
-  background-color: #fff;
-  padding: 20px;
-  margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
 }
 
 .input-login {
@@ -184,13 +174,41 @@
   cursor: pointer;
   font-size: 0.9em;
   transition: background-color 0.3s ease;
-  margin-top: 10px; /* Odstęp od pól hasła */
-  /* width: 100%; */
+  margin-top: 10px;
 }
 
 .show-hide-password-button-signin:hover {
   background-color: #2e8b57;
   color: #fff;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+}
+
+.reset-password-form {
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  width: 80%;
+  max-width: 300px;
+}
+
+input.input-reset-password {
+  width: 80%;
 }
 @media (max-width: 480px) {
   .singup-container {

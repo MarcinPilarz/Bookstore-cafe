@@ -29,6 +29,7 @@ const Signin = () => {
     window.location.href = "/signup";
   };
   const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
   const handleLogin = async () => {
     try {
       const response = await axios.post(
@@ -145,22 +146,28 @@ const Signin = () => {
   };
 
   const handleResetPassword = async () => {
-    if (!loginData.email) {
-      console.error("Adres email jest niezdefiniowany");
+    if (!loginData.email || !newPassword) {
+      console.error("Adres email lub nowe hasło jest niezdefiniowane");
       return;
     }
 
     try {
-      await axios.post("http://localhost:8080/reset-password", {
-        email: loginData.email,
-      });
-      console.log(
-        "Instrukcje dotyczące resetowania hasła zostały wysłane na email."
+      await axios.put(
+        `http://localhost:8080/reset-password?email=${loginData.email}&newPassword=${newPassword}`,
+        {
+          email: loginData.email,
+          newPassword: newPassword,
+        }
       );
+      console.log("Hasło zostało zresetowane.");
       setShowResetPasswordForm(false);
     } catch (error) {
       console.error("Błąd podczas resetowania hasła", error);
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowResetPasswordForm(false);
   };
   return (
     // <AuthContext.Provider
@@ -252,22 +259,36 @@ const Signin = () => {
                 Zaloguj się
               </button>
               {showResetPasswordForm && (
-                <div className="reset-password-form">
-                  <input
-                    className="input-login"
-                    type="email"
-                    name="email"
-                    placeholder="E-mail"
-                    value={loginData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  <button
-                    onClick={handleResetPassword}
-                    className="reset-password-button"
+                <div className="overlay" onClick={handleCloseModal}>
+                  <div
+                    className="reset-password-form"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    Wyślij link resetujący hasło
-                  </button>
+                    <input
+                      className="input-login input-reset-password"
+                      type="email"
+                      name="email"
+                      placeholder="E-mail"
+                      value={loginData.email}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      className="input-login input-reset-password"
+                      type="password"
+                      name="newPassword"
+                      placeholder="Nowe hasło"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      required
+                    />
+                    <button
+                      onClick={handleResetPassword}
+                      className="reset-password-button"
+                    >
+                      Zmień hasło
+                    </button>
+                  </div>
                 </div>
               )}
 
@@ -281,7 +302,6 @@ const Signin = () => {
         </div>
       </div>
     </section>
-    // </AuthContext.Provider>
   );
 };
 

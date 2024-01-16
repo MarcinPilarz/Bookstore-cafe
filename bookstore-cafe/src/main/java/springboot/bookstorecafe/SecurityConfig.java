@@ -54,7 +54,7 @@ public class SecurityConfig {
 								"/updateEvent", "/deleteEvent", "/customNumberOfPeople", "/cancleReservation",
 								"/coffee", "/uploadImage", "/addImage/{idProduct}", "/products", "/updateRoleType",
 								"/order-status", "/update-order-status", "/addProduct", "/updateProducts",
-								"/deleteCoffee", "/employees", "/editUser", "/deleteComment")
+								"/deleteCoffee", "/employees", "/editUser", "/deleteComment", "/reset-password")
 						.permitAll().requestMatchers("/api/v1/admin").hasAnyAuthority(RoleType.Pracownik.name())
 						.requestMatchers("/sayAdmin", "/api/v1/user", "/reviews", "/events", "/sayUser")
 						.hasAnyAuthority(RoleType.Klient.name(), RoleType.Pracownik.name(), RoleType.Wlasciciel.name())

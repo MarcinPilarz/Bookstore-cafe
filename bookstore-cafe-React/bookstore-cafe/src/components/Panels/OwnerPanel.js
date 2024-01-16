@@ -1194,79 +1194,88 @@ const OwnerPanel = () => {
         {activeTab === "rezerwacje" && (
           <section>
             <h3 className="dashboardContentTitle">Zarządzanie Rezerwacjami</h3>
-            <table className="reservation-table">
-              <thead>
-                <tr>
-                  <th>Osoba rezerwująca</th>
-                  <th>Numer osoby rezerwującej</th>
-                  <th>Data rezerwacji</th>
-                  <th>Ilość osób</th>
-                  <th>Numer stolika</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reservationPanel.map((reservation) => (
-                  <tr key={reservation.idReservation}>
-                    <td>
-                      {reservation.person.firstName}{" "}
-                      {reservation.person.lastName}
-                    </td>
-                    <td>{reservation.person.phoneNumber}</td>
-                    <td>{reservation.bokkingData}</td>
-
-                    {editReservationId === reservation.idReservation ? (
-                      <input
-                        type="text"
-                        value={customEdtitReservationData.numberOfPeople}
-                        onChange={(e) =>
-                          setCustomEditReservationData({
-                            ...customEdtitReservationData,
-                            numberOfPeople: e.target.value,
-                          })
-                        }
-                      />
-                    ) : (
-                      reservation.numberOfPeople
-                    )}
-
-                    <td>{reservation.bookTable.tableNumber}</td>
-                    <td>
-                      {editReservationId === reservation.idReservation ? (
-                        <>
-                          <button
-                            onClick={() =>
-                              handleSaveReservation(reservation.idReservation)
-                            }
-                          >
-                            Zapisz
-                          </button>
-                          <button onClick={() => setEditReservationId(null)}>
-                            Anuluj
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() =>
-                              editReservation(reservation.idReservation)
-                            }
-                          >
-                            Edytuj
-                          </button>
-                          <button
-                            onClick={() =>
-                              deleteReservation(reservation.idReservation)
-                            }
-                          >
-                            Usuń
-                          </button>
-                        </>
-                      )}
-                    </td>
+            <div className="reservation-table-container">
+              <table className="reservation-table">
+                <thead>
+                  <tr>
+                    <th>Osoba rezerwująca</th>
+                    <th>Numer osoby rezerwującej</th>
+                    <th>Data rezerwacji</th>
+                    <th>Ilość osób</th>
+                    <th>Numer stolika</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {reservationPanel.map((reservation) => (
+                    <tr key={reservation.idReservation}>
+                      <td>
+                        {reservation.person.firstName}{" "}
+                        {reservation.person.lastName}
+                      </td>
+                      <td>{reservation.person.phoneNumber}</td>
+                      <td>{reservation.bokkingData}</td>
+                      <td>
+                        {editReservationId === reservation.idReservation ? (
+                          <input
+                            type="text"
+                            className="reservation-input"
+                            value={customEdtitReservationData.numberOfPeople}
+                            onChange={(e) =>
+                              setCustomEditReservationData({
+                                ...customEdtitReservationData,
+                                numberOfPeople: e.target.value,
+                              })
+                            }
+                          />
+                        ) : (
+                          reservation.numberOfPeople
+                        )}
+                      </td>
+                      <td>{reservation.bookTable.tableNumber}</td>
+                      <td>
+                        {editReservationId === reservation.idReservation ? (
+                          <>
+                            <button
+                              className="save-button"
+                              onClick={() =>
+                                handleSaveReservation(reservation.idReservation)
+                              }
+                            >
+                              Zapisz
+                            </button>
+                            <button
+                              className="cancel-button"
+                              onClick={() => setEditReservationId(null)}
+                            >
+                              Anuluj
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              className="edit-button"
+                              onClick={() =>
+                                editReservation(reservation.idReservation)
+                              }
+                            >
+                              Edytuj
+                            </button>
+                            <button
+                              className="delete-button"
+                              onClick={() =>
+                                deleteReservation(reservation.idReservation)
+                              }
+                            >
+                              Usuń
+                            </button>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             {/* Tabela rezerwacji lub lista */}
           </section>
@@ -1275,84 +1284,101 @@ const OwnerPanel = () => {
         {activeTab === "wydarzenia" && (
           <section>
             <h3 className="dashboardContentTitle">Zarządzanie Wydarzeniami</h3>
-            <table className="events-table">
-              <thead>
-                <tr>
-                  <th>Nazwa wydarzenia</th>
-                  <th>Opis wydarzenia</th>
-                  <th>Data opublikowania</th>
-                  <th>Osoba publikująca</th>
-                </tr>
-              </thead>
-              <tbody>
-                {eventsPanel.map((events) => (
-                  <tr key={events.idEvent}>
-                    <td>
-                      {editEventId === events.idEvent ? (
-                        <input
-                          type="text"
-                          value={eventFormData.eventName}
-                          onChange={(e) =>
-                            setEventFormData({
-                              ...eventFormData,
-                              eventName: e.target.value,
-                            })
-                          }
-                        />
-                      ) : (
-                        events.eventName
-                      )}
-                    </td>
-                    <td>
-                      {editEventId === events.idEvent ? (
-                        <input
-                          type="text"
-                          value={eventFormData.eventDescription}
-                          onChange={(e) =>
-                            setEventFormData({
-                              ...eventFormData,
-                              eventDescription: e.target.value,
-                            })
-                          }
-                        />
-                      ) : (
-                        events.eventDescription
-                      )}
-                    </td>
-                    <td>{events.eventsDate}</td>
-                    <td>
-                      {events.person.firstName} {events.person.lastName}
-                    </td>
-                    <td>
-                      {editEventId === events.idEvent ? (
-                        <>
-                          <button onClick={() => handleSave(events.idEvent)}>
-                            Zapisz
-                          </button>
-                          <button onClick={() => setEditEventsId(null)}>
-                            Anuluj
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button onClick={() => editEvent(events.idEvent)}>
-                            Edytuj
-                          </button>
-                          <button onClick={() => deleteEvent(events.idEvent)}>
-                            Usuń
-                          </button>
-                        </>
-                      )}
-                    </td>
+            <div className="events-table-container">
+              <table className="events-table">
+                <thead>
+                  <tr>
+                    <th>Nazwa wydarzenia</th>
+                    <th>Opis wydarzenia</th>
+                    <th>Data opublikowania</th>
+                    <th>Osoba publikująca</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {eventsPanel.map((events) => (
+                    <tr key={events.idEvent}>
+                      <td>
+                        {editEventId === events.idEvent ? (
+                          <input
+                            type="text"
+                            className="event-input" // Dodana klasa dla input
+                            value={eventFormData.eventName}
+                            onChange={(e) =>
+                              setEventFormData({
+                                ...eventFormData,
+                                eventName: e.target.value,
+                              })
+                            }
+                          />
+                        ) : (
+                          events.eventName
+                        )}
+                      </td>
+                      <td>
+                        {editEventId === events.idEvent ? (
+                          <textarea
+                            className="event-description-input"
+                            value={eventFormData.eventDescription}
+                            onChange={(e) =>
+                              setEventFormData({
+                                ...eventFormData,
+                                eventDescription: e.target.value,
+                              })
+                            }
+                            maxLength="200"
+                          />
+                        ) : (
+                          events.eventDescription
+                        )}
+                      </td>
+                      <td>{events.eventsDate}</td>
+                      <td>
+                        {events.person.firstName} {events.person.lastName}
+                      </td>
+                      <td>
+                        {editEventId === events.idEvent ? (
+                          <>
+                            <button
+                              className="save-button"
+                              onClick={() => handleSave(events.idEvent)}
+                            >
+                              Zapisz
+                            </button>
+                            <button
+                              className="cancel-button"
+                              onClick={() => setEditEventsId(null)}
+                            >
+                              Anuluj
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              className="edit-button"
+                              onClick={() => editEvent(events.idEvent)}
+                            >
+                              Edytuj
+                            </button>
+                            <button
+                              className="delete-button"
+                              onClick={() => deleteEvent(events.idEvent)}
+                            >
+                              Usuń
+                            </button>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
             <section>
               <h3 className="dashboardContentTitle">Dodaj Nowe Wydarzenie</h3>
-              <form onSubmit={handleCreateEvent}>
+              <form onSubmit={handleCreateEvent} className="events-form">
                 <input
                   type="text"
+                  className="event-input"
                   value={eventFormData.eventName}
                   onChange={(e) =>
                     setEventFormData({
@@ -1364,6 +1390,7 @@ const OwnerPanel = () => {
                 />
                 <input
                   type="text"
+                  className="event-input"
                   value={eventFormData.eventDescription}
                   onChange={(e) =>
                     setEventFormData({
