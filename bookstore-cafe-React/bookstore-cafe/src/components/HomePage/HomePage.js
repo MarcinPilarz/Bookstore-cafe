@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "../HomePage/HomePage.css";
 import ProductsTile from "./ProductsTile";
 import ProductModal from "./ReservationModal";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import EventSlider from "../EventSlider/EventSlider";
 import CommentsSlider from "../Comments/CommentsSlider";
 import axios from "axios";
@@ -41,6 +41,7 @@ const HomePage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [events, setEvents] = useState([]);
   const { authData } = useAuth();
+  const navigate = useNavigate();
   // console.log("Po useAuth", authData);
   useEffect(() => {
     console.log("Po useAuth w Home Page", authData);
@@ -69,6 +70,9 @@ const HomePage = () => {
   //     });
   // }, []);
 
+  const handleSigninClick = () => {
+    navigate("/signin");
+  };
   return (
     <>
       <Navbar />
@@ -140,7 +144,12 @@ const HomePage = () => {
               Zarezerwuj stolik
             </button>
           ) : (
-            <button>zaloguj się</button>
+            <button
+              onClick={handleSigninClick}
+              className="reservation-button-click"
+            >
+              Zaloguj się jako klient
+            </button>
           )}
         </section>
 

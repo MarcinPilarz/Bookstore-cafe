@@ -1,9 +1,3 @@
-div.comments {
-  /* position: relative; */
-  /* margin: 10px; */
-  /* padding: 10px; */
-}
-
 .comment-window {
   width: 30%;
 
@@ -11,10 +5,7 @@ div.comments {
   margin: 5px;
   padding: 5px;
   display: inline-block;
-  /* flex-wrap: wrap; */
-  /* justify-content: space-between; */
-  /* align-items: center; */
-  /* flex-direction: column; */
+
   text-align: center;
   box-shadow: 2px 2px 2px gray;
 }
@@ -45,7 +36,6 @@ p {
   position: relative;
 }
 p.data {
-  /* position: relative; */
   font-size: 9px;
   text-align: end;
   top: -3px;
@@ -58,7 +48,6 @@ h3.rating {
   font-size: 14px;
 }
 p.review-content {
-  /* position: relative; */
   font-size: 11px;
   top: -25px;
   text-align: center;
@@ -85,7 +74,6 @@ p.name-person {
   gap: 10px;
 }
 
-/* Styl dla pola tekstowego komentarza */
 .add-comment-container textarea {
   padding: 10px;
   border: 1px solid #ddd;
@@ -94,7 +82,6 @@ p.name-person {
   min-height: 100px;
 }
 
-/* Styl dla przycisku */
 .add-comment-container button {
   padding: 10px 15px;
   background-color: #007bff;

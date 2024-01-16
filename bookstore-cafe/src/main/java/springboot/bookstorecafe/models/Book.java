@@ -12,7 +12,7 @@ public class Book extends Product {
 	private String author;
 
 	@NotNull
-	@Column(name = "genere")
+	@Column(name = "genre")
 	private String genere;
 
 	@NotNull

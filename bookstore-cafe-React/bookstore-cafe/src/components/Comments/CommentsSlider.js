@@ -3,6 +3,7 @@ import axios from "axios";
 import { useAuth } from "../Login/LoginInfoContext";
 import ReactStars from "react-rating-stars-component";
 import "./CommentsSlider.css";
+import { useNavigate } from "react-router-dom";
 const CommentsSlider = () => {
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);
@@ -10,12 +11,9 @@ const CommentsSlider = () => {
   const [comment, setComment] = React.useState("");
   const [reviewContent, setReviewContent] = useState("");
   const [rating, setRating] = useState(0);
+  const navigate = useNavigate();
   const fetchReviews = async () => {
-    // Zakładamy, że authData jest aktualne i pochodzi z kontekstu
     if (authData?.token && new Date().getTime() < authData?.expirationTime) {
-      // Usuwanie cudzysłowów z początku i końca stringa tokena, jeśli istnieją
-
-      //.replace(/^"|"$/g, "");
       const config = {
         headers: {
           Authorization: `Bearer ${authData.token}`,
@@ -78,15 +76,16 @@ const CommentsSlider = () => {
       rating,
     };
 
-    // const config = {
-    //   headers: { Authorization: `Bearer ${token}` }
-    // };
+    const config = {
+      headers: { Authorization: `Bearer ${authData?.token}` },
+    };
 
     try {
       const response = await axios.post(
         `http://localhost:8080/newComment?idPerson=${authData?.idPerson}`,
-        reviewData
-      ); //, config
+        reviewData,
+        config
+      );
       console.log("Odpowiedź serwera:", response.data);
       setReviewContent("");
       setRating(0);
@@ -102,6 +101,10 @@ const CommentsSlider = () => {
 
   const formatDate = (dateString) => {
     return new Date(dateString).toISOString().split("T")[0];
+  };
+
+  const handleSigninClick = () => {
+    navigate("/signin");
   };
   return (
     <>
@@ -121,7 +124,11 @@ const CommentsSlider = () => {
             isHalf={false}
             activeColor="#ffd700"
           />
-          <button type="submit">Dodaj recenzję</button>
+          {authData?.roleType === "Klient" ? (
+            <button type="submit">Dodaj recenzję</button>
+          ) : (
+            <button onClick={handleSigninClick}>Zaloguj się jako klient</button>
+          )}
         </form>
       </div>
 

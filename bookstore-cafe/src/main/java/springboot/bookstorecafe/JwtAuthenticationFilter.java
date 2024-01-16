@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private JWTService jwtService;
 
 	
-	//błąd HikariCP
+	
 	@Autowired
 	@Lazy
 	private LoginPersonInterface userService;
@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		userEmail = jwtService.extractUserName(jwt);
 
 		
-		//isNotEmpty
+	
 		if (StringUtils.hasText(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			UserDetails userDetails = userService.userDetailsService().loadUserByUsername(userEmail);

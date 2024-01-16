@@ -21,7 +21,7 @@ public class StorageConfig {
 //	    }
 	 
 	    public Storage storage() {
-	        // Konfiguracja i inicjalizacja obiektu Storage
+	    
 	        return StorageOptions.getDefaultInstance().getService();
 	    }
 }
