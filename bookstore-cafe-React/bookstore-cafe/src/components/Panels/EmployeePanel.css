@@ -270,6 +270,10 @@
   background-color: #008cba; /* Niebieski kolor przycisku Dodaj */
 }
 
+.li-order.all,
+.li-order-book.book {
+  border-bottom: 1px solid black;
+}
 @media screen and (max-width: 600px) {
   .events-table th,
   .events-table td,

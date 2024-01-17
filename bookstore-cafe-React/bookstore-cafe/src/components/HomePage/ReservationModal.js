@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import Select from "react-select";
-import { useAuth } from "../Login/LoginInfoContext";
 import "react-datepicker/dist/react-datepicker.css";
+import { useAuth } from "../Login/LoginInfoContext";
 import "./ReservationModal.css";
 
 // productData,
@@ -66,16 +65,20 @@ const ReservationModal = ({ closeModal }) => {
   // };
 
   const handleSubmitReservation = async () => {
-    const formattedDate = reservationDate.toISOString().split('T')[0]; // Formatowanie daty do formatu YYYY-MM-DD
-    var idPerson = authData.idPerson /* ID użytkownika, np. pobrane z kontekstu lub stanu aplikacji */;
-  
-   try {
-  const response = await axios.post(`http://localhost:8080/newReservation?idPerson=${authData.idPerson}&bokkingData=${formattedDate}&numberOfPeople=${numberOfPeople}`, {
-    // idPerson: idPerson,
-    // bokkingData: formattedDate,
-    // numberOfPeople: numberOfPeople,
-  });
-      console.log("Pomyslna rejestracja!")
+    const formattedDate = reservationDate.toISOString().split("T")[0]; // Formatowanie daty do formatu YYYY-MM-DD
+    var idPerson =
+      authData.idPerson; /* ID użytkownika, np. pobrane z kontekstu lub stanu aplikacji */
+
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/newReservation?idPerson=${authData.idPerson}&bokkingData=${formattedDate}&numberOfPeople=${numberOfPeople}`,
+        {
+          // idPerson: idPerson,
+          // bokkingData: formattedDate,
+          // numberOfPeople: numberOfPeople,
+        }
+      );
+      console.log("Pomyslna rejestracja!");
       // Obsługa odpowiedzi, np. wyświetlenie potwierdzenia
     } catch (error) {
       // Obsługa błędów, np. wyświetlenie komunikatu o błędzie
@@ -107,7 +110,6 @@ const ReservationModal = ({ closeModal }) => {
           />
         </div>
 
-       
         {/* Input na liczbę osób */}
         <div className="reservation-value-people">
           <label>Liczba osób:</label>

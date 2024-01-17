@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import ProductSection from "./ProductSection";
+import React, { useEffect, useState } from "react";
 import "./SearchBarProducts.css";
 const SearchBarProducts = ({ allProducts, onSearch, productType }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -8,23 +7,18 @@ const SearchBarProducts = ({ allProducts, onSearch, productType }) => {
     const newSearchQuery = e.target.value;
     setSearchQuery(newSearchQuery);
 
-    // Filtrowanie produktów na podstawie wprowadzonego zapytania
     const filteredProducts = allProducts.filter((product) =>
-      product.productName
-        .toLowerCase()
-        .includes(newSearchQuery.toLowerCase())
+      product.productName.toLowerCase().includes(newSearchQuery.toLowerCase())
     );
 
-    // Przekazanie przefiltrowanych produktów do komponentu nadrzędnego
     onSearch(newSearchQuery, filteredProducts);
   };
 
   const clearSearch = () => {
-    setSearchQuery(""); // Ustaw puste pole wyszukiwania
-    onSearch("", []); // Przekaż puste zapytanie i pustą listę do komponentu nadrzędnego
+    setSearchQuery("");
+    onSearch("", []);
   };
   useEffect(() => {
-    // Wyczyść pole wyszukiwania po zmianie zakładki
     clearSearch();
   }, [productType]);
   return (
@@ -37,7 +31,11 @@ const SearchBarProducts = ({ allProducts, onSearch, productType }) => {
         value={searchQuery}
         onChange={handleSearchChange}
       />
-      <button type="button" className="clear-button-search-bar"onClick={clearSearch}>
+      <button
+        type="button"
+        className="clear-button-search-bar"
+        onClick={clearSearch}
+      >
         Wyczyść
       </button>
     </form>

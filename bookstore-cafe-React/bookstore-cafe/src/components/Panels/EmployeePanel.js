@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import "./EmployeePanel.css";
-import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../Login/LoginInfoContext";
+import withAuth from "../Login/withAuth";
+import "./EmployeePanel.css";
 const EmployeePanel = () => {
   const [activeTab, setActiveTab] = useState("dostepne zamowienia");
   const [eventsPanel, setEventsPanel] = useState([]);
@@ -702,11 +703,21 @@ const EmployeePanel = () => {
         {activeTab === "dostepne zamowienia" && (
           <section className="orders-container">
             <ul>
-              <li onClick={() => setActiveTab("dostepne zamowienia")}>
+              <li
+                className={`li-order ${
+                  activeTab === "dostepne zamowienia" ? "all" : ""
+                }`}
+                onClick={() => setActiveTab("dostepne zamowienia")}
+              >
                 Dostępne zamówienia
               </li>
-              <li onClick={() => setActiveTab("oczekujace zamowienia")}>
-                Oczękujące zamówienia
+              <li
+                className={`li-order-book ${
+                  activeTab === "oczekujace zamowienia" ? "book" : ""
+                }`}
+                onClick={() => setActiveTab("oczekujace zamowienia")}
+              >
+                Oczekujące zamówienia
               </li>
             </ul>
             {orderPanel.map((order) => {
@@ -855,4 +866,4 @@ const EmployeePanel = () => {
   );
 };
 
-export default EmployeePanel;
+export default withAuth(EmployeePanel, ["Pracownik"]);

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
+import React from "react";
+import { useAuth } from "../Login/LoginInfoContext";
 import { useCart } from "../ProductSection/BusketProducts";
 import "./RoleToggle.css";
 const RoleToggle = () => {
@@ -67,7 +67,9 @@ const RoleToggle = () => {
     <div>
       <p>Aktualna rola: {authData.roleType}</p>
       {canToggleRole() && (
-        <button className="role-toggle-button" onClick={toggleRole}>Zmień rolę na {getNextRole()}</button>
+        <button className="role-toggle-button" onClick={toggleRole}>
+          Zmień rolę na {getNextRole()}
+        </button>
       )}
     </div>
   );

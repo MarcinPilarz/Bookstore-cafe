@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "../Login/LoginInfoContext";
+import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
-import "./CommentsSlider.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Login/LoginInfoContext";
+import "./CommentsSlider.css";
 const CommentsSlider = () => {
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);

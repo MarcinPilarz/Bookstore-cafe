@@ -1,17 +1,16 @@
 import {
   faBars,
   faBasketShopping,
-  faClock,
+  faBell,
   faCircleUser,
-  faBell
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Login/LoginInfoContext";
 import { useCart } from "../ProductSection/BusketProducts";
 import "./Navbar.css";
-import { useAuth } from "../Login/LoginInfoContext";
-import axios from "axios";
 import RoleToggle from "./RoleToggle";
 const Navbar = () => {
   const [showMenuBars, setShowMenuBars] = useState(false);
@@ -28,7 +27,7 @@ const Navbar = () => {
     updateProductQuantity,
     removeFromBusket,
   } = useCart();
-  const [barNotification, setBarNotification]= useState([]);
+  const [barNotification, setBarNotification] = useState([]);
   const { authData, logout } = useAuth();
   const idPerson = authData?.idPerson;
   const [cartItemCount, setCartItemCount] = useState(0);
@@ -174,22 +173,22 @@ const Navbar = () => {
   }, [authData?.idPerson]);
 
   useEffect(() => {
-    if (idPerson) { 
-    axios
-      .get(`http://localhost:8080/orders/person?personId=${idPerson}`)
-      .then((response) => {
+    if (idPerson) {
+      axios
+        .get(`http://localhost:8080/orders/person?personId=${idPerson}`)
+        .then((response) => {
           const clientOrdersInfo = response.data;
           console.log("Pobrane danych zamówień z API:", clientOrdersInfo);
           setBarNotification(clientOrdersInfo);
-      })
-      .catch((error) => {
+        })
+        .catch((error) => {
           console.error("Błąd pobierania zamówień", error);
-      });
+        });
     } else {
-        console.log("idPerson jest undefined lub pusty");
-        // Możesz tutaj obsłużyć sytuację, gdy idPerson jest undefined lub pusty
+      console.log("idPerson jest undefined lub pusty");
+      // Możesz tutaj obsłużyć sytuację, gdy idPerson jest undefined lub pusty
     }
-}, [idPerson]);
+  }, [idPerson]);
   return (
     <header>
       <nav className={`bar-icon ${showMenuBars ? "open" : ""}`}>
@@ -284,54 +283,52 @@ const Navbar = () => {
         >
           {historyOrderBar && (
             <div className="order-item-list">
-             {  barNotification.map((status) =>(
-                <div  key={status.idWholeOrderPerson}>
-                  
-                  <div> 
-                    Twoje zamówienie o numerze {status.idWholeOrderPerson} jest {status.orderStatus}
+              {barNotification.map((status) => (
+                <div key={status.idWholeOrderPerson}>
+                  <div>
+                    Twoje zamówienie o numerze {status.idWholeOrderPerson} jest{" "}
+                    {status.orderStatus}
                   </div>
-                  
-                   </div>
+                </div>
               ))}
             </div>
           )}
-         
         </div>
         <div className="user-icon" onClick={userBar}>
-  <FontAwesomeIcon icon={faCircleUser} />
-</div>
-{userActionBar && authData?.token == null && (
-  <div className="user-action-bar">
-    <Link to="/signin">Zaloguj się</Link>
-    <Link to="/signup">Zarejestruj się</Link>
-  </div>
-)}
+          <FontAwesomeIcon icon={faCircleUser} />
+        </div>
+        {userActionBar && authData?.token == null && (
+          <div className="user-action-bar">
+            <Link to="/signin">Zaloguj się</Link>
+            <Link to="/signup">Zarejestruj się</Link>
+          </div>
+        )}
 
-{userActionBar && authData?.token && (
-  <div className="user-action-bar">
-    {authData?.roleType === "Klient" && (
-      <>
-        <Link to="/user-panel">Mój profil</Link>
-        <RoleToggle />
-      </>
-    )}
+        {userActionBar && authData?.token && (
+          <div className="user-action-bar">
+            {authData?.roleType === "Klient" && (
+              <>
+                <Link to="/user-panel">Mój profil</Link>
+                <RoleToggle />
+              </>
+            )}
 
-    {authData?.roleType === "Pracownik" && (
-      <>
-        <Link to="/employee-panel">Profil pracownika</Link>
-        <RoleToggle />
-      </>
-    )}
-    {authData?.roleType === "Wlasciciel" && (
-      <>
-        <Link to="/owner-panel">Profil administratora</Link>
-        <RoleToggle />
-      </>
-    )}
-    <div onClick={logout}>Wyloguj</div>
-  </div>
-)}
-</div>
+            {authData?.roleType === "Pracownik" && (
+              <>
+                <Link to="/employee-panel">Profil pracownika</Link>
+                <RoleToggle />
+              </>
+            )}
+            {authData?.roleType === "Wlasciciel" && (
+              <>
+                <Link to="/owner-panel">Profil administratora</Link>
+                <RoleToggle />
+              </>
+            )}
+            <div onClick={logout}>Wyloguj</div>
+          </div>
+        )}
+      </div>
     </header>
   );
 };

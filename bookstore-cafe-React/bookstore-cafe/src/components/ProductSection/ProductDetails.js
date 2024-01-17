@@ -1,6 +1,5 @@
 import React from "react";
 import "./ProductDetails.css";
-import CoffeeIntensity from "./CoffeeIntensity";
 const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
   const selectedProduct = allProducts.find(
     (product) => product.idProduct === productId

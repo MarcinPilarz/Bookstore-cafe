@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./UserPanel.css";
+import React, { useEffect, useState } from "react";
 import Footer from "../Footer/Footer";
-import Navbar from "../Navbar/Navbar";
 import { useAuth } from "../Login/LoginInfoContext";
+import Navbar from "../Navbar/Navbar";
+import "./UserPanel.css";
 
 const UserPanel = () => {
   const [activeTab, setActiveTab] = useState("personalData");

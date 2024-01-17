@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Signin.css";
 //import { useHistory } from "react-router-dom";
 import { useAuth } from "./LoginInfoContext";
-import HomePage from "../HomePage/HomePage";
 // const AuthContext = React.createContext();
 const Signin = () => {
   const { authData, setAuthData } = useAuth();

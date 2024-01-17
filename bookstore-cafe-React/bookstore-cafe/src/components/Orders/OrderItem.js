@@ -1,8 +1,7 @@
 import React from "react";
-import { useCart } from "../ProductSection/BusketProducts";
-import { useAuth } from "../Login/LoginInfoContext";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Login/LoginInfoContext";
+import { useCart } from "../ProductSection/BusketProducts";
 import "./OrderItem.css";
 const OrderItem = () => {
   const { busket, clearBusket, updateProductQuantity, removeFromBusket } =

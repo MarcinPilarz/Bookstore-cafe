@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "./OwnerPanel.css";
-import "./EmployeePanel.css";
-
-import { useAuth } from "../Login/LoginInfoContext";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../Login/LoginInfoContext";
+import withAuth from "../Login/withAuth";
+import "./EmployeePanel.css";
+import "./OwnerPanel.css";
 const OwnerPanel = () => {
   const [activeTab, setActiveTab] = useState("zamowienia klientow");
   const [eventsPanel, setEventsPanel] = useState([]);
@@ -610,8 +609,10 @@ const OwnerPanel = () => {
       setShowImageUploadModal(false);
       setSelectedFile(null);
       setSelectedProductId(null);
+      alert("Zdjęcie zostało pomyślnie dodane");
     } catch (error) {
       console.error("Błąd przesyłania zdjęcia", error);
+      alert("Nie udało się dodać zdjęcia");
     }
   };
   const renderTableRows = () => {
@@ -646,7 +647,6 @@ const OwnerPanel = () => {
                   product.idProduct,
                   "Intensywność kawy"
                 )}
-                {/* Dodaj tutaj inne pola specyficzne dla kawy do edycji */}
               </>
             )}
 
@@ -701,7 +701,6 @@ const OwnerPanel = () => {
                   product.idProduct,
                   "Ilość w magazynie"
                 )}
-                {/* Dodaj tutaj inne pola specyficzne dla książek do edycji */}
               </>
             )}
 
@@ -719,7 +718,6 @@ const OwnerPanel = () => {
                   product.idProduct,
                   "Waga"
                 )}
-                {/* Dodaj tutaj inne pola specyficzne dla jedzenia do edycji */}
               </>
             )}
           </>
@@ -741,14 +739,12 @@ const OwnerPanel = () => {
                 <td>{product.bookCover}</td>
                 <td>{product.numberPage}</td>
                 <td>{product.numberBookStock}</td>
-                {/* Wyświetl inne pola książki */}
               </>
             )}
             {activeProductType === "FOOD" && (
               <>
                 <td>{product.amountOfCalories}</td>
                 <td>{product.foodWeight}</td>
-                {/* Wyświetl inne pola jedzenia */}
               </>
             )}
           </>
@@ -784,18 +780,6 @@ const OwnerPanel = () => {
   const handleCloseModal = () => {
     setShowAddModal(false);
   };
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   const updatedData = { ...newProductData, [name]: value };
-
-  //   if (activeProductType === 'BOOK' && name === 'numberBookStock') {
-  //     // Ustawienie isAvailable na TRUE, gdy numberBookStock > 0
-  //     updatedData.isAvailable = parseInt(value, 10) > 0;
-  //   }
-
-  //   setNewProductData(updatedData);
-  // };
 
   const handleInputChange = (e, id) => {
     const { name, value } = e.target;
@@ -858,9 +842,10 @@ const OwnerPanel = () => {
       });
       console.log("Produkt dodany", response.data);
       setShowAddModal(false);
-      // Opcjonalnie: Odśwież listę produktów
+      setProductPanel((prevProducts) => [...prevProducts, response.data]);
     } catch (error) {
       console.error("Błąd dodawania produktu", error);
+      alert("Błąd podczas dodawania produktu");
     }
   };
 
@@ -868,7 +853,7 @@ const OwnerPanel = () => {
     try {
       await axios.delete(`http://localhost:8080/deleteCoffee?id=${id}`);
       console.log("Produkt usunięty");
-      // Aktualizacja listy produktów po usunięciu
+
       const updatedProductPanel = productPanel.filter(
         (product) => product.idProduct !== id
       );
@@ -889,7 +874,6 @@ const OwnerPanel = () => {
               onChange={handleInputChange}
               placeholder="Intensywność kawy"
             />
-            {/* Dodaj tutaj inne specyficzne pola dla kawy */}
           </>
         );
       case "BOOK":
@@ -951,7 +935,6 @@ const OwnerPanel = () => {
               onChange={handleInputChange}
               placeholder="Ilość książek w magazynie"
             />
-            {/* Dodaj tutaj inne specyficzne pola dla książek */}
           </>
         );
       case "FOOD":
@@ -971,7 +954,6 @@ const OwnerPanel = () => {
               onChange={handleInputChange}
               placeholder="Waga"
             />
-            {/* Dodaj tutaj inne specyficzne pola dla jedzenia */}
           </>
         );
       default:
@@ -1016,14 +998,17 @@ const OwnerPanel = () => {
   };
 
   const handleAddEmployee = async (employeeData) => {
-    if (!employeeData.email.includes("@")) {
-      alert("Podany e-mail jest niepoprawny. Upewnij się, że zawiera znak @.");
+    if (!employeeData.email.includes("@pracownik")) {
+      alert(
+        "Podany e-mail jest niepoprawny. Upewnij się, że zawiera znak @ i domenę pracownik."
+      );
       return;
     }
     try {
       await axios.post("http://localhost:8080/newPerson", employeeData);
-      fetchEmployees(); // Ponowne pobranie listy pracowników po dodaniu nowego
+      fetchEmployees();
       console.log("Pracownik został pomyślnie zarejestrowany");
+      alert("Pracownik został pomyślnie zarejestrowany");
     } catch (error) {
       console.error("Error adding employee", error);
     }
@@ -1139,7 +1124,11 @@ const OwnerPanel = () => {
           )}
 
           {!isEditMode && (
-            <button type="button" onClick={handleGeneratePassword}>
+            <button
+              id="generate-password-button"
+              type="button"
+              onClick={handleGeneratePassword}
+            >
               Generuj Hasło
             </button>
           )}
@@ -1682,10 +1671,6 @@ const OwnerPanel = () => {
                 </tbody>
               </table>
               {showAddEditModal && renderModalForm()}
-              {/* Tutaj umieść formularz modalny dla dodawania/edycji pracownika
-    {showAddEditModal && (
-      // ...formularz modalny...
-    )} */}
             </div>
           </section>
         )}
@@ -1694,4 +1679,4 @@ const OwnerPanel = () => {
   );
 };
 
-export default OwnerPanel;
+export default withAuth(OwnerPanel, ["Wlasciciel"]);

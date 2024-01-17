@@ -1,16 +1,16 @@
-import React, { useState } from "react";
 import {
-  useStripe,
-  useElements,
-  CardNumberElement,
-  CardExpiryElement,
   CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
 } from "@stripe/react-stripe-js";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-import { useCart } from "../ProductSection/BusketProducts";
 import { useAuth } from "../Login/LoginInfoContext";
+import { useCart } from "../ProductSection/BusketProducts";
 import "./StripePaymentStyle.css";
 
 const StripePayment = () => {

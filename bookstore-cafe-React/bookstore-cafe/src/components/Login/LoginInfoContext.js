@@ -1,8 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 const LoginInfoContext = createContext();
 const AuthProvider = ({ children }) => {
   //   const [authData, setAuthData] = useState({
@@ -80,4 +78,4 @@ const useAuth = () => {
   return context;
 };
 
-export { AuthProvider, useAuth, LoginInfoContext };
+export { AuthProvider, LoginInfoContext, useAuth };

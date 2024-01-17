@@ -1,18 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
-import "../HomePage/HomePage.css";
-import ProductsTile from "./ProductsTile";
-import ProductModal from "./ReservationModal";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import EventSlider from "../EventSlider/EventSlider";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import CommentsSlider from "../Comments/CommentsSlider";
-import axios from "axios";
-import Navbar from "../Navbar/Navbar";
+import EventSlider from "../EventSlider/EventSlider";
 import Footer from "../Footer/Footer";
-import MainPhoto from "./MainPhoto";
-import ProductSection from "../ProductSection/ProductSection";
-import ReservationModal from "./ReservationModal";
-import { AuthContext } from "../Login/Signin";
+import "../HomePage/HomePage.css";
 import { useAuth } from "../Login/LoginInfoContext";
+import Navbar from "../Navbar/Navbar";
+import MainPhoto from "./MainPhoto";
+import ReservationModal from "./ReservationModal";
 
 const HomePage = () => {
   const products = [

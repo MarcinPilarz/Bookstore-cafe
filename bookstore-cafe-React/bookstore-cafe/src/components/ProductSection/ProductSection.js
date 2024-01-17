@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link, useNavigate } from "react-router-dom";
-import SearchBarProducts from "./SearchBarProducts";
-import Navbar from "../Navbar/Navbar";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Footer from "../Footer/Footer";
-import "./ProductSection.css";
-import CoffeeIntensity from "./CoffeeIntensity";
-import ProductDetails from "./ProductDetails";
-import { useCart } from "./BusketProducts";
 import { useAuth } from "../Login/LoginInfoContext";
+import Navbar from "../Navbar/Navbar";
+import { useCart } from "./BusketProducts";
+import CoffeeIntensity from "./CoffeeIntensity";
 import PaginationProducts from "./PaginationProducts";
+import ProductDetails from "./ProductDetails";
+import "./ProductSection.css";
+import SearchBarProducts from "./SearchBarProducts";
 // props= searchResault
 const ProductSection = () => {
   //const { productType } = useParams();
@@ -195,7 +195,6 @@ const ProductSection = () => {
                   )}
                 </>
               </div>
-              {/* Dodaj inne dane produktu, jeśli są dostępne */}
             </div>
           ))}
           <div className="pagination-container">
@@ -414,13 +413,11 @@ const ProductSection = () => {
                   {product.foodWeight} g
                 </h3>
               )}
-              {/* Dodaj inne dane produktu, jeśli są dostępne */}
+
               <div className="button-busket-info-container">
                 <>
                   <button
                     className="more-info-button"
-                    // onClick={productDetails}
-                    // allProducts={products}
                     onClick={() => toggleDetails(product.idProduct)}
                   >
                     Szczegóły
@@ -564,10 +561,53 @@ const ProductSection = () => {
                     {product.foodWeight} g
                   </h3>
                 )}
-                {/* Dodaj inne dane produktu, jeśli są dostępne */}
+
                 <div className="button-busket-info-container">
-                  <button className="more-info-button">Szczegóły</button>
-                  <button className="add-busket-button">Do koszyka</button>
+                  <>
+                    <button
+                      className="more-info-button"
+                      // onClick={productDetails}
+                      // allProducts={products}
+                      onClick={() => toggleDetails(product.idProduct)}
+                    >
+                      Szczegóły
+                    </button>
+                    {detailsMap[product.idProduct] && (
+                      <ProductDetails
+                        onClose={() =>
+                          setDetailsMap((prevDetailsMap) => ({
+                            ...prevDetailsMap,
+                            [product.idProduct]: false,
+                          }))
+                        }
+                        productId={product.idProduct}
+                        allProducts={products}
+                      />
+                    )}
+                  </>
+                  <>
+                    {authData?.roleType === "Klient" ? (
+                      <button
+                        className="add-busket-button"
+                        onClick={() => {
+                          console.log(
+                            "Produkt w buuttonie do przeslania",
+                            product
+                          ); // Wyświetla informacje o produkcie w konsoli
+                          handleAddToBusket(product);
+                        }}
+                      >
+                        Do koszyka
+                      </button>
+                    ) : (
+                      <button
+                        className="else-add-busket-button"
+                        onClick={handleSigninClick}
+                      >
+                        Zaloguj się jako klient
+                      </button>
+                    )}
+                  </>
                 </div>
               </div>
             ))}
