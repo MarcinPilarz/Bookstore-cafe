@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import CommentsSlider from "../Comments/CommentsSlider";
-import EventSlider from "../EventSlider/EventSlider";
-import Footer from "../Footer/Footer";
+import React, { useState, useEffect, useContext } from "react";
 import "../HomePage/HomePage.css";
-import { useAuth } from "../Login/LoginInfoContext";
+import ProductsTile from "./ProductsTile";
+import ProductModal from "./ReservationModal";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import EventSlider from "../EventSlider/EventSlider";
+import CommentsSlider from "../Comments/CommentsSlider";
+import axios from "axios";
 import Navbar from "../Navbar/Navbar";
+import Footer from "../Footer/Footer";
 import MainPhoto from "./MainPhoto";
+import ProductSection from "../ProductSection/ProductSection";
 import ReservationModal from "./ReservationModal";
+import { AuthContext } from "../Login/Signin";
+import { useAuth } from "../Login/LoginInfoContext";
 
 const HomePage = () => {
   const products = [
@@ -29,7 +34,6 @@ const HomePage = () => {
         "https://storage.googleapis.com/springbootphoto/springbootphoto/JedzenieKafelekProdukt.png",
       productType: "FOOD",
     },
-    // Dodaj więcej produktów
   ];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,33 +41,18 @@ const HomePage = () => {
   const [events, setEvents] = useState([]);
   const { authData } = useAuth();
   const navigate = useNavigate();
-  // console.log("Po useAuth", authData);
+
   useEffect(() => {
     console.log("Po useAuth w Home Page", authData);
   }, [authData]);
   const openModal = () => {
-    // setSelectedProduct(product);
     setIsModalOpen(true);
   };
 
-  // Funkcja zamykająca modal
   const closeModal = () => {
     setSelectedProduct(null);
     setIsModalOpen(false);
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8080/events")
-  //     .then((response) => {
-  //       const eventsData = response.data;
-  //       console.log("Pobrane dane z API:", eventsData);
-  //       setEvents(eventsData);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Błąd pobierania danych wydarzeń", error);
-  //     });
-  // }, []);
 
   const handleSigninClick = () => {
     navigate("/signin");
@@ -111,10 +100,6 @@ const HomePage = () => {
               </Link>
             ))}
           </div>
-          {/* Przekazanie productType do ProductSection */}
-          {/* {products.map((product, index) => (
-            <ProductSection key={index} productType={product.productType} />
-          ))} */}
         </section>
 
         <section id="events">
@@ -162,11 +147,8 @@ const HomePage = () => {
             doświadczeniem.
           </p>
         </section>
-        {/* {authData.token && authData.expirationTime ? ( */}
+
         <CommentsSlider />
-        {/* ) : ( */}
-        {/* <button>Nie te uprawnienia</button> */}
-        {/* )} */}
       </div>
 
       <Footer />

@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../Login/LoginInfoContext";
 import withAuth from "../Login/withAuth";
-import "./EmployeePanel.css";
 import "./OwnerPanel.css";
+import "./EmployeePanel.css";
 const OwnerPanel = () => {
   const [activeTab, setActiveTab] = useState("zamowienia klientow");
   const [eventsPanel, setEventsPanel] = useState([]);
@@ -36,7 +36,7 @@ const OwnerPanel = () => {
     productName: "",
     productPrice: "",
     productDescription: "",
-    // Dodaj więcej pól zależnie od typu produktu
+
     ...(activeProductType === "BOOK"
       ? { numberBookStock: 0, isAvailable: false }
       : {}),
@@ -63,14 +63,12 @@ const OwnerPanel = () => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
         try {
-          // Ustawienie nagłówka autoryzacji
           const config = {
             headers: {
               Authorization: `Bearer ${authData.token}`,
             },
           };
 
-          // Wykonanie zapytania GET z dodanym nagłówkiem
           const response = await axios.get(
             "http://localhost:8080/events",
             config
@@ -99,11 +97,10 @@ const OwnerPanel = () => {
 
   const updateEventInDatabase = async (id, updatedEvent) => {
     try {
-      // Wysyłanie żądania PUT lub PATCH do Twojego API
       const response = await fetch(
         `http://localhost:8080/updateEvent?id=${id}`,
         {
-          method: "PUT", // lub 'PATCH'
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -115,8 +112,6 @@ const OwnerPanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Możesz tutaj zaktualizować stan, jeśli jest to konieczne
-      // na przykład, aby odzwierciedlić zmiany w UI
       setEventsPanel((currentEvents) => {
         return currentEvents.map((event) => {
           if (event.idEvent === id) {
@@ -125,29 +120,25 @@ const OwnerPanel = () => {
           return event;
         });
       });
+      alert("Wydarzenie zostało zaktualizowane");
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
+      alert("Błąd podczas aktualizowania wydarzenia");
     }
   };
 
   const handleSave = (id) => {
-    // Znajdź wydarzenie, które ma zostać zaktualizowane
     const eventToUpdate = eventsPanel.find((event) => event.idEvent === id);
 
     if (eventToUpdate) {
-      // Przygotuj zaktualizowane dane wydarzenia
       const updatedEvent = {
         ...eventToUpdate,
         eventName: eventFormData.eventName,
         eventDescription: eventFormData.eventDescription,
       };
 
-      // Zaktualizuj dane wydarzenia w Twoim stanie aplikacji lub bazie danych
-      // Ta część zależy od Twojej architektury i sposobu przechowywania danych
-      // Na przykład, możesz wywołać funkcję aktualizującą stan lub wysłać żądanie do API
       updateEventInDatabase(id, updatedEvent);
 
-      // Resetuj stan formularza i wyjdź z trybu edycji
       setEditEventsId(null);
       setEventFormData({
         eventName: "",
@@ -157,12 +148,10 @@ const OwnerPanel = () => {
   };
 
   const deleteEvent = async (id) => {
-    // Potwierdzenie, że użytkownik chce usunąć wydarzenie
     if (!window.confirm("Czy na pewno chcesz usunąć to wydarzenie?")) {
       return;
     }
 
-    // Usuwanie z bazy danych za pomocą API
     try {
       const response = await fetch(
         `http://localhost:8080/deleteEvent?id=${id}`,
@@ -175,7 +164,6 @@ const OwnerPanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Usunięcie wydarzenia ze stanu lokalnego
       setEventsPanel((currentEvents) =>
         currentEvents.filter((event) => event.idEvent !== id)
       );
@@ -199,7 +187,7 @@ const OwnerPanel = () => {
     const newEvent = {
       eventName: eventFormData.eventName,
       eventDescription: eventFormData.eventDescription,
-      eventsDate: formatDateForSpring(new Date()), // data w formacie ISO
+      eventsDate: formatDateForSpring(new Date()),
       person: {
         idPerson: authData.idPerson,
       },
@@ -218,23 +206,21 @@ const OwnerPanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Dodaj wydarzenie do stanu lokalnego, lub odśwież listę wydarzeń
-      // ...
+      const addedEvent = await response.json();
 
-      const addedEvent = await response.json(); // Nowo dodane wydarzenie z serwera
-
-      // Aktualizacja stanu wydarzeń dodając nowe wydarzenie
       setEventsPanel((currentEvents) => [...currentEvents, addedEvent]);
 
       console.log("Formatted Date:", formatDateForSpring(new Date()));
       console.log("Added Event:", addedEvent);
-      // Opcjonalnie: Resetuj formularz
+
       setEventFormData({
         eventName: "",
         eventDescription: "",
       });
+      alert("Wydarzenie zostało dodane");
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
+      alert("Błąd podczas dodawania wydarzenia");
     }
   };
 
@@ -244,14 +230,12 @@ const OwnerPanel = () => {
     const fetchRezervation = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
         try {
-          // Ustawienie nagłówka autoryzacji
           const config = {
             headers: {
               Authorization: `Bearer ${authData.token}`,
             },
           };
 
-          // Wykonanie zapytania GET z dodanym nagłówkiem
           const response = await axios.get(
             "http://localhost:8080/reservations",
             config
@@ -281,11 +265,10 @@ const OwnerPanel = () => {
 
   const updateReservationInDatabase = async (id, updatedReservation) => {
     try {
-      // Wysyłanie żądania PUT lub PATCH do Twojego API
       const response = await fetch(
         `http://localhost:8080/customNumberOfPeople?idReservation=${id}`,
         {
-          method: "PUT", // lub 'PATCH'
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -297,8 +280,6 @@ const OwnerPanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Możesz tutaj zaktualizować stan, jeśli jest to konieczne
-      // na przykład, aby odzwierciedlić zmiany w UI
       setReservationPanel((currentReservations) => {
         return currentReservations.map((reservation) => {
           if (reservation.idReservation === id) {
@@ -307,29 +288,25 @@ const OwnerPanel = () => {
           return reservation;
         });
       });
+      alert("Rejestracja została zaktualizowana");
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
+      alert("Błąd przy aktualizacji rejestracji");
     }
   };
   const handleSaveReservation = (id) => {
-    // Znajdź wydarzenie, które ma zostać zaktualizowane
     const reservationToUpdate = reservationPanel.find(
       (reservation) => reservation.idReservation === id
     );
 
     if (reservationToUpdate) {
-      // Przygotuj zaktualizowane dane wydarzenia
       const updatedReservation = {
         ...reservationToUpdate,
         numberOfPeople: customEdtitReservationData.numberOfPeople,
       };
 
-      // Zaktualizuj dane wydarzenia w Twoim stanie aplikacji lub bazie danych
-      // Ta część zależy od Twojej architektury i sposobu przechowywania danych
-      // Na przykład, możesz wywołać funkcję aktualizującą stan lub wysłać żądanie do API
       updateReservationInDatabase(id, updatedReservation);
 
-      // Resetuj stan formularza i wyjdź z trybu edycji
       setEditReservationId(null);
       setCustomEditReservationData({
         numberOfPeople: "",
@@ -338,12 +315,10 @@ const OwnerPanel = () => {
   };
 
   const deleteReservation = async (id) => {
-    // Potwierdzenie, że użytkownik chce usunąć wydarzenie
     if (!window.confirm("Czy na pewno chcesz usunąć tą rezerwacje?")) {
       return;
     }
 
-    // Usuwanie z bazy danych za pomocą API
     try {
       const response = await fetch(
         `http://localhost:8080/cancleReservation?idReservation=${id}`,
@@ -356,7 +331,6 @@ const OwnerPanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Usunięcie wydarzenia ze stanu lokalnego
       setReservationPanel((currentReservations) =>
         currentReservations.filter(
           (reservation) => reservation.idReservation !== id
@@ -383,7 +357,6 @@ const OwnerPanel = () => {
           console.log("Pobrane dane z API ZAMOWIENIA:", response.data);
           setOrderPanel(response.data);
 
-          // Aktualizacja stanu selectedStatuses
           const newSelectedStatuses = {};
           response.data.forEach((order) => {
             newSelectedStatuses[order.idWholeOrderPerson] = order.orderStatus;
@@ -406,7 +379,6 @@ const OwnerPanel = () => {
         const response = await axios.get("http://localhost:8080/order-status");
         setOrderStatuses(response.data);
 
-        // Aktualizacja wybranych statusów dla każdego zamówienia
         const newSelectedStatuses = {};
         response.data.forEach((order) => {
           newSelectedStatuses[order.idWholeOrderPerson] = order.orderStatus;
@@ -447,7 +419,6 @@ const OwnerPanel = () => {
       if (response.ok) {
         console.log("Status zamówienia zaktualizowany");
 
-        // Aktualizacja stanu orderPanel z nowym statusem
         setOrderPanel((prevOrders) =>
           prevOrders.map((order) =>
             order.idWholeOrderPerson === orderId
@@ -467,7 +438,6 @@ const OwnerPanel = () => {
     GOTOWE_DO_ODBIORU: "Gotowe do odbioru",
     ODEBRANE: "Odebrane",
     OCZEKIWANIE_NA_DOSTAWE: "Oczekiwanie na dostawę",
-    // Dodaj inne statusy według potrzeb
   };
 
   const getDisplayNameForStatus = (status) => {
@@ -545,39 +515,7 @@ const OwnerPanel = () => {
     }
   };
 
-  // const renderTableRows = () => {
-  //   return productPanel.map((product, index) => (
-  //     <tr key={index}>
-  //       <td>{product.productName}</td>
-  //       <td>{product.productPrice}</td>
-  //       <td>{product.productDescription}</td>
-  //       {activeProductType === 'COFFEE' && <td>{product.coffeeIntensity}</td>}
-  //       {activeProductType === 'BOOK' && (
-  //         <>
-  //           <td>{product.author}</td>
-  //           <td>{product.genere}</td>
-  //           <td>{product.publishingHouse}</td>
-  //           <td>{product.language}</td>
-  //           <td>{product.publicationDate}</td>
-  //           <td>{product.bookCover}</td>
-  //           <td>{product.numberPage}</td>
-
-  //           <td>{product.numberBookStock}</td>
-
-  //         </>
-  //       )}
-  //       {activeProductType === 'FOOD' && (
-  //       <>
-  //       <td>{product.amountOfCalories}</td>
-  //       <td>{product.foodWeight}</td>
-  //       </>
-  //       )}
-  //     </tr>
-  //   ));
-  // };
-
   const handleUploadImageClick = (productId) => {
-    // Ustaw stan dla ID produktu, do którego dodawane jest zdjęcie
     setSelectedProductId(productId);
     setShowImageUploadModal(true);
   };
@@ -803,7 +741,6 @@ const OwnerPanel = () => {
   };
   const handleSaveClick = async (id) => {
     try {
-      // Aktualizacja isAvailable dla Book
       let updatedData = { ...editingProductData };
       if (activeProductType === "BOOK") {
         const stockNumber = parseInt(updatedData.numberBookStock, 10);
@@ -816,7 +753,6 @@ const OwnerPanel = () => {
       );
       console.log("Produkt zaktualizowany");
 
-      // Aktualizacja listy produktów w stanie
       const updatedProductPanel = productPanel.map((product) => {
         if (product.idProduct === id) {
           return { ...product, ...updatedData };
@@ -825,10 +761,9 @@ const OwnerPanel = () => {
       });
       setProductPanel(updatedProductPanel);
 
-      // Zakończenie edycji
       setEditingProduct(null);
       setEditingProductData({});
-      // Opcjonalnie: Odśwież listę produktów
+      alert("Produkt został zaktualizowany");
     } catch (error) {
       console.error("Błąd aktualizacji produktu", error);
     }
@@ -843,6 +778,7 @@ const OwnerPanel = () => {
       console.log("Produkt dodany", response.data);
       setShowAddModal(false);
       setProductPanel((prevProducts) => [...prevProducts, response.data]);
+      alert("Produkt został dodany do oferty");
     } catch (error) {
       console.error("Błąd dodawania produktu", error);
       alert("Błąd podczas dodawania produktu");
@@ -993,7 +929,7 @@ const OwnerPanel = () => {
     setSelectedEmployee(employee);
     setNewEmployeeData({
       ...employee,
-      password: "", // Ustaw puste hasło
+      password: "",
     });
   };
 
@@ -1011,6 +947,7 @@ const OwnerPanel = () => {
       alert("Pracownik został pomyślnie zarejestrowany");
     } catch (error) {
       console.error("Error adding employee", error);
+      alert("Błąd podczas rejestracji pracownika");
     }
   };
 
@@ -1019,7 +956,6 @@ const OwnerPanel = () => {
     setNewEmployeeData({ ...newEmployeeData, [name]: value });
   };
 
-  // Funkcja aktualizująca dane pracownika
   const handleUpdateEmployee = async (id, employeeData) => {
     if (!id) {
       console.error("Identyfikator użytkownika jest niezdefiniowany");
@@ -1030,8 +966,10 @@ const OwnerPanel = () => {
       await axios.put(`http://localhost:8080/editUser?id=${id}`, employeeData);
       fetchEmployees();
       console.log("Użytkownik został pomyślnie zaktualizowany");
+      alert("Dane pracownika zostały zaktualizowane");
     } catch (error) {
       console.error("Error updating employee", error);
+      alert("Błąd podczas edycji pracownika");
     }
   };
 
@@ -1039,18 +977,16 @@ const OwnerPanel = () => {
     setShowAddEditModal(false);
   };
 
-  // Funkcja usuwająca pracownika
   const handleDeleteEmployee = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/deletePerson?id=${id}`);
-      fetchEmployees(); // Ponowne pobranie listy pracowników po usunięciu
+      fetchEmployees();
       console.log("Usunięto Pracownika");
     } catch (error) {
       console.error("Error deleting employee", error);
     }
   };
 
-  // Obsługa formularza do dodawania/edycji pracownika
   const handleSubmitEmployee = (e) => {
     e.preventDefault();
     const employeeData = { ...newEmployeeData };
@@ -1265,8 +1201,6 @@ const OwnerPanel = () => {
                 </tbody>
               </table>
             </div>
-
-            {/* Tabela rezerwacji lub lista */}
           </section>
         )}
 
@@ -1290,7 +1224,7 @@ const OwnerPanel = () => {
                         {editEventId === events.idEvent ? (
                           <input
                             type="text"
-                            className="event-input" // Dodana klasa dla input
+                            className="event-input"
                             value={eventFormData.eventName}
                             onChange={(e) =>
                               setEventFormData({
@@ -1580,7 +1514,6 @@ const OwnerPanel = () => {
             {showAddModal && (
               <div className="add-product-modal">
                 <form onSubmit={handleSubmit}>
-                  {/* Wspólne pola dla wszystkich produktów */}
                   <input
                     type="text"
                     name="productName"
@@ -1602,7 +1535,6 @@ const OwnerPanel = () => {
                     placeholder="Opis produktu"
                   />
 
-                  {/* Specyficzne pola dla poszczególnych typów produktów */}
                   {renderAdditionalFields()}
 
                   <button type="submit">Dodaj produkt</button>
@@ -1632,7 +1564,6 @@ const OwnerPanel = () => {
                 Dodaj Pracownika
               </button>
 
-              {/* Tabela pracowników */}
               <table className="employee-table">
                 <thead className="employee-table-header">
                   <tr>

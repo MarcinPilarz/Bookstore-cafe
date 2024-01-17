@@ -11,29 +11,6 @@ const OrderItem = () => {
     return total + product.productPrice * product.quantity;
   }, 0);
 
-  // const convertProdcutToProductId = busket.map((item) => ({
-  //   idProduct: item.idProduct,
-  //   quantity: item.quantity,
-  // }));
-
-  // console.log("Produkty idki:", convertProdcutToProductId);
-  // const idPerson = authData.idPerson;
-  // console.log("idPerson:", idPerson);
-  // const OrderProducts = async (product) => {
-  //   const url = `http://localhost:8080/addOrder?idPerson=${idPerson}&idProduct=${product.idProduct}&quantity=${product.quantity}`;
-
-  //   try {
-  //     const response = await axios.post(url);
-  //     console.log("Odpowiedź serwera:", response.data);
-  //   } catch (error) {
-  //     console.error("Błąd podczas wysyłania produktu:", error);
-  //   }
-  // };
-  // // convertProdcutToProductId.forEach(handleOrderProducts);
-
-  // const handleOrders = () => {
-  //   convertProdcutToProductId.forEach(OrderProducts);
-  // };
   return (
     <div className="order-summary">
       <div className="order-items-container">

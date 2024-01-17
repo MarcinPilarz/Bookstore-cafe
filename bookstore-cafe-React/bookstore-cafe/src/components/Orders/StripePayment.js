@@ -60,9 +60,6 @@ const StripePayment = () => {
   const handleOrders = async (stripeToken) => {
     const idsProducts = busket.map((item) => item.idProduct);
     const quantities = busket.map((item) => item.quantity);
-    // for (const product of convertProdcutToProductId) {
-    //   await OrderProducts(product, stripeToken);
-    // }
 
     try {
       const response = await axios.post(
@@ -70,14 +67,14 @@ const StripePayment = () => {
       );
 
       console.log("Odpowiedź serwera:", response.data);
-      clearBusket(); // Opcjonalnie czyści koszyk po zakończeniu zamówienia
+      clearBusket();
       setPaymentMessage(
         "Płatność udana. Zostaniesz przekierowany na stronę główną za 5 sekund."
       );
 
       setTimeout(() => {
         navigate("/");
-      }, 5000); // Opóźnienie 5 sekund przed przekierowaniem
+      }, 5000);
     } catch (error) {
       console.error("Błąd podczas tworzenia zamówienia:", error);
       setPaymentMessage("Wystąpił błąd przy płatności. Spróbuj ponownie.");

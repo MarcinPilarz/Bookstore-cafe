@@ -14,7 +14,6 @@ import "./Navbar.css";
 import RoleToggle from "./RoleToggle";
 const Navbar = () => {
   const [showMenuBars, setShowMenuBars] = useState(false);
-  // const { isOpen, setIsOpen, handleClose } = useContext(BusketSideBar);
 
   const [busketOrderBar, setBusketOrderBar] = useState(false);
   const [historyOrderBar, setHistoryOrderBar] = useState(false);
@@ -118,18 +117,8 @@ const Navbar = () => {
       infoImageVisible
     );
   };
-  // const location = useLocation();
-
-  // // Sprawdź, czy jesteś na stronie WydarzeniaPage
-  // const isWydarzeniaPage = location.pathname === "/reservation";
-
-  // // Ukryj Navbar na WydarzeniaPage
-  // if (isWydarzeniaPage) {
-  //   return null;
-  // }
 
   useEffect(() => {
-    // Aktualizuj liczbę produktów w koszyku po zmianie koszyka
     setCartItemCount(busket.reduce((total, item) => total + item.quantity, 0));
   }, [busket]);
 
@@ -141,36 +130,14 @@ const Navbar = () => {
 
   useEffect(() => {
     if (authData && authData.idPerson) {
-      // Wczytanie i ustawienie stanu koszyka dla zalogowanego użytkownika
       const newBusket = loadBusket(authData.idPerson);
       setBusket(newBusket);
     } else {
-      // Jeśli użytkownik nie jest zalogowany, wyczyść koszyk
       setBusket([]);
     }
   }, [authData, setBusket]);
 
-  // const getProductInfo = (productId) => {
-  //   const product = busket.find((item) => item.productId === productId);
-
-  //   if (product && product.product) {
-  //     return {
-  //       productName:
-  //         product.product.productName || "Nazwa produktu niedostępna",
-  //       // inne parametry produktu, np. cena itp.
-  //     };
-  //   } else {
-  //     return {
-  //       productName: "Nazwa produktu niedostępna",
-  //       // inne domyślne wartości dla pozostałych parametrów
-  //     };
-  //   }
-  // };
-
-  useEffect(() => {
-    // Logika wczytywania koszyka lub resetowania stanu
-    // w zależności od aktualnego idPerson
-  }, [authData?.idPerson]);
+  useEffect(() => {}, [authData?.idPerson]);
 
   useEffect(() => {
     if (idPerson) {
@@ -186,7 +153,6 @@ const Navbar = () => {
         });
     } else {
       console.log("idPerson jest undefined lub pusty");
-      // Możesz tutaj obsłużyć sytuację, gdy idPerson jest undefined lub pusty
     }
   }, [idPerson]);
   return (
@@ -234,7 +200,6 @@ const Navbar = () => {
                       "product.productId W nVBAR",
                       product.productId
                     )}{" "}
-                    {/* Użyj unikalnego identyfikatora */}
                     <p>
                       <b>Nazwa produktu:</b>
                       <br />
@@ -259,7 +224,6 @@ const Navbar = () => {
                     <button onClick={() => removeFromBusket(product.idProduct)}>
                       X
                     </button>
-                    {/* inne informacje o produkcie */}
                   </div>
                 ))}
               </div>
@@ -269,7 +233,6 @@ const Navbar = () => {
               <button id="button-busket-color-delete" onClick={clearBusket}>
                 Wyczyść koszyk
               </button>{" "}
-              {/* Przycisk Wyczyść */}
             </div>
           )}
         </div>

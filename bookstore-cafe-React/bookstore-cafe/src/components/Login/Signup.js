@@ -23,7 +23,6 @@ const Signup = () => {
   const [repeatedPassword, setRepeatedPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const handleLoginClick = () => {
-    // Przekierowanie do "/zaloguj"
     window.location.href = "/signin";
   };
 
@@ -47,7 +46,6 @@ const Signup = () => {
 
       console.log("Odpowiedź po rejestracji:", response.data);
 
-      // Wyczyść pola formularza po udanej rejestracji
       setRegistrationData({
         firstName: "",
         lastName: "",
@@ -116,12 +114,6 @@ const Signup = () => {
         </div>
 
         <div className="div-form-container">
-          {/* <div className="logo-login">
-          <img
-            src="https://storage.googleapis.com/springbootphoto/springbootphoto/Czytaj%20z%20Kaw%C4%85%20logo.png"
-            alt="Company Logo"
-          />
-        </div> */}
           <form className="form-container ">
             <div>
               <label>
@@ -145,17 +137,6 @@ const Signup = () => {
                   onChange={handleInputChange}
                 />
               </label>
-
-              {/* <label>
-                <input
-                  className="input-login"
-                  type="text"
-                  name="roleType"
-                  placeholder="Rola"
-                  value={registrationData.roleType}
-                  onChange={handleInputChange}
-                />
-              </label> */}
 
               <label>
                 <br />

@@ -1,6 +1,6 @@
 import React from "react";
-import { useAuth } from "./LoginInfoContext"; // Zaimportuj swój hook
-import { Navigate } from "react-router-dom"; // Zaimportuj Redirect z react-router
+import { useAuth } from "./LoginInfoContext";
+import { Navigate } from "react-router-dom";
 
 const withAuth = (WrappedComponent, allowedRoles) => {
   return (props) => {

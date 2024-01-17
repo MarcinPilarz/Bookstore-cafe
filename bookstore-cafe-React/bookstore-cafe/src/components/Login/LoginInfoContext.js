@@ -3,17 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 const LoginInfoContext = createContext();
 const AuthProvider = ({ children }) => {
-  //   const [authData, setAuthData] = useState({
-  //     token: null,
-  //     refreshToken: null,
-  //     firstName: null,
-  //     lastName: null,
-  //     phoneNumber: null,
-  //   });
-  //   console.log("LoginInfoContext:", authData);
-  //const navigate = useNavigate();
   const [authData, setAuthData] = useState(() => {
-    // Pobranie danych z localStorage przy pierwszym renderowaniu
     const storedAuthData = localStorage.getItem("authData");
     if (storedAuthData) {
       const parsedAuthData = JSON.parse(storedAuthData);
@@ -21,7 +11,6 @@ const AuthProvider = ({ children }) => {
         parsedAuthData.expirationTime &&
         parsedAuthData.expirationTime > new Date().getTime()
       ) {
-        // Dane są ważne
         return parsedAuthData;
       }
     }
@@ -39,7 +28,6 @@ const AuthProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    // Aktualizacja nagłówka axios po odświeżeniu strony
     if (authData?.token) {
       axios.defaults.headers.common[
         "Authorization"
@@ -48,19 +36,14 @@ const AuthProvider = ({ children }) => {
     }
   }, [authData?.token]);
 
-  //   useEffect(() => {
-  //     // Aktualizacja nagłówka axios po odświeżeniu strony
-  //     axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
-  //   }, [authData.token]);
-
   const logout = () => {
     if (authData && authData.idPerson) {
       const busketKey = `busket_${authData.idPerson}`;
-      localStorage.removeItem(busketKey); // Najpierw usuń dane z localStorage
+      localStorage.removeItem(busketKey);
     }
 
-    setAuthData(null); // Następnie czyść stan authData
-    localStorage.removeItem("authData"); // Usuń dane authData z localStorage
+    setAuthData(null);
+    localStorage.removeItem("authData");
   };
   return (
     <LoginInfoContext.Provider value={{ authData, setAuthData, logout }}>

@@ -28,7 +28,6 @@ const UserPanel = () => {
     newPassword: "",
   });
 
-  // Obsługa zmiany wartości w formularzach
   const handleEditFormChange = (event) => {
     setEditFormData({
       ...editFormData,
@@ -43,7 +42,6 @@ const UserPanel = () => {
     });
   };
 
-  // Funkcje do obsługi kliknięcia przycisku
   const handleEditClick = () => {
     setIsEditing(true);
     setIsChangingPassword(false);
@@ -54,21 +52,18 @@ const UserPanel = () => {
     setIsEditing(false);
   };
 
-  // Funkcja do obsługi przesyłania formularza edycji
   const handleEditSubmit = async (event) => {
     event.preventDefault();
     await handleUpdateEmployee(clientData.idPerson, editFormData);
     setIsEditing(false);
   };
 
-  // Funkcja do obsługi przesyłania formularza zmiany hasła
   const handleChangePasswordSubmit = async (event) => {
     event.preventDefault();
-    // Tutaj zaimplementuj logikę zmiany hasła
+
     setIsChangingPassword(false);
   };
 
-  // Przykład funkcji aktualizującej pracownika
   const handleUpdateEmployee = async (id, employeeData) => {
     if (!id) {
       console.error("Identyfikator użytkownika jest niezdefiniowany");
@@ -77,7 +72,7 @@ const UserPanel = () => {
 
     try {
       await axios.put(`http://localhost:8080/editUser?id=${id}`, employeeData);
-      // fetchEmployees();
+
       console.log("Użytkownik został pomyślnie zaktualizowany");
     } catch (error) {
       console.error("Error updating employee", error);

@@ -48,14 +48,9 @@ const RoleToggle = () => {
 
       const updatedAuthData = { ...authData, roleType: newRole };
       setAuthData(updatedAuthData);
-      //   setAuthData({ ...authData, roleType: newRole });
-
-      // Opcjonalnie: odświeżenie strony
-      //   window.location.reload();
 
       localStorage.setItem("authData", JSON.stringify(updatedAuthData));
 
-      // Opcjonalnie: odświeżenie strony
       clearBusket();
       window.location.reload();
     } catch (error) {

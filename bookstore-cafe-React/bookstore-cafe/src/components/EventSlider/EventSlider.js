@@ -17,47 +17,24 @@ const EventSlider = () => {
 
   const handleNext = () => {
     setCurrentIndex(nextIndex);
-    setDirection("next"); // Ustaw kierunek na Następny
+    setDirection("next");
   };
 
   const handlePrev = () => {
     setCurrentIndex(prevIndex);
-    setDirection("prev"); // Ustaw kierunek na Poprzedni
+    setDirection("prev");
   };
-
-  // useEffect(() => {
-  //   console.log("Token przed ustawieniem nagłówka:", authData.token);
-
-  //   axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
-  //   console.log(
-  //     "Nagłówek Authorization ustawiony:",
-  //     axios.defaults.headers.common["Authorization"]
-  //   );
-
-  //   axios
-  //     .get("http://localhost:8080/events")
-  //     .then((response) => {
-  //       const eventsData = response.data;
-  //       console.log("Pobrane dane z API:", eventsData);
-  //       setEvents(eventsData);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Błąd pobierania danych wydarzeń", error);
-  //     });
-  // }, [authData.token]);
 
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
         try {
-          // Ustawienie nagłówka autoryzacji
           const config = {
             headers: {
               Authorization: `Bearer ${authData.token}`,
             },
           };
 
-          // Wykonanie zapytania GET z dodanym nagłówkiem
           const response = await axios.get(
             "http://localhost:8080/events",
             config
@@ -74,17 +51,6 @@ const EventSlider = () => {
       fetchEvents();
     }
   }, [authData?.token]);
-
-  //   useEffect(() => {
-  //     // Przesunięcie slidera o jedno wydarzenie w prawo co kilka sekund
-  //     const interval = setInterval(() => {
-  //       handleNext();
-  //     }, 5000); // Zmień co 5 sekund
-
-  //     return () => {
-  //       clearInterval(interval);
-  //     };
-  //   }, [currentIndex]);
 
   const EventCard = ({ event }) => (
     <div className={`event-card ${direction === "next" ? "transition" : ""}`}>

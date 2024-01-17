@@ -5,12 +5,6 @@ const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
     (product) => product.idProduct === productId
   );
 
-  const detailedInformation = () => {
-    // if (productType === "COFFE") {
-    //   <p>test</p>;
-    // }
-  };
-
   return (
     <div className="product-details-modal-container" onClick={onClose}>
       <div className="product-details-modal-content">
@@ -30,10 +24,6 @@ const ProductDetails = ({ productId, allProducts, onClose, productType }) => {
               <div className="coffee-details-container">
                 <h3 className="coffee-intensity-title">
                   <span className="intensity-title-label">Intensywność:</span>
-                  {/* <CoffeeIntensity
-                    className="coffee-intensity-display"
-                    intensity={selectedProduct.coffeeIntensity}
-                  /> */}
                   {selectedProduct.coffeeIntensity}/10
                 </h3>
                 <p>

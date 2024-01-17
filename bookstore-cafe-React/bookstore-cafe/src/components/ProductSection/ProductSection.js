@@ -10,9 +10,8 @@ import PaginationProducts from "./PaginationProducts";
 import ProductDetails from "./ProductDetails";
 import "./ProductSection.css";
 import SearchBarProducts from "./SearchBarProducts";
-// props= searchResault
+
 const ProductSection = () => {
-  //const { productType } = useParams();
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
   const [searchProducts, setSearchProducts] = useState("");
@@ -40,24 +39,6 @@ const ProductSection = () => {
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  //const { busket } = useCart();
-
-  //   useEffect(() => {
-  //     // Pobierz produkty dla danego productType z bazy danych
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await axios.get(
-  //           `http://example.com/api/products/${productType}`
-  //         );
-  //         setProducts(response.data);
-  //       } catch (error) {
-  //         console.error("Błąd podczas pobierania danych:", error);
-  //       }
-  //     };
-
-  //     fetchData();
-  //   }, [productType]);
-
   const { authData } = useAuth();
   const idPerson = authData?.idPerson;
   const isBooksActive = productType === "BOOK" ? "active-product" : "";
@@ -67,7 +48,7 @@ const ProductSection = () => {
     productType === "ALLPRODUCTS" ? "active-product" : "";
   useEffect(() => {
     axios
-      //.get(`http://localhost:8080/images?productType=${productType}`)
+
       .get(`http://localhost:8080/products?productType=${productType}`)
       .then((response) => {
         const productsData = response.data;
@@ -85,7 +66,6 @@ const ProductSection = () => {
   };
 
   const handleTabClick = () => {
-    // Wyczyść stan Search Bara po kliknięciu w zakładkę
     setSearchQuery("");
     document.getElementById("searchInput").value = "";
   };
@@ -95,17 +75,9 @@ const ProductSection = () => {
     setFilterProducts(products);
   };
 
-  const productDetails = () => {
-    // setProdcutSelectedId(productId);
-    // console.log("Productid:", productId);
-    setShowDetails(!showDetails);
-    console.log("Pokazane szczegoly", !showDetails);
-  };
-
   useEffect(() => {
-    // Resetuj numer strony na 1, za każdym razem gdy productType się zmienia
     setCurrentPage(1);
-  }, [productType]); // Dodaj productType jako zależność efektu
+  }, [productType]);
 
   const toggleDetails = (productId) => {
     setDetailsMap((prevDetailsMap) => ({
@@ -140,7 +112,7 @@ const ProductSection = () => {
               <h3 className="product-price-text">
                 Cena: {product.productPrice} zł
               </h3>
-              {/* <h3>{product.coffeeIntensity}</h3> */}
+
               <h3 className="coffee-intensity">
                 <span className="intensity-label">Intensywność:</span>
                 <CoffeeIntensity
@@ -152,8 +124,6 @@ const ProductSection = () => {
                 <>
                   <button
                     className="more-info-button"
-                    // onClick={productDetails}
-                    // allProducts={products}
                     onClick={() => toggleDetails(product.idProduct)}
                   >
                     Szczegóły
@@ -179,7 +149,7 @@ const ProductSection = () => {
                         console.log(
                           "Produkt w buuttonie do przeslania",
                           product
-                        ); // Wyświetla informacje o produkcie w konsoli
+                        );
                         handleAddToBusket(product);
                       }}
                     >
@@ -223,7 +193,7 @@ const ProductSection = () => {
               <h3 className="product-price-text">
                 Cena: {product.productPrice} zł
               </h3>
-              {/* <h3>{product.coffeeIntensity}</h3> */}
+
               <h3 id="food-info">
                 <span className="calories-label">Autor:</span>
                 {product.author}
@@ -234,8 +204,6 @@ const ProductSection = () => {
                 <>
                   <button
                     className="more-info-button"
-                    // onClick={productDetails}
-                    // allProducts={products}
                     onClick={() => toggleDetails(product.idProduct)}
                   >
                     Szczegóły
@@ -261,7 +229,7 @@ const ProductSection = () => {
                         console.log(
                           "Produkt w buuttonie do przeslania",
                           product
-                        ); // Wyświetla informacje o produkcie w konsoli
+                        );
                         handleAddToBusket(product);
                       }}
                     >
@@ -303,7 +271,7 @@ const ProductSection = () => {
               <h3 className="product-price-text">
                 Cena: {product.productPrice} zł
               </h3>
-              {/* <h3>{product.coffeeIntensity}</h3> */}
+
               <h3 id="food-info">
                 <span className="calories-label">Kalorie:</span>
                 {product.amountOfCalories}
@@ -314,8 +282,6 @@ const ProductSection = () => {
                 <>
                   <button
                     className="more-info-button"
-                    // onClick={productDetails}
-                    // allProducts={products}
                     onClick={() => toggleDetails(product.idProduct)}
                   >
                     Szczegóły
@@ -341,7 +307,7 @@ const ProductSection = () => {
                         console.log(
                           "Produkt w buuttonie do przeslania",
                           product
-                        ); // Wyświetla informacje o produkcie w konsoli
+                        );
                         handleAddToBusket(product);
                       }}
                     >
@@ -443,7 +409,7 @@ const ProductSection = () => {
                         console.log(
                           "Produkt w buuttonie do przeslania",
                           product
-                        ); // Wyświetla informacje o produkcie w konsoli
+                        );
                         handleAddToBusket(product);
                       }}
                     >
@@ -482,7 +448,7 @@ const ProductSection = () => {
   return (
     <>
       <Navbar />
-      {/* <h1 className="productType-name">{productType}</h1> */}
+
       <div className="li-product-card">
         <ul>
           <li className={isAllProductsActive}>
@@ -514,13 +480,10 @@ const ProductSection = () => {
         />
 
         {searchQuery.trim() === "" ? (
-          // Jeśli nic nie wpisano, wyświetl productInfo
           <div>{productInfo}</div>
         ) : (
-          // W przeciwnym razie, wyświetl przefiltrowane produkty
           <div className="tile-products-border">
             {filteredProducts.map((product) => (
-              // <div key={product.idProduct}>
               <div
                 id="title-product-all-list"
                 className="tile-products-list"
@@ -535,7 +498,7 @@ const ProductSection = () => {
                 <h3 className="product-price-text">
                   Cena: {product.productPrice} zł
                 </h3>
-                {/* Dodaj warunek sprawdzający typ produktu i wyświetl odpowiednie informacje */}
+
                 {product.productType === "COFFEE" && (
                   <h3 className="coffee-intensity">
                     <span className="intensity-label">Intensywność:</span>
@@ -566,8 +529,6 @@ const ProductSection = () => {
                   <>
                     <button
                       className="more-info-button"
-                      // onClick={productDetails}
-                      // allProducts={products}
                       onClick={() => toggleDetails(product.idProduct)}
                     >
                       Szczegóły
@@ -593,7 +554,7 @@ const ProductSection = () => {
                           console.log(
                             "Produkt w buuttonie do przeslania",
                             product
-                          ); // Wyświetla informacje o produkcie w konsoli
+                          );
                           handleAddToBusket(product);
                         }}
                       >
@@ -613,8 +574,6 @@ const ProductSection = () => {
             ))}
           </div>
         )}
-        {/* </div> */}
-        {/* )} */}
       </div>
       <Footer />
     </>

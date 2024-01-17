@@ -28,33 +28,16 @@ const EmployeePanel = () => {
   const [selectedOrderId, setSelectedOrderId] = useState(null); // ID wybranego zamówienia do zaktualizowania
   const [statusPanel, setStatusPanel] = useState([]);
 
-  const handleAdd = () => {
-    // Logika dodawania
-    console.log("Dodawanie...");
-  };
-
-  const handleEdit = () => {
-    // Logika edytowania
-    console.log("Edytowanie...");
-  };
-
-  const handleDelete = () => {
-    // Logika usuwania
-    console.log("Usuwanie...");
-  };
-
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
         try {
-          // Ustawienie nagłówka autoryzacji
           const config = {
             headers: {
               Authorization: `Bearer ${authData.token}`,
             },
           };
 
-          // Wykonanie zapytania GET z dodanym nagłówkiem
           const response = await axios.get(
             "http://localhost:8080/events",
             config
@@ -83,11 +66,10 @@ const EmployeePanel = () => {
 
   const updateEventInDatabase = async (id, updatedEvent) => {
     try {
-      // Wysyłanie żądania PUT lub PATCH do Twojego API
       const response = await fetch(
         `http://localhost:8080/updateEvent?id=${id}`,
         {
-          method: "PUT", // lub 'PATCH'
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -99,8 +81,6 @@ const EmployeePanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Możesz tutaj zaktualizować stan, jeśli jest to konieczne
-      // na przykład, aby odzwierciedlić zmiany w UI
       setEventsPanel((currentEvents) => {
         return currentEvents.map((event) => {
           if (event.idEvent === id) {
@@ -109,29 +89,25 @@ const EmployeePanel = () => {
           return event;
         });
       });
+      alert("Wydarzenie zostało zaktualizowane");
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
+      alert("Błąd podczas aktualizacji wydarzenia");
     }
   };
 
   const handleSave = (id) => {
-    // Znajdź wydarzenie, które ma zostać zaktualizowane
     const eventToUpdate = eventsPanel.find((event) => event.idEvent === id);
 
     if (eventToUpdate) {
-      // Przygotuj zaktualizowane dane wydarzenia
       const updatedEvent = {
         ...eventToUpdate,
         eventName: eventFormData.eventName,
         eventDescription: eventFormData.eventDescription,
       };
 
-      // Zaktualizuj dane wydarzenia w Twoim stanie aplikacji lub bazie danych
-      // Ta część zależy od Twojej architektury i sposobu przechowywania danych
-      // Na przykład, możesz wywołać funkcję aktualizującą stan lub wysłać żądanie do API
       updateEventInDatabase(id, updatedEvent);
 
-      // Resetuj stan formularza i wyjdź z trybu edycji
       setEditEventsId(null);
       setEventFormData({
         eventName: "",
@@ -141,12 +117,10 @@ const EmployeePanel = () => {
   };
 
   const deleteEvent = async (id) => {
-    // Potwierdzenie, że użytkownik chce usunąć wydarzenie
     if (!window.confirm("Czy na pewno chcesz usunąć to wydarzenie?")) {
       return;
     }
 
-    // Usuwanie z bazy danych za pomocą API
     try {
       const response = await fetch(
         `http://localhost:8080/deleteEvent?id=${id}`,
@@ -159,7 +133,6 @@ const EmployeePanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Usunięcie wydarzenia ze stanu lokalnego
       setEventsPanel((currentEvents) =>
         currentEvents.filter((event) => event.idEvent !== id)
       );
@@ -183,7 +156,7 @@ const EmployeePanel = () => {
     const newEvent = {
       eventName: eventFormData.eventName,
       eventDescription: eventFormData.eventDescription,
-      eventsDate: formatDateForSpring(new Date()), // data w formacie ISO
+      eventsDate: formatDateForSpring(new Date()),
       person: {
         idPerson: authData.idPerson,
       },
@@ -202,23 +175,21 @@ const EmployeePanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Dodaj wydarzenie do stanu lokalnego, lub odśwież listę wydarzeń
-      // ...
+      const addedEvent = await response.json();
 
-      const addedEvent = await response.json(); // Nowo dodane wydarzenie z serwera
-
-      // Aktualizacja stanu wydarzeń dodając nowe wydarzenie
       setEventsPanel((currentEvents) => [...currentEvents, addedEvent]);
 
       console.log("Formatted Date:", formatDateForSpring(new Date()));
       console.log("Added Event:", addedEvent);
-      // Opcjonalnie: Resetuj formularz
+
       setEventFormData({
         eventName: "",
         eventDescription: "",
       });
+      alert("Wydarzenie zostało dodane");
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
+      alert("Błąd podczas dodawnia wydarzenia");
     }
   };
 
@@ -228,14 +199,12 @@ const EmployeePanel = () => {
     const fetchRezervation = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
         try {
-          // Ustawienie nagłówka autoryzacji
           const config = {
             headers: {
               Authorization: `Bearer ${authData.token}`,
             },
           };
 
-          // Wykonanie zapytania GET z dodanym nagłówkiem
           const response = await axios.get(
             "http://localhost:8080/reservations",
             config
@@ -265,11 +234,10 @@ const EmployeePanel = () => {
 
   const updateReservationInDatabase = async (id, updatedReservation) => {
     try {
-      // Wysyłanie żądania PUT lub PATCH do Twojego API
       const response = await fetch(
         `http://localhost:8080/customNumberOfPeople?idReservation=${id}`,
         {
-          method: "PUT", // lub 'PATCH'
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
@@ -281,8 +249,6 @@ const EmployeePanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Możesz tutaj zaktualizować stan, jeśli jest to konieczne
-      // na przykład, aby odzwierciedlić zmiany w UI
       setReservationPanel((currentReservations) => {
         return currentReservations.map((reservation) => {
           if (reservation.idReservation === id) {
@@ -296,24 +262,18 @@ const EmployeePanel = () => {
     }
   };
   const handleSaveReservation = (id) => {
-    // Znajdź wydarzenie, które ma zostać zaktualizowane
     const reservationToUpdate = reservationPanel.find(
       (reservation) => reservation.idReservation === id
     );
 
     if (reservationToUpdate) {
-      // Przygotuj zaktualizowane dane wydarzenia
       const updatedReservation = {
         ...reservationToUpdate,
         numberOfPeople: customEdtitReservationData.numberOfPeople,
       };
 
-      // Zaktualizuj dane wydarzenia w Twoim stanie aplikacji lub bazie danych
-      // Ta część zależy od Twojej architektury i sposobu przechowywania danych
-      // Na przykład, możesz wywołać funkcję aktualizującą stan lub wysłać żądanie do API
       updateReservationInDatabase(id, updatedReservation);
 
-      // Resetuj stan formularza i wyjdź z trybu edycji
       setEditReservationId(null);
       setCustomEditReservationData({
         numberOfPeople: "",
@@ -322,12 +282,10 @@ const EmployeePanel = () => {
   };
 
   const deleteReservation = async (id) => {
-    // Potwierdzenie, że użytkownik chce usunąć wydarzenie
     if (!window.confirm("Czy na pewno chcesz usunąć tą rezerwacje?")) {
       return;
     }
 
-    // Usuwanie z bazy danych za pomocą API
     try {
       const response = await fetch(
         `http://localhost:8080/cancleReservation?idReservation=${id}`,
@@ -340,7 +298,6 @@ const EmployeePanel = () => {
         throw new Error("Network response was not ok");
       }
 
-      // Usunięcie wydarzenia ze stanu lokalnego
       setReservationPanel((currentReservations) =>
         currentReservations.filter(
           (reservation) => reservation.idReservation !== id
@@ -367,7 +324,6 @@ const EmployeePanel = () => {
           console.log("Pobrane dane z API ZAMOWIENIA:", response.data);
           setOrderPanel(response.data);
 
-          // Aktualizacja stanu selectedStatuses
           const newSelectedStatuses = {};
           response.data.forEach((order) => {
             newSelectedStatuses[order.idWholeOrderPerson] = order.orderStatus;
@@ -390,7 +346,6 @@ const EmployeePanel = () => {
         const response = await axios.get("http://localhost:8080/order-status");
         setOrderStatuses(response.data);
 
-        // Aktualizacja wybranych statusów dla każdego zamówienia
         const newSelectedStatuses = {};
         response.data.forEach((order) => {
           newSelectedStatuses[order.idWholeOrderPerson] = order.orderStatus;
@@ -431,7 +386,6 @@ const EmployeePanel = () => {
       if (response.ok) {
         console.log("Status zamówienia zaktualizowany");
 
-        // Aktualizacja stanu orderPanel z nowym statusem
         setOrderPanel((prevOrders) =>
           prevOrders.map((order) =>
             order.idWholeOrderPerson === orderId
@@ -451,7 +405,6 @@ const EmployeePanel = () => {
     GOTOWE_DO_ODBIORU: "Gotowe do odbioru",
     ODEBRANE: "Odebrane",
     OCZEKIWANIE_NA_DOSTAWE: "Oczekiwanie na dostawę",
-    // Dodaj inne statusy według potrzeb
   };
 
   const getDisplayNameForStatus = (status) => {
@@ -593,7 +546,7 @@ const EmployeePanel = () => {
                         {editEventId === events.idEvent ? (
                           <input
                             type="text"
-                            className="event-input" // Dodana klasa dla input
+                            className="event-input"
                             value={eventFormData.eventName}
                             onChange={(e) =>
                               setEventFormData({
