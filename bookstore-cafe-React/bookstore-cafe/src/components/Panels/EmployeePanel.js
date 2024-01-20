@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../Login/LoginInfoContext";
 import withAuth from "../Login/withAuth";
 import "./EmployeePanel.css";
+import { useNavigate } from "react-router-dom";
 const EmployeePanel = () => {
   const [activeTab, setActiveTab] = useState("dostepne zamowienia");
   const [eventsPanel, setEventsPanel] = useState([]);
@@ -27,7 +28,7 @@ const EmployeePanel = () => {
   );
   const [selectedOrderId, setSelectedOrderId] = useState(null); // ID wybranego zamówienia do zaktualizowania
   const [statusPanel, setStatusPanel] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -413,11 +414,17 @@ const EmployeePanel = () => {
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleString();
   };
+  const navigateToHomePage = () => {
+    navigate("/");
+  };
   return (
     <div className="dashboardContainer">
       <div className="dashboardSidebar">
         <h2 className="dashboardSidebarTitle">Panel pracownika</h2>
         <ul className="dashboardSidebarList">
+          <li className="dashboardSidebarItem" onClick={navigateToHomePage}>
+            Strona główna
+          </li>
           <li
             className="dashboardSidebarItem"
             onClick={() => setActiveTab("dostepne zamowienia")}

@@ -31,6 +31,13 @@ div.busket-icon:hover {
   cursor: pointer;
   color: bisque;
 }
+.user-icon:hover {
+  color: bisque;
+}
+.history-icon:hover {
+  cursor: pointer;
+  color: bisque;
+}
 
 /* div.bar-icon {
 } */
@@ -419,6 +426,7 @@ div.history-sidebar {
     color: #fff;
     /* /* background-color: aqua; * */
   }
+
   div.busket-sidebar {
     width: 100%;
     top: 62.2px;

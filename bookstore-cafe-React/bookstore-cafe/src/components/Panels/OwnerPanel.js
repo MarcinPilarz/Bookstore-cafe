@@ -4,6 +4,7 @@ import { useAuth } from "../Login/LoginInfoContext";
 import withAuth from "../Login/withAuth";
 import "./OwnerPanel.css";
 import "./EmployeePanel.css";
+import { useNavigate } from "react-router-dom";
 const OwnerPanel = () => {
   const [activeTab, setActiveTab] = useState("zamowienia klientow");
   const [eventsPanel, setEventsPanel] = useState([]);
@@ -59,6 +60,7 @@ const OwnerPanel = () => {
     roleType: "Pracownik",
     password: "",
   });
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -1083,11 +1085,17 @@ const OwnerPanel = () => {
     );
   };
 
+  const navigateToHomePage = () => {
+    navigate("/");
+  };
   return (
     <div className="dashboardContainer">
       <div className="dashboardSidebar">
         <h2 className="dashboardSidebarTitle">Panel administratora</h2>
         <ul className="dashboardSidebarList">
+          <li className="dashboardSidebarItem" onClick={navigateToHomePage}>
+            Strona główna
+          </li>
           <li
             className="dashboardSidebarItem"
             onClick={() => setActiveTab("dostepne zamowienia")}
