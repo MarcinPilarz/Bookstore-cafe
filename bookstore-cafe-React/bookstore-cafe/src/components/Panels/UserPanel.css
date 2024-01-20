@@ -32,14 +32,13 @@
 }
 
 .orders-container {
-  max-height: 400px; /* Ustaw maksymalną wysokość */
-  overflow-y: auto; /* Włącz przewijanie pionowe */
-  /* Dodaj inne potrzebne style, np. padding, marginesy itd. */
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .order-container {
-  max-height: 400px; /* Maksymalna wysokość kontenera */
-  overflow-y: auto; /* Włączenie pionowego przewijania */
+  max-height: 400px;
+  overflow-y: auto;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -48,7 +47,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Pozostałe style */
 .product-item {
   background-color: #ffffff;
   border: 1px solid #eee;
@@ -68,16 +66,16 @@
 }
 
 .user-details-container {
-  background-color: #f5f5f5; /* Jasne tło dla kontrastu */
+  background-color: #f5f5f5;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  max-width: 500px; /* lub inna szerokość według potrzeb */
+  max-width: 500px;
   margin: auto;
 }
 
 .user-details-title {
-  color: #2d4d2f; /* Ciemnozielony kolor tytułu */
+  color: #2d4d2f;
   font-size: 24px;
   font-weight: bold;
   text-align: center;
@@ -87,7 +85,7 @@
 }
 
 .user-details {
-  color: #333333; /* Ciemny szary dla tekstu */
+  color: #333333;
 }
 
 .user-detail {
@@ -97,7 +95,7 @@
 
 .edit-button,
 .change-password-button {
-  background-color: #2d4d2f; /* Ciemnozielony kolor przycisków */
+  background-color: #2d4d2f;
   color: white;
   border: none;
   border-radius: 4px;
@@ -109,12 +107,12 @@
 
 .edit-button:hover,
 .change-password-button:hover {
-  background-color: #245423; /* Ciemniejszy odcień zieleni na hover */
+  background-color: #245423;
 }
 
 .edit-form,
 .change-password-form {
-  background-color: #e9e9e9; /* Jasnoszary kolor tła formularza */
+  background-color: #e9e9e9;
   padding: 15px;
   margin-top: 15px;
   border-radius: 4px;
@@ -144,34 +142,31 @@
   background-color: #245423;
 }
 
-/* Orderhistory */
-/* Kontener główny historii zamówień */
 .order-history-container {
-  max-height: 400px; /* Ustaw maksymalną wysokość kontenera */
+  max-height: 400px;
   overflow-y: auto;
-  background-color: #f0f0f0; /* Jasne tło dla kontrastu */
+  background-color: #f0f0f0;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
 }
 
-/* Styl dla każdego zamówienia */
 .order-history-item {
   background-color: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 15px;
-  margin-bottom: 15px; /* Odstęp między zamówieniami */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień dla głębi */
+  margin-bottom: 15px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .order-history-item p {
-  margin: 5px 0; /* Odstępy między liniami */
-  color: #333; /* Ciemniejszy kolor tekstu dla czytelności */
+  margin: 5px 0;
+  color: #333;
 }
 
 .order-history-item p:first-of-type {
-  color: #008000; /* Zielony kolor dla nazwy produktu */
+  color: #008000;
   font-weight: bold;
 }
 
@@ -282,4 +277,15 @@
 .checkbox-label {
   margin-left: 5px;
   font-size: 14px;
+}
+
+.order-number {
+  /* width: 100px; */
+  display: flex;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  right: 0;
+  justify-content: end;
+  text-align: center;
 }

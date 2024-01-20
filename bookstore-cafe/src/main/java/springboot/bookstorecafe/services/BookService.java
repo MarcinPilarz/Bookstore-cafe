@@ -59,7 +59,7 @@ public class BookService {
 		book.setNumberPage(bookDTO.getNumberPage());
 		book.setNumberBookStock(bookDTO.getNumberBookStock());
 		book.setAvailable(true);
-		// Ustaw inne specyficzne pola dla Book, jeśli są dostępne
+	
 		return book;
 	}
 

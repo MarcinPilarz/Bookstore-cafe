@@ -1,19 +1,14 @@
 .intensity-display {
   display: flex;
-  /* background-color: #000; */
-  /* margin-top: 5px; */
+
   position: relative;
 
-  /* justify-content: start;
-  align-items: start;
-  text-align: start; */
   top: -26%;
 
   left: -10%;
 }
 
 .intensity-circle {
-  /* background-color: black; */
   width: 13px;
   height: 13px;
   border: 1px solid #000;
@@ -27,7 +22,6 @@
 
 @media (max-width: 990px) {
   .intensity-circle {
-    /* background-color: black; */
     width: 7px;
     height: 7px;
     border: 1px solid #000;
@@ -37,14 +31,6 @@
     margin-bottom: 10px;
   }
   .intensity-display {
-    /* display: flex; */
-    /* background-color: #000; */
-    /* margin-top: 5px; */
-    /* position: relative; */
-
-    /* justify-content: start;
-    align-items: start;
-    text-align: start; */
     top: -26%;
 
     left: -25%;

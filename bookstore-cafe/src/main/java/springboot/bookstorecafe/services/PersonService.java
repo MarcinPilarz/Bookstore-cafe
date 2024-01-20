@@ -53,8 +53,8 @@ public class PersonService implements MainService<Person> {
 		Customer customer = Customer.create(
 
 				new CustomerCreateParams.Builder().setName(person.getFirstName()).setEmail(loginPerson.getEmail())
-						.setMetadata(Collections.singletonMap("personId", personId.toString())) // Przypisz idPerson
-																								// jako metadane
+						.setMetadata(Collections.singletonMap("personId", personId.toString())) 
+																								
 						.build()
 
 		);

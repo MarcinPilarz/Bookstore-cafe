@@ -1,4 +1,3 @@
-/* Styl ogólny dla kontenera modalnego ze szczegółami produktu */
 .product-details-modal-container {
   background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
@@ -12,7 +11,6 @@
   z-index: 1000;
 }
 
-/* Styl dla treści modalnego szczegółów produktu */
 .product-details-modal-content {
   background-color: #fff;
   padding: 25px;
@@ -51,8 +49,6 @@
   text-align: justify;
 }
 
-/* Styl dla informacji o kawie */
-/* Styl dla kontenera informacji o kawie */
 .coffee-details-container {
   margin-top: 20px;
   padding: 15px;
@@ -74,7 +70,6 @@
   color: #2c3e50;
 }
 
-/* Styl dla opisu intensywności kawy */
 .coffee-details-container p {
   font-size: 16px;
   line-height: 1.6;
@@ -82,7 +77,6 @@
   margin-top: 5px;
 }
 
-/* Dodajemy styl dla wyświetlenia wartości intensywności */
 .coffee-details-container .coffee-intensity-value {
   font-size: 18px;
   font-weight: bold;
@@ -90,7 +84,6 @@
   margin-left: 5px;
 }
 
-/* Styl dla informacji o książce */
 .book-details-info {
   font-size: 18px;
   margin-top: 15px;
@@ -110,7 +103,6 @@
   color: #16a085;
 }
 
-/* Styl dla informacji o jedzeniu */
 .food-details-info {
   font-size: 18px;
   margin-top: 15px;
@@ -129,8 +121,8 @@
   .product-details-modal-content {
     width: 95%;
     padding: 15px;
-    max-height: 80vh; /* maksymalna wysokość modalu */
-    overflow-y: auto; /* pozwala na przewijanie treści, jeśli jest zbyt dużo */
+    max-height: 80vh;
+    overflow-y: auto;
   }
 
   .product-details-title {

@@ -94,7 +94,16 @@
 .pay-button:hover {
   background-color: #388e3c;
 }
-
+.unavailable {
+  color: rgb(139, 114, 0);
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.unavailable:hover {
+  background-color: transparent;
+  color: rgb(139, 114, 0);
+}
 /* Style responsywne */
 @media (max-width: 768px) {
   .order-summary {

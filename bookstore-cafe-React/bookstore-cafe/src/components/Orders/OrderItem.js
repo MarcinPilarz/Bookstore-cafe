@@ -19,6 +19,7 @@ const OrderItem = () => {
             <p className="product-name">
               <b>Nazwa produktu:</b> {product.productName}
             </p>
+
             <div className="quantity-price">
               <div className="quantity">
                 <b>Ilość:</b>
@@ -46,6 +47,18 @@ const OrderItem = () => {
             >
               Usuń
             </button>
+            <p>
+              {product.productType === "BOOK" &&
+              product.numberBookStock < product.quantity ? (
+                <span className="unavailable">
+                  Ilość tego produktu w lokalu wynosi {product.numberBookStock}{" "}
+                  jeśli chcesz kontynuuować, twoje zamówienie zostanie
+                  podzielone na dwa części.{" "}
+                </span>
+              ) : (
+                ""
+              )}
+            </p>
           </div>
         ))}
       </div>

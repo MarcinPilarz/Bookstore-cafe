@@ -518,6 +518,7 @@ const OwnerPanel = () => {
   const handleUploadImageClick = (productId) => {
     setSelectedProductId(productId);
     setShowImageUploadModal(true);
+    setShowAddModal(false);
   };
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -713,6 +714,7 @@ const OwnerPanel = () => {
 
   const handleAddProductClick = () => {
     setShowAddModal(true);
+    setShowImageUploadModal(false);
   };
 
   const handleCloseModal = () => {
@@ -785,6 +787,9 @@ const OwnerPanel = () => {
     }
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleString();
+  };
   const handleDeleteClick = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/deleteCoffee?id=${id}`);
@@ -1347,7 +1352,11 @@ const OwnerPanel = () => {
                 return (
                   <div key={order.idWholeOrderPerson} className="order-item">
                     <div className="order-date">
-                      Data zamówienia: {order.dateOrder}
+                      Data zamówienia: {formatDate(order.dateOrder)}
+                    </div>
+                    <div className="order-number">
+                      Numer : <br />
+                      {order.idWholeOrderPerson}
                     </div>
                     <div className="order-person">
                       Złożone przez: {order.person.firstName}{" "}
@@ -1423,7 +1432,11 @@ const OwnerPanel = () => {
                 return (
                   <div key={order.idWholeOrderPerson} className="order-item">
                     <div className="order-date">
-                      Data zamówienia: {order.dateOrder}
+                      Data zamówienia: {formatDate(order.dateOrder)}
+                    </div>
+                    <div className="order-number">
+                      Numer : <br />
+                      {order.idWholeOrderPerson}
                     </div>
                     <div className="order-person">
                       Złożone przez: {order.person.firstName}{" "}
@@ -1543,7 +1556,7 @@ const OwnerPanel = () => {
               </div>
             )}
             {showImageUploadModal && (
-              <div className="modal">
+              <div className="modal photo-modal">
                 <form onSubmit={handleImageUploadSubmit}>
                   <input type="file" onChange={handleFileChange} />
                   <button type="submit">Prześlij Zdjęcie</button>

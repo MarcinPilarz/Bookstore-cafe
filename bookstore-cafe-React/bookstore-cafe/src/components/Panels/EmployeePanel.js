@@ -681,6 +681,10 @@ const EmployeePanel = () => {
                     <div className="order-date">
                       Data zamówienia: {formatDate(order.dateOrder)}
                     </div>
+                    <div className="order-number">
+                      Numer : <br />
+                      {order.idWholeOrderPerson}
+                    </div>
                     <div className="order-person">
                       Złożone przez: {order.person.firstName}{" "}
                       {order.person.lastName}
@@ -755,7 +759,11 @@ const EmployeePanel = () => {
                 return (
                   <div key={order.idWholeOrderPerson} className="order-item">
                     <div className="order-date">
-                      Data zamówienia: {order.dateOrder}
+                      Data zamówienia: {formatDate(order.dateOrder)}
+                    </div>
+                    <div className="order-number">
+                      Numer : <br />
+                      {order.idWholeOrderPerson}
                     </div>
                     <div className="order-person">
                       Złożone przez: {order.person.firstName}{" "}

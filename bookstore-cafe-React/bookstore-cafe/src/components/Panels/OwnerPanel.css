@@ -469,3 +469,25 @@ li.product-item {
   font-size: 16px;
   border-left: 5px solid #0056b3;
 }
+
+.photo-modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+.order-item .order-number {
+  /* width: 100px; */
+  display: flex;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  right: 0;
+  justify-content: end;
+  text-align: center;
+}

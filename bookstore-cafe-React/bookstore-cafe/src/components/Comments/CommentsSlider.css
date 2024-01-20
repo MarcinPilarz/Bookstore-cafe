@@ -51,6 +51,8 @@ p.review-content {
   font-size: 11px;
   top: -25px;
   text-align: center;
+  height: 8vh;
+  overflow-y: auto;
 }
 
 p.name-person {

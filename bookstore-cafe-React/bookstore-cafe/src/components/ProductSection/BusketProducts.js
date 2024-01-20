@@ -56,16 +56,14 @@ export const CartProvider = ({ children }) => {
         (item) => item.idProduct !== productId
       );
 
-      // Zapisz zaktualizowany koszyk do localStorage
-      // localStorage.setItem("busket", JSON.stringify(updatedCart));
       localStorage.setItem(busketKey, JSON.stringify(updatedCart));
       return updatedCart;
     });
   };
 
   const clearBusket = () => {
-    setBusket([]); // Resetuje stan busket
-    //localStorage.removeItem("busket"); // Usuwa dane z localStorage
+    setBusket([]);
+
     localStorage.removeItem(busketKey);
   };
 

@@ -80,7 +80,6 @@ const UserPanel = () => {
   };
   useEffect(() => {
     if (idPerson) {
-      // Pierwsze żądanie HTTP
       axios
         .get(`http://localhost:8080/personDetails?id=${idPerson}`)
         .then((response) => {
@@ -92,7 +91,6 @@ const UserPanel = () => {
           console.error("Błąd pobierania danych wydarzeń", error);
         });
 
-      // Drugie żądanie HTTP
       axios
         .get(`http://localhost:8080/reservations/person?personId=${idPerson}`)
         .then((response) => {
@@ -152,7 +150,6 @@ const UserPanel = () => {
         });
     } else {
       console.log("idPerson jest undefined lub pusty");
-      // Możesz tutaj obsłużyć sytuację, gdy idPerson jest undefined lub pusty
     }
   }, [idPerson]);
 
@@ -170,7 +167,6 @@ const UserPanel = () => {
         });
     } else {
       console.log("idPerson jest undefined lub pusty");
-      // Możesz tutaj obsłużyć sytuację, gdy idPerson jest undefined lub pusty
     }
   }, [idPerson]);
 
@@ -188,7 +184,6 @@ const UserPanel = () => {
         });
     } else {
       console.log("idPerson jest undefined lub pusty");
-      // Możesz tutaj obsłużyć sytuację, gdy idPerson jest undefined lub pusty
     }
   }, [idPerson]);
 
@@ -229,14 +224,16 @@ const UserPanel = () => {
       }
     }
 
-    // Usuń zaznaczone komentarze z interfejsu użytkownika
     const updatedReviews = clientReviewsData.filter(
       (review) => !successfullyDeleted.includes(review.idReview)
     );
     setClientReviewsData(updatedReviews);
-    setSelectedComments([]); // Resetuj zaznaczone komentarze
+    setSelectedComments([]);
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleString();
+  };
   const renderContent = () => {
     switch (activeTab) {
       case "personalData":
@@ -426,66 +423,40 @@ const UserPanel = () => {
           </div>
         );
       case "myOrders":
-        // return (
-        //     Array.isArray(clientOrdersData) && clientOrdersData.length > 0 ?
-        //         clientOrdersData.map((orders) => (
-        //             <div key={orders.idOrder}> {/* Użyj unikalnego klucza dla każdej rezerwacji */}
-        //                 <p>Data zamówienia: {orders.dateOrder}</p>
-        //                 <p>Ilośc: {orders.quantity}</p>
-        //                 <p>Cena: {orders.totalPrice}</p>
-
-        //                 {orders.products.map((product) => (
-        //                     <p key={product.idProduct}>Nazwa produktu: {product.productName}</p>
-        //                 ))}
-
-        //             </div>
-        //         )) :
-        //         <div>Brak rezerwacji.</div> // Wyświetlane, gdy nie ma rezerwacji
-        // );
         return (
           <div className="orders-container">
-            {
-              Array.isArray(clientOrdersData) && clientOrdersData.length > 0 ? (
-                clientOrdersData.map((orders, index) => {
-                  const isCloseToNextOrder =
-                    index < clientOrdersData.length - 1 &&
-                    Math.abs(
-                      new Date(orders.dateOrder).getTime() -
-                        new Date(
-                          clientOrdersData[index + 1].dateOrder
-                        ).getTime()
-                    ) < 20000;
+            {Array.isArray(clientOrdersData) && clientOrdersData.length > 0 ? (
+              clientOrdersData.map((orders, index) => {
+                return (
+                  <div
+                    key={orders.idWholeOrderPerson}
+                    className="order-container"
+                  >
+                    <p className="data-order-highlight">
+                      Data zamówienia: {formatDate(orders.dateOrder)}
+                    </p>
 
-                  return (
-                    <div
-                      key={orders.idWholeOrderPerson}
-                      className="order-container"
-                    >
-                      {!isCloseToNextOrder && (
-                        <p className="data-order-highlight">
-                          Data zamówienia: {orders.dateOrder}
-                        </p>
-                      )}
-                      <p>Status zamówienia: {orders.orderStatus}</p>
-                      <p>Cena: {orders.totalPrice}</p>
-                      {orders.order.map((productItem) => (
-                        <div
-                          key={productItem.idOrderProduct}
-                          className="product-item"
-                        >
-                          <p>Ilość: {productItem.quantity}</p>
-                          <p>
-                            Nazwa produktu: {productItem.product.productName}
-                          </p>
-                        </div>
-                      ))}
+                    <div className="order-number">
+                      Numer : <br />
+                      {orders.idWholeOrderPerson}
                     </div>
-                  );
-                })
-              ) : (
-                <div>Brak rezerwacji.</div>
-              ) // Wyświetlane, gdy nie ma rezerwacji
-            }
+                    <p>Status zamówienia: {orders.orderStatus}</p>
+                    <p>Cena: {orders.totalPrice}</p>
+                    {orders.order.map((productItem) => (
+                      <div
+                        key={productItem.idOrderProduct}
+                        className="product-item"
+                      >
+                        <p>Ilość: {productItem.quantity}</p>
+                        <p>Nazwa produktu: {productItem.product.productName}</p>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })
+            ) : (
+              <div>Brak rezerwacji.</div>
+            )}
           </div>
         );
       default:

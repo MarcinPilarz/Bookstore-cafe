@@ -42,7 +42,7 @@ public class ReviewController {
 			List<Review> reviews = reviewService.getReviewPerson(personId);
 			return ResponseEntity.ok(reviews);
 		} catch (RuntimeException e) {
-			// Możesz dostosować obsługę błędów w zależności od Twoich potrzeb
+			
 			return ResponseEntity.notFound().build();
 		}
 	}
