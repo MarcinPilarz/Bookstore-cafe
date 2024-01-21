@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Footer from "../Footer/Footer";
 import { useAuth } from "../Login/LoginInfoContext";
 import Navbar from "../Navbar/Navbar";
+import withAuth from "../Login/withAuth";
 import "./UserPanel.css";
 
 const UserPanel = () => {
@@ -61,6 +62,21 @@ const UserPanel = () => {
   const handleChangePasswordSubmit = async (event) => {
     event.preventDefault();
 
+    // i że `passwordData` zawiera nowe hasło
+    const employeeId = authData?.idPerson;
+    const employeeData = {
+      password: passwordData.newPassword,
+      // Możesz dodać tutaj inne wymagane dane pracownika, jeśli to konieczne
+    };
+
+    try {
+      await handleUpdateEmployee(employeeId, employeeData);
+      console.log("Hasło zostało pomyślnie zmienione.");
+      // Tutaj możesz dodać dodatkowe działania po pomyślnej zmianie hasła
+    } catch (error) {
+      console.error("Błąd podczas zmiany hasła", error);
+    }
+
     setIsChangingPassword(false);
   };
 
@@ -71,9 +87,13 @@ const UserPanel = () => {
     }
 
     try {
-      await axios.put(`http://localhost:8080/editUser?id=${id}`, employeeData);
+      await axios.put(`http://localhost:8080/editUser?id=${id}`, employeeData, {
+        headers: {
+          Authorization: `Bearer ${authData?.token}`,
+        },
+      });
 
-      console.log("Użytkownik został pomyślnie zaktualizowany");
+      console.log("Użytkownik został pomyślnie zaktualizowany", employeeData);
     } catch (error) {
       console.error("Error updating employee", error);
     }
@@ -81,18 +101,27 @@ const UserPanel = () => {
   useEffect(() => {
     if (idPerson) {
       axios
-        .get(`http://localhost:8080/personDetails?id=${idPerson}`)
+        .get(`http://localhost:8080/personDetails?id=${idPerson}`, {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        })
         .then((response) => {
           const clientInfo = response.data;
           console.log("Pobrane dane produktow z API:", clientInfo);
           setClientData(clientInfo);
+          setEditFormData(clientInfo);
         })
         .catch((error) => {
           console.error("Błąd pobierania danych wydarzeń", error);
         });
 
       axios
-        .get(`http://localhost:8080/reservations/person?personId=${idPerson}`)
+        .get(`http://localhost:8080/reservations/person?personId=${idPerson}`, {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        })
         .then((response) => {
           const clientReservationInfo = response.data;
           console.log("Pobrane dane rezerwacji z API:", clientReservationInfo);
@@ -103,7 +132,11 @@ const UserPanel = () => {
         });
 
       axios
-        .get(`http://localhost:8080/history?personId=${idPerson}`)
+        .get(`http://localhost:8080/history?personId=${idPerson}`, {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        })
         .then((response) => {
           const clientHistoryOrdersInfo = response.data;
           console.log(
@@ -116,27 +149,11 @@ const UserPanel = () => {
           console.error("Błąd pobierania danych historii zamówień", error);
         });
       axios
-        .get(`http://localhost:8080/history?personId=${idPerson}`)
-        .then((response) => {
-          const clientHistoryOrdersInfo = response.data;
-          console.log(
-            "Pobrane dane historii zamówień z API:",
-            clientHistoryOrdersInfo
-          );
-          setClientHistoryOrdersData(clientHistoryOrdersInfo);
+        .get(`http://localhost:8080/history?personId=${idPerson}`, {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
         })
-        .catch((error) => {
-          console.error("Błąd pobierania danych historii zamówień", error);
-        });
-    } else {
-      console.log("idPerson jest undefined lub pusty");
-    }
-  }, [idPerson]);
-
-  useEffect(() => {
-    if (idPerson) {
-      axios
-        .get(`http://localhost:8080/history?personId=${idPerson}`)
         .then((response) => {
           const clientHistoryOrdersInfo = response.data;
           console.log(
@@ -156,7 +173,35 @@ const UserPanel = () => {
   useEffect(() => {
     if (idPerson) {
       axios
-        .get(`http://localhost:8080/reviews/person?personId=${idPerson}`)
+        .get(`http://localhost:8080/history?personId=${idPerson}`, {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        })
+        .then((response) => {
+          const clientHistoryOrdersInfo = response.data;
+          console.log(
+            "Pobrane dane historii zamówień z API:",
+            clientHistoryOrdersInfo
+          );
+          setClientHistoryOrdersData(clientHistoryOrdersInfo);
+        })
+        .catch((error) => {
+          console.error("Błąd pobierania danych historii zamówień", error);
+        });
+    } else {
+      console.log("idPerson jest undefined lub pusty");
+    }
+  }, [idPerson]);
+
+  useEffect(() => {
+    if (idPerson) {
+      axios
+        .get(`http://localhost:8080/reviews/person?personId=${idPerson}`, {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        })
         .then((response) => {
           const clientReviewsInfo = response.data;
           console.log("Pobrane danych komentarzy z API:", clientReviewsInfo);
@@ -173,7 +218,11 @@ const UserPanel = () => {
   useEffect(() => {
     if (idPerson) {
       axios
-        .get(`http://localhost:8080/orders/person?personId=${idPerson}`)
+        .get(`http://localhost:8080/orders/person?personId=${idPerson}`, {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        })
         .then((response) => {
           const clientOrdersInfo = response.data;
           console.log("Pobrane danych zamówień z API:", clientOrdersInfo);
@@ -313,7 +362,11 @@ const UserPanel = () => {
                       value={passwordData.newPassword}
                       onChange={handlePasswordFormChange}
                     />
-                    <button className="submit-button" type="submit">
+                    <button
+                      className="submit-button"
+                      type="submit"
+                      // onClick={handleUpdateEmployee}
+                    >
                       Zmień Hasło
                     </button>
                   </form>
@@ -492,4 +545,4 @@ const UserPanel = () => {
   );
 };
 
-export default UserPanel;
+export default withAuth(UserPanel, ["Klient"]);

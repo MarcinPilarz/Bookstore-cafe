@@ -32,7 +32,7 @@
 }
 
 .header-login h1 {
-  color: #2e8b57; /* Ciemnozielony */
+  color: #2e8b57;
   text-align: center;
   margin-bottom: 20px;
   font-size: 1.6em;
@@ -112,15 +112,14 @@
   cursor: pointer;
   font-size: 0.9em;
   transition: background-color 0.3s ease;
-  margin-top: 10px; /* Odstęp od pól hasła */
-  /* width: 100%; */
+  margin-top: 10px;
 }
 
 .show-hide-password-button:hover {
   background-color: #2e8b57;
   color: #fff;
 }
-/* Responsywność */
+
 @media (max-width: 768px) {
   .singup-container {
     max-width: 90%;

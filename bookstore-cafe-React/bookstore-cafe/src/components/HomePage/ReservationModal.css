@@ -1,4 +1,3 @@
-/* Modal.css */
 .modal {
   position: relative;
   width: 60%;
@@ -51,20 +50,12 @@
 .input-select {
   position: relative;
   width: 40%;
-  /* height: 30px; */
+
   margin-top: 10px;
   justify-content: center;
   left: 30%;
 }
 
-/* .input-select .react-select__control {
-  width: 2%;
-  height: 20%;
-}
-
-.input-select .react-select__indicator-separator {
-  display: none; 
-}  */
 .input-value-people {
   position: relative;
   width: 40%;
@@ -113,7 +104,7 @@
     position: relative;
     width: 90%;
     right: -2%;
-    height: auto; /* Zmieniamy wysokość na auto, aby dopasować do zawartości */
+    height: auto;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -129,13 +120,13 @@
   .reservation-table,
   .input-select,
   .input-value-people {
-    width: 100%; /* Zmieniamy szerokość na 100% dla elementów, aby zajmowały całą dostępną szerokość */
-    margin: 10px 0; /* Dodajemy odstępy między elementami */
-    left: 0; /* Ustawiamy lewą krawędź na 0, aby elementy były na środku */
+    width: 100%;
+    margin: 10px 0;
+    left: 0;
   }
 
   .reservation-container {
     flex-direction: column;
-    align-items: center; /* Opcjonalnie możesz dodać wyśrodkowanie elementów na środku dla małych ekranów */
+    align-items: center;
   }
 }

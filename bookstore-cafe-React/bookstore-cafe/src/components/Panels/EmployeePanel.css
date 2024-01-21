@@ -8,6 +8,7 @@
   background-color: #48643b;
   color: white;
   padding: 20px;
+  height: 100%;
 }
 
 .dashboardSidebarTitle {
@@ -20,9 +21,7 @@
 }
 
 .dashboardSidebarList {
-  list-style-type: none; /* Usunięcie kropek listy */
-  /* padding: 0; Usunięcie domyślnego paddingu */
-  /* margin: 0; Usunięcie domyślnego marginesu */
+  list-style-type: none;
   display: grid;
   padding: 10px;
   margin-top: 20px;
@@ -37,15 +36,15 @@
   color: white;
   text-decoration: none;
   display: block;
-  padding: 10px 15px; /* Zwiększony padding */
-  border-bottom: 1px solid #4b6584; /* Ciemniejsza linia oddzielająca */
-  cursor: pointer; /* Kursor wskaźnikowy */
-  transition: background-color 0.3s, color 0.3s; /* Animacja przy najechaniu */
+  padding: 10px 15px;
+  border-bottom: 1px solid #4b6584;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .dashboardSidebarItem:hover {
-  background-color: #5d6d7e; /* Zmiana koloru tła przy najechaniu */
-  color: #ecf0f1; /* Zmiana koloru tekstu */
+  background-color: #5d6d7e;
+  color: #ecf0f1;
 }
 
 .dashboardContent {
@@ -70,8 +69,6 @@
 .dashboardButton:hover {
   background-color: darkblue;
 }
-
-/* ... */
 
 .orders-container {
   margin: 20px;
@@ -115,11 +112,10 @@
   border-left: 5px solid #0056b3;
 }
 
-/* Reservation table */
 .reservation-table-container {
-  overflow-x: auto; /* Umożliwia przewijanie poziome */
-  overflow-y: auto; /* Umożliwia przewijanie pionowe */
-  max-height: 400px; /* Ustawia maksymalną wysokość kontenera */
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 400px;
   margin-bottom: 20px;
 }
 
@@ -130,7 +126,6 @@
 
 .reservation-table thead {
   background-color: #007bff;
-  /* color: white; */
 }
 
 .reservation-table th,
@@ -144,7 +139,6 @@
   background-color: #f2f2f2;
 }
 
-/* Style dla inputów */
 .reservation-table input[type="text"] {
   padding: 5px;
   margin-right: 5px;
@@ -152,7 +146,6 @@
   border-radius: 5px;
 }
 
-/* Style dla przycisków */
 .reservation-table button {
   padding: 5px 10px;
   margin-right: 5px;
@@ -174,7 +167,6 @@
   background-color: #6c757d;
 }
 
-/* Responsywność */
 @media screen and (max-width: 600px) {
   .reservation-table th,
   .reservation-table td {
@@ -185,17 +177,16 @@
   }
 }
 
-/* Events */
 .events-table-container {
   max-height: 300px;
   overflow-y: auto;
-  overflow-x: auto; /* Umożliwia przewijanie poziome */
+  overflow-x: auto;
   margin-bottom: 20px;
 }
 
 .events-table {
   width: 100%;
-  min-width: 600px; /* Minimalna szerokość tabeli, aby zachować układ kolumn */
+  min-width: 600px;
   border-collapse: collapse;
 }
 
@@ -208,7 +199,6 @@
 
 .events-table thead {
   background-color: #4caf50;
-  /* color: white; */
 }
 
 .events-table th,
@@ -219,7 +209,7 @@
 }
 
 .events-table tbody tr:nth-child(odd) {
-  background-color: #e8f5e9; /* Lekko zielony dla naprzemiennych wierszy */
+  background-color: #e8f5e9;
 }
 
 .events-table .event-description-input {
@@ -241,25 +231,24 @@
   border-radius: 4px;
 }
 
-/* Styl dla przycisków */
 .events-table .edit-button,
 .events-form .edit-button {
-  background-color: #ffc107; /* Żółty dla edycji */
+  background-color: #ffc107;
 }
 
 .events-table .save-button,
 .events-form .save-button {
-  background-color: #4caf50; /* Zielony dla zapisywania */
+  background-color: #4caf50;
 }
 
 .events-table .cancel-button,
 .events-form .cancel-button {
-  background-color: #6c757d; /* Szary dla anulowania */
+  background-color: #6c757d;
 }
 
 .events-table button:hover,
 .events-form button:hover {
-  opacity: 0.9; /* Lekkie przyciemnienie przy najechaniu */
+  opacity: 0.9;
 }
 
 .events-form {
@@ -267,7 +256,7 @@
 }
 
 .events-form input[type="submit"] {
-  background-color: #008cba; /* Niebieski kolor przycisku Dodaj */
+  background-color: #008cba;
 }
 
 .li-order.all,
@@ -275,7 +264,6 @@
   border-bottom: 1px solid black;
 }
 .order-number {
-  /* width: 100px; */
   display: flex;
   font-size: 20px;
   font-weight: bold;

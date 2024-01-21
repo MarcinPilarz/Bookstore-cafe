@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 import axios from "axios";
+
 const LoginInfoContext = createContext();
+
 const AuthProvider = ({ children }) => {
   const [authData, setAuthData] = useState(() => {
     const storedAuthData = localStorage.getItem("authData");
@@ -31,14 +33,14 @@ const AuthProvider = ({ children }) => {
     if (authData?.token) {
       axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${authData.token}`;
-      console.log("dsadasdasdadad", authData.token);
+      ] = `Bearer ${authData?.token}`;
+      console.log("dsadasdasdadad", authData?.token);
     }
   }, [authData?.token]);
 
   const logout = () => {
-    if (authData && authData.idPerson) {
-      const busketKey = `busket_${authData.idPerson}`;
+    if (authData && authData?.idPerson) {
+      const busketKey = `busket_${authData?.idPerson}`;
       localStorage.removeItem(busketKey);
     }
 

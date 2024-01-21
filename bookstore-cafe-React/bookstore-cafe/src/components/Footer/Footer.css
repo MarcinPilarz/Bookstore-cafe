@@ -36,10 +36,8 @@ section.footer-section {
 img.logo-footer {
   width: 180px;
   position: absolute;
-  left: 50%; /* Ustaw lewą krawędź na środek */
-  transform: translateX(
-    -50%
-  ); /* Przesuń obraz o połowę swojej szerokości w lewo */
+  left: 50%;
+  transform: translateX(-50%);
 }
 @media (max-width: 768px) {
   .links-column {
@@ -59,7 +57,4 @@ img.logo-footer {
   margin-right: 10px;
   font-size: 1.5rem;
   text-decoration: none;
-}
-.logo-footer {
-  /* visibility: hidden; */
 }

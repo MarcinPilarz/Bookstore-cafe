@@ -1,4 +1,3 @@
-/* Kontener slidera */
 .slider {
   display: flex;
   flex-wrap: wrap;
@@ -6,7 +5,6 @@
   align-items: center;
 }
 
-/* Kontener kafli */
 .slider-container {
   display: flex;
   justify-content: space-between;
@@ -14,34 +12,30 @@
   margin: 0 auto;
 }
 
-/* Styl kafli */
 .slider-window {
   display: flex;
-  flex-direction: column; /* Kafle w układzie pionowym */
+  flex-direction: column;
   align-items: center;
   border: 1px solid #ccc;
   padding: 10px;
-  width: 30%; /* Możesz dostosować szerokość kafli według swoich preferencji */
+  width: 30%;
   margin: 10px;
-  height: 300px; /* Wysokość kafli */
+  height: 300px;
   position: relative;
 }
 
-/* Małe kafle boczne z rozmyciem */
 .slider-window.small {
-  opacity: 0.7; /* Większa przezroczystość */
-  filter: blur(2px); /* Rozmycie */
+  opacity: 0.7;
+  filter: blur(2px);
 }
 
-/* Kafel głównego wydarzenia */
 .slider-window.main-event {
   width: 60%;
-  opacity: 1; /* Główny kafelek jest pełni widoczny */
-  height: 400px; /* Wysokość kafelka głównego */
-  width: 400px; /* Szerokość kafelka głównego */
+  opacity: 1;
+  height: 400px;
+  width: 400px;
 }
 
-/* Przyciski Następny i Poprzedni */
 .slider button {
   background-color: #204b33;
   color: #fff;
@@ -50,22 +44,18 @@
   padding: 10px 20px;
   margin: 10px;
   cursor: pointer;
-  /* position: absolute; */
+
   left: 20px;
-  /* bottom: 10px; */
 }
 
-/* Styl przycisków po najechaniu myszą */
 .slider button:hover {
   background-color: #0056b3;
 }
 
-/* Przycisk Następny po prawej stronie */
 .slider button:nth-child(2) {
   margin-left: auto;
 }
 
-/* Przycisk Poprzedni po lewej stronie */
 .slider button:first-child {
   margin-right: auto;
 }
@@ -85,24 +75,19 @@
   transition: transform 5.4s ease-in-out;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1088px) {
   .slider button.prev-button {
     position: relative;
     width: 40%;
     display: block;
 
-    /* top: 250px; */
     left: -5%;
-    /* justify-content: center; */
-    /* text-align: center; */
   }
 
   .slider button.next-button {
     position: relative;
     width: 40%;
     left: -5%;
-    /* left: 85%; */
-    /* left: 100px; */
   }
   .slider .small {
     width: 0px;
@@ -112,10 +97,6 @@
   }
 
   .slider .main-event {
-    width: 600px;
+    width: 900px;
   }
-  /* div.slider-window .small {
-    display: none;
-    visibility: hidden;
-  } */
 }

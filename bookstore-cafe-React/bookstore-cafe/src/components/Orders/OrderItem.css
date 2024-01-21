@@ -4,13 +4,13 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-height: 600px; /* Opcjonalne: ograniczenie wysokości */
+  max-height: 600px;
 }
 
 .order-items-container {
   flex: 1;
-  overflow-y: auto; /* Włącza przewijanie */
-  margin-right: 20px; /* Odstęp od sekcji podsumowania */
+  overflow-y: auto;
+  margin-right: 20px;
 }
 
 .order-item {
@@ -57,10 +57,10 @@
 }
 
 .order-summary-details {
-  flex-basis: 300px; /* Stała szerokość dla sekcji podsumowania */
+  flex-basis: 300px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Wyświetla elementy od lewej strony */
+  align-items: flex-start;
 }
 
 .total-price {
@@ -70,14 +70,14 @@
 }
 
 .order-pickup-method {
-  background-color: #fff3cd; /* Jasnożółty tło dla wyróżnienia */
-  border: 1px solid #ffeeba; /* Subtelna obramówka */
-  border-radius: 8px; /* Zaokrąglone rogi */
-  padding: 10px; /* Wewnętrzny odstęp */
-  margin-bottom: 20px; /* Odstęp od ceny */
-  color: #856404; /* Kolor tekstu */
-  font-size: 1em; /* Rozmiar czcionki */
-  text-align: center; /* Wyśrodkowany tekst */
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 20px;
+  color: #856404;
+  font-size: 1em;
+  text-align: center;
 }
 
 .pay-button {
@@ -88,7 +88,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-  width: 100%; /* Pełna szerokość w sekcji podsumowania */
+  width: 100%;
 }
 
 .pay-button:hover {
@@ -104,16 +104,16 @@
   background-color: transparent;
   color: rgb(139, 114, 0);
 }
-/* Style responsywne */
+
 @media (max-width: 768px) {
   .order-summary {
     flex-direction: column;
-    max-height: none; /* Usuwa ograniczenie wysokości dla mniejszych ekranów */
+    max-height: none;
   }
 
   .order-summary-details {
     width: 100%;
-    margin-right: 0; /* Usuwa odstęp */
-    align-items: center; /* Wyśrodkowuje elementy w sekcji podsumowania */
+    margin-right: 0;
+    align-items: center;
   }
 }

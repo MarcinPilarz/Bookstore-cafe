@@ -1,7 +1,3 @@
-/* div.homepage {
-  background-color: #61493e;
-} */
-
 body {
   overflow-x: hidden;
 }
@@ -11,29 +7,12 @@ body {
   text-align: center;
 }
 
-/* #main-photo img {
-  width: 100%; 
-  height: 100%;
-  display: flex;
-  justify-content: center;
-} */
-
-img.img-main-page-photo {
-  /* width: 100%;
-  height: 100%; */
-  /* object-fit: cover; */
-}
-
 .product-tile h3 {
-  color: #333; /* Wybierz kolor tekstu, który jest widoczny na tle */
-  font-size: 16px; /* Ustaw odpowiedni rozmiar czcionki */
-  margin-top: 8px; /* Dodaj margines, aby odseparować tekst od obrazka */
+  color: #333;
+  font-size: 16px;
+  margin-top: 8px;
 }
-/* .product-link {
-  width: 7200px;
-  height: 700px;
-  background-color: black;
-} */
+
 .homepage section {
   margin: 20px 0;
 }
@@ -65,8 +44,8 @@ img.img-main-page-photo {
   padding: 20px;
   overflow: hidden;
   display: flex;
-  flex-direction: row; /* Zmieniamy kierunek flexboxa na wiersz */
-  align-items: center; /* Centrujemy elementy w pionie */
+  flex-direction: row;
+  align-items: center;
   animation: slide-in 1s ease;
   text-align: justify;
   text-justify: inter-word;
@@ -79,8 +58,6 @@ img.img-main-page-photo {
   letter-spacing: 1.5px;
   line-height: 1.5;
   top: -20%;
-
-  /* right: 10%; */
 }
 
 .about-us img {

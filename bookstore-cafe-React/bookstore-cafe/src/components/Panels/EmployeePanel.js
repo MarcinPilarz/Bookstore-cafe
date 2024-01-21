@@ -73,6 +73,7 @@ const EmployeePanel = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authData?.token}`,
           },
           body: JSON.stringify(updatedEvent),
         }
@@ -127,6 +128,9 @@ const EmployeePanel = () => {
         `http://localhost:8080/deleteEvent?id=${id}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
         }
       );
 
@@ -168,6 +172,7 @@ const EmployeePanel = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${authData?.token}`,
         },
         body: JSON.stringify(newEvent),
       });
@@ -241,6 +246,7 @@ const EmployeePanel = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authData?.token}`,
           },
           body: JSON.stringify(updatedReservation),
         }
@@ -292,6 +298,9 @@ const EmployeePanel = () => {
         `http://localhost:8080/cancleReservation?idReservation=${id}`,
         {
           method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
         }
       );
 
@@ -344,7 +353,11 @@ const EmployeePanel = () => {
   useEffect(() => {
     const fetchOrderStatuses = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/order-status");
+        const response = await axios.get("http://localhost:8080/order-status", {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        });
         setOrderStatuses(response.data);
 
         const newSelectedStatuses = {};

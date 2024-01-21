@@ -1,5 +1,5 @@
 li.active {
-  color: blue; /* Zmiana koloru czcionki dla aktywnego elementu */
+  color: blue;
 }
 
 div.li-product-card a {
@@ -21,9 +21,6 @@ div.li-product-card ul {
   display: flex;
   justify-content: center;
 }
-/* .isBooksAcctive a :active {
-  background-color: blue;
-} */
 
 div.tile-products-list {
   width: 25%;
@@ -32,9 +29,6 @@ div.tile-products-list {
   padding: 10px;
   margin-top: 70px;
 
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   border: 2px solid black;
   border-radius: 2%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -68,11 +62,6 @@ img.photo-list-products {
   justify-content: center;
   text-align: center;
   left: 15%;
-  /* margin-right: 50px;
-    padding-right: 10px; */
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 300px;
-  background-color: green; */
 }
 
 .produc-name-text {
@@ -86,7 +75,7 @@ div.tile-products-list h3.product-price-text {
 }
 .button-busket-info-container {
   position: relative;
-  /* width: 100%; */
+
   top: -50%;
   display: flex;
   margin: 10px;
@@ -99,7 +88,7 @@ div.tile-products-list h3.product-price-text {
   width: 100%;
   height: 40px;
   position: relative;
-  /* top: -40px; */
+
   margin-left: 10px;
   margin-right: 10px;
   left: -2%;
@@ -126,7 +115,7 @@ div.tile-products-list h3.product-price-text {
   width: 100%;
   height: 40px;
   position: relative;
-  /* top: -0px; */
+
   margin-left: 10px;
   margin-right: 10px;
   left: -2%;
@@ -151,32 +140,8 @@ div.tile-products-list h3.product-price-text {
 .div-add-busket-button {
   margin-right: 10px;
 }
-/* .button-busket-info-container button.add-busket-button {
-  width: 20%;
-  height: 20%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px;
-}
-button.more-info-button {
-  width: 20%;
-
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-} */
 
 .coffee-intensity {
-  /* position: relative; */
-
-  /* top: -70%;
-  display: grid;
-  color: #fff; */
   display: flex;
   align-items: center;
 }
@@ -186,12 +151,11 @@ button.more-info-button {
   width: 100%;
   height: 30px;
   font-size: 12px;
-  /* top: -100%; */
 }
 
 .intensity-label {
   position: relative;
-  top: -100%; /* Dostosuj margines w prawo według potrzeb */
+  top: -100%;
   left: 4%;
 }
 
@@ -199,8 +163,6 @@ h3#food-info {
   position: relative;
   top: -50%;
   font-size: 12px;
-  /* margin-bottom: 5px;
-  padding-bottom: px; */
 }
 .weight-label {
   margin-left: 30px;
@@ -208,64 +170,24 @@ h3#food-info {
 
 h3#ook-info {
   position: relative;
-  top: -100%; /* Dostosuj margines w prawo według potrzeb */
+  top: -100%;
   left: 4%;
 }
 
 div.tile-products-list h3.coffee-intensity {
   height: 37px;
   position: relative;
-  /* top: 20%; */
 }
 
 .intensity-label {
   display: flex;
   top: -89%;
   left: 120px;
-  /* font-size: 14px; */
 }
 
 .active-product {
-  /* Zwiększony rozmiar czcionki dla aktywnego linku */
-  border-bottom: 2px solid green; /* Użyj dolnego obramowania jako podkreślenia */
-  padding-bottom: 2px; /* D
-}
-
-
-
-@media (max-width: 768px) {
-  /* div#title-product-all-list {
-    height: 200px;
-  } */
-
-  /* div.tile-products-list {
-    width: 40%;
-    height: 200px;
-    margin: 10px;
-    padding: 10px;
-    margin-top: 70px;
-
-    
-    border: 2px solid black;
-    border-radius: 2%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #6b5e2f;
-  } */
-
-  /* div.tile-products-border {
-    margin-top: 100px;
-    flex-wrap: wrap;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  } */
-
-  /* .intensity-label {
-    position: relative;
-        left: 10%;
-    font-size: 9px;
-  } */
+  border-bottom: 2px solid green;
+  padding-bottom: 2px;
 }
 
 .pagination-container {
@@ -314,9 +236,9 @@ div.tile-products-list h3.coffee-intensity {
   .button-busket-info-container {
     position: relative;
     width: 90%;
-    /* top: -50%; */
+
     left: -2%;
-    /* top: -20%; */
+
     height: 100px;
     display: flex;
     flex-direction: column;
@@ -327,9 +249,6 @@ div.tile-products-list h3.coffee-intensity {
     align-items: center;
   }
 
-  .more-info-button {
-    /* margin-top: 10px; */
-  }
   .add-busket-button {
     margin-top: 10px;
   }
@@ -340,7 +259,7 @@ div.tile-products-list h3.coffee-intensity {
   }
   .weight-label {
     margin-top: 12px;
-    /* font-size: 14px; */
+
     margin-left: 8px;
   }
   span {
@@ -356,15 +275,9 @@ div.tile-products-list h3.coffee-intensity {
   .intensity-label {
     display: flex;
     top: -47%;
-    /* left: -2%; */
+
     font-size: 14px;
   }
-  /* h3.coffee-intensity {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-  } */
 
   span.intensity-label {
     left: 100px;
@@ -373,6 +286,5 @@ div.tile-products-list h3.coffee-intensity {
   div.tile-products-list h3.coffee-intensity {
     height: 110px;
     position: relative;
-    /* top: 20%; */
   }
 }

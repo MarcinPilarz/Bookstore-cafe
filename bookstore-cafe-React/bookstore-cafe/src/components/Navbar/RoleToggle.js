@@ -42,6 +42,9 @@ const RoleToggle = () => {
       const response = await axios.put(
         `http://localhost:8080/updateRoleType?id=${authData.idPerson}`,
         {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
           roleType: newRole,
         }
       );

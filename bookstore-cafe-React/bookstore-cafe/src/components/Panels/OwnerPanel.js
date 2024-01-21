@@ -67,7 +67,7 @@ const OwnerPanel = () => {
         try {
           const config = {
             headers: {
-              Authorization: `Bearer ${authData.token}`,
+              Authorization: `Bearer ${authData?.token}`,
             },
           };
 
@@ -105,6 +105,7 @@ const OwnerPanel = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authData?.token}`,
           },
           body: JSON.stringify(updatedEvent),
         }
@@ -159,6 +160,7 @@ const OwnerPanel = () => {
         `http://localhost:8080/deleteEvent?id=${id}`,
         {
           method: "DELETE",
+          Authorization: `Bearer ${authData?.token}`,
         }
       );
 
@@ -200,6 +202,7 @@ const OwnerPanel = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${authData?.token}`,
         },
         body: JSON.stringify(newEvent),
       });
@@ -234,7 +237,7 @@ const OwnerPanel = () => {
         try {
           const config = {
             headers: {
-              Authorization: `Bearer ${authData.token}`,
+              Authorization: `Bearer ${authData?.token}`,
             },
           };
 
@@ -273,6 +276,7 @@ const OwnerPanel = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authData?.token}`,
           },
           body: JSON.stringify(updatedReservation),
         }
@@ -326,6 +330,7 @@ const OwnerPanel = () => {
         `http://localhost:8080/cancleReservation?idReservation=${id}`,
         {
           method: "DELETE",
+          Authorization: `Bearer ${authData?.token}`,
         }
       );
 
@@ -349,7 +354,7 @@ const OwnerPanel = () => {
         try {
           const config = {
             headers: {
-              Authorization: `Bearer ${authData.token}`,
+              Authorization: `Bearer ${authData?.token}`,
             },
           };
           const response = await axios.get(
@@ -378,7 +383,11 @@ const OwnerPanel = () => {
   useEffect(() => {
     const fetchOrderStatuses = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/order-status");
+        const response = await axios.get("http://localhost:8080/order-status", {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        });
         setOrderStatuses(response.data);
 
         const newSelectedStatuses = {};
@@ -412,7 +421,7 @@ const OwnerPanel = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authData.token}`,
+            Authorization: `Bearer ${authData?.token}`,
           },
           body: JSON.stringify({ orderStatus: newStatus }),
         }
@@ -461,28 +470,28 @@ const OwnerPanel = () => {
   }, [activeProductType]);
 
   const renderEditableCell = (value, name, id, placeholder, type = "text") => {
-    if (type === "number") {
-      return (
-        <input
-          type="number"
-          value={value}
-          name={name}
-          min="0"
-          placeholder={placeholder}
-          onChange={(e) => handleInputChange(e, id)}
-        />
-      );
-    } else {
-      return (
-        <input
-          type="text"
-          value={value}
-          name={name}
-          placeholder={placeholder}
-          onChange={(e) => handleInputChange(e, id)}
-        />
-      );
-    }
+    return (
+      <td>
+        {type === "number" ? (
+          <input
+            type="number"
+            value={value}
+            name={name}
+            min="0"
+            placeholder={placeholder}
+            onChange={(e) => handleInputChange(e, id)}
+          />
+        ) : (
+          <input
+            type="text"
+            value={value}
+            name={name}
+            placeholder={placeholder}
+            onChange={(e) => handleInputChange(e, id)}
+          />
+        )}
+      </td>
+    );
   };
   const renderTableHeaders = () => {
     const commonHeaders = [
@@ -543,6 +552,7 @@ const OwnerPanel = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${authData?.token}`,
           },
         }
       );
@@ -580,16 +590,13 @@ const OwnerPanel = () => {
               "Opis produktu"
             )}
 
-            {activeProductType === "COFFEE" && (
-              <>
-                {renderEditableCell(
-                  editingProductData.coffeeIntensity,
-                  "coffeeIntensity",
-                  product.idProduct,
-                  "Intensywność kawy"
-                )}
-              </>
-            )}
+            {activeProductType === "COFFEE" &&
+              renderEditableCell(
+                editingProductData.coffeeIntensity,
+                "coffeeIntensity",
+                product.idProduct,
+                "Intensywność kawy"
+              )}
 
             {activeProductType === "BOOK" && (
               <>
@@ -705,7 +712,6 @@ const OwnerPanel = () => {
           </button>
         </td>
         <td>
-          {" "}
           <button onClick={() => handleDeleteClick(product.idProduct)}>
             Usuń
           </button>
@@ -753,7 +759,12 @@ const OwnerPanel = () => {
 
       await axios.put(
         `http://localhost:8080/updateProducts?id=${id}`,
-        updatedData
+        updatedData,
+        {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        }
       );
       console.log("Produkt zaktualizowany");
 
@@ -776,6 +787,9 @@ const OwnerPanel = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`http://localhost:8080/addProduct`, {
+        headers: {
+          Authorization: `Bearer ${authData?.token}`,
+        },
         ...newProductData,
         productType: activeProductType,
       });
@@ -794,7 +808,11 @@ const OwnerPanel = () => {
   };
   const handleDeleteClick = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/deleteCoffee?id=${id}`);
+      await axios.delete(`http://localhost:8080/deleteCoffee?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${authData?.token}`,
+        },
+      });
       console.log("Produkt usunięty");
 
       const updatedProductPanel = productPanel.filter(
@@ -910,7 +928,11 @@ const OwnerPanel = () => {
   }, []);
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/employees");
+      const response = await axios.get("http://localhost:8080/employees", {
+        headers: {
+          Authorization: `Bearer ${authData?.token}`,
+        },
+      });
       setEmployeePanel(response.data);
     } catch (error) {
       console.error("Error fetching employees", error);
@@ -970,7 +992,11 @@ const OwnerPanel = () => {
     }
 
     try {
-      await axios.put(`http://localhost:8080/editUser?id=${id}`, employeeData);
+      await axios.put(`http://localhost:8080/editUser?id=${id}`, employeeData, {
+        headers: {
+          Authorization: `Bearer ${authData?.token}`,
+        },
+      });
       fetchEmployees();
       console.log("Użytkownik został pomyślnie zaktualizowany");
       alert("Dane pracownika zostały zaktualizowane");
@@ -986,7 +1012,11 @@ const OwnerPanel = () => {
 
   const handleDeleteEmployee = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/deletePerson?id=${id}`);
+      await axios.delete(`http://localhost:8080/deletePerson?id=${id}`, {
+        headers: {
+          Authorization: `Bearer ${authData?.token}`,
+        },
+      });
       fetchEmployees();
       console.log("Usunięto Pracownika");
     } catch (error) {

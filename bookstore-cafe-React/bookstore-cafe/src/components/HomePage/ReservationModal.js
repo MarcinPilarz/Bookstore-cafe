@@ -19,23 +19,6 @@ const ReservationModal = ({ closeModal }) => {
     }
   };
 
-  const handleReservation = () => {
-    const formData = {
-      reservationDate: reservationDate.toISOString().split("T")[0], // Konwersja daty do formatu "YYYY-MM-DD"
-      numberOfPeople,
-    };
-
-    axios
-      .post("/api/reservations", formData)
-      .then((response) => {
-        console.log("Reservation successful:", response.data);
-        closeModal();
-      })
-      .catch((error) => {
-        console.error("Error during reservation:", error);
-      });
-  };
-
   const handleSubmitReservation = async () => {
     const formattedDate = reservationDate.toISOString().split("T")[0];
     var idPerson = authData.idPerson;
@@ -43,7 +26,11 @@ const ReservationModal = ({ closeModal }) => {
     try {
       const response = await axios.post(
         `http://localhost:8080/newReservation?idPerson=${authData.idPerson}&bokkingData=${formattedDate}&numberOfPeople=${numberOfPeople}`,
-        {}
+        {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        }
       );
       console.log("Pomyslna rejestracja!");
     } catch (error) {}

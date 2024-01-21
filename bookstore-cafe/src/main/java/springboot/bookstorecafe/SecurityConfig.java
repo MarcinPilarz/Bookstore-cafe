@@ -44,21 +44,24 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.cors().and() // Włączenie obsługi CORS
-				.csrf().disable() // Wyłączenie CSRF
+		http.cors().and() 
+				.csrf().disable() 
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/**").permitAll()
-						.requestMatchers("/newPerson", "/images", "/person", "/loginPerson", "/deletePerson",
-								"/newPerson", "/editPerson", "/signin", "/refresh", "/loginPerson", "/addOrder",
-								"/personDetails", "/newEvent", "/orders", "/reservations", "/reservations/person",
-								"/history", "/reviews/person", "/newReservation", "/newComment", "/orders/person",
-								"/updateEvent", "/deleteEvent", "/customNumberOfPeople", "/cancleReservation",
-								"/coffee", "/uploadImage", "/addImage/{idProduct}", "/products", "/updateRoleType",
-								"/order-status", "/update-order-status", "/addProduct", "/updateProducts",
-								"/deleteCoffee", "/employees", "/editUser", "/deleteComment", "/reset-password")
+						.requestMatchers("/newPerson", "/images", "/person", "/loginPerson", 
+								"/newPerson", "/signin", "/refresh", "/loginPerson", "/personDetails",
+								 "/coffee", "/products", "/reset-password")
 						.permitAll().requestMatchers("/api/v1/admin").hasAnyAuthority(RoleType.Pracownik.name())
-						.requestMatchers("/sayAdmin", "/api/v1/user", "/reviews", "/events", "/sayUser")
+						.requestMatchers("/sayAdmin", "/editUser", "/api/v1/user", "/reviews", "/events", "/sayUser",
+								"/editPerson", "/orders/person","/updateRoleType", "/reservations/person")
 						.hasAnyAuthority(RoleType.Klient.name(), RoleType.Pracownik.name(), RoleType.Wlasciciel.name())
-						.requestMatchers("/api/v1/user", "/sayAdmin", "/sayUser")
+						.requestMatchers("/newComment", "/deleteComment","/newReservation", "/history", "/reviews/person", "/addOrder")
+						.hasAnyAuthority(RoleType.Klient.name())
+						.requestMatchers("/newEvent", "/deleteEvent", "/customNumberOfPeople", "/cancleReservation",
+								"/order-status", "/update-order-status", "/reservations", "/orders", "/newEvent",
+								"/updateEvent")
+						.hasAnyAuthority(RoleType.Pracownik.name(), RoleType.Wlasciciel.name())
+						.requestMatchers("/uploadImage", "/updateProducts", "/deleteCoffee", "/addProduct",
+								"/addImage/{idProduct}", "/employees","/deletePerson")
 						.hasAnyAuthority(RoleType.Wlasciciel.name()).anyRequest().authenticated())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

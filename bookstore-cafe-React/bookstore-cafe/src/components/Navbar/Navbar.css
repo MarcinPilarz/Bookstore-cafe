@@ -39,17 +39,14 @@ div.busket-icon:hover {
   color: bisque;
 }
 
-/* div.bar-icon {
-} */
-
 .bar-icon .hamburger {
   width: 4.5%;
-  /* background-color: #333; */
+
   color: #fff;
   padding: 10px;
   justify-content: center;
   align-items: center;
-  margin: 0 auto; /* Wyśrodkowanie w poziomie */
+  margin: 0 auto;
 }
 
 .hamburger {
@@ -70,18 +67,18 @@ nav.open .hamburger {
 div.busket-sidebar {
   width: 300px;
   height: 400px;
-  background-color: #ffffff; /* Jasne tło dla nowocześniejszego wyglądu */
+  background-color: #ffffff;
   position: absolute;
   top: 76px;
   right: 5px;
   overflow-x: hidden;
   overflow-y: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtelny cień dla głębi */
-  border-left: 2px solid #e0e0e0; /* Delikatna linia oddzielająca od reszty treści */
-  z-index: 1000; /* Upewnij się, że jest wyżej niż inne elementy */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 2px solid #e0e0e0;
+  z-index: 1000;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  transform: translateX(0); /* Usunięcie przesunięcia w osi Y */
-  padding: 20px; /* Dodatkowa przestrzeń wewnątrz dla lepszego układu elementów */
+  transform: translateX(0);
+  padding: 20px;
 }
 
 .order-item-list div {
@@ -92,14 +89,12 @@ div.busket-sidebar {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Styl dla nazwy produktu */
 .order-item-list p {
   font-size: 16px;
   color: #333;
   margin: 5px 0;
 }
 
-/* Styl dla inputu ilości */
 .order-item-list input[type="number"] {
   width: 50px;
   padding: 5px;
@@ -109,7 +104,6 @@ div.busket-sidebar {
   text-align: center;
 }
 
-/* Styl dla przycisku usuwania produktu */
 .order-item-list button {
   background-color: #ff6666;
   color: white;
@@ -124,7 +118,6 @@ div.busket-sidebar {
   background-color: #ff4d4d;
 }
 
-/* Styl dla przycisków na dole koszyka */
 .busket-sidebar button {
   background-color: #ff4d4d;
   color: white;
@@ -148,7 +141,6 @@ button#button-busket-color-delete {
   background-color: #d13d3d;
 }
 
-/* Styl dla linków */
 .busket-sidebar a {
   color: white;
   text-decoration: none;
@@ -185,7 +177,7 @@ div.history-sidebar {
 .order-item-list {
   padding: 20px;
   flex-grow: 1;
-  /* overflow-y: auto; Dodać pasek przewijania, jeśli zawartość jest dłuższa niż dostępna przestrzeń */
+
   white-space: pre-line;
 }
 .summary-button {
@@ -196,7 +188,7 @@ div.history-sidebar {
 
   margin: 5px auto;
   padding: 10px;
-  background-color: #4caf50; /* Zielony kolor */
+  background-color: #4caf50;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -210,7 +202,7 @@ div.history-sidebar {
 
   margin: 5px auto;
   padding: 10px;
-  background-color: #f00; /* Czerwony kolor */
+  background-color: #f00;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -219,56 +211,48 @@ div.history-sidebar {
 .logo-nav {
   width: 100px;
   position: absolute;
-  /* margin: 10px; */
+
   padding: 2px;
   top: -1px;
   left: 4px;
   opacity: 0.8;
 }
 
-/* div.icon-container {
-} */
-
 .busket-icon {
   position: absolute;
-  /* display: block; */
-  right: 120px; /* Ustawienie na prawy brzeg */
-  /* top: 1.45rem;  */
+
+  right: 120px;
+
   top: 25px;
-  /* transform: translateY(-50%); Korekta pozycji w pionie */
-  width: 20px; /* Szerokość kwadratu */
-  height: 50px; /* Wysokość kwadratu */
+
+  width: 20px;
+  height: 50px;
   color: #fff;
-  /* background-color: aqua; */
 }
 div.history-icon {
   position: absolute;
-  /* display: block; */
+
   right: 40px;
-  /* top: 1.45rem;  */
-  /* left: 93%; */
+
   margin-right: 30px;
   top: 26px;
-  /* transform: translateY(-50%); Korekta pozycji w pionie */
-  width: 20px; /* Szerokość kwadratu */
-  height: 50px; /* Wysokość kwadratu */
+
+  width: 20px;
+  height: 50px;
   color: #fff;
-  /* background-color: aqua; */
 }
 
 .user-icon {
   position: absolute;
-  /* display: block; */
+
   right: 0;
-  /* top: 1.45rem;  */
-  /* left: 93%; */
+
   margin-right: 30px;
   top: 26px;
-  /* transform: translateY(-50%); Korekta pozycji w pionie */
-  width: 20px; /* Szerokość kwadratu */
-  height: 50px; /* Wysokość kwadratu */
+
+  width: 20px;
+  height: 50px;
   color: #fff;
-  /* background-color: aqua; */
 }
 
 span.amount-of-products:hover {
@@ -276,21 +260,20 @@ span.amount-of-products:hover {
 }
 
 .amount-of-products {
-  position: absolute; /* Pozycjonowanie względem busket-icon */
-  top: -4px; /* Umieszczenie nad ikoną */
-  right: 100%; /* Umieszczenie po prawej stronie ikony */
-  background-color: red; /* Czerwone tło */
-  color: white; /* Biały tekst */
-  border-radius: 50%; /* Okrągłe tło */
-  padding: 2px 5px; /* Padding */
-  font-size: 0.8em; /* Mniejszy rozmiar czcionki */
-  min-width: 20px; /* Minimalna szerokość, aby zachować okrągły kształt */
-  text-align: center; /* Wyśrodkowanie tekstu */
+  position: absolute;
+  top: -4px;
+  right: 100%;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 0.8em;
+  min-width: 20px;
+  text-align: center;
 }
 
 .user-icon {
   cursor: pointer;
-  /* inne style dla ikony użytkownika */
 }
 
 .user-action-bar {
@@ -298,22 +281,22 @@ span.amount-of-products:hover {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
-  position: absolute; /* Aby umiejscowić poniżej ikony użytkownika */
-  right: 10px; /* Dostosuj w zależności od położenia na stronie */
-  top: 70px; /* Dostosuj w zależności od wysokości nagłówka */
+  position: absolute;
+  right: 10px;
+  top: 70px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000; /* Aby był nad innymi elementami */
+  z-index: 1000;
 }
 
 .user-action-bar a {
-  display: block; /* Każdy link na osobnej linii */
+  display: block;
   margin-bottom: 5px;
   color: #333;
   text-decoration: none;
 }
 
 .user-action-bar a:hover {
-  color: #007bff; /* Kolor przy hover */
+  color: #007bff;
 }
 
 .user-action-bar div {
@@ -323,24 +306,24 @@ span.amount-of-products:hover {
 }
 
 .user-action-bar div:hover {
-  color: #007bff; /* Kolor przy hover */
+  color: #007bff;
 }
 
 div.history-sidebar {
   width: 300px;
   height: 400px;
-  background-color: #ffffff; /* Jasne tło dla nowocześniejszego wyglądu */
+  background-color: #ffffff;
   position: absolute;
   top: 76px;
   right: 5px;
   overflow-x: hidden;
   overflow-y: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtelny cień dla głębi */
-  border-left: 2px solid #e0e0e0; /* Delikatna linia oddzielająca od reszty treści */
-  z-index: 1000; /* Upewnij się, że jest wyżej niż inne elementy */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 2px solid #e0e0e0;
+  z-index: 1000;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  transform: translateX(0); /* Usunięcie przesunięcia w osi Y */
-  padding: 20px; /* Dodatkowa przestrzeń wewnątrz dla lepszego układu elementów */
+  transform: translateX(0);
+  padding: 20px;
 }
 
 @media (max-width: 768px) {
@@ -359,19 +342,15 @@ div.history-sidebar {
   ul.navbar {
     width: 87%;
     position: relative;
-    /* right: 20px; */
   }
   nav.open .navbar {
-    /* width: 100%; */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     right: 30px;
-    /* margin: 0; */
-    padding: 0;
 
-    /* position: sticky; */
+    padding: 0;
   }
 
   ul {
@@ -391,40 +370,34 @@ div.history-sidebar {
 
   div.history-icon {
     position: absolute;
-    right: 10; /* Ustawienie na prawy brzeg */
-    /* top: 1.45rem;  */
+    right: 10;
+
     top: 20px;
 
-    /* transform: translateY(-50%); Korekta pozycji w pionie */
-    width: 20px; /* Szerokość kwadratu */
-    height: 50px; /* Wysokość kwadratu */
+    width: 20px;
+    height: 50px;
     color: #fff;
-    /* /* background-color: aqua; * */
   }
   div.busket-icon {
     position: absolute;
-    right: 10; /* Ustawienie na prawy brzeg */
-    /* top: 1.45rem;  */
+    right: 10;
+
     top: 20px;
 
-    /* transform: translateY(-50%); Korekta pozycji w pionie */
-    width: 20px; /* Szerokość kwadratu */
-    height: 50px; /* Wysokość kwadratu */
+    width: 20px;
+    height: 50px;
     color: #fff;
-    /* /* background-color: aqua; * */
   }
 
   .user-icon {
     position: absolute;
-    right: 10; /* Ustawienie na prawy brzeg */
-    /* top: 1.45rem;  */
+    right: 10;
+
     top: 20px;
 
-    /* transform: translateY(-50%); Korekta pozycji w pionie */
-    width: 20px; /* Szerokość kwadratu */
-    height: 50px; /* Wysokość kwadratu */
+    width: 20px;
+    height: 50px;
     color: #fff;
-    /* /* background-color: aqua; * */
   }
 
   div.busket-sidebar {
@@ -441,7 +414,7 @@ div.history-sidebar {
 
   .summary-button,
   .clear-button {
-    width: 100%; /* Pełna szerokość na małym ekranie */
+    width: 100%;
     bottom: -320%;
   }
   .logo-nav {

@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Login/LoginInfoContext";
 import { useCart } from "../ProductSection/BusketProducts";
 import "./Navbar.css";
@@ -30,6 +30,7 @@ const Navbar = () => {
   const { authData, logout } = useAuth();
   const idPerson = authData?.idPerson;
   const [cartItemCount, setCartItemCount] = useState(0);
+  const navigate = useNavigate();
   const ProductsNavigate = () => {
     const element = document.getElementById("products");
     if (element) {
@@ -142,7 +143,11 @@ const Navbar = () => {
   useEffect(() => {
     if (idPerson) {
       axios
-        .get(`http://localhost:8080/orders/person?personId=${idPerson}`)
+        .get(`http://localhost:8080/orders/person?personId=${idPerson}`, {
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
+        })
         .then((response) => {
           const clientOrdersInfo = response.data;
           console.log("Pobrane danych zamówień z API:", clientOrdersInfo);
@@ -155,6 +160,11 @@ const Navbar = () => {
       console.log("idPerson jest undefined lub pusty");
     }
   }, [idPerson]);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
   return (
     <header>
       <nav className={`bar-icon ${showMenuBars ? "open" : ""}`}>
@@ -288,7 +298,7 @@ const Navbar = () => {
                 <RoleToggle />
               </>
             )}
-            <div onClick={logout}>Wyloguj</div>
+            <div onClick={handleLogout}>Wyloguj</div>
           </div>
         )}
       </div>

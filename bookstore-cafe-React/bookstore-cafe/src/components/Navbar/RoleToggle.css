@@ -1,15 +1,14 @@
 .role-toggle-button {
-    background-color: #007bff; /* Niebieski kolor tła */
-    color: white; /* Biały tekst */
-    border: none; /* Brak obramowania */
-    padding: 8px 15px; /* Padding wewnątrz przycisku */
-    border-radius: 5px; /* Zaokrąglone rogi */
-    cursor: pointer; /* Kursor wskazujący */
-    transition: background-color 0.3s; /* Animacja zmiany koloru tła */
-    margin-top: 5px; /* Margines na górze */
-  }
-  
-  .role-toggle-button:hover {
-    background-color: #0056b3; /* Ciemniejszy kolor tła przy najechaniu */
-  }
-  
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 5px;
+}
+
+.role-toggle-button:hover {
+  background-color: #0056b3;
+}

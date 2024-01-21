@@ -1,11 +1,11 @@
 .stripe-payment-form {
-  background-color: #ffffff; /* Czyste białe tło */
+  background-color: #ffffff;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 500px;
   margin: 20px auto;
-  font-family: "Arial", sans-serif; /* Nowoczesna czcionka */
+  font-family: "Arial", sans-serif;
 }
 
 .stripe-payment-form form {
@@ -15,32 +15,32 @@
 }
 
 .card-element-container {
-  background-color: #f7f7f7; /* Delikatne tło dla każdego pola */
+  background-color: #f7f7f7;
   padding: 15px;
   border: 1px solid #e0e0e0;
   border-radius: 6px;
-  color: #333333; /* Ciemniejszy kolor tekstu dla lepszej czytelności */
+  color: #333333;
 }
 
 .stripe-payment-form label {
-  font-weight: bold; /* Pogrubione etykiety */
+  font-weight: bold;
   margin-bottom: 8px;
   color: #333333;
 }
 
 .stripe-payment-form button {
-  background-color: #28a745; /* Zielony kolor przycisku */
+  background-color: #28a745;
   color: white;
   border: none;
   padding: 12px 20px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 18px; /* Większa czcionka przycisku */
-  transition: background-color 0.3s; /* Animacja dla przycisku */
+  font-size: 18px;
+  transition: background-color 0.3s;
 }
 
 .stripe-payment-form button:hover {
-  background-color: #218838; /* Ciemniejszy kolor przy najechaniu */
+  background-color: #218838;
 }
 
 .stripe-payment-form button:disabled {
@@ -51,7 +51,7 @@
 .payment-message {
   margin-top: 20px;
   padding: 15px;
-  background-color: #dff0d8; /* Jasnozielone tło dla pozytywnego komunikatu */
+  background-color: #dff0d8;
   color: #3c763d;
   border: 1px solid #d6e9c6;
   border-radius: 4px;

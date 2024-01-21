@@ -176,18 +176,16 @@
   padding: 20px;
 }
 
-/* Reservations */
-
 .reservations-section {
   display: flex;
-  justify-content: space-between; /* Rozkłada główne elementy na całej szerokości */
-  align-items: flex-start; /* Wyrównuje elementy do góry */
+  justify-content: space-between;
+  align-items: flex-start;
   padding: 20px;
 }
 .reservations-container {
-  flex: 1; /* Zajmuje dostępną przestrzeń, ale pozwala na rozszerzenie informacji kontaktowej */
+  flex: 1;
   margin-right: 20px;
-  background-color: #f4f4f4; /* Jasne tło dla kontrastu z ciemnozielonym */
+  background-color: #f4f4f4;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -195,16 +193,16 @@
 
 .reservation-item {
   background-color: #fff;
-  border-left: 5px solid rgb(100, 88, 0); /* Akcent kolorystyczny pasujący do ciemnozielonego */
+  border-left: 5px solid rgb(100, 88, 0);
   padding: 15px;
-  margin-bottom: 15px; /* Odstęp między rezerwacjami */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Delikatny cień dla głębi */
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .reservation-item p {
   margin: 10px 0;
   color: #333;
-  font-size: 16px; /* Czytelny rozmiar czcionki */
+  font-size: 16px;
 }
 
 .no-reservations {
@@ -214,7 +212,7 @@
 }
 
 .contact-info {
-  width: 300px; /* Stała szerokość dla informacji kontaktowej */
+  width: 300px;
   padding: 20px;
   background-color: #fff;
   border: 1px solid #e0e0e0;
@@ -227,7 +225,6 @@
   margin: 10px 0;
   color: #333;
 }
-/* Comments */
 
 .comments-container {
   max-height: 400px;
