@@ -272,6 +272,39 @@
   justify-content: end;
   text-align: center;
 }
+
+.dashboardSidebar {
+  display: block;
+}
+div.dashboardContainer div.hamburger {
+  position: absolute;
+  left: 2%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  display: none;
+  font-size: 30px;
+  z-index: 1000;
+}
+div.dashboardContainer div.hamburger:hover {
+  color: bisque;
+  cursor: pointer;
+}
+@media screen and (max-width: 800px) {
+  .dashboardSidebar {
+    display: none;
+  }
+
+  .dashboardSidebar.show {
+    display: block;
+    /* width: 200%; */
+    z-index: 999;
+  }
+  div.dashboardContainer div.hamburger {
+    display: block;
+  }
+}
 @media screen and (max-width: 600px) {
   .events-table th,
   .events-table td,

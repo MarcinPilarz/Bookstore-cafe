@@ -2,6 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../Login/LoginInfoContext";
 import withAuth from "../Login/withAuth";
+import {
+  faBars,
+  faBasketShopping,
+  faBell,
+  faCircleUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./OwnerPanel.css";
 import "./EmployeePanel.css";
 import { useNavigate } from "react-router-dom";
@@ -60,7 +67,17 @@ const OwnerPanel = () => {
     roleType: "Pracownik",
     password: "",
   });
+  const [showMenuBars, setShowMenuBars] = useState(false);
   const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setShowMenuBars(!showMenuBars);
+
+    console.log(
+      "Menu zostało przełączone. Aktualny stan menuOpen:",
+      !showMenuBars
+    );
+  };
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -1120,7 +1137,10 @@ const OwnerPanel = () => {
   };
   return (
     <div className="dashboardContainer">
-      <div className="dashboardSidebar">
+      <div onClick={toggleMenu} className="hamburger">
+        <FontAwesomeIcon icon={faBars} />
+      </div>
+      <div className={`dashboardSidebar ${showMenuBars ? "show" : ""}`}>
         <h2 className="dashboardSidebarTitle">Panel administratora</h2>
         <ul className="dashboardSidebarList">
           <li className="dashboardSidebarItem" onClick={navigateToHomePage}>

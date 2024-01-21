@@ -63,7 +63,7 @@ const StripePayment = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8080/addOrder?idPerson=${authData.idPerson}&idProduct=${idsProducts}&quantity=${quantities}&token=${stripeToken}`
+        `http://localhost:8080/addOrder?idPerson=${authData?.idPerson}&idProduct=${idsProducts}&quantity=${quantities}&token=${stripeToken}`
       );
 
       console.log("Odpowiedź serwera:", response.data);

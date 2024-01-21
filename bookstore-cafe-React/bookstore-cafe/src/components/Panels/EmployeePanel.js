@@ -2,6 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../Login/LoginInfoContext";
 import withAuth from "../Login/withAuth";
+import {
+  faBars,
+  faBasketShopping,
+  faBell,
+  faCircleUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./EmployeePanel.css";
 import { useNavigate } from "react-router-dom";
 const EmployeePanel = () => {
@@ -29,6 +36,7 @@ const EmployeePanel = () => {
   const [selectedOrderId, setSelectedOrderId] = useState(null); // ID wybranego zamówienia do zaktualizowania
   const [statusPanel, setStatusPanel] = useState([]);
   const navigate = useNavigate();
+  const [showMenuBars, setShowMenuBars] = useState(false);
   useEffect(() => {
     const fetchEvents = async () => {
       if (authData?.token && new Date().getTime() < authData?.expirationTime) {
@@ -430,10 +438,23 @@ const EmployeePanel = () => {
   const navigateToHomePage = () => {
     navigate("/");
   };
+
+  const toggleMenu = () => {
+    setShowMenuBars(!showMenuBars);
+
+    console.log(
+      "Menu zostało przełączone. Aktualny stan menuOpen:",
+      !showMenuBars
+    );
+  };
   return (
     <div className="dashboardContainer">
-      <div className="dashboardSidebar">
+      <div onClick={toggleMenu} className="hamburger">
+        <FontAwesomeIcon icon={faBars} />
+      </div>
+      <div className={`dashboardSidebar ${showMenuBars ? "show" : ""}`}>
         <h2 className="dashboardSidebarTitle">Panel pracownika</h2>
+
         <ul className="dashboardSidebarList">
           <li className="dashboardSidebarItem" onClick={navigateToHomePage}>
             Strona główna

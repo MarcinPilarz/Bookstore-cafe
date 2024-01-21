@@ -134,6 +134,9 @@ public class OrderService {
 	        totalPrice += calculateTotalPrice(product, requestedQuantity);
 	    }
 
+	    if (totalPrice <= 0) {
+		throw new IllegalArgumentException("The total order price must be greater than 0");
+	}
 	    // Sprawdzenie płatności przed utworzeniem zamówienia
 	    Charge charge = stripeService.chargePayment(token, totalPrice, "Order", person.getFirstName(), person.getLastName());
 	    if (!charge.getPaid()) {
