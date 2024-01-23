@@ -307,7 +307,9 @@ const EmployeePanel = () => {
         {
           method: "DELETE",
           headers: {
-            Authorization: `Bearer ${authData?.token}`,
+            headers: {
+              Authorization: `Bearer ${authData?.token}`,
+            },
           },
         }
       );

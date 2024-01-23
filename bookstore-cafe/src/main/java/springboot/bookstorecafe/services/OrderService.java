@@ -49,9 +49,9 @@ public class OrderService {
 	@Autowired
 	private OrderProductRepository orderProductRepo;
 
-	@Autowired 
+	@Autowired
 	private BookRepository bookRepo;
-	
+
 	@Autowired
 	public OrderService(PersonRepository personRepo) {
 
@@ -70,118 +70,69 @@ public class OrderService {
 		return wholeOrderRepo.findAll();
 	}
 
-//	public void addItems(Long idPerson, List<Long> idProduct, List<Integer> quantity, String token)
-//			throws StripeException {
-//		Person person = personRepo.findById(idPerson)
-//				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
-//
-//		if (idProduct.size() != quantity.size()) {
-//			throw new IllegalArgumentException("Product quantity and quantity must be the same");
-//		}
-//
-//		double totalPrice = 0;
-//		List<OrderProduct> orderProducts = new ArrayList<>();
-//
-//		for (int i = 0; i < idProduct.size(); i++) {
-//			Product product = findProductById(idProduct.get(i));
-//			int quantitys = quantity.get(i);
-//			totalPrice += calculateTotalPrice(product, quantitys);
-//
-//			OrderProduct orderProduct = new OrderProduct();
-//			orderProduct.setProduct(product);
-//			orderProduct.setQuantity(quantitys);
-//			orderProducts.add(orderProduct);
-//		}
-//
-//		if (totalPrice <= 0) {
-//			throw new IllegalArgumentException("The total order price must be greater than 0");
-//		}
-//
-//		Charge charge = stripeService.chargePayment(token, totalPrice, "Zamówienie", person.getFirstName(),
-//				person.getLastName());
-//		if (!charge.getPaid()) {
-//			throw new RuntimeException("Payment failed");
-//		}
-//
-//		WholeOrderPerson order = new WholeOrderPerson();
-//		order.setDateOrder(LocalDateTime.now().withNano(0));
-//		order.setTotalPrice(totalPrice);
-//		order.setOrderStatus("W trakcie");
-//		order.setPerson(person);
-//		order = wholeOrderRepo.save(order);
-//
-//		for (OrderProduct orderProduct : orderProducts) {
-//			orderProduct.setOrder(order);
-//			orderProductRepo.save(orderProduct);
-//		}
-//	}
+	public void addItems(Long idPerson, List<Long> idProduct, List<Integer> quantity, String token)
+			throws StripeException {
+		Person person = personRepo.findById(idPerson)
+				.orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
 
-	public void addItems(Long idPerson, List<Long> idProduct, List<Integer> quantity, String token) throws StripeException {
-	    Person person = personRepo.findById(idPerson)
-	            .orElseThrow(() -> new RuntimeException("There is no such person: " + idPerson));
+		if (idProduct.size() != quantity.size()) {
+			throw new IllegalArgumentException("Product quantity and quantity must be the same");
+		}
 
-	    if (idProduct.size() != quantity.size()) {
-	        throw new IllegalArgumentException("Product quantity and quantity must be the same");
-	    }
+		double totalPrice = 0;
+		List<OrderProduct> orderProducts = new ArrayList<>();
 
-	    double totalPrice = 0;
-	    List<OrderProduct> orderProducts = new ArrayList<>();
+		for (int i = 0; i < idProduct.size(); i++) {
+			Product product = findProductById(idProduct.get(i));
+			int requestedQuantity = quantity.get(i);
+			totalPrice += calculateTotalPrice(product, requestedQuantity);
+		}
 
-	    // Obliczanie całkowitego kosztu zamówienia
-	    for (int i = 0; i < idProduct.size(); i++) {
-	        Product product = findProductById(idProduct.get(i));
-	        int requestedQuantity = quantity.get(i);
-	        totalPrice += calculateTotalPrice(product, requestedQuantity);
-	    }
+		if (totalPrice <= 0) {
+			throw new IllegalArgumentException("The total order price must be greater than 0");
+		}
 
-	    if (totalPrice <= 0) {
-		throw new IllegalArgumentException("The total order price must be greater than 0");
-	}
-	    // Sprawdzenie płatności przed utworzeniem zamówienia
-	    Charge charge = stripeService.chargePayment(token, totalPrice, "Order", person.getFirstName(), person.getLastName());
-	    if (!charge.getPaid()) {
-	        throw new RuntimeException("Payment failed");
-	    }
+		Charge charge = stripeService.chargePayment(token, totalPrice, "Order", person.getFirstName(),
+				person.getLastName());
+		if (!charge.getPaid()) {
+			throw new RuntimeException("Payment failed");
+		}
 
-	    // Tworzenie głównego zamówienia
-	    WholeOrderPerson order = new WholeOrderPerson();
-	    order.setDateOrder(LocalDateTime.now().withNano(0));
-	    order.setTotalPrice(totalPrice);
-	    order.setOrderStatus("W trakcie");
-	    order.setPerson(person);
-	    order = wholeOrderRepo.save(order);
+		WholeOrderPerson order = new WholeOrderPerson();
+		order.setDateOrder(LocalDateTime.now().withNano(0));
+		order.setTotalPrice(totalPrice);
+		order.setOrderStatus("W trakcie");
+		order.setPerson(person);
+		order = wholeOrderRepo.save(order);
 
-	    // Przetwarzanie poszczególnych produktów
-	    for (int i = 0; i < idProduct.size(); i++) {
-	        Product product = findProductById(idProduct.get(i));
-	        int requestedQuantity = quantity.get(i);
-	        int stockQuantity = product instanceof Book ? ((Book) product).getNumberBookStock() : requestedQuantity;
+		for (int i = 0; i < idProduct.size(); i++) {
+			Product product = findProductById(idProduct.get(i));
+			int requestedQuantity = quantity.get(i);
+			int stockQuantity = product instanceof Book ? ((Book) product).getNumberBookStock() : requestedQuantity;
 
-	        if (stockQuantity > 0) {
-	            int orderQuantity = Math.min(requestedQuantity, stockQuantity);
+			if (stockQuantity > 0) {
+				int orderQuantity = Math.min(requestedQuantity, stockQuantity);
 
-	            OrderProduct orderProduct = new OrderProduct();
-	            orderProduct.setProduct(product);
-	            orderProduct.setQuantity(orderQuantity);
-	            orderProducts.add(orderProduct);
-	            orderProduct.setOrder(order);
-	            orderProductRepo.save(orderProduct);
+				OrderProduct orderProduct = new OrderProduct();
+				orderProduct.setProduct(product);
+				orderProduct.setQuantity(orderQuantity);
+				orderProducts.add(orderProduct);
+				orderProduct.setOrder(order);
+				orderProductRepo.save(orderProduct);
 
-	            // Aktualizacja stanu magazynowego dla książek
-	            if (product instanceof Book) {
-	                ((Book) product).setNumberBookStock(stockQuantity - orderQuantity);
-	                bookRepo.save((Book) product);
-	            }
+				if (product instanceof Book) {
+					((Book) product).setNumberBookStock(stockQuantity - orderQuantity);
+					bookRepo.save((Book) product);
+				}
 
-	            // Tworzenie zamówienia częściowego dla brakujących produktów
-	            if (requestedQuantity > orderQuantity) {
-	                createPartialOrder(person, product, requestedQuantity - orderQuantity);
-	            }
-	        } else {
-	            // Całe zamówienie przechodzi do statusu "Oczekiwanie na dostawę"
-	            createPartialOrder(person, product, requestedQuantity);
-	        }
-	    }
+				if (requestedQuantity > orderQuantity) {
+					createPartialOrder(person, product, requestedQuantity - orderQuantity);
+				}
+			} else {
+
+				createPartialOrder(person, product, requestedQuantity);
+			}
+		}
 	}
 
 	private Product findProductById(Long idProduct) {
@@ -198,24 +149,23 @@ public class OrderService {
 		return products.getProductPrice() * quantity;
 	}
 
-	
 	private void createPartialOrder(Person person, Product product, int quantity) {
-	    WholeOrderPerson partialOrder = new WholeOrderPerson();
-	    partialOrder.setDateOrder(LocalDateTime.now().withNano(0));
-	    partialOrder.setTotalPrice(calculateTotalPrice(product, quantity));
-	    partialOrder.setOrderStatus("Oczekiwanie na dostawę");
-	    partialOrder.setPerson(person);
+		WholeOrderPerson partialOrder = new WholeOrderPerson();
+		partialOrder.setDateOrder(LocalDateTime.now().withNano(0));
+		partialOrder.setTotalPrice(calculateTotalPrice(product, quantity));
+		partialOrder.setOrderStatus("Oczekiwanie na dostawę");
+		partialOrder.setPerson(person);
 
-	    partialOrder = wholeOrderRepo.save(partialOrder);
+		partialOrder = wholeOrderRepo.save(partialOrder);
 
-	    OrderProduct orderProduct = new OrderProduct();
-	    orderProduct.setProduct(product);
-	    orderProduct.setQuantity(quantity);
-	    orderProduct.setOrder(partialOrder);
+		OrderProduct orderProduct = new OrderProduct();
+		orderProduct.setProduct(product);
+		orderProduct.setQuantity(quantity);
+		orderProduct.setOrder(partialOrder);
 
-	    orderProductRepo.save(orderProduct);
+		orderProductRepo.save(orderProduct);
 	}
-	
+
 	public void updateOrderStatus(Long orderId, String displayStatus) {
 		WholeOrderPerson order = wholeOrderRepo.findById(orderId)
 				.orElseThrow(() -> new RuntimeException("Order not found"));

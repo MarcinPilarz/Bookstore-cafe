@@ -177,7 +177,9 @@ const OwnerPanel = () => {
         `http://localhost:8080/deleteEvent?id=${id}`,
         {
           method: "DELETE",
-          Authorization: `Bearer ${authData?.token}`,
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
         }
       );
 
@@ -347,7 +349,9 @@ const OwnerPanel = () => {
         `http://localhost:8080/cancleReservation?idReservation=${id}`,
         {
           method: "DELETE",
-          Authorization: `Bearer ${authData?.token}`,
+          headers: {
+            Authorization: `Bearer ${authData?.token}`,
+          },
         }
       );
 

@@ -52,9 +52,9 @@ public class SecurityConfig {
 								 "/coffee", "/products", "/reset-password")
 						.permitAll().requestMatchers("/api/v1/admin").hasAnyAuthority(RoleType.Pracownik.name())
 						.requestMatchers("/sayAdmin", "/editUser", "/api/v1/user", "/reviews", "/events", "/sayUser",
-								"/editPerson", "/orders/person","/updateRoleType", "/reservations/person")
+								"/editPerson", "/orders/person","/newReservation","/updateRoleType", "/reservations/person")
 						.hasAnyAuthority(RoleType.Klient.name(), RoleType.Pracownik.name(), RoleType.Wlasciciel.name())
-						.requestMatchers("/newComment", "/deleteComment","/newReservation", "/history", "/reviews/person", "/addOrder")
+						.requestMatchers("/newComment", "/deleteComment", "/history", "/reviews/person", "/addOrder")
 						.hasAnyAuthority(RoleType.Klient.name())
 						.requestMatchers("/newEvent", "/deleteEvent", "/customNumberOfPeople", "/cancleReservation",
 								"/order-status", "/update-order-status", "/reservations", "/orders", "/newEvent",
