@@ -65,8 +65,8 @@ body {
   position: relative;
   left: 9%;
   height: 20%;
-  margin-left: 20px; /* Dodatkowy odstęp między tekstem a obrazem */
-  /* border-radius: 76% 24% 80% 20%/39% 44% 56% 61%; */
+  margin-left: 20px;
+
   border: 2px solid #204b33;
   transform: rotate(10deg);
 }

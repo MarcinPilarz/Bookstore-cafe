@@ -1,7 +1,7 @@
 import React from "react";
 import "./CoffeeIntensity.css";
 const CoffeeIntensity = ({ intensity }) => {
-  const maxIntensity = 10; // Maksymalna wartość intensywności
+  const maxIntensity = 10;
   const circles = [];
 
   for (let i = 0; i < maxIntensity; i++) {

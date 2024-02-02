@@ -12,15 +12,13 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     const busketKey = `busket_${authData.idPerson}`;
 
-    // Funkcja do ładowania koszyka z localStorage
     const loadBusket = () => {
       const savedBusket = localStorage.getItem(busketKey);
       return savedBusket ? JSON.parse(savedBusket) : [];
     };
 
-    // Ustawienie stanu koszyka po zmianie użytkownika
     setBusket(loadBusket());
-  }, [authData.idPerson, authData.token]); // Uruchom ponownie, gdy zmienia się idPerson lub token
+  }, [authData.idPerson, authData.token]);
 
   const addToBusket = (product) => {
     setBusket((prevCart) => {

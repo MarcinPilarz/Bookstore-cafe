@@ -62,17 +62,14 @@ const UserPanel = () => {
   const handleChangePasswordSubmit = async (event) => {
     event.preventDefault();
 
-    // i że `passwordData` zawiera nowe hasło
     const employeeId = authData?.idPerson;
     const employeeData = {
       password: passwordData.newPassword,
-      // Możesz dodać tutaj inne wymagane dane pracownika, jeśli to konieczne
     };
 
     try {
       await handleUpdateEmployee(employeeId, employeeData);
       console.log("Hasło zostało pomyślnie zmienione.");
-      // Tutaj możesz dodać dodatkowe działania po pomyślnej zmianie hasła
     } catch (error) {
       console.error("Błąd podczas zmiany hasła", error);
     }

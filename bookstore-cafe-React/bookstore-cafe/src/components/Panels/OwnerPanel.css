@@ -349,7 +349,7 @@ th {
 
 #generate-password-button {
   background-color: #e1c008;
-  color: black;
+  color: white;
 }
 @media screen and (max-width: 800px) {
   .product-container table,
@@ -475,4 +475,13 @@ li.product-item {
   right: 0;
   justify-content: end;
   text-align: center;
+}
+.addEmployee {
+  background-color: #388e3c;
+}
+.closeModalEmployee {
+  background-color: #dc3545;
+}
+.btn-add {
+  margin-bottom: 1px;
 }

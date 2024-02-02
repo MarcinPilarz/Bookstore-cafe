@@ -1127,11 +1127,16 @@ const OwnerPanel = () => {
             </button>
           )}
 
-          <button type="submit">
+          <button type="submit" className="addEmployee">
             {isEditMode ? "Zapisz zmiany" : "Dodaj Pracownika"}
           </button>
         </form>
-        <button onClick={handleCloseModalEmployee}>Zamknij</button>
+        <button
+          onClick={handleCloseModalEmployee}
+          className="closeModalEmployee"
+        >
+          Zamknij
+        </button>
       </div>
     );
   };
