@@ -18,7 +18,7 @@ const MainPhoto = ({ infoImageVisible }) => {
 
       <div className="info-image-container">
         <h1 className="h1-image">Czytaj z kawą</h1>
-        <p className="p-image">Zamów kawe i wejdz do świata ksiązki.</p>
+        <p className="p-image">Zamów kawę i wejdź do świata książki.</p>
         <button onClick={handleProductNavigate} className="button-image">
           Produkty
         </button>
