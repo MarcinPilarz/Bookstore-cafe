@@ -3,6 +3,11 @@
 This project is a web application for a bookstore combined with a café, developed as part of an **engineering thesis**.  
 The application enables product browsing, online ordering, seat reservations, and administrative management of orders and products.
 
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=flat&logo=springboot)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)
+![Stripe](https://img.shields.io/badge/Stripe-635BFF?style=flat&logo=stripe&logoColor=white)
+
+
 ---
 
 ## Project Objective
